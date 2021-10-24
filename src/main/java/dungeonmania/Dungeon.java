@@ -4,18 +4,18 @@ import dungeonmania.difficultyStates.Difficulty;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Dungeon {
 
     private Difficulty gameMode;
-    private playerCharacter character;
+    private PlayerCharacter character;
     private HashMap<Position, ArrayList<Entity>> entitiesMap;
     private MovementManager movementManager;
     private InteractionManager interactionManager;
     private FightManager fightManager;
+    private GoalManager goalManager;
     private EntityFactory entityFactory;
 
     public Dungeon(String dungeonName, Difficulty gameMode) {
@@ -25,6 +25,7 @@ public class Dungeon {
         this.movementManager = new MovementManager();
         this.interactionManager = new InteractionManager();
         this.fightManager = new FightManager();
+        this.goalManager = new GoalManager(dungeonName);
         this.entitiesMap = createEntitiesMap(dungeonName);
 
     }
