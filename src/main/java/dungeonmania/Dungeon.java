@@ -16,13 +16,20 @@ public class Dungeon {
     private MovementManager movementManager;
     private InteractionManager interactionManager;
     private FightManager fightManager;
-
+    private EntityFactory entityFactory;
 
     public Dungeon(String dungeonName, Difficulty gameMode) {
-        ;
+        this.gameMode = gameMode;
+        this.entityFactory = gameMode.createEntityFactory();
+        this.character =  entityFactory.create("character");
+        this.movementManager = new MovementManager();
+        this.interactionManager = new InteractionManager();
+        this.fightManager = new FightManager();
+        this.entitiesMap = createEntitiesMap(dungeonName);
+
     }
 
-    public HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) throws IOException {
+    public HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) {
         ;
     }
 
@@ -32,20 +39,10 @@ public class Dungeon {
             // for each in theCharacter inventory
                 // if the item is iteMused
                     // item.use()
-        // gameMode.simulate(Direction movementDirection);
-            // THIS IS ALL WITHIN gameMode.simulate()
-            // movementManager.moveChar(MovementDirection)
-            // interactionManager.doCharInteractions()
-            // FightManager.doCharFights()
-            // movementManager.moveMobs()
-            // interactionManager.doInteractions()
-            // FightManager.doCharFights()
-            // movementManager.doMercenarySpMove()
-            // FightManager.resetHasFought()
+        // gameMode.simulate(movementDirection);
     }
 
-    public void deleteEntity(Entity entityTbd) {
-    }
+    public void deleteEntity(Entity entityTbd) {}
 
 
 }

@@ -15,4 +15,9 @@ public class Peaceful extends  Difficulty{
 //        movementManager.doMercenarySpMove();
 //        fightManager.resetHasFought();
     }
+
+    @Override
+    public EntityFactory createEntityFactory() {
+        return null;
+    }
 }

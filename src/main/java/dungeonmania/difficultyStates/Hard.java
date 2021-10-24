@@ -19,4 +19,9 @@ public class Hard extends Difficulty{
 //        movementManager.doMercenarySpMove();
 //        fightManager.resetHasFought();
     }
+
+    @Override
+    public EntityFactory createEntityFactory() {
+        return null;
+    }
 }
