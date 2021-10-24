@@ -1,8 +1,7 @@
 package dungeonmania;
 
-import dungeonmania.response.models.DungeonResponse;
+import dungeonmania.difficultyStates.Difficulty;
 import dungeonmania.util.Direction;
-import dungeonmania.util.FileLoader;
 import dungeonmania.util.Position;
 
 import java.io.IOException;
@@ -12,10 +11,11 @@ import java.util.HashMap;
 public class Dungeon {
 
     private Difficulty gameMode;
-    private playerCharacter theCharacter;
+    private playerCharacter character;
     private HashMap<Position, ArrayList<Entity>> entitiesMap;
-    private MovementManager theFightManager;
-    private CollisionManager theCollisionManager;
+    private MovementManager movementManager;
+    private InteractionManager interactionManager;
+    private FightManager fightManager;
 
 
     public Dungeon(String dungeonName, Difficulty gameMode) {
@@ -32,23 +32,19 @@ public class Dungeon {
             // for each in theCharacter inventory
                 // if the item is iteMused
                     // item.use()
-        // movementManager.moveChar(MovementDirection)
-        // movementManager.doInteractions()
-        // movementManager.moveMobs()
-        // movementManager.doInteractions()
-        // movementManager.doMercenarySpMove()
-        // OR
-        // movementManager.simulate()
-        // OR
-        // movementManager.moveChar(MovementDirection)
-        // interactionManager.doInteractions()
-        // movementManager.moveMobs()
-        // interactionManager.doInteractions()
-        // movementManager.doMercenarySpMove()
+        // gameMode.simulate(Direction movementDirection);
+            // THIS IS ALL WITHIN gameMode.simulate()
+            // movementManager.moveChar(MovementDirection)
+            // interactionManager.doCharInteractions()
+            // FightManager.doCharFights()
+            // movementManager.moveMobs()
+            // interactionManager.doInteractions()
+            // FightManager.doCharFights()
+            // movementManager.doMercenarySpMove()
+            // FightManager.resetHasFought()
     }
 
     public void deleteEntity(Entity entityTbd) {
-        return;
     }
 
 
