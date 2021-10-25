@@ -37,7 +37,7 @@ public class Dungeon {
     public void tick(String itemUsed, Direction movementDirection) {
         // if item is used
             // for each in theCharacter inventory
-                // if the item is iteMused
+                // if the item is itemUsed
                     // item.use()
         // gameMode.simulate(movementDirection);
     }
