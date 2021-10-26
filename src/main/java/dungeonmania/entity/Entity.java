@@ -76,11 +76,6 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void interact(Mob mob) {
-
-    }
-
-    @Override
     public void interact(Mercenary mercenary) {
 
     }
@@ -112,6 +107,11 @@ public abstract class Entity implements Interacts, Fights {
 
     @Override
     public void interact(InvincibilityPotion invincibilityPotion) {
+
+    }
+
+    @Override
+    public void interact(InvisibilityPotion invisibilityPotion) {
 
     }
 

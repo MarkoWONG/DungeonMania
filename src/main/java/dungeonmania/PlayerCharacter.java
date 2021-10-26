@@ -4,7 +4,7 @@ import dungeonmania.entity.Entity;
 
 import java.util.ArrayList;
 
-public abstract class PlayerCharacter extends Entity {
+public class PlayerCharacter extends Entity {
 
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;

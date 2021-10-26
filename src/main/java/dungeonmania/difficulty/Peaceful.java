@@ -1,6 +1,8 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.PeacefulEntityFactory;
 import dungeonmania.util.Direction;
 
 public class Peaceful extends  Difficulty{
@@ -19,6 +21,6 @@ public class Peaceful extends  Difficulty{
 
     @Override
     public EntityFactory createEntityFactory() {
-        return null;
+        return new PeacefulEntityFactory();
     }
 }

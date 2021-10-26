@@ -22,7 +22,6 @@ public interface Interacts {
     void interact(Toaster toaster);
 
     // mobs
-    void interact(Mob mob);
     void interact(Mercenary mercenary);
     void interact(Zombie zombie);
     void interact(Spider spider);
@@ -32,6 +31,7 @@ public interface Interacts {
     void interact(Key key);
     void interact(HealthPotion healthPotion);
     void interact(InvincibilityPotion invincibilityPotion);
+    void interact(InvisibilityPotion invisibilityPotion);
     void interact(Wood wood);
     void interact(Arrow arrow);
     void interact(Bomb bomb);

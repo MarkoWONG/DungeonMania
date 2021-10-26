@@ -1,6 +1,9 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.StandardEntityFactory;
+import dungeonmania.util.Direction;
 
 public class Standard extends Difficulty {
     public Standard(Dungeon dungRef) {
@@ -21,6 +24,6 @@ public class Standard extends Difficulty {
 
     @Override
     public EntityFactory createEntityFactory() {
-        return null;
+        return new StandardEntityFactory();
     }
 }
