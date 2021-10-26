@@ -2,6 +2,10 @@ package dungeonmania.entity;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
+import dungeonmania.entity.collectables.*;
+import dungeonmania.entity.collectables.potion.*;
+import dungeonmania.entity.collectables.rare.*;
+import dungeonmania.entity.staticEnt.*;
 
 public abstract class Entity implements Interacts, Fights {
 
@@ -56,7 +60,7 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void interact(floorSwitch floorSwitch) {
+    public void interact(Switch Switch) {
 
     }
 
@@ -71,7 +75,7 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void interact(Toaster toaster) {
+    public void interact(ZombieSpawner zombieSpawner) {
 
     }
 
