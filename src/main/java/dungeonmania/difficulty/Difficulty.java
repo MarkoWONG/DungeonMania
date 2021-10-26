@@ -1,4 +1,4 @@
-package dungeonmania.difficultyStates;
+package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
 import dungeonmania.util.Direction;

@@ -1,14 +1,12 @@
-package dungeonmania.difficultyStates;
+package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
-import dungeonmania.util.Direction;
 
-public class Hard extends Difficulty{
-    public Hard(Dungeon dungRef) {
+public class Standard extends Difficulty {
+    public Standard(Dungeon dungRef) {
         super(dungRef,movementManager,interactionManager,fightManager);
     }
 
-    // same simulation as standard difficulty, only entity factory has changes
     @Override
     public void simulate(Direction movementDirection) {
 //        movementManager.moveChar(movementDirection);

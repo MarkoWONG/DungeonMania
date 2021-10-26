@@ -1,6 +1,7 @@
 package dungeonmania;
 
-import dungeonmania.difficultyStates.Difficulty;
+import dungeonmania.difficulty.Difficulty;
+import dungeonmania.entity.Entity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 

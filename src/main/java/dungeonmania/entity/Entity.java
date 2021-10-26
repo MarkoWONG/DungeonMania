@@ -1,5 +1,8 @@
-package dungeonmania;
+package dungeonmania.entity;
 
+import dungeonmania.Fights;
+import dungeonmania.Interacts;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 
 public abstract class Entity implements Interacts, Fights {

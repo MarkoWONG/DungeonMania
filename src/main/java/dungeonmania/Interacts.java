@@ -1,5 +1,7 @@
 package dungeonmania;
 
+import dungeonmania.entity.Entity;
+
 public interface Interacts {
     // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
     // currEntity.doInteraction(currEntity2) will then call currEntity2.interact(this) to get the right type without typecasting. (HOPEFULLY?!)

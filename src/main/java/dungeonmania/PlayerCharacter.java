@@ -1,7 +1,8 @@
 package dungeonmania;
 
+import dungeonmania.entity.Entity;
+
 import java.util.ArrayList;
-import java.util.Collection;
 
 public abstract class PlayerCharacter extends Entity {
 
