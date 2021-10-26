@@ -50,10 +50,12 @@ public class Dungeon {
         HashMap<Position, ArrayList<Entity>> output = new HashMap<>();
         for (int i = 0; i < currEntities.length() ; i++) {
             JSONObject currObj = currEntities.getJSONObject(i);
-            int curX = currObj.getInt("x");
-            int curY = currObj.getInt("y");
-            Position currPosition = new Position(curX,curY);
-            Entity currEnt = entityFactory.create(currObj.getString("type"));
+            Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
+            String currEntType = currObj.getString("type");
+            Entity currEnt = entityFactory.create(currEntType);
+            if ( currEntType.equals("player") ) {
+                this.character = (PlayerCharacter) currEnt;
+            }
             if (!output.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
                 output.put(currPosition, new ArrayList<Entity>());
             }
