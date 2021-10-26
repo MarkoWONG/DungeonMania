@@ -1,6 +1,8 @@
-package dungeonmania.difficultyStates;
+package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.entity.EntityFactory;
+import dungeonmania.util.Direction;
 
 public abstract class Difficulty {
 
