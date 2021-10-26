@@ -76,12 +76,12 @@ public class DungeonTests {
         assertFalse(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)
                 .collect(Collectors.toList())
-                .contains("invincibilitypotion"));
+                .contains("invincibility_potion"));
         // assert no potion in dungeon
         assertFalse(currResponse.getEntities()
                 .stream().map(EntityResponse::getType)
                 .collect(Collectors.toList())
-                .contains("invincibilitypotion"));
+                .contains("invincibility_potion"));
     }
 
 
@@ -93,14 +93,14 @@ public class DungeonTests {
         // get the id of the mercenary
         String mercenaryId = currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().getId();
         // get the id of the spawner
-        String spawnerId = currResponse.getEntities().stream().filter(e -> e.getType().equals("toaster")).findAny().get().getId();
+        String spawnerId = currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast_spawner")).findAny().get().getId();
 
 
         // assert mercenary interactable immediately
-        assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
+        assertTrue(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
 
         // assert spawner interactable immediately
-        assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("toaster")).findAny().get().isInteractable());
+        assertTrue(currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast_spawner")).findAny().get().isInteractable());
 
         // click on the adjacent spawner, doesnt tick the game world
         currController.interact(spawnerId);
@@ -109,7 +109,7 @@ public class DungeonTests {
         assertFalse(currResponse.getEntities()
                 .stream().map(EntityResponse::getType)
                 .collect(Collectors.toList())
-                .contains("toaster"));
+                .contains("zombie_toast_spawner"));
 
         // go up and collect the treasure
         currController.tick(null, Direction.UP);
@@ -125,6 +125,26 @@ public class DungeonTests {
 
         // assert mercenary not interactable anymore
         assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
+    }
+
+    @Test
+    public void testBuilding() {
+        DungeonManiaController currController = new DungeonManiaController();
+        DungeonResponse currResponse = currController.newGame("buildableEntities", "Standard");
+
+        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.DOWN));
+        currController.build("bow");
+        assertTrue(currResponse.getInventory()
+                .stream().map(ItemResponse::getType)
+                .collect(Collectors.toList())
+                .contains("bow"));
+
+        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.DOWN));
+        currController.build("shield");
+        assertTrue(currResponse.getInventory()
+                .stream().map(ItemResponse::getType)
+                .collect(Collectors.toList())
+                .contains("shield"));
     }
 
 }
