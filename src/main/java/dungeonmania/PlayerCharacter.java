@@ -12,11 +12,11 @@ public class PlayerCharacter extends Entity {
     private double attackDamage;
     private double defense;
 
-    public addItemToInventory(CollectableEntity item) {
+    public void addItemToInventory(CollectableEntity item) {
         ;
     }
 
-    public removeItem(CollectableEntity item) {
+    public void removeItem(CollectableEntity item) {
         ;
     }
 }

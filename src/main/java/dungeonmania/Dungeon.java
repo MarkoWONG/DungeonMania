@@ -39,7 +39,6 @@ public class Dungeon {
     }
 
     private HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) throws IllegalArgumentException {
-        // set this.character to the character when you add it
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
