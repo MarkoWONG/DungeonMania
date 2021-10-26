@@ -132,44 +132,72 @@ public class itemTests {
         assertTrue(new_frame.getInventory().contains(wood3));
     }
 
-    //only one key at a time
-    public void oneKeyTest(){
-        // Create new dungeon
-        DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("advanced", "standard");
+    // stat change when picked up a sword or armour
+    @Test
+    public void swordStatChange(){
 
-        // Sword item
-        ItemResponse key1 = new ItemResponse("2", "key");
-        ItemResponse key2 = new ItemResponse("3", "key");
-        
-        //move to collect key
-        for (int i = 0; i < 10; i++){
-            new_frame = dungeon.tick("none", Direction.RIGHT);
-            assertTrue(new_frame.getInventory().size() == 0);
-        }
-        for (int i = 0; i < 8; i++){
-            new_frame = dungeon.tick("none", Direction.DOWN);
-            assertTrue(new_frame.getInventory().size() == 1);
-        }
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        assertTrue(new_frame.getInventory().size() == 2);
-        assertTrue(new_frame.getInventory().contains(key1));
-
-        // only one key
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        assertTrue(new_frame.getInventory().size() == 2);
-        assertTrue(new_frame.getInventory().contains(key1));
-        assertFalse(new_frame.getInventory().contains(key2));
     }
 
+    @Test
+    public void armourStatChange(){
+        
+    }
 
-    // stat change when picked up a sword or armour
+    @Test
+    public void zombieSpawnWithArmour(){
+        
+    }
+
+    // defeating a zombie with armour drops an new armour
+    @Test
+    public void zombieArmourDrop(){
+        
+    }
+
+    @Test
+    public void mercenarySpawnWithArmour(){
+        
+    }
+    // defeating a mercenary with armour drops an new armour
+    @Test
+    public void mercenaryArmourDrop(){
+        
+    }
 
     // using the potions
+    @Test
+    public void healthPotion(){
+        
+    }
+    @Test
+    public void standardInvincibilityPotion(){
+        
+    }
+    @Test
+    public void hardInvincibilityPotion(){
+        
+    }
+    @Test
+    public void invisibilityPotion(){
+        
+    }
 
     // test one_ring item (respawn and drop rate)
+    @Test
+    public void oneRing(){
+        
+    }
 
     // durablity of bow and shield
+    @Test
+    public void bowDurablity(){
+        
+    }
+
+    @Test
+    public void shieldDurablity(){
+        
+    }
 
     // crafting
     @Test
@@ -230,7 +258,37 @@ public class itemTests {
         new_frame = dungeon.build("shield");
         assertTrue(new_frame.getInventory().contains(shield2));
     }
-    
+
+    //only one key at a time
+    public void onlyOneKeyTest(){
+        // Create new dungeon
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("advanced", "standard");
+
+        // Sword item
+        ItemResponse key1 = new ItemResponse("2", "key");
+        ItemResponse key2 = new ItemResponse("3", "key");
+        
+        //move to collect key
+        for (int i = 0; i < 10; i++){
+            new_frame = dungeon.tick("none", Direction.RIGHT);
+            assertTrue(new_frame.getInventory().size() == 0);
+        }
+        for (int i = 0; i < 8; i++){
+            new_frame = dungeon.tick("none", Direction.DOWN);
+            assertTrue(new_frame.getInventory().size() == 1);
+        }
+        new_frame = dungeon.tick("none", Direction.DOWN);
+        assertTrue(new_frame.getInventory().size() == 2);
+        assertTrue(new_frame.getInventory().contains(key1));
+
+        // only one key
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(new_frame.getInventory().size() == 2);
+        assertTrue(new_frame.getInventory().contains(key1));
+        assertFalse(new_frame.getInventory().contains(key2));
+    }
+
     // one key at a time (use a key (craft / open door) then pick up another key
     @Test
     public void usingKey(){
@@ -292,12 +350,20 @@ public class itemTests {
     }
 
     // test bomb
+    @Test
+    public void placeBomb(){
+
+    }
+
+    @Test
+    public void activateBomb(){
+        
+    }
 
     // one big intergation test
+    @Test
+    public void itemsIntergationTest(){
 
-
-
-
-
+    }
 
 }
