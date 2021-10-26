@@ -1,14 +1,16 @@
 package dungeonmania;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
+import dungeonmania.response.models.ItemResponse;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DungeonTests {
     @Test
@@ -59,6 +61,70 @@ public class DungeonTests {
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("sword")).filter(e -> e.getPosition().equals(new Position(8, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("armour")).filter(e -> e.getPosition().equals(new Position(9, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("one_ring")).filter(e -> e.getPosition().equals(new Position(10, 0))).count());
+    }
+
+    @Test
+    public void testItemUsedPickedUpOnTick() {
+        DungeonManiaController currController = new DungeonManiaController();
+        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
+
+        // get the potion, use it
+        currController.tick(null, Direction.LEFT);
+        currController.tick("invincibility_potion", Direction.LEFT);
+
+        // assert no potion in inventory
+        assertFalse(currResponse.getInventory()
+                .stream().map(ItemResponse::getType)
+                .collect(Collectors.toList())
+                .contains("invincibilitypotion"));
+        // assert no potion in dungeon
+        assertFalse(currResponse.getEntities()
+                .stream().map(EntityResponse::getType)
+                .collect(Collectors.toList())
+                .contains("invincibilitypotion"));
+    }
+
+
+    @Test
+    public void testClickingEntity() {
+        DungeonManiaController currController = new DungeonManiaController();
+        DungeonResponse currResponse = currController.newGame("clickableEntities", "Standard");
+
+        // get the id of the mercenary
+        String mercenaryId = currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().getId();
+        // get the id of the spawner
+        String spawnerId = currResponse.getEntities().stream().filter(e -> e.getType().equals("toaster")).findAny().get().getId();
+
+
+        // assert mercenary interactable immediately
+        assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
+
+        // assert spawner interactable immediately
+        assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("toaster")).findAny().get().isInteractable());
+
+        // click on the adjacent spawner, doesnt tick the game world
+        currController.interact(spawnerId);
+
+        // assert spawner is killed
+        assertFalse(currResponse.getEntities()
+                .stream().map(EntityResponse::getType)
+                .collect(Collectors.toList())
+                .contains("toaster"));
+
+        // go up and collect the treasure
+        currController.tick(null, Direction.UP);
+
+        // click on the mercenary
+        currController.interact(mercenaryId);
+
+        // assert no gold in inventory
+        assertFalse(currResponse.getInventory()
+                .stream().map(ItemResponse::getType)
+                .collect(Collectors.toList())
+                .contains("treasure"));
+
+        // assert mercenary not interactable anymore
+        assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
     }
 
 }
