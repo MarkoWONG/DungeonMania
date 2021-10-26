@@ -1,4 +1,6 @@
-package dungeonmania;
+package dungeonmania.entity;
+
+import dungeonmania.PlayerCharacter;
 
 public interface Fights {
     // iterate through the entitieslist, if its a mob (use instanceof) do mob.startFight(character)
