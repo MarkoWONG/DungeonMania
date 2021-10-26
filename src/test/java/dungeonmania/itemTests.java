@@ -10,6 +10,34 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class itemTests {
+    /**
+     * counts the number of entities of type
+     * @param frame
+     * @param type
+     * @return number of entities of type
+     */
+    public int entityCounter(DungeonResponse frame, String type){
+        int counter = 0;
+        for (EntityResponse ent : frame.getEntities()){
+            if (ent.getType().equals(type)){
+                counter++;
+            }
+        }
+        return counter;
+    }
+    /**
+     * helper function to find player postion
+     * @param frame
+     * @return player postion or null if no player
+     */
+    public Position findEntityPos(DungeonResponse frame, String id){
+        for (EntityResponse ent : frame.getEntities()){
+            if (ent.getId().equals(id)){
+                return ent.getPosition();
+            }
+        }
+        return null;
+    }
     @Test
     public void singleCollectionTest(){
         // Create new dungeon
@@ -143,24 +171,14 @@ public class itemTests {
         
     }
 
+    // durablity of bow and shield
     @Test
-    public void zombieSpawnWithArmour(){
-        
-    }
-
-    // defeating a zombie with armour drops an new armour
-    @Test
-    public void zombieArmourDrop(){
+    public void bowDurablity(){
         
     }
 
     @Test
-    public void mercenarySpawnWithArmour(){
-        
-    }
-    // defeating a mercenary with armour drops an new armour
-    @Test
-    public void mercenaryArmourDrop(){
+    public void shieldDurablity(){
         
     }
 
@@ -182,21 +200,58 @@ public class itemTests {
         
     }
 
-    // test one_ring item (respawn and drop rate)
+    // test bomb
     @Test
-    public void oneRing(){
+    public void placeBomb(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("bomb", "standard");
+        ItemResponse bomb = new ItemResponse("1", "bomb");
         
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(new_frame.getInventory().contains(bomb));
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("1", Direction.LEFT);
+        assertTrue(findEntityPos(new_frame, "bomb_1").equals(new Position(4,2)));
+        assertTrue(new_frame.getInventory().size() == 0);
     }
 
-    // durablity of bow and shield
     @Test
-    public void bowDurablity(){
+    public void activateBombBoulderNotOnSwitch(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("bomb", "standard");
         
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("1", Direction.LEFT);
+        new_frame = dungeon.tick("none", Direction.LEFT);
+        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(findEntityPos(new_frame, "switch_2") == null);
+        assertTrue(findEntityPos(new_frame, "boulder_1") == null);
+        assertTrue(findEntityPos(new_frame, "wall_9") == null);
+        assertTrue(findEntityPos(new_frame, "wall_11") == null);
+        assertTrue(findEntityPos(new_frame, "wall_15") == null);
+        assertTrue(findEntityPos(new_frame, "player_1").equals(new Position(4,3)));
     }
 
     @Test
-    public void shieldDurablity(){
+    public void activateBombBoulderAlreadyOnSwitch(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("bomb", "standard");
         
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("1", Direction.LEFT);
+        assertTrue(findEntityPos(new_frame, "switch_2") == null);
+        assertTrue(findEntityPos(new_frame, "boulder_1") == null);
+        assertTrue(findEntityPos(new_frame, "wall_9") == null);
+        assertTrue(findEntityPos(new_frame, "wall_11") == null);
+        assertTrue(findEntityPos(new_frame, "wall_15") == null);
+        assertTrue(findEntityPos(new_frame, "player_1").equals(new Position(4,2)));
     }
 
     // crafting
@@ -298,23 +353,23 @@ public class itemTests {
 
         new_frame = dungeon.tick("none", Direction.UP);
         //find playerPosition
-        Position playerPos = findPlayerPos(new_frame);
+        Position playerPos = findEntityPos(new_frame, "player_1");
         // playerPosition should be in the same postion as player don't have a key
         assertTrue(playerPos.equals(new Position(2,2)));
 
         new_frame = dungeon.tick("none", Direction.RIGHT);
         new_frame = dungeon.tick("none", Direction.UP);
-        playerPos = findPlayerPos(new_frame);
+        playerPos = findEntityPos(new_frame, "player_1");
         // playerPosition should be on top of the opened door (key used to open door)
         assertTrue(playerPos.equals(new Position(3,1)));
 
         new_frame = dungeon.tick("none", Direction.DOWN);
-        playerPos = findPlayerPos(new_frame);
+        playerPos = findEntityPos(new_frame, "player_1");
         assertTrue(playerPos.equals(new Position(3,2)));
         
         // playerPosition should be in the same postion as player don't have a key
         new_frame = dungeon.tick("none", Direction.DOWN);
-        playerPos = findPlayerPos(new_frame);
+        playerPos = findEntityPos(new_frame, "player_1");
         assertTrue(playerPos.equals(new Position(3,2)));
 
         // collect key and 2 wood and build a shield
@@ -325,38 +380,40 @@ public class itemTests {
 
         // no key = locked door
         new_frame = dungeon.tick("none", Direction.DOWN);
-        playerPos = findPlayerPos(new_frame);
+        playerPos = findEntityPos(new_frame, "player_1");
         assertTrue(playerPos.equals(new Position(4,4)));
         
         // collect key and open door
         new_frame = dungeon.tick("none", Direction.RIGHT);
         new_frame = dungeon.tick("none", Direction.DOWN);
-        playerPos = findPlayerPos(new_frame);
+        playerPos = findEntityPos(new_frame, "player_1");
         assertTrue(playerPos.equals(new Position(5,5)));
     }
 
-    /**
-     * helper function to find player postion
-     * @param frame
-     * @return player postion or null if no player
-     */
-    public Position findPlayerPos(DungeonResponse frame){
-        for (EntityResponse ent : frame.getEntities()){
-            if (ent.getType().equals("player")){
-                return ent.getPosition();
-            }
-        }
-        return null;
+    @Test
+    public void zombieSpawnWithArmour(){
+        
     }
 
-    // test bomb
+    // defeating a zombie with armour drops an new armour
     @Test
-    public void placeBomb(){
-
+    public void zombieArmourDrop(){
+        
     }
 
     @Test
-    public void activateBomb(){
+    public void mercenarySpawnWithArmour(){
+        
+    }
+    // defeating a mercenary with armour drops an new armour
+    @Test
+    public void mercenaryArmourDrop(){
+        
+    }
+    
+    // test one_ring item (respawn and drop rate)
+    @Test
+    public void oneRing(){
         
     }
 
