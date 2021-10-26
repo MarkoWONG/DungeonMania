@@ -1,5 +1,12 @@
 package dungeonmania.entity.staticEnt;
 
-public class Wall {
-    
+import dungeonmania.entity.Entity;
+
+public class Wall implements StaticEntity{
+    public void create(){
+
+    }
+    public void interact(){
+        
+    }
 }

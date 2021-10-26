@@ -9,6 +9,7 @@ import dungeonmania.entity.staticEnt.*;
 
 public abstract class Entity implements Interacts, Fights {
 
+
     private Position position;
 
     // none of these do anything by default you need to override them in the specific class to implement the behaviour

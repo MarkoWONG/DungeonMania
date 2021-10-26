@@ -1,7 +1,7 @@
 package dungeonmania.entity.staticEnt;
 
-import dungeonmania.entity.Entity;
+public interface StaticEntity{
+    void create();
 
-public abstract class StaticEntity extends Entity{
-    
+    void interact();
 }
