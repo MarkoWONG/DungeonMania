@@ -2,6 +2,7 @@ package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
 import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.HardEntityFactory;
 import dungeonmania.util.Direction;
 
 public class Hard extends Difficulty{
@@ -24,6 +25,6 @@ public class Hard extends Difficulty{
 
     @Override
     public EntityFactory createEntityFactory() {
-        return
+        return new HardEntityFactory();
     }
 }
