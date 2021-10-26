@@ -64,7 +64,7 @@ public class DungeonTests {
     }
 
     @Test
-    public void testItemUsedPickedUpOnTick() {
+    public void testItemUsedAndPickedUpOnTick() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
 
