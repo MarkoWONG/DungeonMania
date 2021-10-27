@@ -19,4 +19,14 @@ public class PlayerCharacter extends Entity {
     public void removeItem(CollectableEntity item) {
         ;
     }
+
+    @Override
+    public void fight(Mob mob) {
+
+    }
+
+    @Override
+    public void startInteraction(Entity entity) {
+
+    }
 }
