@@ -1,7 +1,8 @@
 package dungeonmania.entity.staticEnt;
 
-public interface StaticEntity{
-    void create();
+import dungeonmania.entity.Entity;
+import dungeonmania.util.Position;
 
-    void interact();
+public abstract class StaticEntity implements Entity{
+    public abstract Position getPostion();
 }

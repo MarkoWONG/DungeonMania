@@ -1,8 +1,8 @@
 package dungeonmania;
 
 import dungeonmania.difficulty.Difficulty;
-import dungeonmania.entity.Entity;
-import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.Entity_Ethan;
+import dungeonmania.entity.EntityFactory_Ethan;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -14,12 +14,12 @@ public class Dungeon {
 
     private Difficulty gameMode;
     private PlayerCharacter character;
-    private HashMap<Position, ArrayList<Entity>> entitiesMap;
+    private HashMap<Position, ArrayList<Entity_Ethan>> entitiesMap;
     private MovementManager movementManager;
     private InteractionManager interactionManager;
     private FightManager fightManager;
     private GoalManager goalManager;
-    private EntityFactory entityFactory;
+    private EntityFactory_Ethan entityFactory;
 
     public Dungeon(String dungeonName, Difficulty gameMode) {
         this.gameMode = gameMode;
@@ -31,7 +31,7 @@ public class Dungeon {
         this.entitiesMap = createEntitiesMap(dungeonName);
     }
 
-    private HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) {
+    private HashMap<Position, ArrayList<Entity_Ethan>> createEntitiesMap(String dungeonName) {
         // set this.character to the character when you add it
     }
 
@@ -44,7 +44,7 @@ public class Dungeon {
         // gameMode.simulate(movementDirection);
     }
 
-    public void deleteEntity(Entity entityTbd) {}
+    public void deleteEntity(Entity_Ethan entityTbd) {}
 
 
 }

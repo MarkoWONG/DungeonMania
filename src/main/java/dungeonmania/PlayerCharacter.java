@@ -1,10 +1,10 @@
 package dungeonmania;
 
-import dungeonmania.entity.Entity;
+import dungeonmania.entity.Entity_Ethan;
 
 import java.util.ArrayList;
 
-public class PlayerCharacter extends Entity {
+public class PlayerCharacter extends Entity_Ethan {
 
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
