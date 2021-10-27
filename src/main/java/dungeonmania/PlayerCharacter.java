@@ -12,11 +12,21 @@ public class PlayerCharacter extends Entity_Ethan {
     private double attackDamage;
     private double defense;
 
-    public addItemToInventory(CollectableEntity item) {
+    public void addItemToInventory(CollectableEntity item) {
         ;
     }
 
-    public removeItem(CollectableEntity item) {
+    public void removeItem(CollectableEntity item) {
         ;
+    }
+
+    @Override
+    public void fight(Mob mob) {
+
+    }
+
+    @Override
+    public void startInteraction(Entity entity) {
+
     }
 }

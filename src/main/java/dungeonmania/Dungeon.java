@@ -2,15 +2,25 @@ package dungeonmania;
 
 import dungeonmania.difficulty.Difficulty;
 import dungeonmania.util.Direction;
+import dungeonmania.util.FileLoader;
 import dungeonmania.util.Position;
+<<<<<<< HEAD
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
+=======
+import org.json.JSONArray;
+import org.json.JSONObject;
+>>>>>>> origin/Dungeon
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class Dungeon {
+
+    private String id;
 
     private Difficulty gameMode;
     private PlayerCharacter character;
@@ -31,8 +41,29 @@ public class Dungeon {
         this.entitiesMap = createEntitiesMap(dungeonName);
     }
 
-    private HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) {
-        // set this.character to the character when you add it
+    private HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) throws IllegalArgumentException {
+        String currFileStr;
+        try {
+            currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Dungeon does not exist");
+        }
+        JSONArray currEntities = new JSONObject(currFileStr).getJSONArray("entities");
+        HashMap<Position, ArrayList<Entity>> output = new HashMap<>();
+        for (int i = 0; i < currEntities.length() ; i++) {
+            JSONObject currObj = currEntities.getJSONObject(i);
+            Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
+            String currEntType = currObj.getString("type");
+            Entity currEnt = entityFactory.create(currEntType);
+            if ( currEntType.equals("player") ) {
+                this.character = (PlayerCharacter) currEnt;
+            }
+            if (!output.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
+                output.put(currPosition, new ArrayList<Entity>());
+            }
+            output.get(currPosition).add(currEnt);
+        }
+        return output;
     }
 
 

@@ -15,6 +15,7 @@ public abstract class Entity implements Interacts, Fights {
         // playerCharacter.fight(this); example override for playerCharacter
     }
 
+<<<<<<< HEAD
 //    @Override
 //    public void fight(Mercenary mercenary) {
 //
@@ -144,4 +145,20 @@ public abstract class Entity implements Interacts, Fights {
 //    public void interact(OneRing oneRing) {
 //
 //    }
+=======
+    @Override
+    public void fight(Mob mob) {
+
+    }
+
+    @Override
+    public void startInteraction(Entity entity) {
+
+    }
+
+    @Override
+    public void interact(Entity entity) {
+
+    }
+>>>>>>> origin/Dungeon
 }
