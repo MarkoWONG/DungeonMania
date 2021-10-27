@@ -7,54 +7,54 @@ import java.util.Locale;
 
 public abstract class EntityFactory {
 
-//    public Entity create(String entityType, Position startPos) {
-//        switch (entityType.toLowerCase(Locale.ROOT)) {
-//            case "player":
-//                return makePlayer(startPos);
-//            case "wall":
-//                return makeWall(startPos);
-//            case "exit":
-//                return makeExit(startPos);
-//            case "boulder":
-//                return makeBoulder(startPos);
-//            case "floorswitch":
-//                return makeFloorSwitch(startPos);
-//            case "door":
-//                return makeDoor(startPos);
-//            case "portal":
-//                return makePortal(startPos);
-//            case "toaster":
-//                return makeToaster(startPos);
-//            case "mercenary":
-//                return makeMercenary(startPos);
-//            case "zombie":
-//                return makeZombie(startPos);
-//            case "spider":
-//                return makeSpider(startPos);
-//            case "treasure":
-//                return makeTreasure(startPos);
-//            case "key":
-//                return makeKey(startPos);
-//            case "healthpotion":
-//                return makeHealthPotion(startPos);
-//            case "invincibilitypotion":
-//                return makeInvincibilityPotion(startPos);
-//            case "invisibilitypotion":
-//                return makeInvisibilityPotion(startPos);
-//            case "wood":
-//                return makeWood(startPos);
-//            case "arrow":
-//                return makeArrow(startPos);
-//            case "bomb":
-//                return makeBomb(startPos);
-//            case "sword":
-//                return makeSword(startPos);
-//            case "armour":
-//                return makeArmour(startPos);
-//            case "onering":
-//                return makeOneRing(startPos);
-//        }
-//    }
+    public Entity create(String entityType, Position startPos) {
+        switch (entityType.toLowerCase(Locale.ROOT)) {
+            case "player":
+                return makePlayer(startPos);
+            case "wall":
+                return makeWall(startPos);
+            case "exit":
+                return makeExit(startPos);
+            case "boulder":
+                return makeBoulder(startPos);
+            case "floorswitch":
+                return makeFloorSwitch(startPos);
+            case "door":
+                return makeDoor(startPos);
+            case "portal":
+                return makePortal(startPos);
+            case "toaster":
+                return makeToaster(startPos);
+            case "mercenary":
+                return makeMercenary(startPos);
+            case "zombie":
+                return makeZombie(startPos);
+            case "spider":
+                return makeSpider(startPos);
+            case "treasure":
+                return makeTreasure(startPos);
+            case "key":
+                return makeKey(startPos);
+            case "healthpotion":
+                return makeHealthPotion(startPos);
+            case "invincibilitypotion":
+                return makeInvincibilityPotion(startPos);
+            case "invisibilitypotion":
+                return makeInvisibilityPotion(startPos);
+            case "wood":
+                return makeWood(startPos);
+            case "arrow":
+                return makeArrow(startPos);
+            case "bomb":
+                return makeBomb(startPos);
+            case "sword":
+                return makeSword(startPos);
+            case "armour":
+                return makeArmour(startPos);
+            case "onering":
+                return makeOneRing(startPos);
+        }
+    }
 
     public Entity makePlayer(Position startPos) {
         return new PlayerCharacter(startPos);
