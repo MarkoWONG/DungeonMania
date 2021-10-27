@@ -10,13 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public class Dungeon {
 
+    private String name;
     private String id;
 
     private Difficulty gameMode;
@@ -35,10 +34,10 @@ public class Dungeon {
         this.interactionManager = new InteractionManager();
         this.fightManager = new FightManager();
         this.goalManager = new GoalManager(dungeonName);
-        this.entitiesMap = createEntitiesMap(dungeonName);
+        this.entitiesMap = createEntitiesMap_FromJson(dungeonName);
     }
 
-    private HashMap<Position, ArrayList<Entity>> createEntitiesMap(String dungeonName) throws IllegalArgumentException {
+    private HashMap<Position, ArrayList<Entity>> createEntitiesMap_FromJson(String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
