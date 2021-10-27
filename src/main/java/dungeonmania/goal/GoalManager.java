@@ -6,12 +6,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// use the composite pattern!!!
 public class GoalManager {
 
+    private Dungeon dungRef;
     private ArrayList<String> goals; // figure out how to store this...
 
-    public GoalManager(String dungeonName) {
-
+    public GoalManager(String dungeonName, Dungeon dungRef) {
+        this.dungRef = dungRef;
+        this.goals = createGoals(dungeonName);
     }
 
     public ArrayList<String> createGoals(String dungeonName) throws IllegalArgumentException {

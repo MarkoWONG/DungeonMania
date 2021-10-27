@@ -1,9 +1,11 @@
 package dungeonmania.entity;
 
+import dungeonmania.util.Position;
+
 public class HardEntityFactory extends EntityFactory{
 
     @Override
-    protected Entity makeToaster() {
-        return new Toaster(15);
+    public Entity makeToaster(Position startPos) {
+        return new Toaster(startPos,15);
     }
 }
