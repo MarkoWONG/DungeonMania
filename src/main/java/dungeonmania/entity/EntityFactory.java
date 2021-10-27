@@ -1,22 +1,17 @@
 package dungeonmania.entity;
+
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.Wall;
 import java.util.Locale;
 
+public abstract class EntityFactory {
 
-public class EntityFactory {
-    // public static Entity getEntity() {
-	// 	String platform = System.getProperty("os.name");
-	// 	return getEntity(platform);
-	// }
-
-	public static Entity getEntity(String entityType) {
-		Entity ent = null;
-
-		switch (entityType.toLowerCase(Locale.ROOT)) {
+    public Entity create(String entityType) {
+        switch (entityType.toLowerCase(Locale.ROOT)) {
             // case "player":
             //     return makePlayer();
             case "wall":
-                ent = new Wall();
+                return makeWall();
             // case "exit":
             //     return makeExit();
             // case "boulder":
@@ -58,9 +53,95 @@ public class EntityFactory {
             // case "onering":
             //     return makeOneRing();
         }
+    }
 
-		return ent;
-	}
+    protected Entity makePlayer() {
+        return new PlayerCharacter();
+    }
+
+    protected Entity makeWall() {
+        return new Wall();
+    }
+
+    protected Entity makeExit() {
+        return new Exit();
+    }
+
+    protected Entity makeBoulder() {
+        return new Boulder();
+    }
+
+    protected Entity makeFloorSwitch() {
+        return new floorSwitch();
+    }
+
+    protected Entity makeDoor() {
+        return new Door();
+    }
+
+    protected Entity makePortal() {
+        return new Portal();
+    }
+
+    protected Entity makeToaster() {
+        return new Toaster();
+    }
+
+    protected Entity makeMercenary() {
+        return new Mercenary();
+    }
+
+    protected Entity makeZombie() {
+        return new Zombie();
+    }
+
+    protected Entity makeSpider() {
+        return new Spider();
+    }
+
+    protected Entity makeTreasure() {
+        return new Treasure();
+    }
+
+    protected Entity makeKey() {
+        return new Key();
+    }
+
+    protected Entity makeHealthPotion() {
+        return new HealthPotion();
+    }
+
+    protected Entity makeInvincibilityPotion() {
+        return new InvincibilityPotion();
+    }
+
+    protected Entity makeInvisibilityPotion() {
+        return new InvisibilityPotion();
+    }
+
+    protected Entity makeWood() {
+        return new Wood();
+    }
+
+    protected Entity makeArrow() {
+        return new Arrow();
+    }
+
+    protected Entity makeBomb() {
+        return new Bomb();
+    }
+
+    protected Entity makeSword() {
+        return new Arrow();
+    }
+
+    protected Entity makeArmour() {
+        return new Arrow();
+    }
+
+    protected Entity makeOneRing() {
+        return new OneRing();
+    }
 
 
 }
