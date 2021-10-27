@@ -1,6 +1,7 @@
 package dungeonmania;
 
 import dungeonmania.entity.Entity;
+import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,10 @@ public class PlayerCharacter extends Entity {
     private double Health;
     private double attackDamage;
     private double defense;
+
+    public PlayerCharacter(Position position) {
+        super(position);
+    }
 
     public void addItemToInventory(CollectableEntity item) {
         ;

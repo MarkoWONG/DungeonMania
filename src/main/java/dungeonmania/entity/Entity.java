@@ -7,9 +7,19 @@ public abstract class Entity implements Interacts, Fights {
 
     private Position position;
 
+    public Entity(Position position) {
+        setPosition(position);
+    }
+
+
     public void setPosition(Position newPosition) {
         position = newPosition;
     }
+
+    public Position getPosition() {
+        return this.position;
+    }
+
 
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
@@ -20,22 +30,17 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void fight(Mercenary mercenary) {
-
-    }
-
-    @Override
-    public void fight(Zombie zombie) {
-
-    }
-
-    @Override
-    public void fight(Spider spider) {
+    public void fight(Mob mob) {
 
     }
 
     @Override
     public void startInteraction(Entity entity) {
+
+    }
+
+    @Override
+    public void interact(Entity entity) {
 
     }
 
