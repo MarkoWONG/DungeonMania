@@ -1,6 +1,9 @@
 package dungeonmania;
 
 import dungeonmania.difficulty.Difficulty;
+import dungeonmania.difficulty.Hard;
+import dungeonmania.difficulty.Peaceful;
+import dungeonmania.difficulty.Standard;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.util.Direction;
@@ -27,8 +30,8 @@ public class Dungeon {
     private GoalManager goalManager;
     private EntityFactory entityFactory;
 
-    public Dungeon(String dungeonName, Difficulty gameMode) {
-        this.gameMode = gameMode;
+    public Dungeon(String dungeonName, String gameMode) {
+        this.gameMode = difficultySelector(gameMode);
         this.entityFactory = gameMode.createEntityFactory();
         this.movementManager = new MovementManager();
         this.interactionManager = new InteractionManager();
@@ -73,5 +76,16 @@ public class Dungeon {
 
     public void deleteEntity(Entity entityTbd) {}
 
+    // will always be given a valid string, we do the checking in the controller
+    private Difficulty difficultySelector(String gameMode) {
+        switch (gameMode) {
+            case ("Peaceful"):
+                return new Peaceful(this,movementManager,interactionManager,fightManager);
+            case ("Standard"):
+                return new Standard(this,movementManager,interactionManager,fightManager);
+            case ("Hard"):
+                return new Hard(this,movementManager,interactionManager,fightManager);
+        }
+    }
 
 }
