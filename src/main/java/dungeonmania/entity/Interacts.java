@@ -12,35 +12,35 @@ public interface Interacts {
 
     void interact(Entity entity);
 
-//    void interact(PlayerCharacter player);
+    void interact(PlayerCharacter player);
 
-//    // static entities
-//    void interact(Wall wall);
-//    void interact(Exit wall);
-//    void interact(Boulder boulder);
-//    void interact(floorSwitch floorSwitch);
-//    void interact(Door door);
-//    void interact(Portal portal);
-//    void interact(Toaster toaster);
-//
-//    // mobs
-//    void interact(Mercenary mercenary);
-//    void interact(Zombie zombie);
-//    void interact(Spider spider);
-//
-//    // collectables
-//    void interact(Treasure treasure);
-//    void interact(Key key);
-//    void interact(HealthPotion healthPotion);
-//    void interact(InvincibilityPotion invincibilityPotion);
-//    void interact(InvisibilityPotion invisibilityPotion);
-//    void interact(Wood wood);
-//    void interact(Arrow arrow);
-//    void interact(Bomb bomb);
-//    void interact(Sword sword);
-//    void interact(Armour armour);
-//    void interact(OneRing oneRing);
-//
-//    // buildables not needed, don't appear on the ground, cant collide with them.
+    // static entities
+    void interact(Wall wall);
+    void interact(Exit wall);
+    void interact(Boulder boulder);
+    void interact(floorSwitch floorSwitch);
+    void interact(Door door);
+    void interact(Portal portal);
+    void interact(Toaster toaster);
+
+    // mobs
+    void interact(Mercenary mercenary);
+    void interact(Zombie zombie);
+    void interact(Spider spider);
+
+    // collectables
+    void interact(Treasure treasure);
+    void interact(Key key);
+    void interact(HealthPotion healthPotion);
+    void interact(InvincibilityPotion invincibilityPotion);
+    void interact(InvisibilityPotion invisibilityPotion);
+    void interact(Wood wood);
+    void interact(Arrow arrow);
+    void interact(Bomb bomb);
+    void interact(Sword sword);
+    void interact(Armour armour);
+    void interact(OneRing oneRing);
+
+    // buildables not needed, don't appear on the ground, cant collide with them.
 
 }
