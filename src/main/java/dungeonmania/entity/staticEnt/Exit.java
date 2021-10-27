@@ -3,11 +3,8 @@ package dungeonmania.entity.staticEnt;
 import dungeonmania.util.Position;
 
 public class Exit extends StaticEntity{
-    public Position getPostion(){
-        System.out.println("created Exit");
-        return new Position(2,4);
+    public Exit(Position position){
+        super(new Position(position.getX(), position.getY(), 0));     
     }
-    public void interact(){
-        
-    }
+    
 }

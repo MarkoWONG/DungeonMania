@@ -4,13 +4,10 @@ import dungeonmania.difficulty.Difficulty;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
 import dungeonmania.util.Position;
-<<<<<<< HEAD
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
-=======
 import org.json.JSONArray;
 import org.json.JSONObject;
->>>>>>> origin/Dungeon
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -54,7 +51,7 @@ public class Dungeon {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
             String currEntType = currObj.getString("type");
-            Entity currEnt = entityFactory.create(currEntType);
+            Entity currEnt = entityFactory.create(currEntType, currPosition);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
             }

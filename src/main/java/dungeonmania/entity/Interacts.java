@@ -2,6 +2,7 @@ package dungeonmania.entity;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.staticEnt.*;
 
 public interface Interacts {
     // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
@@ -17,7 +18,7 @@ public interface Interacts {
 //    // static entities
 //    void interact(Wall wall);
 //    void interact(Exit wall);
-//    void interact(Boulder boulder);
+   void interact(Boulder boulder);
 //    void interact(floorSwitch floorSwitch);
 //    void interact(Door door);
 //    void interact(Portal portal);

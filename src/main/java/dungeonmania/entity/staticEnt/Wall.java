@@ -1,10 +1,9 @@
 package dungeonmania.entity.staticEnt;
 
-import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
-// import dungeonmania.difficulty.Difficulty;
 
 public class Wall extends StaticEntity{
-    
-   
+    public Wall(Position position){
+        super(new Position(position.getX(), position.getY(), Integer.MAX_VALUE));     
+    }
 }

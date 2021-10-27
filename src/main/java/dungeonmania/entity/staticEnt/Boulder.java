@@ -1,12 +1,14 @@
 package dungeonmania.entity.staticEnt;
+
 import dungeonmania.util.Position;
 
 public class Boulder extends StaticEntity{
-    public Position getPostion(){
-        System.out.println("created Boulder");
-        return new Position(2,4);
+    
+    public Boulder(Position position){
+        super(new Position(position.getX(), position.getY(), Integer.MAX_VALUE));     
     }
-    public void interact(){
-        
-    }
+
+    //move method
+    
+
 }
