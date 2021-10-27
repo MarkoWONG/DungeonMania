@@ -6,7 +6,7 @@ import dungeonmania.entity.StandardEntityFactory;
 import dungeonmania.util.Direction;
 
 public class Standard extends Difficulty {
-    public Standard(Dungeon dungRef) {
+    public Standard(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
         super(dungRef,movementManager,interactionManager,fightManager);
     }
 

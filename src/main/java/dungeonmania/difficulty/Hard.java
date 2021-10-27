@@ -6,7 +6,7 @@ import dungeonmania.entity.HardEntityFactory;
 import dungeonmania.util.Direction;
 
 public class Hard extends Difficulty{
-    public Hard(Dungeon dungRef) {
+    public Hard(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
         super(dungRef,movementManager,interactionManager,fightManager);
     }
 
