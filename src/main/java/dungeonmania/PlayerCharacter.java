@@ -19,4 +19,14 @@ public class PlayerCharacter extends Entity {
     public void removeItem(CollectableEntity item) {
         ;
     }
+
+    public void fight(Entity e) {
+        // does nothing
+    }
+
+    public void fight(Mob mob) {
+        // actually fight
+
+        
+    }
 }
