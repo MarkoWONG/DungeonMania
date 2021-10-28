@@ -20,6 +20,9 @@ public abstract class Entity implements Interacts, Fights {
         return this.position;
     }
 
+    public void incrementTick() {
+        return;
+    }
 
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
