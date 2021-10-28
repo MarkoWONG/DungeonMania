@@ -7,6 +7,10 @@ public abstract class CollectableEntity extends Entity{
         super(position, type);
     }
 
+    public CollectableEntity(Position position, String type, String otherInfo){
+        super(position, type, otherInfo);
+    }
+
     @Override
     public void startInteraction(Entity entity) {
         entity.interact(this);

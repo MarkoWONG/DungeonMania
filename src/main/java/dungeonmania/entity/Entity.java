@@ -3,7 +3,7 @@ package dungeonmania.entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
-import dungeonmania.entity.Mobs.*;
+import dungeonmania.entity.Mob.*;
 import dungeonmania.entity.collectables.*;
 
 import java.util.UUID;
@@ -29,7 +29,7 @@ public abstract class Entity implements Interacts {
     }
     
     @Override
-    public void fight(Mob mob) {
+    public void fight(MobEntity mob) {
 
     }
 
@@ -45,7 +45,7 @@ public abstract class Entity implements Interacts {
     }
 
     @Override
-    public void fight(Mob mob) {
+    public void fight(MobEntity mob) {
 
     }
 

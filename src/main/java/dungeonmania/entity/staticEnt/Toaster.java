@@ -2,7 +2,7 @@ package dungeonmania.entity.staticEnt;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.Mobs.Zombie;
+import dungeonmania.entity.Mob.Zombie;
 import dungeonmania.util.Position;
 
 import java.util.HashMap;

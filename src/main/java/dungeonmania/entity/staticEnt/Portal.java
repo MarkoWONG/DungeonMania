@@ -1,8 +1,9 @@
 package dungeonmania.entity.staticEnt;
 
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.Mob.Zombie;
 import dungeonmania.util.Position;
-import dungeonmania.entity.Mobs.Zombie;
+
 import java.util.HashMap;
 
 

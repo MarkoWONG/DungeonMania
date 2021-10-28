@@ -9,8 +9,8 @@ public abstract class StaticEntity extends Entity{
         super(position, type);
     }
 
-    public StaticEntity(Position position, String type, String colour){
-        super(position, type, colour);
+    public StaticEntity(Position position, String type, String otherInfo){
+        super(position, type, otherInfo);
     }
 
     @Override

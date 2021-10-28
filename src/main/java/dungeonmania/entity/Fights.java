@@ -8,5 +8,5 @@ public interface Fights {
     // this lets us not have to have a case for every subclass of Entity, ( we have to do that for Interacts )
 
     void startFight(PlayerCharacter playerCharacter);
-    void fight(Mob mob);
+    void fight(MobEntity mob);
 }
