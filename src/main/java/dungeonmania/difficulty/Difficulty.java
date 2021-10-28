@@ -1,8 +1,13 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Difficulty {
 
@@ -20,5 +25,5 @@ public abstract class Difficulty {
 
     abstract public void simulate(Direction movementDirection);
 
-    abstract public EntityFactory createEntityFactory();
+    abstract public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap);
 }

@@ -1,9 +1,14 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.HardEntityFactory;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Hard extends Difficulty{
     public Hard(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
@@ -24,7 +29,7 @@ public class Hard extends Difficulty{
     }
 
     @Override
-    public EntityFactory createEntityFactory() {
-        return new HardEntityFactory();
+    public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
+        return new HardEntityFactory(entityMap);
     }
 }

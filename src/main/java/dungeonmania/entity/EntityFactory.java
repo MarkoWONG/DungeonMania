@@ -3,11 +3,19 @@ package dungeonmania.entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 public abstract class EntityFactory {
 
-    public Entity create(String entityType, Position startPos) {
+    private HashMap<Position, ArrayList<Entity>> entityMap;
+
+    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap ) {
+        this.entityMap = entityMap;
+    }
+
+    public Entity create(String entityType, Position startPos, String colour, String key) {
         switch (entityType.toLowerCase(Locale.ROOT)) {
             case "player":
                 return makePlayer(startPos);
