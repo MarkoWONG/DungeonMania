@@ -26,7 +26,5 @@ public class PlayerCharacter extends Entity {
 
     public void fight(Mob mob) {
         // actually fight
-
-        
-    }
+    }    
 }
