@@ -1,5 +1,6 @@
 package dungeonmania.entity.collectables;
 
+import dungeonmania.entity.Entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 
@@ -20,5 +21,17 @@ public class Sword extends CollectableEntity{
     @Override
     public void interact(PlayerCharacter player){
         player.addItemToInventory(this);
+        player.setAttackDamage(player.getAttackDamage() + 2);
+    }
+
+    public void usedInBattle(PlayerCharacter player){
+        durability--;
+        if (durability <= 0){
+            for (CollectableEntity ent : player.getInventory()){
+                if (ent.equals(this)){
+                    player.getInventory().remove(ent);
+                }
+            }
+        }
     }
 }

@@ -5,8 +5,6 @@ import dungeonmania.entity.Mob.Zombie;
 import dungeonmania.util.Position;
 
 import java.util.HashMap;
-
-
 import java.util.ArrayList;
 
 public class Portal extends StaticEntity{

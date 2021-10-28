@@ -1,5 +1,37 @@
 package dungeonmania.entity.collectables;
 
-public class Armour {
-    
+import dungeonmania.entity.Entity;
+import dungeonmania.PlayerCharacter;
+import dungeonmania.util.Position;
+
+public class Armour extends CollectableEntity{
+
+    private int durability;
+
+    public Armour(Position position){
+        super(new Position(position.getX(), position.getY(), 0), "armour");
+        this.durability = 3;
+    }
+
+    @Override
+    public void startInteraction(Entity entity) {
+        entity.interact(this);
+    }
+
+    @Override
+    public void interact(PlayerCharacter player){
+        player.addItemToInventory(this);
+        player.setHasArmour(true);
+    }
+
+    public void usedInBattle(PlayerCharacter player){
+        durability--;
+        if (durability <= 0){
+            for (CollectableEntity ent : player.getInventory()){
+                if (ent.equals(this)){
+                    player.getInventory().remove(ent);
+                }
+            }
+        }
+    }
 }
