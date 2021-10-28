@@ -9,7 +9,7 @@ public class Armour extends CollectableEntity{
     private int durability;
 
     public Armour(Position position){
-        super(new Position(position.getX(), position.getY(), 0), "armour");
+        super(new Position(position.getX(), position.getY(), 40), "armour");
         this.durability = 3;
     }
 

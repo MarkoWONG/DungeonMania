@@ -1,8 +1,8 @@
 package dungeonmania.entity.staticEnt;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
-import java.util.HashMap;
-import java.util.ArrayList;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Key;
 
 public class Door extends StaticEntity{
@@ -15,7 +15,7 @@ public class Door extends StaticEntity{
         this.key = Integer.parseInt(key);
     }
 
-    public void unlockDoor(){
+    public void unlock(){
         this.isOpen = true;
         this.setPosition(new Position(this.getPosition().getX(), this.getPosition().getY(), 0));
     }
@@ -25,11 +25,22 @@ public class Door extends StaticEntity{
         entity.interact(this);
     }
 
-    @Override
-    public void interact(Key playerKey){
-        if (playerKey.getKeyIdentifer() == key){
-            unlockDoor();
+    /**
+     * Attempts to unlock door
+     * @param player
+     * @return true for succussful unlock, false otherwise
+     */
+    public boolean unlockDoor(PlayerCharacter player){
+        for (CollectableEntity item : player.getInventory()){
+            if (item.getType().equals("key")){
+                Key playerKey = (Key) item;
+                if (playerKey.getKeyIdentifer() == key){
+                    unlock();
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     //Getter and Setter
