@@ -51,7 +51,7 @@ public class Dungeon {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
             String currEntType = currObj.getString("type");
-            Entity currEnt = entityFactory.create(currEntType, currPosition);
+            Entity currEnt = entityFactory.create(currPosition, currEntType, otherInfo);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
             }

@@ -3,6 +3,8 @@ package dungeonmania.entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
+import dungeonmania.entity.Mobs.*;
+import dungeonmania.entity.collectables.*;
 
 import java.util.UUID;
 
@@ -11,16 +13,19 @@ public abstract class Entity implements Interacts {
     private Position position;
     private final String id;
     private final String type;
+    private final String otherInfo; // For Door's matching key and Portal's colour
     public Entity(Position position, String type) {
         this.id = UUID.randomUUID().toString();
         this.position = position;
         this.type = type;
+        this.otherInfo = null;
     }
 
-    public Entity(Position position, String type, String colour) {
+    public Entity(Position position, String type, String otherInfo) {
         this.id = UUID.randomUUID().toString();
         this.position = position;
         this.type = type;
+        this.otherInfo = otherInfo;
     }
     
     @Override
@@ -181,6 +186,10 @@ public abstract class Entity implements Interacts {
 
     public String getType() {
         return this.type;
+    }
+
+    public String getOtherInfo() {
+        return this.otherInfo;
     }
 
 }

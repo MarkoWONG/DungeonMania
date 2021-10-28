@@ -15,7 +15,7 @@ public abstract class EntityFactory {
         this.entityMap = entityMap;
     }
 
-    public Entity create(String entityType, Position startPos, String colour) {
+    public Entity create(String entityType, Position startPos, String otherInfo) {
         switch (entityType.toLowerCase(Locale.ROOT)) {
             // case "player":
             //     return makePlayer(startPos);
@@ -28,9 +28,9 @@ public abstract class EntityFactory {
             case "floorswitch":
                 return Switch(startPos);
             case "door":
-                return makeDoor(startPos);
+                return makeDoor(startPos, otherInfo);
             case "portal":
-                return makePortal(startPos, colour);
+                return makePortal(startPos, otherInfo);
             case "toaster":
                 return makeToaster(startPos);
             // case "mercenary":
@@ -86,8 +86,8 @@ public abstract class EntityFactory {
         return new Switch(startPos);
     }
 
-    protected Entity makeDoor(Position startPos) {
-        return new Door(startPos, entityMap);
+    protected Entity makeDoor(Position startPos, String keyIdentifer) {
+        return new Door(startPos, keyIdentifer);
     }
 
     protected Entity makePortal(Position startPos, String colour) {
