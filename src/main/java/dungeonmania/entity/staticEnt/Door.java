@@ -32,6 +32,7 @@ public class Door extends StaticEntity{
         }
     }
 
+    //Getter and Setter
     public Boolean getIsOpen() {
         return this.isOpen;
     }

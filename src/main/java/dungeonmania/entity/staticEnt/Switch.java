@@ -20,6 +20,7 @@ public class Switch extends StaticEntity{
         switchOn = true;
     }
 
+    // Getter and Setters
     public boolean getSwitchOn() {
         return this.switchOn;
     }
