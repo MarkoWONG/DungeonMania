@@ -3,11 +3,18 @@ package dungeonmania.entity.staticEnt;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.Mobs.Zombie;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Portal extends StaticEntity{
 
-    public Portal(Position position){
-        super(new Position(position.getX(), position.getY(), 0), "portal");     
+    private HashMap<Position, ArrayList<Entity>> entityMap;
+    private Position otherPortalPosition;
+
+    public Portal(Position position, String colour, HashMap<Position, ArrayList<Entity>> entityMap){
+        super(new Position(position.getX(), position.getY(), 80), "portal", colour);     
+        this.entityMap = entityMap;
     }
 
     @Override
@@ -15,13 +22,17 @@ public class Portal extends StaticEntity{
         entity.interact(this);
     }
 
+
     @Override
-    public void interact(PlayerCharacter player){
-        // TODO: Get location of other portal
-        Position portalPosition = null;
-        // TODO: update player position to other portal location + 1 step out (according to the MoveDirection)
-        Position newPlayerPostion = portalPostition.translateBy(playerDirection);
-        player.setPosition(newPlayerPostion);
+    public void interact(Zombie zombie){
+        // DO Nothing
     }
 
+    @Override
+    public void interact(Entity Entity){
+        Entity.setPosition(otherPortalPosition);
+    }
+
+    // portal should search for another portal on creation, if found it will set it's other portal reference, and also notify the other portal of its existence
+    
 }

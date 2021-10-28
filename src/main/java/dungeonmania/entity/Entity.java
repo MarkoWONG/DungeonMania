@@ -17,6 +17,20 @@ public abstract class Entity implements Interacts {
         this.type = type;
     }
 
+    public Entity(Position position, String type, String colour) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
+        this.type = type;
+    }
+    
+    @Override
+    public void fight(Mob mob) {
+
+    }
+
+    public void incrementTick(){
+        return;
+    }
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
 
@@ -149,6 +163,8 @@ public abstract class Entity implements Interacts {
     public void interact(OneRing oneRing) {
 
     }
+
+
 
     // Getter and Setters
     public Position getPosition() {

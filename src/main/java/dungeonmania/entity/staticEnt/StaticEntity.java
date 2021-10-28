@@ -8,9 +8,10 @@ public abstract class StaticEntity extends Entity{
     public StaticEntity(Position position, String type){
         super(position, type);
     }
-    public void interact(Boulder boulder){
-        // do nothing
-    };
+
+    public StaticEntity(Position position, String type, String colour){
+        super(position, type, colour);
+    }
 
     @Override
     public void startInteraction(Entity entity) {

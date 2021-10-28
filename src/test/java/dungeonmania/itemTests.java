@@ -152,27 +152,27 @@ public class itemTests {
         assertTrue(inventoryItemCount(new_frame, "arrow") == 3);
     }
 
-    // stat change when picked up a sword or armour
-    @Test
-    public void swordStatChange(){
+    // // stat change when picked up a sword or armour
+    // @Test
+    // public void swordStatChange(){
 
-    }
+    // }
 
-    @Test
-    public void armourStatChange(){
+    // @Test
+    // public void armourStatChange(){
         
-    }
+    // }
 
-    // durablity of bow and shield
-    @Test
-    public void bowDurablity(){
+    // // durablity of bow and shield
+    // @Test
+    // public void bowDurablity(){
         
-    }
+    // }
 
-    @Test
-    public void shieldDurablity(){
+    // @Test
+    // public void shieldDurablity(){
         
-    }
+    // }
 
     // using the potions
     @Test
@@ -362,26 +362,26 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,5)));
     }
 
-    @Test
-    public void zombieSpawnWithArmour(){
+    // @Test
+    // public void zombieSpawnWithArmour(){
         
-    }
+    // }
 
-    // defeating a zombie with armour drops an new armour
-    @Test
-    public void zombieArmourDrop(){
+    // // defeating a zombie with armour drops an new armour
+    // @Test
+    // public void zombieArmourDrop(){
         
-    }
+    // }
 
-    @Test
-    public void mercenarySpawnWithArmour(){
+    // @Test
+    // public void mercenarySpawnWithArmour(){
         
-    }
-    // defeating a mercenary with armour drops an new armour
-    @Test
-    public void mercenaryArmourDrop(){
+    // }
+    // // defeating a mercenary with armour drops an new armour
+    // @Test
+    // public void mercenaryArmourDrop(){
         
-    }
+    // }
     
     // test one_ring item (respawn and drop rate)
     @Test

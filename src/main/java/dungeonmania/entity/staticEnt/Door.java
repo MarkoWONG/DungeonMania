@@ -1,13 +1,18 @@
 package dungeonmania.entity.staticEnt;
-import dungeonmania.entity.collectables.Key;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Door extends StaticEntity{
+
+    private HashMap<Position, ArrayList<Entity>> entityMap;
     private Boolean isOpen;
-    public Door(Position position){
-        super(new Position(position.getX(), position.getY(), Integer.MAX_VALUE), "door");   
+
+    public Door(Position position, HashMap<Position, ArrayList<Entity>> entityMap){
+        super(new Position(position.getX(), position.getY(), 80), "door");   
         this.isOpen = false;  
+        this.entityMap = entityMap;
     }
 
     public void unlockDoor(){
@@ -20,10 +25,7 @@ public class Door extends StaticEntity{
         entity.interact(this);
     }
 
-    @Override
-    public void interact(Key key){
-        unlockDoor();
-    }
+    // TODO: same logic as portal only one key link to door
 
     public Boolean getIsOpen() {
         return this.isOpen;

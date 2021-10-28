@@ -3,12 +3,19 @@ package dungeonmania.entity;
 // import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.util.Position;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 public abstract class EntityFactory {
 
-    public Entity create(String entityType, Position startPos) {
+    private HashMap<Position, ArrayList<Entity>> entityMap;
+
+    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap ) {
+        this.entityMap = entityMap;
+    }
+
+    public Entity create(String entityType, Position startPos, String colour) {
         switch (entityType.toLowerCase(Locale.ROOT)) {
             // case "player":
             //     return makePlayer(startPos);
@@ -23,7 +30,7 @@ public abstract class EntityFactory {
             case "door":
                 return makeDoor(startPos);
             case "portal":
-                return makePortal(startPos);
+                return makePortal(startPos, colour);
             case "toaster":
                 return makeToaster(startPos);
             // case "mercenary":
@@ -34,7 +41,7 @@ public abstract class EntityFactory {
             //     return makeSpider();
             // case "treasure":
             //     return makeTreasure();
-            // case "key":
+            // case "key": // colour
             //     return makeKey();
             // case "healthpotion":
             //     return makeHealthPotion();
@@ -80,15 +87,15 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeDoor(Position startPos) {
-        return new Door(startPos);
+        return new Door(startPos, entityMap);
     }
 
-    protected Entity makePortal(Position startPos) {
-        return new Portal(startPos);
+    protected Entity makePortal(Position startPos, String colour) {
+        return new Portal(startPos, colour, entityMap);
     }
 
     protected Entity makeToaster(Position startPos) {
-        return new Toaster(startPos, 20);
+        return new Toaster(startPos, 20, entityMap);
     }
 
     // protected Entity makeMercenary(Position startPos) {

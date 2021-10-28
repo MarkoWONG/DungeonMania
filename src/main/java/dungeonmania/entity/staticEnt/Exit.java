@@ -11,6 +11,4 @@ public class Exit extends StaticEntity{
     public void startInteraction(Entity entity) {
         entity.interact(this);
     }
-
-    //TODO: how are we checking the goals? and how are we ending the game?
 }
