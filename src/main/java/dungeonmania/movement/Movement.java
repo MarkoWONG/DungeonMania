@@ -1,4 +1,4 @@
-package dungeonmania.managers;
+package dungeonmania.movement;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 

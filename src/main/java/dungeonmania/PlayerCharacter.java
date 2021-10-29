@@ -2,9 +2,9 @@ package dungeonmania;
 
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.Mob;
+import dungeonmania.movement.Movement;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-import dungeonmania.managers.Movement;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,12 @@ public class PlayerCharacter extends Entity implements Movement{
     }
 
     public void takeDamage(Double damage) {
+        Double damageTaken = damage * defense;
+        health -= damageTaken;
 
+        if (health <= 0) {
+            // notify something coz of death and all that
+        }
     }
 
     @Override
