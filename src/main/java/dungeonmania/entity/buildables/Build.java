@@ -30,6 +30,8 @@ public class Build {
                 return Bow.getRecipe();
             case "shield":
                 return Shield.getRecipe();
+            default:
+                return new ArrayList<String>();
         }
     }
 }
