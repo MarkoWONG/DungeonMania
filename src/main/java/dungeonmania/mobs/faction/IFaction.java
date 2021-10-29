@@ -1,4 +1,4 @@
-package dungeonmania.mobs;
+package dungeonmania.mobs.faction;
 
 public interface IFaction {
     public String getFaction();

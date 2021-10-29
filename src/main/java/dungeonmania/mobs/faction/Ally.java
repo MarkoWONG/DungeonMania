@@ -1,4 +1,4 @@
-package dungeonmania.mobs;
+package dungeonmania.mobs.faction;
 
 public class Ally implements IFaction {
     public Ally() {

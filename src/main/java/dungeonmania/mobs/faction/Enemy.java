@@ -1,4 +1,4 @@
-package dungeonmania.mobs;
+package dungeonmania.mobs.faction;
 
 public class Enemy implements IFaction {
     public Enemy(){
