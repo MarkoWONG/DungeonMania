@@ -3,6 +3,7 @@ import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.entity.collectables.Sword;
 import dungeonmania.entity.collectables.buildable.Shield;
+import dungeonmania.entity.collectables.potion.HealthPotion;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -61,15 +62,6 @@ public class itemTests {
         }
         return counter;
     }
-
-    // public PlayerCharacter findPlayer(DungeonResponse frame){
-    //     for (EntityResponse ent : frame.getEntities()){
-    //         if (ent.getType().equals("player")){
-    //             PlayerCharacter player = (PlayerCharacter) ent;
-    //             return ent;
-    //         }
-    //     }
-    // }
 
     @Test
     public void singleCollectionTest(){
@@ -274,19 +266,76 @@ public class itemTests {
     // using the potions
     @Test
     public void healthPotion(){
+        Position position = new Position(0,0,0);
+        PlayerCharacter character = new PlayerCharacter(position);
+        HealthPotion healthPotion = new HealthPotion(position);
+        HealthPotion healthPotion2 = new HealthPotion(position);
+        character.addItemToInventory(healthPotion);
+        character.addItemToInventory(healthPotion2);
+
+        Entity mercenary1 = new Mercenary(position);
+
+        ArrayList<Entity> square = new ArrayList<Entity>();
+        square.add((Entity)character);
+        square.add(mercenary);
+        //do the fights
+        FightManager fightManager = new FightManager();
+        double orginalHealth = character.getHealth();
+        fightManager.doCharFights(character, square);
+        assertTrue(orginalHealth > character.getHealth());
+        character.useItem(healthPotion);
+        assertTrue(orginalHealth == character.getHealth());
+        //only on healthPotion can be used
+        character.useItem(healthPotion);
+        assertTrue(character.getInventory().contains(healthPotion2));
         
     }
     @Test
     public void standardInvincibilityPotion(){
-        
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("potion", "standard");
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick("none", Direction.RIGHT);
+        }
+        assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 1);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick("invincibility_potion", Direction.DOWN);
+        assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,2)));
     }
     @Test
     public void hardInvincibilityPotion(){
-        
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("potion", "hard");
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick("none", Direction.RIGHT);
+        }
+        assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 1);
+        new_frame = dungeon.tick("invincibility_potion", Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+        new_frame = dungeon.tick("none", Direction.DOWN);
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,2)));
     }
     @Test
     public void invisibilityPotion(){
-        
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("potion", "standard");
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        new_frame = dungeon.tick("none", Direction.LEFT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
+        new_frame = dungeon.tick("none", Direction.UP);
+        assertTrue(inventoryItemCount(new_frame, "invisibility_potion") == 1);
+        new_frame = dungeon.tick("invisibility_potion", Direction.DOWN);
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
     }
 
     // test bomb
@@ -311,7 +360,7 @@ public class itemTests {
         new_frame = dungeon.tick("none", Direction.RIGHT);
         new_frame = dungeon.tick("none", Direction.RIGHT);
         new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("1", Direction.LEFT);
+        new_frame = dungeon.tick("bomb", Direction.LEFT);
         new_frame = dungeon.tick("none", Direction.LEFT);
         new_frame = dungeon.tick("none", Direction.DOWN);
         new_frame = dungeon.tick("none", Direction.RIGHT);

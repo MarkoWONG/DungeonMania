@@ -34,10 +34,6 @@ public class PlayerCharacter extends Entity {
         
     }
 
-    public void removeItem(CollectableEntity item) {
-        ;
-    }
-
     @Override
     public void fight(MobEntity mob) {
 
@@ -81,11 +77,7 @@ public class PlayerCharacter extends Entity {
         this.attackDamage = attackDamage;
     }
 
-    public Boolean isHasArmour() {
-        return this.hasArmour;
-    }
-
-    public Boolean getHasArmour() {
+    public Boolean HasArmour() {
         return this.hasArmour;
     }
 
