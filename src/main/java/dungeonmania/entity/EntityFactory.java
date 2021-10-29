@@ -32,7 +32,7 @@ public abstract class EntityFactory {
             case "boulder":
                 return makeBoulder(startPos);
             case "floorswitch":
-                return Switch(startPos);
+                return makeSwitch(startPos);
             case "door":
                 return makeDoor(startPos, otherInfo);
             case "portal":
@@ -88,7 +88,7 @@ public abstract class EntityFactory {
         return new Boulder(startPos);
     }
 
-    protected Entity Switch(Position startPos) {
+    protected Entity makeSwitch(Position startPos) {
         return new Switch(startPos);
     }
 

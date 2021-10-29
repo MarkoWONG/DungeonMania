@@ -3,7 +3,6 @@ import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
 import dungeonmania.entity.collectables.CollectableEntity;
 
-// TODO: COMPLETE TEST first
 public abstract class rareEntity extends CollectableEntity {
     public rareEntity(Position position, String type){
         super(position, type);

@@ -5,13 +5,13 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Mob.Zombie;
 
 public interface Interacts {
-    // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
-    // currEntity.doInteraction(currEntity2) will then call currEntity2.interact(this) to get the right type without typecasting. (HOPEFULLY?!)
-    void startInteraction(Entity entity);
+   // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
+   // currEntity.doInteraction(currEntity2) will then call currEntity2.interact(this) to get the right type without typecasting. (HOPEFULLY?!)
+   void startInteraction(Entity entity);
 
-    // we need to have a case for every subclass of entity... (a lot)
+   // we need to have a case for every subclass of entity... (a lot)
 
-    void interact(Entity entity);
+   void interact(Entity entity);
 
    void interact(PlayerCharacter player);
 
