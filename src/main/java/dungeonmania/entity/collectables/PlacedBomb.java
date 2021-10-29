@@ -1,9 +1,9 @@
 package dungeonmania.entity.collectables;
 import dungeonmania.util.Position;
-import java.util.HashMap;
 import dungeonmania.entity.Entity;
-import java.util.ArrayList;
 import dungeonmania.entity.staticEnt.Switch;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlacedBomb extends Bomb {
     private HashMap<Position, ArrayList<Entity>> entityMap;

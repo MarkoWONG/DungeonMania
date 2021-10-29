@@ -8,13 +8,16 @@ import dungeonmania.util.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 public abstract class EntityFactory {
 
     private HashMap<Position, ArrayList<Entity>> entityMap;
+    private Random random;
 
-    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap ) {
+    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
         this.entityMap = entityMap;
+        this.random = new Random(System.currentTimeMillis());
     }
 
     public Entity create(String entityType, Position startPos, String otherInfo) {
@@ -145,7 +148,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeSword(Position startPos) {
-        return new Sword(startPos);
+        return new Sword(startPos, (random.nextInt(5-2) + 2));
     }
 
     protected Entity makeArmour(Position startPos) {

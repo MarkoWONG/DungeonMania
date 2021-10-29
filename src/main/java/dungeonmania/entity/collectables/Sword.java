@@ -8,9 +8,9 @@ public class Sword extends CollectableEntity{
 
     private int durability;
 
-    public Sword(Position position){
+    public Sword(Position position, int durability){
         super(new Position(position.getX(), position.getY(), 40), "sword");
-        this.durability = 3;
+        this.durability = durability;
     }
 
     @Override

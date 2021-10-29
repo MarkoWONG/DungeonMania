@@ -5,7 +5,7 @@ import dungeonmania.entity.Entity;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class Bomb extends CollectableEntity{
+public class Bomb extends CollectableEntity implements Usable{
     private HashMap<Position, ArrayList<Entity>> entityMap;
 
     public Bomb(Position position, HashMap<Position, ArrayList<Entity>> entityMap){
@@ -23,7 +23,7 @@ public class Bomb extends CollectableEntity{
         player.addItemToInventory(this);
     }
 
-    public void plantBomb(PlayerCharacter player){
+    public void useItem(PlayerCharacter player){
         new PlacedBomb(player.getPosition(), entityMap);
         player.removeItemFromInventory(this);
     }

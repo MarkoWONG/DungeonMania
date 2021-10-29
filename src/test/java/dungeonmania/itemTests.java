@@ -1,9 +1,14 @@
 package dungeonmania;
+import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.Armour;
+import dungeonmania.entity.collectables.Sword;
+import dungeonmania.entity.collectables.buildable.Shield;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -56,6 +61,15 @@ public class itemTests {
         }
         return counter;
     }
+
+    // public PlayerCharacter findPlayer(DungeonResponse frame){
+    //     for (EntityResponse ent : frame.getEntities()){
+    //         if (ent.getType().equals("player")){
+    //             PlayerCharacter player = (PlayerCharacter) ent;
+    //             return ent;
+    //         }
+    //     }
+    // }
 
     @Test
     public void singleCollectionTest(){
@@ -152,27 +166,110 @@ public class itemTests {
         assertTrue(inventoryItemCount(new_frame, "arrow") == 3);
     }
 
-    // // stat change when picked up a sword or armour
-    // @Test
-    // public void swordStatChange(){
+    // stat change when picked up a sword or armour
+    @Test
+    public void swordStatChange(){
+        PlayerCharacter player = new PlayerCharacter(new Position(0,0,0));
+        assertTrue(player.getAttackDamage() == 1);
+        Sword sword = new Sword(new Position(0,0,0), 3);
+        player.addItemToInventory(sword);
+        assertTrue(player.getAttackDamage() == 3);
+    }
 
-    // }
+    @Test
+    public void armourStatUpdate(){
+        PlayerCharacter player = new PlayerCharacter(new Position(0,0,0));
+        assertTrue(!player.getHasArmour());
+        Armour armour = new Armour(new Position(0,0,0));
+        player.addItemToInventory(armour);
+        assertTrue(player.getHasArmour());
+    }
 
-    // @Test
-    // public void armourStatChange(){
+    // durablity of bow and shield
+    @Test
+    public void bowDurablity(){
+        Position position = new Position(0,0,0);
+        PlayerCharacter character = new PlayerCharacter(position);
         
-    // }
+        Entity mercenary1 = new Mercenary(position);
 
-    // // durablity of bow and shield
-    // @Test
-    // public void bowDurablity(){
+        while (!mercenary.hasArmour()) {
+            mercenary = new Mercenary(position);
+        }
         
-    // }
+        Bow bow = new Bow();
+        character.addItemToInventory(bow);
 
-    // @Test
-    // public void shieldDurablity(){
+        ArrayList<Entity> square = new ArrayList<Entity>();
+        square.add((Entity)character);
+        square.add(mercenary);
+        //do the fights
+        FightManager fightManager = new FightManager();
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(bow));
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(bow));
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(bow));
+        fightManager.doCharFights(character, square);
+        assertTrue(!character.getInventory().contains(bow));
+    }
+
+    @Test
+    public void swordDurablity(){
+        Position position = new Position(0,0,0);
+        PlayerCharacter character = new PlayerCharacter(position);
         
-    // }
+        Entity mercenary1 = new Mercenary(position);
+
+        while (!mercenary.hasArmour()) {
+            mercenary = new Mercenary(position);
+        }
+        
+        Sword sword = new Sword(position, 2);
+        character.addItemToInventory(sword);
+
+        ArrayList<Entity> square = new ArrayList<Entity>();
+        square.add((Entity)character);
+        square.add(mercenary);
+        //do the fights
+        FightManager fightManager = new FightManager();
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(sword));
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(sword));
+        fightManager.doCharFights(character, square);
+        assertTrue(!character.getInventory().contains(sword));
+    }
+    
+    @Test
+    public void shieldDurablity(){
+        Position position = new Position(0,0,0);
+        PlayerCharacter character = new PlayerCharacter(position);
+        
+        Entity mercenary1 = new Mercenary(position);
+
+        while (!mercenary.hasArmour()) {
+            mercenary = new Mercenary(position);
+        }
+        
+        Shield shield = new Shield(position, 3);
+        character.addItemToInventory(shield);
+
+        ArrayList<Entity> square = new ArrayList<Entity>();
+        square.add((Entity)character);
+        square.add(mercenary);
+        //do the fights
+        FightManager fightManager = new FightManager();
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(shield));
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(shield));
+        fightManager.doCharFights(character, square);
+        assertTrue(character.getInventory().contains(shield));
+        fightManager.doCharFights(character, square);
+        assertTrue(!character.getInventory().contains(shield));
+    }
 
     // using the potions
     @Test
@@ -361,27 +458,6 @@ public class itemTests {
         new_frame = dungeon.tick("none", Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,5)));
     }
-
-    // @Test
-    // public void zombieSpawnWithArmour(){
-        
-    // }
-
-    // // defeating a zombie with armour drops an new armour
-    // @Test
-    // public void zombieArmourDrop(){
-        
-    // }
-
-    // @Test
-    // public void mercenarySpawnWithArmour(){
-        
-    // }
-    // // defeating a mercenary with armour drops an new armour
-    // @Test
-    // public void mercenaryArmourDrop(){
-        
-    // }
     
     // test one_ring item (respawn and drop rate)
     @Test

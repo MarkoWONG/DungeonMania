@@ -4,7 +4,7 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 
 
-public class Treasure extends CollectableEntity{
+public class Treasure extends CollectableEntity implements Craftable{
     public Treasure(Position position){
         super(new Position(position.getX(), position.getY(), 40), "treasure");     
     }
