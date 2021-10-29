@@ -16,6 +16,8 @@ public class PlayerCharacter extends Entity {
     private Position position;
     private Boolean invincible;
     private Boolean invisible;
+    private Boolean hasOneRing;
+    
 
     public PlayerCharacter(Position position) {
         super(position, "player");
@@ -27,6 +29,7 @@ public class PlayerCharacter extends Entity {
         this.hasArmour = false;
         this.invisible = false;
         this.invincible = false;
+        this.hasOneRing = false;
     }
 
 
@@ -112,5 +115,14 @@ public class PlayerCharacter extends Entity {
     public void setInvisible(Boolean invisible) {
         this.invisible = invisible;
     }
+
+    public Boolean getHasOneRing() {
+        return this.hasOneRing;
+    }
+
+    public void setHasOneRing(Boolean hasOneRing) {
+        this.hasOneRing = hasOneRing;
+    }
+
 
 }
