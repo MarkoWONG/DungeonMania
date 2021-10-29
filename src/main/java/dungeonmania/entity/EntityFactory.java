@@ -1,7 +1,9 @@
 package dungeonmania.entity;
 
-// import dungeonmania.PlayerCharacter;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.*;
+import dungeonmania.entity.collectables.*;
+import dungeonmania.entity.collectables.rare.*;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +19,8 @@ public abstract class EntityFactory {
 
     public Entity create(String entityType, Position startPos, String otherInfo) {
         switch (entityType.toLowerCase(Locale.ROOT)) {
-            // case "player":
-            //     return makePlayer(startPos);
+            case "player":
+                return makePlayer(startPos);
             case "wall":
                 return makeWall(startPos);
             case "exit":
@@ -39,36 +41,36 @@ public abstract class EntityFactory {
             //     return makeZombie();
             // case "spider":
             //     return makeSpider();
-            // case "treasure":
-            //     return makeTreasure();
-            // case "key": // colour
-            //     return makeKey();
-            // case "healthpotion":
-            //     return makeHealthPotion();
-            // case "invincibilitypotion":
-            //     return makeInvincibilityPotion();
-            // case "invisibilitypotion":
-            //     return makeInvisibilityPotion();
-            // case "wood":
-            //     return makeWood();
-            // case "arrow":
-            //     return makeArrow();
-            // case "bomb":
-            //     return makeBomb();
-            // case "sword":
-            //     return makeSword();
-            // case "armour":
-            //     return makeArmour();
-            // case "onering":
-            //     return makeOneRing();
+            case "treasure":
+                return makeTreasure(startPos);
+            case "key": 
+                return makeKey(startPos, otherInfo);
+            case "healthpotion":
+                return makeHealthPotion(startPos);
+            case "invincibilitypotion":
+                return makeInvincibilityPotion(startPos);
+            case "invisibilitypotion":
+                return makeInvisibilityPotion(startPos);
+            case "wood":
+                return makeWood(startPos);
+            case "arrow":
+                return makeArrow(startPos);
+            case "bomb":
+                return makeBomb(startPos);
+            case "sword":
+                return makeSword(startPos);
+            case "armour":
+                return makeArmour(startPos);
+            case "onering":
+                return makeOneRing(startPos);
             default:
                 return null;
         }
     }
 
-    // protected Entity makePlayer(Position startPos) {
-    //     return new PlayerCharacter(startPos);
-    // }
+    protected Entity makePlayer(Position startPos) {
+        return new PlayerCharacter(startPos);
+    }
 
     protected Entity makeWall(Position startPos) {
         return new Wall(startPos);
@@ -110,49 +112,49 @@ public abstract class EntityFactory {
     //     return new Spider();
     // }
 
-    // protected Entity makeTreasure() {
-    //     return new Treasure();
-    // }
+    protected Entity makeTreasure(Position startPos) {
+        return new Treasure(startPos);
+    }
 
-    // protected Entity makeKey() {
-    //     return new Key();
-    // }
+    protected Entity makeKey(Position startPos, String keyIdentifer) {
+        return new Key(startPos, keyIdentifer);
+    }
 
-    // protected Entity makeHealthPotion() {
-    //     return new HealthPotion();
-    // }
+    protected Entity makeHealthPotion(Position startPos) {
+        return new HealthPotion(startPos);
+    }
 
-    // protected Entity makeInvincibilityPotion() {
-    //     return new InvincibilityPotion();
-    // }
+    protected Entity makeInvincibilityPotion(Position startPos) {
+        return new InvincibilityPotion(startPos);
+    }
 
-    // protected Entity makeInvisibilityPotion() {
-    //     return new InvisibilityPotion();
-    // }
+    protected Entity makeInvisibilityPotion(Position startPos) {
+        return new InvisibilityPotion(startPos);
+    }
 
-    // protected Entity makeWood() {
-    //     return new Wood();
-    // }
+    protected Entity makeWood(Position startPos) {
+        return new Wood(startPos);
+    }
 
-    // protected Entity makeArrow() {
-    //     return new Arrow();
-    // }
+    protected Entity makeArrow(Position startPos) {
+        return new Arrow(startPos);
+    }
 
-    // protected Entity makeBomb() {
-    //     return new Bomb();
-    // }
+    protected Entity makeBomb(Position startPos) {
+        return new Bomb(startPos, entityMap);
+    }
 
-    // protected Entity makeSword() {
-    //     return new Arrow();
-    // }
+    protected Entity makeSword(Position startPos) {
+        return new Sword(startPos);
+    }
 
-    // protected Entity makeArmour() {
-    //     return new Arrow();
-    // }
+    protected Entity makeArmour(Position startPos) {
+        return new Armour(startPos);
+    }
 
-    // protected Entity makeOneRing() {
-    //     return new OneRing();
-    // }
+    protected Entity makeOneRing(Position startPos) {
+        return new OneRing(startPos);
+    }
 
 
 }
