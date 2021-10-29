@@ -65,7 +65,6 @@ public class itemTests {
 
     @Test
     public void singleCollectionTest(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("advanced", "standard");
 
@@ -80,7 +79,6 @@ public class itemTests {
 
     @Test
     public void muiltpleCollectionTest(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("advanced", "standard");
 
@@ -117,7 +115,6 @@ public class itemTests {
 
     @Test
     public void duplicateItemCollectionTest(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("advanced", "standard");
 
@@ -158,7 +155,6 @@ public class itemTests {
         assertTrue(inventoryItemCount(new_frame, "arrow") == 3);
     }
 
-    // stat change when picked up a sword or armour
     @Test
     public void swordStatChange(){
         PlayerCharacter player = new PlayerCharacter(new Position(0,0,0));
@@ -177,7 +173,6 @@ public class itemTests {
         assertTrue(player.getHasArmour());
     }
 
-    // durablity of bow and shield
     @Test
     public void bowDurablity(){
         Position position = new Position(0,0,0);
@@ -263,7 +258,6 @@ public class itemTests {
         assertTrue(!character.getInventory().contains(shield));
     }
 
-    // using the potions
     @Test
     public void healthPotion(){
         Position position = new Position(0,0,0);
@@ -338,7 +332,6 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
     }
 
-    // test bomb
     @Test
     public void placeBomb(){
         DungeonManiaController dungeon = new DungeonManiaController();
@@ -391,10 +384,8 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,2)));
     }
 
-    // crafting
     @Test
     public void craftingOneAtATime(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("crafting", "standard");
 
@@ -421,7 +412,6 @@ public class itemTests {
     }
     @Test
     public void craftingAllAtATime(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("crafting", "standard");
         for (int i = 0; i < 4; i++){
@@ -443,9 +433,8 @@ public class itemTests {
         assertTrue(inventoryItemCount(new_frame, "shield") == 2);
     }
 
-    //only one key at a time
+    @Test
     public void onlyOneKeyTest(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("advanced", "standard");
 
@@ -469,10 +458,8 @@ public class itemTests {
         assertTrue(inventoryItemCount(new_frame, "sword") == 1);
     }
 
-    // one key at a time (use a key (craft / open door) then pick up another key
     @Test
     public void usingKey(){
-        // Create new dungeon
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("key_test", "standard");
 
@@ -508,16 +495,12 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,5)));
     }
     
-    // test one_ring item (respawn and drop rate)
+    // test one_ring item (respawn and drop rate) in fighting tests
     @Test
-    public void oneRing(){
-        
+    public void oneRingPickUp(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("one_ring", "standard");
+        new_frame = dungeon.tick("none", Direction.RIGHT);
+        assertTrue(inventoryItemCount(new_frame, "one_ring") == 1);
     }
-
-    // one big intergation test
-    @Test
-    public void itemsIntergationTest(){
-
-    }
-
 }

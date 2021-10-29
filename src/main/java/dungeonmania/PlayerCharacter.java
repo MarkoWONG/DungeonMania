@@ -38,10 +38,10 @@ public class PlayerCharacter extends Entity {
         
     }
 
-    @Override
-    public void fight(MobEntity mob) {
+    // @Override
+    // public void fight(MobEntity mob) {
 
-    }
+    // }
 
     @Override
     public void startInteraction(Entity entity) {
