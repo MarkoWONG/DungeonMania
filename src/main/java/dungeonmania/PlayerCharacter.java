@@ -77,7 +77,7 @@ public class PlayerCharacter extends Entity {
         this.attackDamage = attackDamage;
     }
 
-    public Boolean HasArmour() {
+    public Boolean getHasArmour() {
         return this.hasArmour;
     }
 
