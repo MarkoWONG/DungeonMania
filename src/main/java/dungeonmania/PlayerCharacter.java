@@ -14,7 +14,8 @@ public class PlayerCharacter extends Entity {
     private double attackDamage;
     private Boolean hasArmour;
     private Position position;
-
+    private Boolean invincible;
+    private Boolean invisible;
 
     public PlayerCharacter(Position position) {
         this.position = position;
@@ -23,6 +24,8 @@ public class PlayerCharacter extends Entity {
         this.Health = 10;
         this.attackDamage = 1;
         this.hasArmour = false;
+        this.invisible = false;
+        this.invincible = false;
     }
 
 
@@ -92,4 +95,21 @@ public class PlayerCharacter extends Entity {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    public Boolean getInvincible() {
+        return this.invincible;
+    }
+
+    public void setInvincible(Boolean invincible) {
+        this.invincible = invincible;
+    }
+
+    public Boolean getInvisible() {
+        return this.invisible;
+    }
+
+    public void setInvisible(Boolean invisible) {
+        this.invisible = invisible;
+    }
+
 }

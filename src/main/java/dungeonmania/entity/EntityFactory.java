@@ -3,6 +3,7 @@ package dungeonmania.entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
+import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
@@ -124,11 +125,11 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeHealthPotion(Position startPos) {
-        return new HealthPotion(startPos);
+        return new HealthPotion(startPos, entityMap);
     }
 
     protected Entity makeInvincibilityPotion(Position startPos) {
-        return new InvincibilityPotion(startPos);
+        return new InvincibilityPotion(startPos, entityMap);
     }
 
     protected Entity makeInvisibilityPotion(Position startPos) {
