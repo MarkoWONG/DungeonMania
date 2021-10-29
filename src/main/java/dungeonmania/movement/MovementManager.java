@@ -9,7 +9,9 @@ import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.lang.Math;
 
 public class MovementManager {
     private HashMap<Position, ArrayList<Entity>> entitiesMap;
@@ -41,16 +43,53 @@ public class MovementManager {
         // other things?? idk
     }
 
+    /**
+     * calls move for every mob on the map
+     * passes a random, possible direction for the mob to move
+     */
     private void moveMobs() {
         for (ArrayList<Entity> es : entitiesMap.values()) {
             for (Entity e : es) {
                 if (e instanceof Mob) {
-                    Mob e.move();
+                    Mob e.move(getRandDirection(e)); // needs to have something passed to it
                 }
             }
         }
     }
 
+    /**
+     * generates a random, possible movement direction
+     * @param entity
+     * @return a random direction the entity can move in
+     */
+    private Direction getRandDirection(Entity entity) {
+        Position entityPosition = entity.getPosition();
+        ArrayList<Direction> possibleMoves = new ArrayList<>();
+
+        if (checkMove(entity, Direction.UP)) {
+            possibleMoves.add(Direction.UP);
+        }
+        if (checkMove(entity, Direction.RIGHT)) {
+            possibleMoves.add(Direction.RIGHT);
+        }
+        if (checkMove(entity, Direction.DOWN)) {
+            possibleMoves.add(Direction.DOWN);
+        }
+        if (checkMove(entity, Direction.LEFT)) {
+            possibleMoves.add(Direction.LEFT);
+        }
+
+        Random rand = new Random();
+        int x = rand.nextInt(possibleMoves.size());
+
+        return possibleMoves.get(x);
+    }
+
+    /**
+     * checks if the player is going to run into a boulder
+     * if so, moves the boulder
+     * @param direction where the character wants to move
+     */
     private void checkBoulder(Direction direction) {
         // if the player is walking into a boulder then move boulder
         Position newPlayerPos = player.getPosition().translateBy(direction);
@@ -80,5 +119,25 @@ public class MovementManager {
 
     }
 
+    /**
+     * 
+     * @param a the position of some entity a
+     * @param b the position of some entity b
+     * @return the direction a must travel to get to b
+     */
+    public static Direction shortestPath(Position a, Position b) {
+        Position btwn = Position.calculatePositionBetween(a, b);
+        int xDistance = btwn.getX();
+        int yDistance = btwn.getY();
+        Direction d = Direction.NONE;
+
+        if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
+            d = (yDistance > 0) ? Direction.UP : Direction.DOWN;
+        } else { // further away on the x axis OR equal
+            d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
+        } 
+
+        return d;
+    }
 
 }
