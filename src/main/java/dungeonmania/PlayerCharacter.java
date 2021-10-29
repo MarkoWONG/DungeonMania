@@ -18,9 +18,10 @@ public class PlayerCharacter extends Entity {
     private Boolean invisible;
 
     public PlayerCharacter(Position position) {
+        super(position, "player");
         this.position = position;
         this.inventory = new ArrayList<CollectableEntity>();
-        this.allies = new ArrayList<Mercenary>();
+        // this.allies = new ArrayList<Mercenary>();
         this.Health = 10;
         this.attackDamage = 1;
         this.hasArmour = false;

@@ -1,7 +1,5 @@
 package dungeonmania.entity;
 
-import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.*;
 
 public interface Interacts {
