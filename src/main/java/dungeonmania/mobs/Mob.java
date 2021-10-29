@@ -10,6 +10,7 @@ public class Mob extends Entity implements Movement{
     private double attackDamage;
     private boolean hasFought;
     private Faction faction;
+    private Position position;
 
     public Mob () {
         this.faction = new Faction();
@@ -24,6 +25,7 @@ public class Mob extends Entity implements Movement{
     @Override
     public void move(Direction d) {
         // just a standard move
+        position = position.translateBy(d);
     }
 
     /**
@@ -33,6 +35,7 @@ public class Mob extends Entity implements Movement{
     @Override
     public void teleport(Position p) {
         // just a standard teleport
+        position = p;
     }
 
     public boolean isEnemy() {

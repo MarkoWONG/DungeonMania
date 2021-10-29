@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 import java.lang.Math;
 
 public class MovementManager {
-    private HashMap<Position, ArrayList<Entity>> entitiesMap;
+    private HashMap<Position, ArrayList<Entity>> oldMap;
+    private HashMap<Position, ArrayList<Entity>> newMap;
     private PlayerCharacter player;
 
     public MovementManager(HashMap<Position, ArrayList<Entity>> entitiesMap, PlayerCharacter player) {
@@ -22,11 +23,21 @@ public class MovementManager {
         this.player = player;
     }
 
-    public void simulate(Direction direction) {
+    /**
+     * 
+     * @param direction the direction the player wants to move
+     * @param entitiesMap the current map
+     * @return the new map of the board
+     */
+    public HashMap<Position, ArrayList<Entity>> simulate(Direction direction, HashMap<Position, ArrayList<Entity>> entitiesMap) {
+        oldMap = entitiesMap;
+
         moveChar(direction);
         doInteractions();
         moveMobs();
         doInteractions();
+
+        return newMap;
     }
 
     private void moveChar(Direction direction) {
@@ -34,6 +45,8 @@ public class MovementManager {
         if (checkMove(player, direction)){
             player.move(direction);
         }
+        addToMap(player);
+        
     }
 
     private void doInteractions() {
@@ -48,11 +61,12 @@ public class MovementManager {
      * passes a random, possible direction for the mob to move
      */
     private void moveMobs() {
-        for (ArrayList<Entity> es : entitiesMap.values()) {
+        for (ArrayList<Entity> es : oldMap.values()) {
             for (Entity e : es) {
                 if (e instanceof Mob) {
                     Mob e.move(getRandDirection(e)); // needs to have something passed to it
                 }
+                if (! (e instanceof PlayerCharacter)) {addToMap(e);}
             }
         }
     }
@@ -93,7 +107,7 @@ public class MovementManager {
     private void checkBoulder(Direction direction) {
         // if the player is walking into a boulder then move boulder
         Position newPlayerPos = player.getPosition().translateBy(direction);
-        ArrayList<Entity> thingsInPosition = entitiesMap.get(newPlayerPos);
+        ArrayList<Entity> thingsInPosition = oldMap.get(newPlayerPos);
         if (thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).count() == 1) {
             Boulder boulder = (Boulder) thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).collect(Collectors.toList()).get(0);
             if (checkMove(boulder, direction)) {
@@ -108,7 +122,7 @@ public class MovementManager {
      */
     public Boolean checkMove(Entity entity, Direction direction) {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
-        ArrayList<Entity> thingsInPosition = entitiesMap.get(newEntityPosition);
+        ArrayList<Entity> thingsInPosition = oldMap.get(newEntityPosition);
 
         for(Entity e : thingsInPosition) {
             if (e.getPosition().getLayer() >= entity.getPosition().getLayer()) {
@@ -117,6 +131,21 @@ public class MovementManager {
         }
         return true;
 
+    }
+
+    /**
+     * adds an entity to the new map
+     * @param e
+     */
+    private void addToMap(Entity e) {
+        Position p = e.getPosition();
+        if (newMap.get(p) == null ) {
+            ArrayList<Entity> entities = new ArrayList<>();
+            entities.add(e);
+            newMap.put(p, entities);
+        } else {
+            newMap.get(p).add(e);
+        }
     }
 
     /**

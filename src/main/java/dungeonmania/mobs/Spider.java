@@ -16,7 +16,7 @@ public class Spider extends Mob {
      */
 
      public Spider() {
-         super();
+        super();
      }
 
     @Override
