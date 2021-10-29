@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class Dungeon {
@@ -125,6 +126,10 @@ public class Dungeon {
 
     public HashMap<Position, ArrayList<Entity>> getEntitiesMap() {
         return entitiesMap;
+    }
+
+    public List<String> getBuildables() {
+        return character.getBuildables();
     }
 
 

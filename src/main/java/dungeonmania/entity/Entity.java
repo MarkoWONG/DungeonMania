@@ -2,14 +2,28 @@ package dungeonmania.entity;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
+import java.util.UUID;
 
 public abstract class Entity implements Interacts, Fights {
 
     private Position position;
-
-    public Entity(Position position) {
-        setPosition(position);
+    private final String id;
+    private final String type;
+    private final String otherInfo; // For Door's matching key and Portal's colour
+    public Entity(Position position, String type) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
+        this.type = type;
+        this.otherInfo = null;
     }
+
+    public Entity(Position position, String type, String otherInfo) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
+        this.type = type;
+        this.otherInfo = otherInfo;
+    }
+
 
 
     public void setPosition(Position newPosition) {
@@ -19,6 +33,14 @@ public abstract class Entity implements Interacts, Fights {
     public Position getPosition() {
         return this.position;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    abstract public String getType();
+
+    abstract public boolean isInteractable();
 
     public void incrementTick() {
         return;

@@ -20,14 +20,16 @@ public class DungeonAdapterTests {
     @Test
     public void testDungeonName() {
         Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
-        DungeonResponse currResponse = DungeonResponseAdapter.createDungResponse(currDungeon);
+        DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
+        DungeonResponse currResponse = adapter.createDungResponse();
         assertEquals("dungeon_static",currResponse.getDungeonName());
     }
 
     @Test
     public void testEntityOnly() {
         Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
-        DungeonResponse currResponse = DungeonResponseAdapter.createDungResponse(currDungeon);
+        DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
+        DungeonResponse currResponse = adapter.createDungResponse();
         assertEquals(7, (int) currResponse.getEntities().size());
         // this test is already done by DungeonTests (more or less), so we'll keep it short
     }
@@ -36,7 +38,8 @@ public class DungeonAdapterTests {
     public void testItemResponse() {
         Dungeon currDungeon = new Dungeon("dungeon_collectable","Standard");
         IntStream.range(0,10).forEach(tick -> currDungeon.tick(null, Direction.DOWN));
-        DungeonResponse currResponse = DungeonResponseAdapter.createDungResponse(currDungeon);
+        DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
+        DungeonResponse currResponse = adapter.createDungResponse();
         List<String> allItems = currResponse.getInventory().stream().map(ItemResponse::getType).collect(Collectors.toList());
         assertEquals(10, (int) allItems.size());
         assertTrue(allItems.contains("key"));
@@ -55,7 +58,8 @@ public class DungeonAdapterTests {
     public void testBuildableContents() {
         Dungeon currDungeon = new Dungeon("buildableEntities","Standard");
         IntStream.range(0,6).forEach(tick -> currDungeon.tick(null, Direction.UP));
-        DungeonResponse currResponse = DungeonResponseAdapter.createDungResponse(currDungeon);
+        DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
+        DungeonResponse currResponse = adapter.createDungResponse();
         List<String> allBuildables = currResponse.getBuildables();
         assertEquals(2, allBuildables.size());
         assertTrue(allBuildables.contains("bow"));
@@ -65,7 +69,8 @@ public class DungeonAdapterTests {
     @Test
     public void testGoalContents() {
         Dungeon currDungeon = new Dungeon("advanced","Standard");
-        DungeonResponse currResponse = DungeonResponseAdapter.createDungResponse(currDungeon);
+        DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
+        DungeonResponse currResponse = adapter.createDungResponse();
         String goals = currResponse.getGoals();
         assertTrue(goals.contains("enemies"));
         assertTrue(goals.contains("treasure"));

@@ -1,6 +1,7 @@
 package dungeonmania;
 
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.buildables.Build;
 import dungeonmania.util.Position;
 
 import java.sql.Array;
@@ -40,6 +41,10 @@ public class PlayerCharacter extends Entity {
         for (CollectableEntity eachItemTBD : itemsTBD) {
             removeItem(eachItemTBD);
         }
+    }
+
+    public List<String> getBuildables() {
+        return Build.getBuildables(inventory);
     }
 
 
