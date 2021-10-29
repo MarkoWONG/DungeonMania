@@ -6,6 +6,7 @@ import dungeonmania.difficulty.Peaceful;
 import dungeonmania.difficulty.Standard;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.buildables.Build;
 import dungeonmania.goal.GoalManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
@@ -16,11 +17,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Dungeon {
 
     private String name;
     private String id;
+    private Position entry;
 
     private Difficulty gameMode;
     private PlayerCharacter character;
@@ -39,6 +42,8 @@ public class Dungeon {
         this.fightManager = new FightManager();
         this.goalManager = new GoalManager(dungeonName,this);
         createEntitiesMap_FromJson(entitiesMap, dungeonName);
+        this.name = dungeonName;
+        this.id = UUID.randomUUID().toString();
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -50,6 +55,15 @@ public class Dungeon {
     }
 
     public void deleteEntity(Entity entityTbd) {}
+
+
+    public void build(String item) {
+        if (Build.getBuildables(getInventory()).contains(item)) {
+            character.addItemToInventory(entityFactory.create(item, null,null,null));
+            character.consume(Build.getRecipe(item));
+        }
+
+    }
 
     // will always be given a valid string, we do the checking in the controller
     private Difficulty difficultySelector(String gameMode) {
@@ -81,6 +95,7 @@ public class Dungeon {
             Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
+                this.entry = currPosition;
             }
             if (!output.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
                 output.put(currPosition, new ArrayList<Entity>());
@@ -88,5 +103,30 @@ public class Dungeon {
             output.get(currPosition).add(currEnt);
         }
     }
+
+    // Getters for creating a DungeonResponse
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+
+    public String getGoals() {
+        return goalManager.getGoals();
+    }
+
+    public ArrayList<CollectableEntity> getInventory() {
+        return character.getInventory();
+    }
+
+    public HashMap<Position, ArrayList<Entity>> getEntitiesMap() {
+        return entitiesMap;
+    }
+
+
 
 }

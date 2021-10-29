@@ -61,6 +61,10 @@ public abstract class EntityFactory {
                 return makeArmour(startPos);
             case "onering":
                 return makeOneRing(startPos);
+            case "shield":
+                return makeShield();
+            case "bow":
+                return makeBow();
         }
     }
 
@@ -151,6 +155,10 @@ public abstract class EntityFactory {
     public Entity makeOneRing(Position startPos) {
         return new OneRing(startPos);
     }
+
+    public Entity makeBow() { return new Bow(); }
+
+    public Entity makeShield() { return new Shield(); }
 
 
 }
