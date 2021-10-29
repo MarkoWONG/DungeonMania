@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;
     private int currentTickCount;
-    private HashMap<Position, ArrayList<Entity>> entitiesMap;
-    public Toaster(Position position, int tickTilSpawn, HashMap<Position, ArrayList<Entity>> entitiesMap){
+    private HashMap<Position, ArrayList<Entity>> entityMap;
+    public Toaster(Position position, int tickTilSpawn, HashMap<Position, ArrayList<Entity>> entityMap){
         super(new Position(position.getX(), position.getY(), 80), "toaster"); 
         this.tickTilSpawn = tickTilSpawn;    
         this.currentTickCount = 0;
-        this.entitiesMap = entitiesMap;
+        this.entityMap = entityMap;
     }
 
     @Override
@@ -37,13 +37,13 @@ public class Toaster extends StaticEntity{
 
     // Destory toaster if player with sword is adject to toaster 
     public void destoryToaster(){
-        for (Entity ent : entitiesMap.get(this.getPosition())){
+        for (Entity ent : entityMap.get(this.getPosition())){
             if (ent.getType().equals("zombie_toast_spawner")){
-                entitiesMap.get(this.getPosition()).remove(ent);
+                entityMap.get(this.getPosition()).remove(ent);
             }
         }
         // for (Position checkPos : this.getPosition().getAdjacentPositions()){
-        //     for (Entity ent : entitiesMap.get(checkPos)){
+        //     for (Entity ent : entityMap.get(checkPos)){
         //         for ()
         //         if (ent.getType().equals("player") && playerHasSword(ent)){
         //             return true;

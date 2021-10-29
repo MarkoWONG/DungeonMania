@@ -27,7 +27,11 @@ public class PlayerCharacter extends Entity {
 
 
     public void addItemToInventory(CollectableEntity item) {
-        ;
+        ; //REMEMBER TO Remove Entity from Map
+    }
+
+    public void removeItemFromInventory(CollectableEntity item){
+        
     }
 
     public void removeItem(CollectableEntity item) {
