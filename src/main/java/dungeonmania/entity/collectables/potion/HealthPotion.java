@@ -39,13 +39,4 @@ public class HealthPotion extends PotionEntity implements Usable{
             player.removeItemFromInventory(this);
         }
     }
-
-
-    public boolean getHealthPotionUsed() {
-        return this.healthPotionUsed;
-    }
-
-    public void setHealthPotionUsed(boolean healthPotionUsed) {
-        this.healthPotionUsed = healthPotionUsed;
-    }
 }

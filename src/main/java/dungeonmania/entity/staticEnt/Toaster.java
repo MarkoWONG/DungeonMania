@@ -24,6 +24,10 @@ public class Toaster extends StaticEntity{
         entity.interact(this);
     }
 
+    @Override
+    public boolean isInteractable() {
+        return true;
+    }
 
     @Override
     public String getType() {
