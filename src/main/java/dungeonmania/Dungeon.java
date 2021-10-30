@@ -1,11 +1,11 @@
 package dungeonmania;
 
 import dungeonmania.difficulty.Difficulty;
-import dungeonmania.entity.Entity;
-import dungeonmania.entity.EntityFactory;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
 import dungeonmania.util.Position;
+import dungeonmania.entity.Entity;
+import dungeonmania.entity.EntityFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -51,7 +51,7 @@ public class Dungeon {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
             String currEntType = currObj.getString("type");
-            Entity currEnt = entityFactory.create(currEntType);
+            Entity currEnt = entityFactory.create(currPosition, currEntType, otherInfo);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
             }
@@ -67,7 +67,7 @@ public class Dungeon {
     public void tick(String itemUsed, Direction movementDirection) {
         // if item is used
             // for each in theCharacter inventory
-                // if the item is iteMused
+                // if the item is itemUsed
                     // item.use()
         // gameMode.simulate(movementDirection);
     }

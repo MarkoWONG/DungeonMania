@@ -5,7 +5,6 @@ import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

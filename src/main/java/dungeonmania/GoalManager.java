@@ -18,7 +18,7 @@ public class GoalManager {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
-        } catch (IOException e) {d
+        } catch (IOException e) {
             throw new IllegalArgumentException("Dungeon does not exist");
         }
         JSONObject currGoals = new JSONObject(currFileStr).getJSONObject("goal-condition");
