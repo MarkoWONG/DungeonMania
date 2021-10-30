@@ -3,6 +3,7 @@ package dungeonmania;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.Mob.Mob;
 import dungeonmania.entity.collectables.CollectableEntity;
+import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.util.Position;
 
@@ -81,6 +82,16 @@ public class PlayerCharacter extends Entity {
 
     public void setInventory(ArrayList<CollectableEntity> inventory) {
         this.inventory = inventory;
+    }
+
+    public void useItem(String itemType) {
+        for (CollectableEntity eachItem : inventory) {
+            if (eachItem.getType().equals(itemType)) {
+                if (eachItem instanceof Usable) {
+                    ((Usable) eachItem).useItem(this);
+                }
+            }
+        }
     }
 
     public ArrayList<Mob> getAllies() {

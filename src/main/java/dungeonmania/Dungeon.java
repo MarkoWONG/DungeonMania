@@ -54,6 +54,15 @@ public class Dungeon {
                 // if the item is iteMused
                     // item.use()
         // gameMode.simulate(movementDirection);
+        // notifyOfTick();
+    }
+
+    private void notifyOfTick() {
+        for (ArrayList<Entity> eachTile : entitiesMap.values()) {
+            for (Entity eachEntity : eachTile) {
+                eachEntity.incrementTick();
+            }
+        }
     }
 
     public void deleteEntity(Entity entityTbd) {}
