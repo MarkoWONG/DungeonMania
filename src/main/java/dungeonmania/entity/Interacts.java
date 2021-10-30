@@ -10,6 +10,8 @@ public interface Interacts {
 
     // we need to have a case for every subclass of entity... (a lot)
 
+    void interact(Entity entity);
+
     void interact(PlayerCharacter player);
 
     // static entities

@@ -64,7 +64,7 @@ public class DungeonTests {
     }
 
     @Test
-    public void testItemUsedPickedUpOnTick() {
+    public void testItemUsedAndPickedUpOnTick() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
 
@@ -132,14 +132,14 @@ public class DungeonTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("buildableEntities", "Standard");
 
-        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.DOWN));
+        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.UP));
         currController.build("bow");
         assertTrue(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)
                 .collect(Collectors.toList())
                 .contains("bow"));
 
-        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.DOWN));
+        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.UP));
         currController.build("shield");
         assertTrue(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)

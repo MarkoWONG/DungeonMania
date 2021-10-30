@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DungeonManiaController {
+
+    private Dungeon currDungeon;
+
     public DungeonManiaController() {
     }
 
@@ -54,7 +57,7 @@ public class DungeonManiaController {
     public List<String> allGames() {
         return new ArrayList<>();
     }
-
+    // itemUsed refers to the id!!
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
         return null;
     }

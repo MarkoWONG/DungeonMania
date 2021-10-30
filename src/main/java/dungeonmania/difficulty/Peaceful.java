@@ -1,9 +1,14 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.PeacefulEntityFactory;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Peaceful extends  Difficulty{
     public Peaceful(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
@@ -20,7 +25,7 @@ public class Peaceful extends  Difficulty{
     }
 
     @Override
-    public EntityFactory createEntityFactory() {
-        return new PeacefulEntityFactory();
+    public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
+        return new PeacefulEntityFactory(entityMap);
     }
 }

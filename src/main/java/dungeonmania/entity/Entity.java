@@ -2,10 +2,49 @@ package dungeonmania.entity;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
+import java.util.UUID;
 
 public abstract class Entity implements Interacts, Fights {
 
     private Position position;
+    private final String id;
+    private final String type;
+    private final String otherInfo; // For Door's matching key and Portal's colour
+    public Entity(Position position, String type) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
+        this.type = type;
+        this.otherInfo = null;
+    }
+
+    public Entity(Position position, String type, String otherInfo) {
+        this.id = UUID.randomUUID().toString();
+        this.position = position;
+        this.type = type;
+        this.otherInfo = otherInfo;
+    }
+
+
+
+    public void setPosition(Position newPosition) {
+        position = newPosition;
+    }
+
+    public Position getPosition() {
+        return this.position;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    abstract public String getType();
+
+    abstract public boolean isInteractable();
+
+    public void incrementTick() {
+        return;
+    }
 
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
@@ -16,22 +55,17 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void fight(Mercenary mercenary) {
-
-    }
-
-    @Override
-    public void fight(Zombie zombie) {
-
-    }
-
-    @Override
-    public void fight(Spider spider) {
+    public void fight(Mob mob) {
 
     }
 
     @Override
     public void startInteraction(Entity entity) {
+
+    }
+
+    @Override
+    public void interact(Entity entity) {
 
     }
 
