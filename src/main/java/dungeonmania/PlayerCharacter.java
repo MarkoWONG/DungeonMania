@@ -3,9 +3,12 @@ package dungeonmania;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.Mob.Mob;
 import dungeonmania.entity.collectables.CollectableEntity;
+import dungeonmania.entity.buildables.Build;
 import dungeonmania.util.Position;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerCharacter extends Entity {
     private ArrayList<CollectableEntity> inventory;
@@ -33,12 +36,37 @@ public class PlayerCharacter extends Entity {
         ; //REMEMBER TO Remove Entity from Map
     }
 
+    public void addItemToInventory(Entity item) {
+        ;
+    }
+
     public void removeItemFromInventory(CollectableEntity item){
         
     }
 
-    // @Override
-    // public void fight(Mob mob) {
+    public void consume(List<String> items) {
+        ArrayList<CollectableEntity> itemsTBD = new ArrayList<CollectableEntity>();
+        for (String eachString : items) {
+            for (CollectableEntity eachItem : inventory) {
+                if (eachItem.getType().equals(eachString)) {
+                    itemsTBD.add(eachItem);
+                    break;
+                }
+            }
+        }
+        for (CollectableEntity eachItemTBD : itemsTBD) {
+            removeItem(eachItemTBD);
+        }
+    }
+
+    public List<String> getBuildables() {
+        return Build.getBuildables(inventory);
+    }
+
+
+
+    @Override
+    public void fight(Mob mob) {
 
     // }
 
