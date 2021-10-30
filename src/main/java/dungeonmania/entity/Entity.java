@@ -31,7 +31,7 @@ public abstract class Entity implements Interacts {
     }
     
     // @Override
-    // public void fight(MobEntity mob) {
+    // public void fight(Mob mob) {
 
     // }
 
@@ -47,7 +47,7 @@ public abstract class Entity implements Interacts {
     // }
 
     // @Override
-    // public void fight(MobEntity mob) {
+    // public void fight(Mob mob) {
 
     // }
 

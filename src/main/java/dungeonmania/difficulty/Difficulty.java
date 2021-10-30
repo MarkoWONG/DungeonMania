@@ -1,7 +1,7 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
-import dungeonmania.entity.EntityFactory_Ethan;
+import dungeonmania.entity.EntityFactory;
 import dungeonmania.util.Direction;
 
 public abstract class Difficulty {
@@ -20,5 +20,5 @@ public abstract class Difficulty {
 
     abstract public void simulate(Direction movementDirection);
 
-    abstract public EntityFactory_Ethan createEntityFactory();
+    abstract public EntityFactory createEntityFactory();
 }

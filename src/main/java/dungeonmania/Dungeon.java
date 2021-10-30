@@ -51,7 +51,7 @@ public class Dungeon {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
             String currEntType = currObj.getString("type");
-            Entity currEnt = entityFactory.create(currPosition, currEntType, otherInfo);
+            Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
             }
@@ -66,9 +66,9 @@ public class Dungeon {
 
     public void tick(String itemUsed, Direction movementDirection) {
         // if item is used
-            // for each in theCharacter inventory
-                // if the item is itemUsed
-                    // item.use()
+        // for each in theCharacter inventory
+        // if the item is itemUsed
+        // item.use()
         // gameMode.simulate(movementDirection);
     }
 

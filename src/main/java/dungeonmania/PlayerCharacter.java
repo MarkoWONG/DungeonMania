@@ -1,7 +1,7 @@
 package dungeonmania;
 
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.Mob.MobEntity;
+import dungeonmania.entity.Mob.Mob;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.util.Position;
 
@@ -9,27 +9,23 @@ import java.util.ArrayList;
 
 public class PlayerCharacter extends Entity {
     private ArrayList<CollectableEntity> inventory;
-    private ArrayList<MobEntity> allies;
+    private ArrayList<Mob> allies;
     private double Health;
     private double attackDamage;
-    private Boolean hasArmour;
     private Position position;
     private Boolean invincible;
     private Boolean invisible;
-    private Boolean hasOneRing;
     
 
     public PlayerCharacter(Position position) {
         super(position, "player");
         this.position = position;
         this.inventory = new ArrayList<CollectableEntity>();
-        // this.allies = new ArrayList<Mercenary>();
+        this.allies = new ArrayList<Mob>();
         this.Health = 10;
         this.attackDamage = 1;
-        this.hasArmour = false;
         this.invisible = false;
         this.invincible = false;
-        this.hasOneRing = false;
     }
 
 
@@ -42,7 +38,7 @@ public class PlayerCharacter extends Entity {
     }
 
     // @Override
-    // public void fight(MobEntity mob) {
+    // public void fight(Mob mob) {
 
     // }
 
@@ -60,11 +56,11 @@ public class PlayerCharacter extends Entity {
         this.inventory = inventory;
     }
 
-    public ArrayList<MobEntity> getAllies() {
+    public ArrayList<Mob> getAllies() {
         return this.allies;
     }
 
-    public void setAllies(ArrayList<MobEntity> allies) {
+    public void setAllies(ArrayList<Mob> allies) {
         this.allies = allies;
     }
 
@@ -115,14 +111,5 @@ public class PlayerCharacter extends Entity {
     public void setInvisible(Boolean invisible) {
         this.invisible = invisible;
     }
-
-    public Boolean getHasOneRing() {
-        return this.hasOneRing;
-    }
-
-    public void setHasOneRing(Boolean hasOneRing) {
-        this.hasOneRing = hasOneRing;
-    }
-
 
 }

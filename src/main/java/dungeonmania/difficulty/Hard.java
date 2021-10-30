@@ -1,7 +1,7 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
-import dungeonmania.entity.EntityFactory_Ethan;
+import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.HardEntityFactory;
 import dungeonmania.util.Direction;
 
@@ -24,7 +24,7 @@ public class Hard extends Difficulty{
     }
 
     @Override
-    public EntityFactory_Ethan createEntityFactory() {
+    public EntityFactory createEntityFactory() {
         return new HardEntityFactory();
     }
 }

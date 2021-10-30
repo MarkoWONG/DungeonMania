@@ -55,7 +55,7 @@ public class DungeonManiaController {
         return new ArrayList<>();
     }
 
-    public DungeonResponse tick(String itemUsedId, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
+    public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
         return null;
     }
 

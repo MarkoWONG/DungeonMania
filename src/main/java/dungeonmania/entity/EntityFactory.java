@@ -21,7 +21,7 @@ public abstract class EntityFactory {
         this.random = new Random(System.currentTimeMillis());
     }
 
-    public Entity create(String entityType, Position startPos, String otherInfo) {
+    public Entity create(String entityType, Position startPos, String colour, String key) {
         switch (entityType.toLowerCase(Locale.ROOT)) {
             case "player":
                 return makePlayer(startPos);
@@ -34,21 +34,21 @@ public abstract class EntityFactory {
             case "floorswitch":
                 return makeSwitch(startPos);
             case "door":
-                return makeDoor(startPos, otherInfo);
+                return makeDoor(startPos, key);
             case "portal":
-                return makePortal(startPos, otherInfo);
+                return makePortal(startPos, colour);
             case "toaster":
                 return makeToaster(startPos);
-            // case "mercenary":
-            //     return makeMercenary();
-            // case "zombie":
-            //     return makeZombie();
-            // case "spider":
-            //     return makeSpider();
+             case "mercenary":
+                 return makeMercenary();
+             case "zombie":
+                 return makeZombie();
+             case "spider":
+                 return makeSpider();
             case "treasure":
                 return makeTreasure(startPos);
-            case "key": 
-                return makeKey(startPos, otherInfo);
+            case "key":
+                return makeKey(startPos, key);
             case "healthpotion":
                 return makeHealthPotion(startPos);
             case "invincibilitypotion":
@@ -104,17 +104,17 @@ public abstract class EntityFactory {
         return new Toaster(startPos, 20, entityMap);
     }
 
-    // protected Entity makeMercenary(Position startPos) {
-    //     return new Mercenary(startPos);
-    // }
+     protected Entity makeMercenary(Position startPos) {
+         return new Mercenary(startPos);
+     }
 
-    // protected Entity makeZombie() {
-    //     return new Zombie();
-    // }
+     protected Entity makeZombie() {
+         return new Zombie();
+     }
 
-    // protected Entity makeSpider() {
-    //     return new Spider();
-    // }
+     protected Entity makeSpider() {
+         return new Spider();
+     }
 
     protected Entity makeTreasure(Position startPos) {
         return new Treasure(startPos);
