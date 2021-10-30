@@ -9,8 +9,13 @@ public class Armour extends CollectableEntity{
     private int durability;
 
     public Armour(Position position){
-        super(new Position(position.getX(), position.getY(), 40), "armour");
+        super(new Position(position.getX(), position.getY(), 40));
         this.durability = 3;
+    }
+
+    @Override
+    public String getType() {
+        return "armour";
     }
 
     @Override
@@ -21,17 +26,12 @@ public class Armour extends CollectableEntity{
     @Override
     public void interact(PlayerCharacter player){
         player.addItemToInventory(this);
-        player.setHasArmour(true);
     }
 
     public void usedInBattle(PlayerCharacter player){
         durability--;
         if (durability <= 0){
-            for (CollectableEntity ent : player.getInventory()){
-                if (ent.equals(this)){
-                    player.getInventory().remove(ent);
-                }
-            }
+            player.getInventory().removeIf(ent -> ent.equals(this));
         }
     }
 }

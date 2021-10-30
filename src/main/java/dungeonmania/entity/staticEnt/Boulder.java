@@ -7,8 +7,14 @@ import dungeonmania.util.Position;
 public class Boulder extends StaticEntity implements Movement{
     
     public Boulder(Position position){
-        super(new Position(position.getX(), position.getY(), 100), "boulder");     
+        super(new Position(position.getX(), position.getY(),100) );
     }
+
+    @Override
+    public String getType() {
+        return "Boulder";
+    }
+
 
     @Override
     public void startInteraction(Entity entity) {

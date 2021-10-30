@@ -3,10 +3,16 @@ import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 
-public class Wood extends CollectableEntity implements Craftable{
+public class Wood extends CollectableEntity{
     public Wood(Position position){
-        super(new Position(position.getX(), position.getY(), 40), "wood");     
+        super(new Position(position.getX(), position.getY(), 40));
     }
+
+    @Override
+    public String getType() {
+        return "wood";
+    }
+
 
     @Override
     public void startInteraction(Entity entity) {

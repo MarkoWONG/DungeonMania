@@ -2,6 +2,7 @@ package dungeonmania;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.entity.collectables.Sword;
+import dungeonmania.entity.collectables.buildable.Bow;
 import dungeonmania.entity.collectables.buildable.Shield;
 import dungeonmania.entity.collectables.potion.HealthPotion;
 import dungeonmania.response.models.DungeonResponse;
@@ -240,7 +241,7 @@ public class itemTests {
             mercenary = new Mercenary(position);
         }
         
-        Shield shield = new Shield(position, 3);
+        Shield shield = new Shield(3);
         character.addItemToInventory(shield);
 
         ArrayList<Entity> square = new ArrayList<Entity>();

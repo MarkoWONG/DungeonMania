@@ -13,7 +13,7 @@ public class Toaster extends StaticEntity{
     private int currentTickCount;
     private HashMap<Position, ArrayList<Entity>> entityMap;
     public Toaster(Position position, int tickTilSpawn, HashMap<Position, ArrayList<Entity>> entityMap){
-        super(new Position(position.getX(), position.getY(), 80), "toaster"); 
+        super(new Position(position.getX(), position.getY(), 80));
         this.tickTilSpawn = tickTilSpawn;    
         this.currentTickCount = 0;
         this.entityMap = entityMap;
@@ -26,6 +26,11 @@ public class Toaster extends StaticEntity{
 
 
     @Override
+    public String getType() {
+        return "zombie_toast_spawner";
+    }
+
+    @Override
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
@@ -35,12 +40,8 @@ public class Toaster extends StaticEntity{
     }
 
     // Destory toaster if player with sword is adject to toaster 
-    public void destoryToaster(){
-        for (Entity ent : entityMap.get(this.getPosition())){
-            if (ent.getType().equals("zombie_toast_spawner")){
-                entityMap.get(this.getPosition()).remove(ent);
-            }
-        }
+    public void destroyToaster(){
+        entityMap.get(this.getPosition()).removeIf(ent -> ent.getType().equals("zombie_toast_spawner"));
         // for (Position checkPos : this.getPosition().getAdjacentPositions()){
         //     for (Entity ent : entityMap.get(checkPos)){
         //         for ()

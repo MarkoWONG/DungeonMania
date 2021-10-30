@@ -3,9 +3,14 @@ import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 
-public class Arrow extends CollectableEntity implements Craftable{
+public class Arrow extends CollectableEntity {
     public Arrow(Position position){
-        super(new Position(position.getX(), position.getY(), 40), "arrow");     
+        super(new Position(position.getX(), position.getY(), 40));
+    }
+
+    @Override
+    public String getType() {
+        return null;
     }
 
     @Override

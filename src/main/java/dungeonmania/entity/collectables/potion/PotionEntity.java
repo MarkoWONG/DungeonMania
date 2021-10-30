@@ -5,8 +5,8 @@ import dungeonmania.util.Position;
 import dungeonmania.entity.collectables.CollectableEntity;
 
 public abstract class PotionEntity extends CollectableEntity{
-    public PotionEntity(Position position, String type){
-        super(position, type);
+    public PotionEntity(Position position){
+        super(position);
     }
 
     @Override

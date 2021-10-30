@@ -8,8 +8,14 @@ import dungeonmania.PlayerCharacter;
 public class InvisibilityPotion extends PotionEntity implements Usable{
 
     public InvisibilityPotion(Position position){
-        super(new Position(position.getX(), position.getY(), 40), "invisibility_potion");  
+        super(new Position(position.getX(), position.getY(), 40));
     }
+
+    @Override
+    public String getType() {
+        return "invisibility_potion";
+    }
+
 
     @Override
     public void startInteraction(Entity entity) {
@@ -22,7 +28,7 @@ public class InvisibilityPotion extends PotionEntity implements Usable{
     }
 
     public void useItem(PlayerCharacter player){
-        player.setInvisible(true);
+        player.setInvisibleTicks(5);
         player.removeItemFromInventory(this);
     }
 

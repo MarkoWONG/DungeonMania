@@ -9,7 +9,7 @@ public class PlacedBomb extends Bomb {
     private HashMap<Position, ArrayList<Entity>> entityMap;
 
     public PlacedBomb(Position position, HashMap<Position, ArrayList<Entity>> entityMap){
-        super(new Position(position.getX(), position.getY(), 40), entityMap);
+        super(new Position(position.getX(), position.getY(), 100), entityMap);
         this.entityMap = entityMap;
     }
 

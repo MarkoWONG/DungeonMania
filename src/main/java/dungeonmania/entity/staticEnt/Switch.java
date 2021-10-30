@@ -5,8 +5,13 @@ import dungeonmania.util.Position;
 public class Switch extends StaticEntity{
     private boolean switchOn;
     public Switch(Position position){
-        super(new Position(position.getX(), position.getY(), 0), "switch");    
+        super(new Position(position.getX(), position.getY(), 0));
         switchOn = false; 
+    }
+
+    @Override
+    public String getType() {
+        return "switch";
     }
 
     @Override

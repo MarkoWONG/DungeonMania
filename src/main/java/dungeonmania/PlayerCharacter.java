@@ -3,10 +3,9 @@ package dungeonmania;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.Mob.Mob;
 import dungeonmania.entity.collectables.CollectableEntity;
-import dungeonmania.entity.buildables.Build;
+import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.util.Position;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +15,19 @@ public class PlayerCharacter extends Entity {
     private double Health;
     private double attackDamage;
     private Position position;
-    private Boolean invincible;
-    private Boolean invisible;
+    private Integer invincibleTicks;
+    private Integer invisibleTicks;
     
 
     public PlayerCharacter(Position position) {
-        super(position, "player");
+        super(position);
         this.position = position;
-        this.inventory = new ArrayList<CollectableEntity>();
-        this.allies = new ArrayList<Mob>();
+        this.inventory = new ArrayList<>();
+        this.allies = new ArrayList<>();
         this.Health = 10;
         this.attackDamage = 1;
-        this.invisible = false;
-        this.invincible = false;
+        this.invisibleTicks = 0;
+        this.invincibleTicks = 0;
     }
 
 
@@ -55,7 +54,7 @@ public class PlayerCharacter extends Entity {
             }
         }
         for (CollectableEntity eachItemTBD : itemsTBD) {
-            removeItem(eachItemTBD);
+            removeItemFromInventory(eachItemTBD);
         }
     }
 
@@ -68,7 +67,7 @@ public class PlayerCharacter extends Entity {
     @Override
     public void fight(Mob mob) {
 
-    // }
+     }
 
     @Override
     public void startInteraction(Entity entity) {
@@ -77,7 +76,7 @@ public class PlayerCharacter extends Entity {
 
     // Getter and Setters
     public ArrayList<CollectableEntity> getInventory() {
-        return this.inventory;
+        return inventory;
     }
 
     public void setInventory(ArrayList<CollectableEntity> inventory) {
@@ -108,36 +107,48 @@ public class PlayerCharacter extends Entity {
         this.attackDamage = attackDamage;
     }
 
-    public Boolean getHasArmour() {
-        return this.hasArmour;
-    }
-
-    public void setHasArmour(Boolean hasArmour) {
-        this.hasArmour = hasArmour;
-    }
-
     public Position getPosition() {
         return this.position;
+    }
+
+    @Override
+    public String getType() {
+        return "player";
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return false;
     }
 
     public void setPosition(Position position) {
         this.position = position;
     }
 
-    public Boolean getInvincible() {
-        return this.invincible;
+    public Integer getInvincibleTicks() {
+        return invincibleTicks;
     }
 
-    public void setInvincible(Boolean invincible) {
-        this.invincible = invincible;
+    public void setInvincibleTicks(Integer invincibleTicks) {
+        this.invincibleTicks = invincibleTicks;
     }
 
-    public Boolean getInvisible() {
-        return this.invisible;
+    public Integer getInvisibleTicks() {
+        return this.invisibleTicks;
     }
 
-    public void setInvisible(Boolean invisible) {
-        this.invisible = invisible;
+    public void setInvisibleTicks(Integer invisibleTicks) {
+        this.invisibleTicks = invisibleTicks;
+    }
+
+    @Override
+    public void incrementTick() {
+        if (invincibleTicks > 0) {
+            invincibleTicks--;
+        }
+        if (invisibleTicks > 0) {
+            invisibleTicks--;
+        }
     }
 
 }

@@ -6,13 +6,12 @@ import dungeonmania.difficulty.Peaceful;
 import dungeonmania.difficulty.Standard;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
-import dungeonmania.entity.buildables.Build;
+import dungeonmania.entity.collectables.buildable.Build;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.goal.GoalManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
 import dungeonmania.util.Position;
-import dungeonmania.entity.Entity;
-import dungeonmania.entity.EntityFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -77,6 +76,8 @@ public class Dungeon {
                 return new Standard(this,movementManager,interactionManager,fightManager);
             case ("Hard"):
                 return new Hard(this,movementManager,interactionManager,fightManager);
+            default:
+                return new Standard(this,movementManager,interactionManager,fightManager);
         }
     }
 

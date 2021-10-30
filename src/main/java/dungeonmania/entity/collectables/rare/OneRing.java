@@ -9,6 +9,11 @@ public class OneRing extends rareEntity{
     }
 
     @Override
+    public String getType() {
+        return "one_ring";
+    }
+
+    @Override
     public void startInteraction(Entity entity) {
         entity.interact(this);
     }
@@ -19,7 +24,6 @@ public class OneRing extends rareEntity{
     }
 
     public void useItem(PlayerCharacter player){
-        player.setHasOneRing(true);
         player.removeItemFromInventory(this);
     }
 }

@@ -1,6 +1,8 @@
 package dungeonmania.entity;
 
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.collectables.buildable.Bow;
+import dungeonmania.entity.collectables.buildable.Shield;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
@@ -33,7 +35,7 @@ public abstract class EntityFactory {
             case "boulder":
                 return makeBoulder(startPos);
             case "floorswitch":
-                return makeSwitch(startPos);
+                return makeFloorSwitch(startPos);
             case "door":
                 return makeDoor(startPos, key);
             case "portal":
@@ -41,11 +43,11 @@ public abstract class EntityFactory {
             case "toaster":
                 return makeToaster(startPos);
              case "mercenary":
-                 return makeMercenary();
+                 return makeMercenary(startPos);
              case "zombie":
-                 return makeZombie();
+                 return makeZombie(startPos);
              case "spider":
-                 return makeSpider();
+                 return makeSpider(startPos);
             case "treasure":
                 return makeTreasure(startPos);
             case "key":
@@ -72,6 +74,8 @@ public abstract class EntityFactory {
                 return makeShield();
             case "bow":
                 return makeBow();
+            default:
+                return null; // should never happen
         }
     }
 
@@ -92,19 +96,19 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeFloorSwitch(Position startPos) {
-        return new floorSwitch(startPos);
+        return new Switch(startPos);
     }
 
-    protected Entity makeDoor(Position startPos) {
-        return new Door(startPos);
+    protected Entity makeDoor(Position startPos, String keyValue) {
+        return new Door(startPos,keyValue);
     }
 
-    protected Entity makePortal(Position startPos) {
-        return new Portal(startPos);
+    protected Entity makePortal(Position startPos, String colourValue) {
+        return new Portal(startPos,colourValue,entityMap);
     }
 
     protected Entity makeToaster(Position startPos) {
-        return new Toaster(startPos);
+        return new Toaster(startPos,20,entityMap);
     }
 
     protected Entity makeMercenary(Position startPos) {
@@ -123,8 +127,8 @@ public abstract class EntityFactory {
         return new Treasure(startPos);
     }
 
-    protected Entity makeKey(Position startPos) {
-        return new Key(startPos);
+    protected Entity makeKey(Position startPos, String keyValue) {
+        return new Key(startPos, keyValue);
     }
 
     protected Entity makeHealthPotion(Position startPos) {
@@ -148,7 +152,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeBomb(Position startPos) {
-        return new Bomb(startPos);
+        return new Bomb(startPos,entityMap);
     }
 
     protected Entity makeSword(Position startPos) {
@@ -165,7 +169,7 @@ public abstract class EntityFactory {
 
     protected Entity makeBow() { return new Bow(); }
 
-    protected Entity makeShield() { return new Shield(); }
+    protected Entity makeShield() { return new Shield(3); }
 
 
 }

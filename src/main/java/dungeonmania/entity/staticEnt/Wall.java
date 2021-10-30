@@ -5,7 +5,12 @@ import dungeonmania.entity.Entity;
 
 public class Wall extends StaticEntity{
     public Wall(Position position){
-        super(new Position(position.getX(), position.getY(), 80), "wall");     
+        super(new Position(position.getX(), position.getY(), 80));
+    }
+
+    @Override
+    public String getType() {
+        return "wall";
     }
 
     @Override

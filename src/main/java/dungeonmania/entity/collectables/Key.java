@@ -3,12 +3,18 @@ import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 
-public class Key extends CollectableEntity implements Craftable{
+public class Key extends CollectableEntity {
     private final int keyIdentifer;
     public Key(Position position, String keyIdentifer){
-        super(new Position(position.getX(), position.getY(), 40), "key");     
+        super(new Position(position.getX(), position.getY(), 40));
         this.keyIdentifer = Integer.parseInt(keyIdentifer);
     }
+
+    @Override
+    public String getType() {
+        return "key";
+    }
+
 
     @Override
     public void startInteraction(Entity entity) {

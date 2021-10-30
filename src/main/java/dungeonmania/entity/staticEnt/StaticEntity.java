@@ -5,12 +5,8 @@ import dungeonmania.util.Position;
 
 public abstract class StaticEntity extends Entity{
 
-    public StaticEntity(Position position, String type){
-        super(position, type);
-    }
-
-    public StaticEntity(Position position, String type, String otherInfo){
-        super(position, type, otherInfo);
+    public StaticEntity(Position position){
+        super(position);
     }
 
     @Override

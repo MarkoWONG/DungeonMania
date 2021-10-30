@@ -10,7 +10,7 @@ public class Door extends StaticEntity{
     private int key;
 
     public Door(Position position, String key){
-        super(new Position(position.getX(), position.getY(), 80), "door");   
+        super(new Position(position.getX(), position.getY(), 80));
         this.isOpen = false;  
         this.key = Integer.parseInt(key);
     }
@@ -19,6 +19,12 @@ public class Door extends StaticEntity{
         this.isOpen = true;
         this.setPosition(new Position(this.getPosition().getX(), this.getPosition().getY(), 0));
     }
+
+    @Override
+    public String getType() {
+        return "door";
+    }
+
 
     @Override
     public void startInteraction(Entity entity) {
