@@ -3,6 +3,9 @@ package dungeonmania;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.Mob.MobEntity;
 import dungeonmania.entity.collectables.CollectableEntity;
+import dungeonmania.mobs.Mob;
+import dungeonmania.movement.Movement;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
@@ -17,6 +20,8 @@ public class PlayerCharacter extends Entity {
     private Boolean invincible;
     private Boolean invisible;
     private Boolean hasOneRing;
+    private Double health;
+    private Double defense;
     
 
     public PlayerCharacter(Position position) {
@@ -30,6 +35,14 @@ public class PlayerCharacter extends Entity {
         this.invisible = false;
         this.invincible = false;
         this.hasOneRing = false;
+    }
+
+    public PlayerCharacter(Double health, Double attack, Double defense) {
+        super(null, "player");
+        this.health = health;
+        this.attackDamage = attack;
+        this.defense = defense;
+        this.hasArmour = false;
     }
 
 
@@ -54,6 +67,29 @@ public class PlayerCharacter extends Entity {
     // Getter and Setters
     public ArrayList<CollectableEntity> getInventory() {
         return this.inventory;
+    }
+
+    public void removeItem(CollectableEntity item) {
+        inventory.remove(item);
+    }
+
+    public void takeDamage(Double damage) {
+        Double damageTaken = damage * defense;
+        health -= damageTaken;
+
+        if (health <= 0) {
+            // notify something coz of death and all that
+        }
+    }
+
+    @Override
+    public void move(Direction direction) {
+
+    }
+
+    @Override
+    public void teleport(Position position) {
+
     }
 
     public void setInventory(ArrayList<CollectableEntity> inventory) {
@@ -86,15 +122,10 @@ public class PlayerCharacter extends Entity {
         int charAttack = getHealth() * attack() / 5;
         int mobAttack = mob.getHealth() * mob.attack() / 10;
 
-        takeDamage(mobAttack);
+        //takeDamage(mobAttack);
         mob.takeDamage(charAttack);
     }   
-    
-    
 
-    public double getHealth() {
-        return Health;
-    }
     public double getAttackDamage() {
         return this.attackDamage;
     }
