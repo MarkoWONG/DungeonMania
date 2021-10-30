@@ -25,6 +25,18 @@ public class PlayerCharacter extends Entity {
     }
 
     public void fight(Mob mob) {
-        // actually fight
-    }    
+
+        // get attack damage before fight so that order of attacks doesnt matter
+        int charAttack = getHealth() * attack() / 5;
+        int mobAttack = mob.getHealth() * mob.attack() / 10;
+
+        takeDamage(mobAttack);
+        mob.takeDamage(charAttack);
+    }   
+    
+    
+
+    public double getHealth() {
+        return Health;
+    }
 }
