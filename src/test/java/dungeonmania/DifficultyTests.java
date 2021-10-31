@@ -31,9 +31,9 @@ public class DifficultyTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
 
-        IntStream.range(0,2).forEach(tick -> currController.tick(null, Direction.NONE));
+        IntStream.range(0,6).forEach(tick -> currController.tick(null, Direction.NONE));
         currResponse = currController.tick(null, Direction.NONE);
-        // ASSUMES: the character has killed the mercenary by now - dependent on stats of entities
+        // ASSUMES: the character has killed the mercenary by now - dependent on stats of entities and whether it spawned with armor
         assertFalse(currResponse.getEntities()
                 .stream().map(EntityResponse::getType)
                 .collect(Collectors.toList())

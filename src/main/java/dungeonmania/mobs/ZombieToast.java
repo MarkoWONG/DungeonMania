@@ -10,8 +10,10 @@ public class ZombieToast extends Mob{
 
     private Armour armour;
 
-    public ZombieToast(Position position) {
+    public ZombieToast(Position position, int health, int ad) {
         super(position);
+        setAttackDamage(ad);
+        setHealth(health);
         Random rand = new Random(System.currentTimeMillis());
         if (rand.nextInt(5) == 4) {
             armour = new Armour();

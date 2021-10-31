@@ -20,6 +20,6 @@ public class HardEntityFactory extends EntityFactory{
 
     @Override
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos,10,entityMap);
+        return new PlayerCharacter(startPos,entityMap,10,5);
     }
 }

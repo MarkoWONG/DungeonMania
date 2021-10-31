@@ -15,8 +15,10 @@ public class Spider extends Mob {
      * Starts at -1, then moves to 0 and starts going in a circle
      */
 
-     public Spider(Position position) {
+     public Spider(Position position, int health, int ad) {
         super(position);
+         setAttackDamage(ad);
+         setHealth(health);
      }
 
     @Override

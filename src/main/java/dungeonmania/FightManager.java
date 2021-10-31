@@ -41,7 +41,7 @@ public class FightManager {
 
     public void resetHasFought() {
         for (Entity eachEntity : entities) {
-                eachEntity.resetHasFought();
+                eachEntity.setHasFought(false);
         }
     }
 

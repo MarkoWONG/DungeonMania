@@ -62,10 +62,9 @@ public abstract class Entity implements Interacts {
 
     public void startFight(PlayerCharacter playerCharacter) {
         playerCharacter.fight(this); //example override for playerCharacter
-        hasFought = true;
     }
 
-    public void resetHasFought() {
+    public void setHasFought(Boolean value) {
         hasFought = false;
     }
 

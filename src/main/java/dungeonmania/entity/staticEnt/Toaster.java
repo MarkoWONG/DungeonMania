@@ -43,7 +43,7 @@ public class Toaster extends StaticEntity{
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
-            new ZombieToast(this.getPosition());
+            new ZombieToast(this.getPosition(),10,2);
             currentTickCount = 0;
         }
     }

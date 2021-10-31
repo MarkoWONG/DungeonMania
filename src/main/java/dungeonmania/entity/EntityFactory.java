@@ -84,7 +84,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos,20,entityMap);
+        return new PlayerCharacter(startPos,entityMap,20,5);
     }
 
     protected Entity makeWall(Position startPos) {
@@ -116,15 +116,15 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return new Mercenary(startPos,1);
+        return new Mercenary(startPos,1,entityMap,15,10);
     }
 
     protected Entity makeZombie(Position startPos) {
-        return new ZombieToast(startPos);
+        return new ZombieToast(startPos,10,2);
     }
 
     protected Entity makeSpider(Position startPos) {
-        return new Spider(startPos);
+        return new Spider(startPos,5,6);
     }
 
     protected Entity makeTreasure(Position startPos) {

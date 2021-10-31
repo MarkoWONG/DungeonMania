@@ -23,13 +23,13 @@ public class PlayerCharacter extends Entity implements Movement{
     private Integer invincibleTicks;
     private Integer invisibleTicks;
 
-    public PlayerCharacter(Position position, Integer health, EntityList entities) {
+    public PlayerCharacter(Position position,EntityList entities, int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
         this.entities = entities;
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
         this.Health = health;
-        this.attackDamage = 1;
+        this.attackDamage = ad;
         this.invisibleTicks = 0;
         this.invincibleTicks = 0;
     }
@@ -96,7 +96,7 @@ public class PlayerCharacter extends Entity implements Movement{
 
     @Override
     public void fight(Mob mob) {
-        int mobAttack = mob.attack();
+        int mobAttack = mob.getAttackDamage();
         mob.takeDamage(attack());
         takeDamage(mobAttack);
     }
@@ -115,7 +115,7 @@ public class PlayerCharacter extends Entity implements Movement{
         }
 
         for (Mob mob : allies) {
-            AD += mob.attack();
+            AD += mob.getAttackDamage();
         }
         return AD;
     }   

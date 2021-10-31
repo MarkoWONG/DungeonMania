@@ -1,5 +1,7 @@
 package dungeonmania.mobs;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.Armour;
 import dungeonmania.mobs.faction.IFaction;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -11,11 +13,33 @@ public abstract class Mob extends Entity implements Movement{
     private Integer attackDamage;
     private Faction faction;
     private Position position;
+    private Armour armour;
 
     public Mob (Position position) {
         super(position);
         this.faction = new Faction();
         faction.setFaction(new Enemy());
+    }
+
+    public void setArmour(Armour armour) {
+        this.armour = armour;
+    }
+
+    public Armour getArmour() {
+        return armour;
+    }
+
+    public void takeDamage(int damage) {
+        int reducedDamage = damage;
+        if (armour!= null) {
+            reducedDamage = armour.usedInDefense(reducedDamage);
+            armour.usedInBattle(this);
+        }
+        setHealth(getHealth() - damage);
+    }
+
+    public void startFight(PlayerCharacter playerCharacter) {
+        playerCharacter.fight(this); //example override for playerCharacter
     }
 
     /**
@@ -55,19 +79,21 @@ public abstract class Mob extends Entity implements Movement{
         }
     }
 
+    public void setAttackDamage(Integer attackDamage) {
+        this.attackDamage = attackDamage;
+    }
+
     @Override
     public Integer getHealth() {
         return health;
     }
-    public int attack() {
-        return (int)attackDamage;
+
+    public int getAttackDamage() {
+        return attackDamage;
     }
 
     public void setHealth(Integer health) {
         this.health = health;
     }
-    
-    public void takeDamage(int damage) {
-        setHealth(getHealth() - damage);
-    }
+
 }

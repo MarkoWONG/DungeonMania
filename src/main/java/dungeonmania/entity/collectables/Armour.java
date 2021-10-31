@@ -2,6 +2,7 @@ package dungeonmania.entity.collectables;
 
 import dungeonmania.entity.Entity;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.mobs.Mob;
 import dungeonmania.util.Position;
 
 public class Armour extends CollectableEntity{
@@ -36,6 +37,13 @@ public class Armour extends CollectableEntity{
         durability--;
         if (durability <= 0){
             player.getInventory().removeIf(ent -> ent.equals(this));
+        }
+    }
+
+    public void usedInBattle(Mob mob) {
+        durability--;
+        if (durability <= 0) {
+            mob.setArmour(null);
         }
     }
 

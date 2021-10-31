@@ -1,4 +1,5 @@
 package dungeonmania.mobs;
+import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
@@ -15,21 +16,25 @@ import dungeonmania.util.Direction;
 import static java.lang.Math.abs;
 
 public class Mercenary extends Mob{
+    private EntityList entities;
+    private PlayerCharacter characterTracker;
     private int price;
     private Position charPosition;
     private int battleRadius;
     private Boolean battleInRadius;
-    private Armour armour;
 
-    public Mercenary(Position position, int price) {
+    public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
-        this.setHealth(15);
+        setAttackDamage(ad);
+        setHealth(health);
+        this.entities = entities;
+        this.characterTracker = entities.findPlayer();
         this.price = price;
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
-            armour = new Armour();
+            setArmour(new Armour());
         } else {
-            armour = null;
+            setArmour(null);
         }
     }
 
@@ -53,16 +58,6 @@ public class Mercenary extends Mob{
     }
 
     @Override
-    public void takeDamage(int damage) {
-        int reducedDamage = damage;
-        if (armour != null) {
-            reducedDamage = armour.usedInDefense(reducedDamage);
-            armour.usedInBattle(this);
-        }
-        super.takeDamage(reducedDamage);
-    }
-
-    @Override
     public String getType() {
         return "mercenary";
     }
@@ -83,7 +78,6 @@ public class Mercenary extends Mob{
 
     @Override
     public void move(Direction direction) {
-        // observer not implemented
-        // super.move(MovementManager.shortestPath(super.getPosition(), charPosition));
+        super.move(MovementManager.shortestPath(super.getPosition(), characterTracker.getPosition()));
     }
 }
