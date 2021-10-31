@@ -2,6 +2,7 @@ package dungeonmania.entity;
 
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.collectables.potion.InvincibilityPotion;
 import dungeonmania.entity.staticEnt.Toaster;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
@@ -21,5 +22,10 @@ public class HardEntityFactory extends EntityFactory{
     @Override
     protected Entity makePlayer(Position startPos) {
         return new PlayerCharacter(startPos,entityMap,10,5);
+    }
+
+    @Override
+    protected Entity makeInvincibilityPotion(Position startPos) {
+        return new InvincibilityPotion(startPos,false);
     }
 }

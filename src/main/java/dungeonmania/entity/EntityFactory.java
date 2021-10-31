@@ -140,7 +140,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeInvincibilityPotion(Position startPos) {
-        return new InvincibilityPotion(startPos);
+        return new InvincibilityPotion(startPos,true);
     }
 
     protected Entity makeInvisibilityPotion(Position startPos) {

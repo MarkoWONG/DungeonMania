@@ -33,7 +33,7 @@ public class DifficultyTests {
 
         IntStream.range(0,6).forEach(tick -> currController.tick(null, Direction.NONE));
         currResponse = currController.tick(null, Direction.NONE);
-        // ASSUMES: the character has killed the mercenary by now - dependent on stats of entities and whether it spawned with armor
+
         assertFalse(currResponse.getEntities()
                 .stream().map(EntityResponse::getType)
                 .collect(Collectors.toList())
@@ -45,7 +45,6 @@ public class DifficultyTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest", "Hard");
 
-        IntStream.range(0,2).forEach(tick -> currController.tick(null, Direction.NONE));
         currResponse = currController.tick(null, Direction.NONE);
         // ASSUMES: In hard mode, mercenaries will one shot the player
         assertFalse(currResponse.getEntities()
@@ -60,11 +59,13 @@ public class DifficultyTests {
         DungeonResponse currResponse = currController.newGame("difficultytest", "Hard");
 
         // get the potion, use it
-        currController.tick(null, Direction.LEFT);
-        currController.tick("invincibility_potion", Direction.NONE);
+        currResponse = currController.tick(null, Direction.LEFT);
+        String invincPotionId = currResponse.getInventory().get(0).getId();
+        currController.tick(invincPotionId, Direction.NONE);
 
         // character will now die in two ticks because potion doesn't do anything in hard
-        IntStream.range(0,2).forEach(tick -> currController.tick(null, Direction.NONE));
+        currResponse = currController.tick(null, Direction.NONE);
+        currResponse = currController.tick(null, Direction.NONE);
 
         // ASSUMES: In hard mode, mercenaries will one shot the player
         assertFalse(currResponse.getEntities()
