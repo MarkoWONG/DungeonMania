@@ -42,19 +42,8 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
-    @Override
-    public void move(Direction direction) {
-
     public PlayerCharacter(Position position) {
         super(position);
-    }
-
-    public void addItemToInventory(Entity item) {
-        ;
-    }
-
-    public void removeItem(CollectableEntity item) {
-        ;
     }
 
     public void consume(List<String> items) {
@@ -75,8 +64,6 @@ public class PlayerCharacter extends Entity implements Movement{
     public List<String> getBuildables() {
         return Build.getBuildables(inventory);
     }
-
-
 
     @Override
     public void fight(Mob mob) {

@@ -19,7 +19,7 @@ public class MovementManager {
     private PlayerCharacter player;
 
     public MovementManager(HashMap<Position, ArrayList<Entity>> entitiesMap, PlayerCharacter player) {
-        this.entitiesMap = entitiesMap;
+        this.oldMap = entitiesMap;
         this.player = player;
     }
 
@@ -77,7 +77,6 @@ public class MovementManager {
      * @return a random direction the entity can move in
      */
     private Direction getRandDirection(Entity entity) {
-        Position entityPosition = entity.getPosition();
         ArrayList<Direction> possibleMoves = new ArrayList<>();
 
         if (checkMove(entity, Direction.UP)) {
@@ -93,7 +92,7 @@ public class MovementManager {
             possibleMoves.add(Direction.LEFT);
         }
 
-        Random rand = new Random();
+        Random rand = new Random(System.currentTimeMillis());
         int x = rand.nextInt(possibleMoves.size());
 
         return possibleMoves.get(x);

@@ -11,9 +11,10 @@ public class Mob extends Entity implements Movement{
     private Faction faction;
     private Position position;
 
-    public Mob () {
+    public Mob() {
         this.faction = new Faction();
         faction.setFaction(new Enemy());
+
     }
 
     /**
@@ -53,7 +54,6 @@ public class Mob extends Entity implements Movement{
         }
     }
 
-    @Override
     public double getHealth() {
         return health;
     }

@@ -9,7 +9,7 @@ public class ZombieToast extends Mob{
     
     public ZombieToast() {
         super();
-        Random rand = new Random();
+        Random rand = new Random(System.currentTimeMillis());
         if (rand.nextInt(5) == 4) {
             armour = new Armour();
         } else {
