@@ -66,9 +66,15 @@ public class PlayerCharacter extends Entity {
 
 
     @Override
-    public void fight(Mob mob) {
+    public void fight(Entity e) {
 
-     }
+    }
+
+    @Override
+    public void fight(Mob mob) {
+        int mobAttack = mob.getHealth();
+        mob.takeDamage(getAttackDamage());
+    }
 
     @Override
     public void startInteraction(Entity entity) {

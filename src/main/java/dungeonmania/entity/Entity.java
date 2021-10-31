@@ -45,20 +45,18 @@ public abstract class Entity implements Interacts {
     public void fight(Mob mob) {
 
     }
+    public void fight(Entity e) {
+
+    }
 
     public void incrementTick(){}
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
 
-    // @Override
-    // public void startFight(PlayerCharacter playerCharacter) {
-    //     // playerCharacter.fight(this); example override for playerCharacter
-    // }
-
-    // @Override
-    // public void fight(Mob mob) {
-
-    // }
+    @Override
+    public void startFight(PlayerCharacter playerCharacter) {
+        playerCharacter.fight(this); //example override for playerCharacter
+    }
 
     @Override
     public void startInteraction(Entity entity) {
