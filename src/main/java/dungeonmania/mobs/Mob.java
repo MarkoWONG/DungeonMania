@@ -53,4 +53,9 @@ public class Mob extends Entity implements Movement{
             faction.setFaction(new Enemy());
         }
     }
+
+    @Override
+    public int getHealth() {
+        return (int)health;
+    }
 }
