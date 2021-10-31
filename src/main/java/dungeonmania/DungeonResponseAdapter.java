@@ -30,10 +30,8 @@ public class DungeonResponseAdapter {
 
     private List<EntityResponse> doEntities() {
         ArrayList<EntityResponse> output = new ArrayList<>();
-        for (ArrayList<Entity> eachTile : dungeon.getEntitiesMap().values()) {
-            for (Entity eachEntity : eachTile) {
-                output.add(new EntityResponse(eachEntity.getId(),eachEntity.getType(),eachEntity.getPosition(),eachEntity.isInteractable()));
-            }
+        for (Entity eachEntity : dungeon.getEntities() ) {
+            output.add(new EntityResponse(eachEntity.getId(),eachEntity.getType(),eachEntity.getPosition(),eachEntity.isInteractable()));
         }
         return output;
     }

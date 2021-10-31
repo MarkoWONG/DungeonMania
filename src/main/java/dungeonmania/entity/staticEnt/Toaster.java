@@ -1,5 +1,6 @@
 package dungeonmania.entity.staticEnt;
 
+import dungeonmania.EntityList;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
@@ -11,8 +12,8 @@ import java.util.ArrayList;
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;
     private int currentTickCount;
-    private HashMap<Position, ArrayList<Entity>> entityMap;
-    public Toaster(Position position, int tickTilSpawn, HashMap<Position, ArrayList<Entity>> entityMap){
+    private EntityList entityMap;
+    public Toaster(Position position, int tickTilSpawn, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 80));
         this.tickTilSpawn = tickTilSpawn;    
         this.currentTickCount = 0;
@@ -44,8 +45,9 @@ public class Toaster extends StaticEntity{
     }
 
     // Destory toaster if player with sword is adject to toaster 
-    public void destroyToaster(){
-        entityMap.get(this.getPosition()).removeIf(ent -> ent.getType().equals("zombie_toast_spawner"));
+    public void destroyToaster() {
+
+//        entityMap.get(this.getPosition()).removeIf(ent -> ent.getType().equals("zombie_toast_spawner"));
         // for (Position checkPos : this.getPosition().getAdjacentPositions()){
         //     for (Entity ent : entityMap.get(checkPos)){
         //         for ()

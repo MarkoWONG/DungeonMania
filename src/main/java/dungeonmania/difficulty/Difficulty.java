@@ -1,6 +1,7 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.EntityList;
 import dungeonmania.FightManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
@@ -23,7 +24,7 @@ public abstract class Difficulty {
         this.fightManager = fightManager;
     }
 
-    abstract public HashMap<Position, ArrayList<Entity>> simulate(HashMap<Position, ArrayList<Entity>> entitiesMap, Direction movementDirection);
+    abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
-    abstract public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap);
+    abstract public EntityFactory createEntityFactory(EntityList entityMap);
 }

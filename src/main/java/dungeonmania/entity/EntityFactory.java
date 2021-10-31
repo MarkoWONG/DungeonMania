@@ -1,5 +1,6 @@
 package dungeonmania.entity;
 
+import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.buildable.Bow;
 import dungeonmania.entity.collectables.buildable.Shield;
@@ -19,10 +20,10 @@ import java.util.Random;
 
 public abstract class EntityFactory {
 
-    protected HashMap<Position, ArrayList<Entity>> entityMap;
+    protected EntityList entityMap;
     protected Random random;
 
-    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
+    public EntityFactory(EntityList entityMap) {
         this.entityMap = entityMap;
         this.random = new Random(System.currentTimeMillis());
     }

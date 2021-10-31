@@ -1,6 +1,7 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.EntityList;
 import dungeonmania.FightManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
@@ -17,17 +18,16 @@ public class Peaceful extends  Difficulty{
         super(dungRef,movementManager,fightManager);
     }
 
-    public HashMap<Position, ArrayList<Entity>> simulate(HashMap<Position, ArrayList<Entity>> entitiesMap, Direction moveDir) {
-        entitiesMap = movementManager.moveChar(entitiesMap,moveDir);
-        movementManager.doInteractions(entitiesMap);
-        entitiesMap = movementManager.moveMobs(entitiesMap);
-        movementManager.doInteractions(entitiesMap);
+    public void simulate(EntityList entitiesMap, Direction moveDir) {
+        movementManager.moveChar(moveDir);
+        movementManager.doInteractions();
+        movementManager.moveMobs();
+        movementManager.doInteractions();
 //        movementManager.doMercenarySpMove();
-        return entitiesMap;
     }
 
     @Override
-    public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
+    public EntityFactory createEntityFactory(EntityList entityMap) {
         return new PeacefulEntityFactory(entityMap);
     }
 }

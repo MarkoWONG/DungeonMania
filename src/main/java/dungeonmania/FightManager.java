@@ -9,24 +9,24 @@ import java.util.HashMap;
 public class FightManager {
 
     private PlayerCharacter character;
+    private EntityList entities;
 
-    public void charFights(HashMap<Position, ArrayList<Entity>> entitiesMap) {
-        doCharFights(entitiesMap.get(character.getPosition()));
+    public FightManager(EntityList entities) {
+        this.entities = entities;
+        this.character = null;
     }
 
-    public void doCharFights(ArrayList<Entity> entities) {
-        // does all fights, if somethings health <= 0 then it is removed in cleanup
-        for (Entity e : entities) {
+    public void doCharFights() {
+        ArrayList<Entity> currTile= entities.searchTile(character);
+        for (Entity e : currTile) {
             if (!e.hasFought()) {
                 e.startFight(character);
             }
         }
-        
-        cleanUp(entities);
-        
+        cleanUp();
     }
 
-    private void cleanUp (ArrayList<Entity> entities) {
+    private void cleanUp () {
         for (Entity e : entities) {
             if (e.getHealth() <= 0) {
                 if (!e.canRevive()) {
@@ -38,11 +38,9 @@ public class FightManager {
         }
     }
 
-    public void resetHasFought(HashMap<Position, ArrayList<Entity>> entitiesMap) {
-        for (ArrayList<Entity> entities: entitiesMap.values()) {
-            for (Entity e : entities) {
-                e.resetHasFought();
-            }
+    public void resetHasFought() {
+        for (Entity eachEntity : entities) {
+                eachEntity.resetHasFought();
         }
     }
 

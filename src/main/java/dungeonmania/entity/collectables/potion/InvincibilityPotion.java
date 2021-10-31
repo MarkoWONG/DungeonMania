@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-   
-    private HashMap<Position, ArrayList<Entity>> entityMap;
 
     public InvincibilityPotion(Position position){
         super(new Position(position.getX(), position.getY(), 40));

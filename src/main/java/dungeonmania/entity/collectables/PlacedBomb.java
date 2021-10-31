@@ -1,27 +1,23 @@
 package dungeonmania.entity.collectables;
+import dungeonmania.EntityList;
+import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.staticEnt.Switch;
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.staticEnt.Switch;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PlacedBomb extends Bomb {
-    private HashMap<Position, ArrayList<Entity>> entityMap;
-
-    public PlacedBomb(Position position, HashMap<Position, ArrayList<Entity>> entityMap){
+    private EntityList entities;
+    public PlacedBomb(Position position, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 100), entityMap);
-        this.entityMap = entityMap;
+        this.entities = entityMap;
     }
 
     @Override
     public void incrementTick(){
-        for (Position checkPos : this.getPosition().getAdjacentPositions()){
-            for (Entity ent : entityMap.get(checkPos)){
-                if (ent.getType().equals("switch")){
-                    Switch sw = (Switch) ent;
-                    if (sw.getSwitchOn()){
-                        denotate();
-                    }
+        for (Position eachPos : this.getPosition().getAdjacentPositions()) {
+            for (Entity eachEntity : entities.search(eachPos)) {
+                if (eachEntity.getType().equals("switch") && ((Switch) eachEntity).getSwitchOn()) {
+                    denotate();
                 }
             }
         }
@@ -29,18 +25,11 @@ public class PlacedBomb extends Bomb {
 
     // removes all entities directly surrounding bomb (except player)
     private void denotate(){
-        for (Position checkPos : this.getPosition().getAdjacentPositions()){
-            boolean playerOnTile = false;
-            for (Entity ent : entityMap.get(checkPos)){
-                if (!ent.getType().equals("player")){
-                    entityMap.get(checkPos).remove(ent);
+        for (Position eachPos : this.getPosition().getAdjacentPositions()) {
+            for (Entity eachEntity : entities.search(eachPos)) {
+                if (!(eachEntity instanceof PlayerCharacter)) {
+                    entities.remove(eachEntity);
                 }
-                else{
-                    playerOnTile = true;
-                }
-            }
-            if (!playerOnTile){
-                entityMap.remove(checkPos);
             }
         }
     }   

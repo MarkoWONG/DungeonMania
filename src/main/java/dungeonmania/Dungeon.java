@@ -18,7 +18,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +29,7 @@ public class Dungeon {
 
     private Difficulty gameMode;
     private PlayerCharacter character;
-    private HashMap<Position, ArrayList<Entity>> entitiesMap = new HashMap<>();
+    private EntityList entities;
     private MovementManager movementManager;
     private FightManager fightManager;
     private GoalManager goalManager;
@@ -39,12 +38,13 @@ public class Dungeon {
     public Dungeon(String dungeonName, String gameMode) {
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
+        this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);
-        this.movementManager = new MovementManager();
-        this.fightManager = new FightManager();
+        this.movementManager = new MovementManager(entities);
+        this.fightManager = new FightManager(entities);
         this.gameMode = difficultySelector(gameMode);
-        this.entityFactory = this.gameMode.createEntityFactory(entitiesMap);
-        createEntitiesMap_FromJson(entitiesMap, dungeonName);
+        this.entityFactory = this.gameMode.createEntityFactory(entities);
+        createEntitiesMap_FromJson(entities, dungeonName);
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
@@ -55,15 +55,13 @@ public class Dungeon {
             // for each in theCharacter inventory
                 // if the item is iteMused
                     // item.use()
-         this.entitiesMap = gameMode.simulate(entitiesMap,movementDirection);
-         notifyOfTick();
+        gameMode.simulate(entities,movementDirection);
+        notifyOfTick();
     }
 
     private void notifyOfTick() {
-        for (ArrayList<Entity> eachTile : entitiesMap.values()) {
-            for (Entity eachEntity : eachTile) {
-                eachEntity.incrementTick();
-            }
+        for (Entity eachEntity : entities) {
+            eachEntity.incrementTick();
         }
     }
 
@@ -93,7 +91,7 @@ public class Dungeon {
         }
     }
 
-    private void createEntitiesMap_FromJson(HashMap<Position, ArrayList<Entity>> output, String dungeonName) throws IllegalArgumentException {
+    private void createEntitiesMap_FromJson(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
@@ -112,10 +110,7 @@ public class Dungeon {
                 this.character = (PlayerCharacter) currEnt;
                 this.entry = currPosition;
             }
-            if (!output.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
-                output.put(currPosition, new ArrayList<Entity>());
-            }
-            output.get(currPosition).add(currEnt);
+            output.add(currEnt);
         }
     }
 
@@ -138,8 +133,8 @@ public class Dungeon {
         return character.getInventory();
     }
 
-    public HashMap<Position, ArrayList<Entity>> getEntitiesMap() {
-        return entitiesMap;
+    public ArrayList<Entity> getEntities() {
+        return entities;
     }
 
     public List<String> getBuildables() {
