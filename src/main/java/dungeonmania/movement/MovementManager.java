@@ -60,7 +60,7 @@ public class MovementManager {
      */
     public void moveMobs() {
         for (Entity eachEntity : entities) {
-            if ( !(eachEntity instanceof PlayerCharacter)) {
+            if ( eachEntity instanceof Mob ) {
                 eachEntity.move(getRandDirection(eachEntity));
             }
         }
@@ -88,9 +88,12 @@ public class MovementManager {
         }
 
         Random rand = new Random(System.currentTimeMillis());
-        int x = rand.nextInt(possibleMoves.size());
+        if (possibleMoves.size() != 0) {
+            int x = rand.nextInt(possibleMoves.size());
+            return possibleMoves.get(x);
+        }
+        return Direction.NONE;
 
-        return possibleMoves.get(x);
     }
 
     /**

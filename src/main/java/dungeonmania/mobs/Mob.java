@@ -12,7 +12,6 @@ public abstract class Mob extends Entity implements Movement{
     private Integer health;
     private Integer attackDamage;
     private Faction faction;
-    private Position position;
     private Armour armour;
 
     public Mob (Position position) {

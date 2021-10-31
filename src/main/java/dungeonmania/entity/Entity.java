@@ -29,7 +29,7 @@ public abstract class Entity implements Interacts {
     }
 
     public void setPosition(Position newPosition) {
-        position = newPosition;
+        this.position = newPosition;
     }
 
     public Position getPosition() {
