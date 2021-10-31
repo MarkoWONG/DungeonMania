@@ -89,6 +89,7 @@ public class PlayerCharacter extends Entity {
             if (eachItem.getType().equals(itemType)) {
                 if (eachItem instanceof Usable) {
                     ((Usable) eachItem).useItem(this);
+                    return;
                 }
             }
         }
