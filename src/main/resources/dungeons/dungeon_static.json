@@ -34,6 +34,11 @@
       "x": 6,
       "y": 0,
       "type": "zombie_toast_spawner"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "type": "player"
     }
   ]
 }
