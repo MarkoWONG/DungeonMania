@@ -5,8 +5,14 @@ import dungeonmania.util.Position;
 
 public class Exit extends StaticEntity{
     public Exit(Position position){
-        super(new Position(position.getX(), position.getY(), 0), "exit");     
+        super(new Position(position.getX(), position.getY(), 0));
     }
+
+    @Override
+    public String getType() {
+        return "exit";
+    }
+
     @Override
     public void startInteraction(Entity entity) {
         entity.interact(this);
