@@ -97,34 +97,42 @@ public class DungeonTests {
     @Test
     public void testClickingSpawner() {
         DungeonManiaController currController = new DungeonManiaController();
-        DungeonResponse currResponse = currController.newGame("clickableEntities", "Standard");
+        DungeonResponse currResponse = currController.newGame("clickableEntities1", "Standard");
 
-        // get the id of the mercenary
-        String mercenaryId = currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().getId();
         // get the id of the spawner
         String spawnerId = currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast_spawner")).findAny().get().getId();
-
-
-        // assert mercenary interactable immediately
-        assertTrue(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
 
         // assert spawner interactable immediately
         assertTrue(currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast_spawner")).findAny().get().isInteractable());
 
+        currResponse = currController.tick(null, Direction.RIGHT);
+
         // click on the adjacent spawner, doesnt tick the game world
-        currController.interact(spawnerId);
+        currResponse = currController.interact(spawnerId);
 
         // assert spawner is killed
         assertFalse(currResponse.getEntities()
                 .stream().map(EntityResponse::getType)
                 .collect(Collectors.toList())
                 .contains("zombie_toast_spawner"));
+    }
 
-        // go up and collect the treasure
-        currController.tick(null, Direction.UP);
+    @Test
+    public void testClickingMercenary() {
+        DungeonManiaController currController = new DungeonManiaController();
+        DungeonResponse currResponse = currController.newGame("clickableEntities2", "Standard");
+
+        // get the id of the mercenary
+        String mercenaryId = currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().getId();
+
+        // assert mercenary interactable immediately
+        assertTrue(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
+
+        // go left and collect the treasure
+        currController.tick(null, Direction.LEFT);
 
         // click on the mercenary
-        currController.interact(mercenaryId);
+        currResponse = currController.interact(mercenaryId);
 
         // assert no gold in inventory
         assertFalse(currResponse.getInventory()
@@ -134,11 +142,6 @@ public class DungeonTests {
 
         // assert mercenary not interactable anymore
         assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
-    }
-
-    @Test
-    public void testClickingMercenary() {
-        ;
     }
 
 

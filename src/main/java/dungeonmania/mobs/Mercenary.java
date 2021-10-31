@@ -44,13 +44,12 @@ public class Mercenary extends Mob{
      * @param amount an amount of money given
      * @return false if its not enough, true if the merc has become an ally
      */
-    public Boolean bribe(int amount) {
+    public void bribe(int amount) {
         price -= amount;
         if (price > 0) {
-            return false;
+            return;
         }
         super.changeFaction("ally");
-        return true;
     }
 
     @Override
@@ -78,17 +77,13 @@ public class Mercenary extends Mob{
         if (abs(posBetween.getX()) == 2 ||  abs(posBetween.getY()) == 2) {
             bribe(1);
         } else {
-            throw new InvalidActionException("Out of range");
+            throw new InvalidActionException("Mercenary out of range");
         }
     }
 
     @Override
     public void move(Direction direction) {
-        if ( charPosition != null ) {
-            super.move(MovementManager.shortestPath(super.getPosition(), charPosition));
-        } else {
-            ;
-        }
-
+        // observer not implemented
+        // super.move(MovementManager.shortestPath(super.getPosition(), charPosition));
     }
 }
