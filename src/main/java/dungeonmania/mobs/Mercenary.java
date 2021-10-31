@@ -1,5 +1,8 @@
 package dungeonmania.mobs;
 import dungeonmania.util.Position;
+
+import java.util.Random;
+
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 
@@ -8,9 +11,16 @@ public class Mercenary extends Mob{
     private Position charPosition;
     private int battleRadius;
     private Boolean battleInRadius;
+    private Armour armour;
 
     public Mercenary() {
         super();
+        Random rand = new Random();
+        if (rand.nextInt(5) == 4) {
+            armour = new Armour();
+        } else {
+            armour = null;
+        }
     }
     
     /**
@@ -26,6 +36,16 @@ public class Mercenary extends Mob{
         }
         super.changeFaction("ally");
         return true;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        int reducedDamage = damage;
+        if (armour != null) {
+            reducedDamage = armour.usedInDefense(reducedDamage);
+            armour.usedInBattle(this);
+        }
+        super.takeDamage(reducedDamage);
     }
 
     @Override

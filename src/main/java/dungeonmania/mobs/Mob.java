@@ -8,7 +8,6 @@ import dungeonmania.mobs.faction.*;
 public class Mob extends Entity implements Movement{
     private double health;
     private double attackDamage;
-    private boolean hasFought;
     private Faction faction;
     private Position position;
 
@@ -55,7 +54,18 @@ public class Mob extends Entity implements Movement{
     }
 
     @Override
-    public int getHealth() {
-        return (int)health;
+    public double getHealth() {
+        return health;
+    }
+    public int attack() {
+        return (int)attackDamage;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+    
+    public void takeDamage(int damage) {
+        setHealth(getHealth() - damage);
     }
 }
