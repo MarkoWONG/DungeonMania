@@ -7,16 +7,21 @@ import java.util.Random;
 
 public class ZombieToast extends Mob{
     
-    public ZombieToast() {
-        super();
-        Random rand = new Random();
+    public ZombieToast(Position position) {
+        super(position);
+        Random rand = new Random(System.currentTimeMillis());
         if (rand.nextInt(5) == 4) {
             armour = new Armour();
         } else {
             armour = null;
         }
     }
-    
+
+    @Override
+    public String getType() {
+        return "zombie_toast";
+    }
+
     @Override
     public void move(Direction d) {
         // get list of possible moves

@@ -101,7 +101,6 @@ public class MovementManager {
      * @return a random direction the entity can move in
      */
     private Direction getRandDirection(HashMap<Position, ArrayList<Entity>> oldMap, Entity entity) {
-        Position entityPosition = entity.getPosition();
         ArrayList<Direction> possibleMoves = new ArrayList<>();
 
         if (checkMove(oldMap, entity, Direction.UP)) {
@@ -117,7 +116,7 @@ public class MovementManager {
             possibleMoves.add(Direction.LEFT);
         }
 
-        Random rand = new Random();
+        Random rand = new Random(System.currentTimeMillis());
         int x = rand.nextInt(possibleMoves.size());
 
         return possibleMoves.get(x);
