@@ -17,7 +17,6 @@ public class Door extends StaticEntity{
 
     public void unlock(){
         this.isOpen = true;
-        this.setPosition(new Position(this.getPosition().getX(), this.getPosition().getY(), 0));
     }
 
     @Override
@@ -34,9 +33,11 @@ public class Door extends StaticEntity{
     /**
      * Attempts to unlock door
      * @param player
-     * @return true for succussful unlock, false otherwise
      */
     public boolean unlockDoor(PlayerCharacter player){
+        if (isOpen) {
+            return true;
+        }
         for (CollectableEntity item : player.getInventory()){
             if (item.getType().equals("key")){
                 Key playerKey = (Key) item;

@@ -17,8 +17,8 @@ public class Spider extends Mob {
 
      public Spider(Position position, int health, int ad) {
         super(position);
-         setAttackDamage(ad);
-         setHealth(health);
+        setAttackDamage(ad);
+        setHealth(health);
      }
 
     @Override

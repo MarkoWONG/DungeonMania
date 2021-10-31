@@ -122,7 +122,7 @@ public class Dungeon {
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
             String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
             String currEntColour = ((currObj.has("colour") && !currObj.isNull("colour"))) ? currObj.getString("colour") : "";
-            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? currObj.getString("key") : "";
+            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
             Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;

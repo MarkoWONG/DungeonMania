@@ -31,7 +31,7 @@ public class DifficultyTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
 
-        IntStream.range(0,6).forEach(tick -> currController.tick(null, Direction.NONE));
+        IntStream.range(0,4).forEach(tick -> currController.tick(null, Direction.NONE));
         currResponse = currController.tick(null, Direction.NONE);
 
         assertFalse(currResponse.getEntities()

@@ -28,7 +28,6 @@ public class Mercenary extends Mob{
         setAttackDamage(ad);
         setHealth(health);
         this.entities = entities;
-        this.characterTracker = entities.findPlayer();
         this.price = price;
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
@@ -78,6 +77,7 @@ public class Mercenary extends Mob{
 
     @Override
     public void move(Direction direction) {
+        this.characterTracker = entities.findPlayer();
         super.move(MovementManager.shortestPath(super.getPosition(), characterTracker.getPosition()));
     }
 }

@@ -3,6 +3,7 @@ package dungeonmania.movement;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.Boulder;
+import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
 import dungeonmania.movement.Movement;
 import dungeonmania.entity.Entity;
@@ -122,6 +123,9 @@ public class MovementManager {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
         ArrayList<Entity> tile = entities.search(newEntityPosition);
         for (Entity eachEntity : tile) {
+            if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
+                return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
+            }
             if (eachEntity.getPosition().getLayer() > entity.getPosition().getLayer()) {
                 return false;
             }

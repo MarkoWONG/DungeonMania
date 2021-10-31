@@ -15,7 +15,6 @@ import java.util.List;
 
 public class PlayerCharacter extends Entity implements Movement{
 
-    private EntityList entities;
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
     private Integer Health;
@@ -23,9 +22,8 @@ public class PlayerCharacter extends Entity implements Movement{
     private Integer invincibleTicks;
     private Integer invisibleTicks;
 
-    public PlayerCharacter(Position position,EntityList entities, int health, int ad) {
+    public PlayerCharacter(Position position, int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
-        this.entities = entities;
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
         this.Health = health;
