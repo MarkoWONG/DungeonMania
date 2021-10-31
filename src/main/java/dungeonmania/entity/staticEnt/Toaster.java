@@ -1,12 +1,16 @@
 package dungeonmania.entity.staticEnt;
 
 import dungeonmania.EntityList;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+
+import static java.lang.Math.abs;
 
 
 public class Toaster extends StaticEntity{
@@ -44,28 +48,12 @@ public class Toaster extends StaticEntity{
         }
     }
 
-    // Destory toaster if player with sword is adject to toaster 
-    public void destroyToaster() {
-
-//        entityMap.get(this.getPosition()).removeIf(ent -> ent.getType().equals("zombie_toast_spawner"));
-        // for (Position checkPos : this.getPosition().getAdjacentPositions()){
-        //     for (Entity ent : entityMap.get(checkPos)){
-        //         for ()
-        //         if (ent.getType().equals("player") && playerHasSword(ent)){
-        //             return true;
-        //         }
-        //     }
-        // }
-        // return false;
+    @Override
+    public void click(PlayerCharacter character) {
+        for (Position adjPositions : this.getPosition().getAdjacentPositions() ) {
+            if (character.getPosition().equals(adjPositions.asLayer(50)) && character.hasWeapon()) {
+                entityMap.remove(this);
+            }
+        }
     }
-    // // Need access to player Inventory OR have this function in PlayerCharater class 
-    // private boolean playerHasSword(Entity playerEnt){
-    //     PlayerCharacter player = (PlayerCharacter) playerEnt;
-    //     for (CollectableEntity item : player.getInventory()){
-    //         if (item.getType().equals("sword")){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 }

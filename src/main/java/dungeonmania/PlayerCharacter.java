@@ -3,6 +3,7 @@ package dungeonmania;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
+import dungeonmania.entity.collectables.Weapon;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.mobs.Mob;
 import dungeonmania.util.Direction;
@@ -167,6 +168,24 @@ public class PlayerCharacter extends Entity implements Movement{
         return null;
     }
 
+    public CollectableEntity getItemByType(String type) {
+        for (CollectableEntity eachEntity : inventory) {
+            if (eachEntity.getType().equals(type)) {
+                return eachEntity;
+            }
+        }
+        return null;
+    }
+
+    public boolean hasWeapon() {
+        for (CollectableEntity eachEntity : inventory) {
+            if (eachEntity instanceof Weapon) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Mob> getAllies() {
         return this.allies;
     }
@@ -197,10 +216,6 @@ public class PlayerCharacter extends Entity implements Movement{
         return "player";
     }
 
-    @Override
-    public boolean isInteractable() {
-        return false;
-    }
 
     public Integer getInvincibleTicks() {
         return invincibleTicks;

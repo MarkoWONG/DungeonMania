@@ -46,6 +46,8 @@ public abstract class Entity implements Interacts {
         return false;
     }
 
+    public void click(PlayerCharacter character) {} // nothing by default
+
     public void move(Direction direction) {
         ;
     }

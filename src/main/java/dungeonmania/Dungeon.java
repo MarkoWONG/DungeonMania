@@ -77,7 +77,13 @@ public class Dungeon {
         }
     }
 
-    public void deleteEntity(Entity entityTbd) {}
+    public void click(String entityId) {
+        Entity givenEntity = entities.searchId(entityId);
+        if (givenEntity == null) {
+            throw new IllegalArgumentException();
+        }
+        givenEntity.click(character);
+    }
 
 
     public void build(String item) {

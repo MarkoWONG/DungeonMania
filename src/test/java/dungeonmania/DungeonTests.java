@@ -95,7 +95,7 @@ public class DungeonTests {
 
 
     @Test
-    public void testClickingEntity() {
+    public void testClickingSpawner() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("clickableEntities", "Standard");
 
@@ -135,6 +135,14 @@ public class DungeonTests {
         // assert mercenary not interactable anymore
         assertFalse(currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().isInteractable());
     }
+
+    @Test
+    public void testClickingMercenary() {
+        ;
+    }
+
+
+
 
     @Test
     public void testBuilding() {

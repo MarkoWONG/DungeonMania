@@ -116,7 +116,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return new Mercenary(startPos);
+        return new Mercenary(startPos,1);
     }
 
     protected Entity makeZombie(Position startPos) {

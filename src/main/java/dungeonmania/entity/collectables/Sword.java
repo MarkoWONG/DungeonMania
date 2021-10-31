@@ -4,7 +4,7 @@ import dungeonmania.entity.Entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 
-public class Sword extends CollectableEntity{
+public class Sword extends CollectableEntity implements Weapon{
 
     private int durability;
 
