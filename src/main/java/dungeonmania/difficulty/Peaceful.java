@@ -1,6 +1,7 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.FightManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.PeacefulEntityFactory;
@@ -12,17 +13,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Peaceful extends  Difficulty{
-    public Peaceful(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
-        super(dungRef,movementManager,interactionManager,fightManager);
+    public Peaceful(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
+        super(dungRef,movementManager,fightManager);
     }
 
-    public HashMap<Position, ArrayList<Entity>> simulate(Direction movementDirection) {
-//        movementManager.moveChar(movementDirection);
+    public HashMap<Position, ArrayList<Entity>> simulate(HashMap<Position, ArrayList<Entity>> entitiesMap, Direction moveDir) {
+        entitiesMap = movementManager.moveChar(entitiesMap,moveDir);
 //        interactionManager.doCharInteractions();
-//        movementManager.moveMobs();
+        entitiesMap = movementManager.moveMobs(entitiesMap);
 //        interactionManager.doInteractions();
 //        movementManager.doMercenarySpMove();
-//        fightManager.resetHasFought();
+        return entitiesMap;
     }
 
     @Override

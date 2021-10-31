@@ -7,6 +7,9 @@ import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
+import dungeonmania.mobs.Mercenary;
+import dungeonmania.mobs.Spider;
+import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
@@ -80,7 +83,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos);
+        return new PlayerCharacter(startPos,20);
     }
 
     protected Entity makeWall(Position startPos) {
@@ -116,7 +119,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeZombie(Position startPos) {
-        return new Zombie(startPos);
+        return new ZombieToast(startPos);
     }
 
     protected Entity makeSpider(Position startPos) {

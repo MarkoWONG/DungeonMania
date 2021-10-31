@@ -1,6 +1,7 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.FightManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.HardEntityFactory;
@@ -12,21 +13,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Hard extends Difficulty{
-    public Hard(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
-        super(dungRef,movementManager,interactionManager,fightManager);
+    public Hard(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
+        super(dungRef,movementManager,fightManager);
     }
 
     // same simulation as standard difficulty, only entity factory has changes
     @Override
-    public HashMap<Position, ArrayList<Entity>> simulate(Direction movementDirection) {
-//        movementManager.moveChar(movementDirection);
-//        interactionManager.doCharInteractions();
-//        fightManager.doCharFights();
-//        movementManager.moveMobs();
+    public HashMap<Position, ArrayList<Entity>> simulate(HashMap<Position, ArrayList<Entity>> entitiesMap, Direction moveDir) {
+        entitiesMap = movementManager.moveChar(entitiesMap,moveDir);
+//      interactionManager.doCharInteractions();
+        fightManager.charFights(entitiesMap);
+        entitiesMap = movementManager.moveMobs(entitiesMap);
 //        interactionManager.doInteractions();
-//        fightManager.doCharFights();
+        fightManager.charFights(entitiesMap);
 //        movementManager.doMercenarySpMove();
-//        fightManager.resetHasFought();
+        fightManager.charFights(entitiesMap);
+        fightManager.resetHasFought(entitiesMap);
+        return entitiesMap;
     }
 
     @Override

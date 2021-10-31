@@ -7,6 +7,10 @@ import dungeonmania.util.Position;
 public class Armour extends CollectableEntity{
 
     private int durability;
+    public Armour() {
+        super(null);
+        this.durability = 3;
+    }
 
     public Armour(Position position){
         super(new Position(position.getX(), position.getY(), 40));
@@ -33,5 +37,10 @@ public class Armour extends CollectableEntity{
         if (durability <= 0){
             player.getInventory().removeIf(ent -> ent.equals(this));
         }
+    }
+
+    @Override
+    public int usedInDefense(int damage) {
+        return damage / 2;
     }
 }

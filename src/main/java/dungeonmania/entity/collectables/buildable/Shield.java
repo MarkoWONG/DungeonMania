@@ -34,4 +34,9 @@ public class Shield extends CollectableEntity {
         return "shield";
     }
 
+    @Override
+    public int usedInDefense(int damage) {
+        return damage / 2;
+    }
+
 }

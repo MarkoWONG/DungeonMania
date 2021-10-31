@@ -1,7 +1,7 @@
 package dungeonmania.entity.staticEnt;
 
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.Mob.Zombie;
+import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class Toaster extends StaticEntity{
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
-            new Zombie(this.getPosition());
+            new ZombieToast(this.getPosition());
             currentTickCount = 0;
         }
     }

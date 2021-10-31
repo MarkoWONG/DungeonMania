@@ -275,7 +275,7 @@ public class itemTests {
         square.add(mercenary);
         //do the fights
         FightManager fightManager = new FightManager();
-        double orginalHealth = character.getHealth();
+        Integer orginalHealth = character.getHealth();
         fightManager.doCharFights(character, square);
         assertTrue(orginalHealth > character.getHealth());
         character.useItem(healthPotion.getType());

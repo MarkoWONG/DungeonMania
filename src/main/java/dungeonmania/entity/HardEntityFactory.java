@@ -1,5 +1,6 @@
 package dungeonmania.entity;
 
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.Toaster;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
@@ -14,5 +15,10 @@ public class HardEntityFactory extends EntityFactory{
     @Override
     protected Entity makeToaster(Position startPos) {
         return new Toaster(startPos, 15, entityMap);
+    }
+
+    @Override
+    protected Entity makePlayer(Position startPos) {
+        return new PlayerCharacter(startPos,10);
     }
 }

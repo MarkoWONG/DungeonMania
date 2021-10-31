@@ -10,7 +10,7 @@ public class Arrow extends CollectableEntity {
 
     @Override
     public String getType() {
-        return null;
+        return "arrow";
     }
 
     @Override

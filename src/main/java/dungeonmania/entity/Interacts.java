@@ -7,9 +7,9 @@ import dungeonmania.entity.collectables.potion.InvisibilityPotion;
 import dungeonmania.entity.collectables.rare.OneRing;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Mob.Zombie;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Spider;
+import dungeonmania.mobs.ZombieToast;
 
 public interface Interacts {
     // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
@@ -33,7 +33,7 @@ public interface Interacts {
 
     // mobs
     void interact(Mercenary mercenary);
-    void interact(Zombie zombie);
+    void interact(ZombieToast zombie);
     void interact(Spider spider);
 
     // collectables

@@ -1,7 +1,6 @@
 package dungeonmania;
 
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.Mob.Mob;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.buildable.Build;
@@ -18,17 +17,17 @@ public class PlayerCharacter extends Entity implements Movement{
     private Position position;
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
-    private double Health;
-    private double attackDamage;
+    private Integer Health;
+    private Integer attackDamage;
     private Integer invincibleTicks;
     private Integer invisibleTicks;
 
-    public PlayerCharacter(Position position, Double health, Double attack, Double defense) {
+    public PlayerCharacter(Position position, Integer health) {
         super(position);
         this.position = position;
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
-        this.Health = 10;
+        this.Health = health;
         this.attackDamage = 1;
         this.invisibleTicks = 0;
         this.invincibleTicks = 0;
@@ -66,9 +65,71 @@ public class PlayerCharacter extends Entity implements Movement{
         return Build.getBuildables(inventory);
     }
 
+    @Override
+    public boolean canRevive() {
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("one_ring")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void revive() {
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("one_ring")) {
+                setHealth(20);
+                inventory.remove(e);
+            }
+        }
+    }
+
+    @Override
+    public void fight(Entity e) {
+        ;
+    }
+
+    @Override
+    public void fight(Mob mob) {
+        int mobAttack = mob.attack();
+        mob.takeDamage(attack());
+        takeDamage(mobAttack);
+    }
+
+    public int attack() {
+        int AD = (int)getAttackDamage();
+        ArrayList<String> typesUsed = new ArrayList<String>();
 
 
+        for (CollectableEntity e : inventory) {
+            if (!typesUsed.contains(e.getType())) {
+                AD = e.usedInAttack(AD);
+                e.usedInBattle(this);
+                typesUsed.add(e.getType());
+            }
+        }
 
+        for (Mob mob : allies) {
+            AD += mob.attack();
+        }
+        return AD;
+    }   
+
+    public void takeDamage(int damage) {
+        ArrayList<String> typesUsed = new ArrayList<String>();
+        int reducedDamage = damage;
+
+        for (CollectableEntity e : inventory) {
+            if (!typesUsed.contains(e.getType())) {
+                reducedDamage = e.usedInDefense(reducedDamage);
+                e.usedInBattle(this);
+                typesUsed.add(e.getType());
+            }
+        }
+        setHealth(getHealth() - reducedDamage);
+    }  
+    
     @Override
     public void startInteraction(Entity entity) {
 
@@ -102,11 +163,11 @@ public class PlayerCharacter extends Entity implements Movement{
         this.allies = allies;
     }
 
-    public double getHealth() {
+    public Integer getHealth() {
         return this.Health;
     }
 
-    public void setHealth(double Health) {
+    public void setHealth(Integer Health) {
         this.Health = Health;
     }
 
@@ -114,7 +175,7 @@ public class PlayerCharacter extends Entity implements Movement{
         return this.attackDamage;
     }
 
-    public void setAttackDamage(double attackDamage) {
+    public void setAttackDamage(Integer attackDamage) {
         this.attackDamage = attackDamage;
     }
 

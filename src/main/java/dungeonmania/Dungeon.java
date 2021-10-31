@@ -32,22 +32,21 @@ public class Dungeon {
     private PlayerCharacter character;
     private HashMap<Position, ArrayList<Entity>> entitiesMap = new HashMap<>();
     private MovementManager movementManager;
-    private InteractionManager interactionManager;
     private FightManager fightManager;
     private GoalManager goalManager;
     private EntityFactory entityFactory;
 
     public Dungeon(String dungeonName, String gameMode) {
-        this.gameMode = difficultySelector(gameMode);
-        this.entityFactory = this.gameMode.createEntityFactory(entitiesMap);
-        this.goalManager = new GoalManager(dungeonName,this);
-        createEntitiesMap_FromJson(entitiesMap, dungeonName);
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
+        this.goalManager = new GoalManager(dungeonName,this);
         this.movementManager = new MovementManager(character);
-        this.interactionManager = new InteractionManager();
         this.fightManager = new FightManager();
+        this.gameMode = difficultySelector(gameMode);
+        this.entityFactory = this.gameMode.createEntityFactory(entitiesMap);
+        createEntitiesMap_FromJson(entitiesMap, dungeonName);
         this.entry = character.getPosition();
+        fightManager.setCharacter(character);
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -55,8 +54,8 @@ public class Dungeon {
             // for each in theCharacter inventory
                 // if the item is iteMused
                     // item.use()
-        // this.entitiesMap = gameMode.simulate(movementDirection);
-        // notifyOfTick();
+         this.entitiesMap = gameMode.simulate(entitiesMap,movementDirection);
+         notifyOfTick();
     }
 
     private void notifyOfTick() {
@@ -80,16 +79,16 @@ public class Dungeon {
     }
 
     // will always be given a valid string, we do the checking in the controller
-    private Difficulty difficultySelector(String gameMode) {
+    private Difficulty difficultySelector(String gameMode) throws IllegalArgumentException {
         switch (gameMode) {
             case ("Peaceful"):
-                return new Peaceful(this,movementManager,interactionManager,fightManager);
+                return new Peaceful(this,movementManager,fightManager);
             case ("Standard"):
-                return new Standard(this,movementManager,interactionManager,fightManager);
+                return new Standard(this,movementManager,fightManager);
             case ("Hard"):
-                return new Hard(this,movementManager,interactionManager,fightManager);
+                return new Hard(this,movementManager,fightManager);
             default:
-                return new Standard(this,movementManager,interactionManager,fightManager);
+                throw new IllegalArgumentException("Game mode does not exist");
         }
     }
 

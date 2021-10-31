@@ -13,6 +13,7 @@ import java.util.List;
 public class DungeonManiaController {
 
     private Dungeon currDungeon;
+    private DungeonResponseAdapter currAdapter;
 
     public DungeonManiaController() {
     }
@@ -43,7 +44,9 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
-        return null;
+        currDungeon = new Dungeon(dungeonName,gameMode);
+        this.currAdapter = new DungeonResponseAdapter(currDungeon);
+        return currAdapter.createDungResponse();
     }
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {
@@ -59,7 +62,8 @@ public class DungeonManiaController {
     }
     // itemUsed refers to the id!!
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
-        return null;
+        currDungeon.tick(itemUsed,movementDirection);
+        return currAdapter.createDungResponse();
     }
 
     public DungeonResponse interact(String entityId) throws IllegalArgumentException, InvalidActionException {

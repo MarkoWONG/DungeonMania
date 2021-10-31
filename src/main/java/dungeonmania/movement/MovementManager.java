@@ -56,7 +56,7 @@ public class MovementManager {
     }
 
 
-    private HashMap<Position, ArrayList<Entity>> moveChar(HashMap<Position, ArrayList<Entity>> oldMap, Direction moveDir) {
+    public HashMap<Position, ArrayList<Entity>> moveChar(HashMap<Position, ArrayList<Entity>> oldMap, Direction moveDir) {
         HashMap<Position, ArrayList<Entity>> newMap = new HashMap<>();
         checkBoulder(oldMap,moveDir);
         for (ArrayList<Entity> es : oldMap.values()) {
@@ -78,7 +78,7 @@ public class MovementManager {
      * calls move for every mob on the map
      * passes a random, possible direction for the mob to move
      */
-    private HashMap<Position, ArrayList<Entity>> moveMobs(HashMap<Position, ArrayList<Entity>> oldMap) {
+    public HashMap<Position, ArrayList<Entity>> moveMobs(HashMap<Position, ArrayList<Entity>> oldMap) {
         HashMap<Position, ArrayList<Entity>> newMap = new HashMap<>();
         for (ArrayList<Entity> es : oldMap.values()) {
             for (Entity e : es) {

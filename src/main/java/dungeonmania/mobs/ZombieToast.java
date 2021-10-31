@@ -1,12 +1,15 @@
 package dungeonmania.mobs;
 
+import dungeonmania.entity.collectables.Armour;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.movement.Movement;
 import java.util.Random;
 
 public class ZombieToast extends Mob{
-    
+
+    private Armour armour;
+
     public ZombieToast(Position position) {
         super(position);
         Random rand = new Random(System.currentTimeMillis());

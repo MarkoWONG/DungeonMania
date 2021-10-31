@@ -15,9 +15,14 @@ public class Spider extends Mob {
      * Starts at -1, then moves to 0 and starts going in a circle
      */
 
-     public Spider() {
-        super();
+     public Spider(Position position) {
+        super(position);
      }
+
+    @Override
+    public String getType() {
+        return "spider";
+    }
 
     @Override
     public void move(Direction direction) {

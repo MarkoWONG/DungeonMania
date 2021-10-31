@@ -1,4 +1,5 @@
 package dungeonmania.mobs;
+import dungeonmania.entity.collectables.Armour;
 import dungeonmania.util.Position;
 
 import java.util.Random;
@@ -13,8 +14,8 @@ public class Mercenary extends Mob{
     private Boolean battleInRadius;
     private Armour armour;
 
-    public Mercenary() {
-        super();
+    public Mercenary(Position position) {
+        super(position);
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
             armour = new Armour();
@@ -22,7 +23,12 @@ public class Mercenary extends Mob{
             armour = null;
         }
     }
-    
+
+    @Override
+    public boolean isInteractable() {
+        return true;
+    }
+
     /**
      * bribe the mercenary to change its faction. 
      * the amount given is cumilative
@@ -46,6 +52,11 @@ public class Mercenary extends Mob{
             armour.usedInBattle(this);
         }
         super.takeDamage(reducedDamage);
+    }
+
+    @Override
+    public String getType() {
+        return "mercenary";
     }
 
     @Override
