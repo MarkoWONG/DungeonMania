@@ -41,6 +41,10 @@ public class CombatTests {
         fightManager.setCharacter(character);
         fightManager.doCharFights();
 
+        assertTrue(zombie.getArmour() == null);
+        assertTrue(mercenary.getArmour() == null);
+        assertTrue(character.getInventory().isEmpty());
+        
         assertTrue(character.getHealth() == 9);
         assertTrue(spider.getHealth() == -3 );
         assertTrue(zombie.getHealth() == 4);
@@ -55,7 +59,7 @@ public class CombatTests {
         fightManager.doCharFights();
         assertTrue(character.getHealth() == 6);
         assertTrue(zombie.getHealth() == 1);
-        assertTrue(mercenary.getHealth() == 10);
+        assertTrue(mercenary.getHealth() == 6);
 
         assertTrue(square.contains(character));
         assertTrue(square.contains(zombie));
