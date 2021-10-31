@@ -4,6 +4,7 @@ import dungeonmania.Dungeon;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.HardEntityFactory;
+import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -17,7 +18,7 @@ public class Hard extends Difficulty{
 
     // same simulation as standard difficulty, only entity factory has changes
     @Override
-    public void simulate(Direction movementDirection) {
+    public HashMap<Position, ArrayList<Entity>> simulate(Direction movementDirection) {
 //        movementManager.moveChar(movementDirection);
 //        interactionManager.doCharInteractions();
 //        fightManager.doCharFights();

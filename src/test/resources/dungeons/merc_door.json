@@ -1,0 +1,70 @@
+
+{
+    "entities": [
+    {
+        "x": 0,
+        "y": 0,
+        "type": "door",
+        "key": 1
+    },
+    {
+        "x": 1,
+        "y": 0,
+        "type": "door",
+        "key": 2
+    },
+    {
+        "x": 2,
+        "y": 0,
+        "type": "door",
+        "key": 3
+    },
+    {
+        "x": 0,
+        "y": 1,
+        "type": "door",
+        "key": 4
+    },
+    {
+        "x": 1,
+        "y": 1,
+        "type": "mercenary"
+    },
+    {
+        "x": 2,
+        "y": 1,
+        "type": "door",
+        "key": 5
+    },
+    {
+        "x": 0,
+        "y": 2,
+        "type": "door",
+        "key": 6
+    },
+    {
+        "x": 1,
+        "y": 2,
+        "type": "door",
+        "key": 7
+    },
+    {
+        "x": 2,
+        "y": 2,
+        "type": "door",
+        "key": 8
+    },
+    {
+        "x": 1,
+        "y": 3,
+        "type": "key",
+        "key": 7
+    },
+    {
+        "x": 1,
+        "y": 4,
+        "type": "player"
+    }
+
+]
+}

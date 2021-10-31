@@ -8,6 +8,8 @@ import dungeonmania.entity.collectables.rare.OneRing;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Mob.Zombie;
+import dungeonmania.mobs.Mercenary;
+import dungeonmania.mobs.Spider;
 
 public interface Interacts {
     // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
