@@ -31,13 +31,21 @@ public class MovementManager {
     public void doInteractions() {
         for (Entity eachEntity : entities) {
             for (Entity eachOtherEntity : entities.searchTile(eachEntity)) {
-                eachEntity.interact(eachOtherEntity);
+                eachEntity.startInteraction(eachOtherEntity);
+            }
+        }
+        // clean up picked up items
+        for(int i = entities.size() - 1; i >= 0; --i) {
+            Entity curr = entities.get(i);
+            if(curr.getPosition() == null) {
+                entities.remove(i);
             }
         }
     }
 
 
     public void moveChar(Direction moveDir) {
+        checkBoulder(moveDir);
         ArrayList<Entity> player = entities.search("player");
         for (Entity thePlayer : player) {
             if (checkMove(thePlayer,moveDir)) {

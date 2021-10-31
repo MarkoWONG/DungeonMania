@@ -16,6 +16,7 @@ public class Mercenary extends Mob{
 
     public Mercenary(Position position) {
         super(new Position(position.getX(), position.getY(),50));
+        this.setHealth(15);
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
             armour = new Armour();

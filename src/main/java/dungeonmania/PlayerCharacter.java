@@ -14,6 +14,7 @@ import java.util.List;
 
 public class PlayerCharacter extends Entity implements Movement{
 
+    private EntityList entities;
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
     private Integer Health;
@@ -21,8 +22,9 @@ public class PlayerCharacter extends Entity implements Movement{
     private Integer invincibleTicks;
     private Integer invisibleTicks;
 
-    public PlayerCharacter(Position position, Integer health) {
+    public PlayerCharacter(Position position, Integer health, EntityList entities) {
         super(new Position(position.getX(), position.getY(),50));
+        this.entities = entities;
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
         this.Health = health;
@@ -33,6 +35,7 @@ public class PlayerCharacter extends Entity implements Movement{
 
     public void addItemToInventory(CollectableEntity item) {
         inventory.add(item);
+        item.setPosition(null);
     }
 
     public void removeItemFromInventory(CollectableEntity item) {
@@ -132,7 +135,7 @@ public class PlayerCharacter extends Entity implements Movement{
     
     @Override
     public void startInteraction(Entity entity) {
-
+        entity.interact(this);
     }
 
     // Getter and Setters
@@ -153,6 +156,15 @@ public class PlayerCharacter extends Entity implements Movement{
                 }
             }
         }
+    }
+
+    public CollectableEntity getItemById(String id) {
+        for (CollectableEntity eachEntity : inventory) {
+            if (eachEntity.getId().equals(id)) {
+                return eachEntity;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Mob> getAllies() {

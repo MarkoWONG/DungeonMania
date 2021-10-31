@@ -14,6 +14,9 @@ public class EntityList extends ArrayList<Entity> {
         int givenY = position.getY();
         for (Entity eachEntity : this) {
             Position currEntPosition = eachEntity.getPosition();
+            if (currEntPosition == null) {
+                continue;
+            }
             int currX = currEntPosition.getX();
             int currY = currEntPosition.getY();
             if (givenX == currX && givenY == currY) {
@@ -39,6 +42,9 @@ public class EntityList extends ArrayList<Entity> {
      * @return
      */
     public ArrayList<Entity> searchTile(Entity entity) {
+        if (entity.getPosition() == null) {
+            return new ArrayList<>();
+        }
         ArrayList<Entity> input = search(entity.getPosition());
         ArrayList<Entity> output = new ArrayList<>();
         for (Entity eachEntity : input) {
@@ -53,6 +59,15 @@ public class EntityList extends ArrayList<Entity> {
         for (Entity eachEntity : this) {
             if (eachEntity instanceof PlayerCharacter) {
                 return (PlayerCharacter) eachEntity;
+            }
+        }
+        return null;
+    }
+
+    public Entity searchId(String id) {
+        for (Entity eachEntity : this) {
+            if (eachEntity.getId().equals(id)) {
+                return eachEntity;
             }
         }
         return null;

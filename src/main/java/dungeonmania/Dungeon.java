@@ -6,8 +6,10 @@ import dungeonmania.difficulty.Peaceful;
 import dungeonmania.difficulty.Standard;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.entity.collectables.CollectableEntity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goal.GoalManager;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
@@ -51,12 +53,22 @@ public class Dungeon {
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
-        // if item is used
-            // for each in theCharacter inventory
-                // if the item is iteMused
-                    // item.use()
+        if (itemUsed != null) {
+            useItemId(itemUsed);
+        }
         gameMode.simulate(entities,movementDirection);
         notifyOfTick();
+    }
+
+    private void useItemId(String itemUsed) {
+        Entity givenItem = character.getItemById(itemUsed);
+        if (!(givenItem instanceof Usable)) {
+            throw new IllegalArgumentException();
+        }
+        if (!getInventory().contains(givenItem)) {
+            throw new InvalidActionException(givenItem.getType() + "not in inventory");
+        }
+        ((Usable) givenItem).useItem(character);
     }
 
     private void notifyOfTick() {

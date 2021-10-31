@@ -27,12 +27,13 @@ public class FightManager {
     }
 
     private void cleanUp () {
-        for (Entity e : entities) {
-            if (e.getHealth() <= 0) {
-                if (!e.canRevive()) {
-                     entities.remove(e);
+        for(int i = entities.size() - 1; i >= 0; --i) {
+            Entity curr = entities.get(i);
+            if(curr.getHealth() <= 0) {
+                if (!curr.canRevive()) {
+                    entities.remove(i);
                 } else {
-                     e.revive();
+                    curr.revive();
                 }
             }
         }

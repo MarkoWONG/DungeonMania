@@ -69,14 +69,17 @@ public class DungeonTests {
         DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
 
         // get the potion, use it
-        currController.tick(null, Direction.LEFT);
+        currResponse = currController.tick(null, Direction.LEFT);
 
         assertTrue(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)
                 .collect(Collectors.toList())
                 .contains("invincibility_potion"));
 
-        currController.tick("invincibility_potion", Direction.LEFT);
+        // get item ID, only one item possible so we can hardcode this
+        String invisPotionId = currResponse.getInventory().get(0).getId();
+
+        currResponse = currController.tick(invisPotionId, Direction.LEFT);
 
         // assert no potion in inventory
         assertFalse(currResponse.getInventory()
