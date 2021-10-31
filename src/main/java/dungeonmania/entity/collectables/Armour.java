@@ -7,6 +7,10 @@ import dungeonmania.util.Position;
 public class Armour extends CollectableEntity{
 
     private int durability;
+    public Armour() {
+        super(null);
+        this.durability = 3;
+    }
 
     public Armour(Position position){
         super(new Position(position.getX(), position.getY(), 40));
