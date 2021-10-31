@@ -20,12 +20,17 @@ public class GoalManager {
 
     private Goal createGoal(String dungeonName) throws IllegalArgumentException {
         String currFileStr;
+        JSONObject currGoals;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
         } catch (IOException e) {
             throw new IllegalArgumentException("Dungeon does not exist");
         }
-        JSONObject currGoals = new JSONObject(currFileStr).getJSONObject("goal-condition");
+        try {
+            currGoals = new JSONObject(currFileStr).getJSONObject("goal-condition");
+        } catch(Exception e) {
+            return new NoGoal();
+        }
         return doGoal(currGoals);
     }
 

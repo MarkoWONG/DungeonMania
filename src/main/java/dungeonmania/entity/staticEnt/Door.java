@@ -12,7 +12,7 @@ public class Door extends StaticEntity{
     public Door(Position position, String key){
         super(new Position(position.getX(), position.getY(), 80));
         this.isOpen = false;  
-        this.key = Integer.parseInt(key);
+        this.key = !key.isBlank() ? Integer.parseInt(key) : -1;
     }
 
     public void unlock(){

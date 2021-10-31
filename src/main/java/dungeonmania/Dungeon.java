@@ -103,10 +103,9 @@ public class Dungeon {
         for (int i = 0; i < currEntities.length() ; i++) {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
-            String currEntType = currObj.getString("type");
-            String currEntColour = currObj.getString("colour");
-            String currDoorKey= currObj.getString("key");
-            String currKeyDoor = currObj.getString("door");
+            String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
+            String currEntColour = ((currObj.has("colour") && !currObj.isNull("colour"))) ? currObj.getString("colour") : "";
+            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? currObj.getString("key") : "";
             Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;

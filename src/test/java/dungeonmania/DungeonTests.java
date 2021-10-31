@@ -17,7 +17,7 @@ public class DungeonTests {
     public void testEntityMapCreation_StaticOnly() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("dungeon_static", "Standard");
-        assertEquals(7, (int) currResponse.getEntities().size());
+        assertEquals(8, (int) currResponse.getEntities().size());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("wall")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("exit")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());

@@ -37,13 +37,13 @@ public abstract class EntityFactory {
                 return makeExit(startPos);
             case "boulder":
                 return makeBoulder(startPos);
-            case "floorswitch":
+            case "switch":
                 return makeFloorSwitch(startPos);
             case "door":
                 return makeDoor(startPos, key);
             case "portal":
                 return makePortal(startPos, colour);
-            case "toaster":
+            case "zombie_toast_spawner":
                 return makeToaster(startPos);
              case "mercenary":
                  return makeMercenary(startPos);
@@ -55,11 +55,11 @@ public abstract class EntityFactory {
                 return makeTreasure(startPos);
             case "key":
                 return makeKey(startPos, key);
-            case "healthpotion":
+            case "health_potion":
                 return makeHealthPotion(startPos);
-            case "invincibilitypotion":
+            case "invincibility_potion":
                 return makeInvincibilityPotion(startPos);
-            case "invisibilitypotion":
+            case "invisibility_potion":
                 return makeInvisibilityPotion(startPos);
             case "wood":
                 return makeWood(startPos);
@@ -71,7 +71,7 @@ public abstract class EntityFactory {
                 return makeSword(startPos);
             case "armour":
                 return makeArmour(startPos);
-            case "onering":
+            case "one_ring":
                 return makeOneRing(startPos);
             case "shield":
                 return makeShield();

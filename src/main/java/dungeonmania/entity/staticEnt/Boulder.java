@@ -12,7 +12,7 @@ public class Boulder extends StaticEntity implements Movement{
 
     @Override
     public String getType() {
-        return "Boulder";
+        return "boulder";
     }
 
 
