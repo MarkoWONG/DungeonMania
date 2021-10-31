@@ -1,31 +1,47 @@
 package dungeonmania;
 
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.buildables.Build;
+import dungeonmania.entity.Mob.Mob;
+import dungeonmania.entity.collectables.CollectableEntity;
+import dungeonmania.entity.collectables.Usable;
+import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.util.Position;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCharacter extends Entity {
-
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
     private double Health;
     private double attackDamage;
-    private double defense;
+    private Position position;
+    private Integer invincibleTicks;
+    private Integer invisibleTicks;
+    
 
     public PlayerCharacter(Position position) {
         super(position);
+        this.position = position;
+        this.inventory = new ArrayList<>();
+        this.allies = new ArrayList<>();
+        this.Health = 10;
+        this.attackDamage = 1;
+        this.invisibleTicks = 0;
+        this.invincibleTicks = 0;
+    }
+
+
+    public void addItemToInventory(CollectableEntity item) {
+        ; //REMEMBER TO Remove Entity from Map
     }
 
     public void addItemToInventory(Entity item) {
         ;
     }
 
-    public void removeItem(CollectableEntity item) {
-        ;
+    public void removeItemFromInventory(CollectableEntity item){
+        
     }
 
     public void consume(List<String> items) {
@@ -39,7 +55,7 @@ public class PlayerCharacter extends Entity {
             }
         }
         for (CollectableEntity eachItemTBD : itemsTBD) {
-            removeItem(eachItemTBD);
+            removeItemFromInventory(eachItemTBD);
         }
     }
 
@@ -52,10 +68,99 @@ public class PlayerCharacter extends Entity {
     @Override
     public void fight(Mob mob) {
 
-    }
+     }
 
     @Override
     public void startInteraction(Entity entity) {
 
     }
+
+    // Getter and Setters
+    public ArrayList<CollectableEntity> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(ArrayList<CollectableEntity> inventory) {
+        this.inventory = inventory;
+    }
+
+    public void useItem(String itemType) {
+        for (CollectableEntity eachItem : inventory) {
+            if (eachItem.getType().equals(itemType)) {
+                if (eachItem instanceof Usable) {
+                    ((Usable) eachItem).useItem(this);
+                    return;
+                }
+            }
+        }
+    }
+
+    public ArrayList<Mob> getAllies() {
+        return this.allies;
+    }
+
+    public void setAllies(ArrayList<Mob> allies) {
+        this.allies = allies;
+    }
+
+    public double getHealth() {
+        return this.Health;
+    }
+
+    public void setHealth(double Health) {
+        this.Health = Health;
+    }
+
+    public double getAttackDamage() {
+        return this.attackDamage;
+    }
+
+    public void setAttackDamage(double attackDamage) {
+        this.attackDamage = attackDamage;
+    }
+
+    public Position getPosition() {
+        return this.position;
+    }
+
+    @Override
+    public String getType() {
+        return "player";
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return false;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Integer getInvincibleTicks() {
+        return invincibleTicks;
+    }
+
+    public void setInvincibleTicks(Integer invincibleTicks) {
+        this.invincibleTicks = invincibleTicks;
+    }
+
+    public Integer getInvisibleTicks() {
+        return this.invisibleTicks;
+    }
+
+    public void setInvisibleTicks(Integer invisibleTicks) {
+        this.invisibleTicks = invisibleTicks;
+    }
+
+    @Override
+    public void incrementTick() {
+        if (invincibleTicks > 0) {
+            invincibleTicks--;
+        }
+        if (invisibleTicks > 0) {
+            invisibleTicks--;
+        }
+    }
+
 }

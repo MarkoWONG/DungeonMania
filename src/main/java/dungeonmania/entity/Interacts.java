@@ -1,7 +1,13 @@
 package dungeonmania.entity;
 
+import dungeonmania.entity.collectables.*;
+import dungeonmania.entity.collectables.potion.HealthPotion;
+import dungeonmania.entity.collectables.potion.InvincibilityPotion;
+import dungeonmania.entity.collectables.potion.InvisibilityPotion;
+import dungeonmania.entity.collectables.rare.OneRing;
+import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Entity;
+import dungeonmania.entity.Mob.Zombie;
 
 public interface Interacts {
     // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
@@ -16,9 +22,9 @@ public interface Interacts {
 
     // static entities
     void interact(Wall wall);
-    void interact(Exit wall);
+    void interact(Exit exit);
     void interact(Boulder boulder);
-    void interact(floorSwitch floorSwitch);
+    void interact(Switch floorSwitch);
     void interact(Door door);
     void interact(Portal portal);
     void interact(Toaster toaster);

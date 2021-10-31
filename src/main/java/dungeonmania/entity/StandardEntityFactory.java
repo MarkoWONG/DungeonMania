@@ -1,4 +1,7 @@
 package dungeonmania.entity;
+import dungeonmania.util.Position;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import dungeonmania.util.Position;
 

@@ -1,30 +1,28 @@
 package dungeonmania.entity;
 
-import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.collectables.*;
+import dungeonmania.entity.collectables.potion.HealthPotion;
+import dungeonmania.entity.collectables.potion.InvincibilityPotion;
+import dungeonmania.entity.collectables.potion.InvisibilityPotion;
+import dungeonmania.entity.collectables.rare.OneRing;
 import dungeonmania.util.Position;
+import dungeonmania.entity.staticEnt.*;
+import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.Mob.*;
+// import dungeonmania.entity.collectables.*;
+// import dungeonmania.entity.collectables.potion.*;
+// import dungeonmania.entity.collectables.rare.*;
+
 import java.util.UUID;
 
-public abstract class Entity implements Interacts, Fights {
+public abstract class Entity implements Interacts {
 
     private Position position;
     private final String id;
-    private final String type;
-    private final String otherInfo; // For Door's matching key and Portal's colour
-    public Entity(Position position, String type) {
+    public Entity(Position position) {
         this.id = UUID.randomUUID().toString();
         this.position = position;
-        this.type = type;
-        this.otherInfo = null;
     }
-
-    public Entity(Position position, String type, String otherInfo) {
-        this.id = UUID.randomUUID().toString();
-        this.position = position;
-        this.type = type;
-        this.otherInfo = otherInfo;
-    }
-
-
 
     public void setPosition(Position newPosition) {
         position = newPosition;
@@ -40,24 +38,27 @@ public abstract class Entity implements Interacts, Fights {
 
     abstract public String getType();
 
-    abstract public boolean isInteractable();
-
-    public void incrementTick() {
-        return;
+    public boolean isInteractable() {
+        return false;
     }
 
-    // none of these do anything by default you need to override them in the specific class to implement the behaviour
-    // startFight and startInteraction just call .fight(this) when overridden
-
-    @Override
-    public void startFight(PlayerCharacter playerCharacter) {
-        // playerCharacter.fight(this); example override for playerCharacter
-    }
-
-    @Override
     public void fight(Mob mob) {
 
     }
+
+    public void incrementTick(){}
+    // none of these do anything by default you need to override them in the specific class to implement the behaviour
+    // startFight and startInteraction just call .fight(this) when overridden
+
+    // @Override
+    // public void startFight(PlayerCharacter playerCharacter) {
+    //     // playerCharacter.fight(this); example override for playerCharacter
+    // }
+
+    // @Override
+    // public void fight(Mob mob) {
+
+    // }
 
     @Override
     public void startInteraction(Entity entity) {
@@ -80,7 +81,7 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void interact(Exit wall) {
+    public void interact(Exit exit) {
 
     }
 
@@ -90,7 +91,7 @@ public abstract class Entity implements Interacts, Fights {
     }
 
     @Override
-    public void interact(floorSwitch floorSwitch) {
+    public void interact(Switch floorSwitch) {
 
     }
 

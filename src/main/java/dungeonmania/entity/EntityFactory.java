@@ -1,18 +1,27 @@
 package dungeonmania.entity;
 
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.collectables.buildable.Bow;
+import dungeonmania.entity.collectables.buildable.Shield;
+import dungeonmania.entity.staticEnt.*;
+import dungeonmania.entity.collectables.*;
+import dungeonmania.entity.collectables.potion.*;
+import dungeonmania.entity.collectables.rare.*;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 public abstract class EntityFactory {
 
-    private HashMap<Position, ArrayList<Entity>> entityMap;
+    protected HashMap<Position, ArrayList<Entity>> entityMap;
+    protected Random random;
 
-    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap ) {
+    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
         this.entityMap = entityMap;
+        this.random = new Random(System.currentTimeMillis());
     }
 
     public Entity create(String entityType, Position startPos, String colour, String key) {
@@ -28,21 +37,21 @@ public abstract class EntityFactory {
             case "floorswitch":
                 return makeFloorSwitch(startPos);
             case "door":
-                return makeDoor(startPos);
+                return makeDoor(startPos, key);
             case "portal":
-                return makePortal(startPos);
+                return makePortal(startPos, colour);
             case "toaster":
                 return makeToaster(startPos);
-            case "mercenary":
-                return makeMercenary(startPos);
-            case "zombie":
-                return makeZombie(startPos);
-            case "spider":
-                return makeSpider(startPos);
+             case "mercenary":
+                 return makeMercenary(startPos);
+             case "zombie":
+                 return makeZombie(startPos);
+             case "spider":
+                 return makeSpider(startPos);
             case "treasure":
                 return makeTreasure(startPos);
             case "key":
-                return makeKey(startPos);
+                return makeKey(startPos, key);
             case "healthpotion":
                 return makeHealthPotion(startPos);
             case "invincibilitypotion":
@@ -65,100 +74,102 @@ public abstract class EntityFactory {
                 return makeShield();
             case "bow":
                 return makeBow();
+            default:
+                return null; // should never happen
         }
     }
 
-    public Entity makePlayer(Position startPos) {
+    protected Entity makePlayer(Position startPos) {
         return new PlayerCharacter(startPos);
     }
 
-    public Entity makeWall(Position startPos) {
+    protected Entity makeWall(Position startPos) {
         return new Wall(startPos);
     }
 
-    public Entity makeExit(Position startPos) {
+    protected Entity makeExit(Position startPos) {
         return new Exit(startPos);
     }
 
-    public Entity makeBoulder(Position startPos) {
+    protected Entity makeBoulder(Position startPos) {
         return new Boulder(startPos);
     }
 
-    public Entity makeFloorSwitch(Position startPos) {
-        return new floorSwitch(startPos);
+    protected Entity makeFloorSwitch(Position startPos) {
+        return new Switch(startPos);
     }
 
-    public Entity makeDoor(Position startPos) {
-        return new Door(startPos);
+    protected Entity makeDoor(Position startPos, String keyValue) {
+        return new Door(startPos,keyValue);
     }
 
-    public Entity makePortal(Position startPos) {
-        return new Portal(startPos);
+    protected Entity makePortal(Position startPos, String colourValue) {
+        return new Portal(startPos,colourValue,entityMap);
     }
 
-    public Entity makeToaster(Position startPos) {
-        return new Toaster(startPos);
+    protected Entity makeToaster(Position startPos) {
+        return new Toaster(startPos,20,entityMap);
     }
 
-    public Entity makeMercenary(Position startPos) {
+    protected Entity makeMercenary(Position startPos) {
         return new Mercenary(startPos);
     }
 
-    public Entity makeZombie(Position startPos) {
+    protected Entity makeZombie(Position startPos) {
         return new Zombie(startPos);
     }
 
-    public Entity makeSpider(Position startPos) {
+    protected Entity makeSpider(Position startPos) {
         return new Spider(startPos);
     }
 
-    public Entity makeTreasure(Position startPos) {
+    protected Entity makeTreasure(Position startPos) {
         return new Treasure(startPos);
     }
 
-    public Entity makeKey(Position startPos) {
-        return new Key(startPos);
+    protected Entity makeKey(Position startPos, String keyValue) {
+        return new Key(startPos, keyValue);
     }
 
-    public Entity makeHealthPotion(Position startPos) {
+    protected Entity makeHealthPotion(Position startPos) {
         return new HealthPotion(startPos);
     }
 
-    public Entity makeInvincibilityPotion(Position startPos) {
+    protected Entity makeInvincibilityPotion(Position startPos) {
         return new InvincibilityPotion(startPos);
     }
 
-    public Entity makeInvisibilityPotion(Position startPos) {
+    protected Entity makeInvisibilityPotion(Position startPos) {
         return new InvisibilityPotion(startPos);
     }
 
-    public Entity makeWood(Position startPos) {
+    protected Entity makeWood(Position startPos) {
         return new Wood(startPos);
     }
 
-    public Entity makeArrow(Position startPos) {
+    protected Entity makeArrow(Position startPos) {
         return new Arrow(startPos);
     }
 
-    public Entity makeBomb(Position startPos) {
-        return new Bomb(startPos);
+    protected Entity makeBomb(Position startPos) {
+        return new Bomb(startPos,entityMap);
     }
 
-    public Entity makeSword(Position startPos) {
+    protected Entity makeSword(Position startPos) {
         return new Arrow(startPos);
     }
 
-    public Entity makeArmour(Position startPos) {
+    protected Entity makeArmour(Position startPos) {
         return new Arrow(startPos);
     }
 
-    public Entity makeOneRing(Position startPos) {
+    protected Entity makeOneRing(Position startPos) {
         return new OneRing(startPos);
     }
 
-    public Entity makeBow() { return new Bow(); }
+    protected Entity makeBow() { return new Bow(); }
 
-    public Entity makeShield() { return new Shield(); }
+    protected Entity makeShield() { return new Shield(3); }
 
 
 }

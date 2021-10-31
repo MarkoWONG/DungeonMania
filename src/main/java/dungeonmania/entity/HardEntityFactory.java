@@ -1,7 +1,7 @@
 package dungeonmania.entity;
 
+import dungeonmania.entity.staticEnt.Toaster;
 import dungeonmania.util.Position;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ public class HardEntityFactory extends EntityFactory{
     }
 
     @Override
-    public Entity makeToaster(Position startPos) {
-        return new Toaster(startPos,15);
+    protected Entity makeToaster(Position startPos) {
+        return new Toaster(startPos, 15, entityMap);
     }
 }
