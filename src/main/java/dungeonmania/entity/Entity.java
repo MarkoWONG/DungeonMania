@@ -19,9 +19,12 @@ public abstract class Entity implements Interacts {
 
     private Position position;
     private final String id;
+    private boolean hasFought;
+
     public Entity(Position position) {
         this.id = UUID.randomUUID().toString();
         this.position = position;
+        hasFought = false;
     }
 
     public void setPosition(Position newPosition) {
@@ -53,9 +56,24 @@ public abstract class Entity implements Interacts {
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
 
-    @Override
     public void startFight(PlayerCharacter playerCharacter) {
         playerCharacter.fight(this); //example override for playerCharacter
+        hasFought = true;
+    }
+
+    public void resetHasFought() {
+        hasFought = false;
+    }
+
+    public boolean hasFought() {
+        return hasFought;
+    }
+
+    public boolean canRevive() {
+        return false;
+    }
+    public void revive() {
+
     }
 
     @Override
@@ -176,5 +194,9 @@ public abstract class Entity implements Interacts {
     @Override
     public void interact(OneRing oneRing) {
 
+    }
+
+    public Double getHealth() {
+        return 1.0;
     }
 }

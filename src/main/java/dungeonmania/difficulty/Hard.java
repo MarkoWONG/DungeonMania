@@ -25,7 +25,7 @@ public class Hard extends Difficulty{
 //        interactionManager.doInteractions();
 //        fightManager.doCharFights();
 //        movementManager.doMercenarySpMove();
-//        fightManager.resetHasFought();
+//        fightManager.resetHasFought(dungRef.getEntitiesMap());
     }
 
     @Override

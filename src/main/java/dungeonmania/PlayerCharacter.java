@@ -63,7 +63,25 @@ public class PlayerCharacter extends Entity {
         return Build.getBuildables(inventory);
     }
 
+    @Override
+    public boolean canRevive() {
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("one_ring")) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    @Override
+    public void revive() {
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("one_ring")) {
+                setHealth(20);
+                inventory.remove(e);
+            }
+        }
+    }
 
     @Override
     public void fight(Entity e) {
@@ -88,6 +106,10 @@ public class PlayerCharacter extends Entity {
                 e.usedInBattle(this);
                 typesUsed.add(e.getType());
             }
+        }
+
+        for (Mob mob : allies) {
+            AD += mob.attack();
         }
         return AD;
     }   
@@ -138,7 +160,7 @@ public class PlayerCharacter extends Entity {
         this.allies = allies;
     }
 
-    public double getHealth() {
+    public Double getHealth() {
         return this.Health;
     }
 
