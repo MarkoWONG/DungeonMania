@@ -24,4 +24,9 @@ public class Bow extends CollectableEntity {
     public String getType() {
         return "bow";
     }
+
+    @Override
+    public int usedInAttack(int attackDamage) {
+        return attackDamage * 2;
+    }
 }

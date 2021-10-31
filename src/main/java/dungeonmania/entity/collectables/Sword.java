@@ -35,4 +35,9 @@ public class Sword extends CollectableEntity{
             player.getInventory().removeIf(ent -> ent.equals(this));
         }
     }
+
+    @Override
+    public int usedInAttack(int attackDamage) {
+        return attackDamage + 2;
+    }
 }

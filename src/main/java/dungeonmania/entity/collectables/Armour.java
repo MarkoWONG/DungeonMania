@@ -34,4 +34,9 @@ public class Armour extends CollectableEntity{
             player.getInventory().removeIf(ent -> ent.equals(this));
         }
     }
+
+    @Override
+    public int usedInDefense(int damage) {
+        return damage / 2;
+    }
 }

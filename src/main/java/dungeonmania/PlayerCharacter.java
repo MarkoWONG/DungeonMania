@@ -72,10 +72,40 @@ public class PlayerCharacter extends Entity {
 
     @Override
     public void fight(Mob mob) {
-        int mobAttack = mob.getHealth();
-        mob.takeDamage(getAttackDamage());
+        int mobAttack = mob.attack();
+        mob.takeDamage(attack());
+        takeDamage(mobAttack);
     }
 
+    public int attack() {
+        int AD = (int)getAttackDamage();
+        ArrayList<String> typesUsed = new ArrayList<String>();
+
+
+        for (CollectableEntity e : inventory) {
+            if (!typesUsed.contains(e.getType())) {
+                AD = e.usedInAttack(AD);
+                e.usedInBattle(this);
+                typesUsed.add(e.getType());
+            }
+        }
+        return AD;
+    }   
+
+    public void takeDamage(int damage) {
+        ArrayList<String> typesUsed = new ArrayList<String>();
+        int reducedDamage = damage;
+
+        for (CollectableEntity e : inventory) {
+            if (!typesUsed.contains(e.getType())) {
+                reducedDamage = e.usedInDefense(reducedDamage);
+                e.usedInBattle(this);
+                typesUsed.add(e.getType());
+            }
+        }
+        setHealth(getHealth() - reducedDamage);
+    }  
+    
     @Override
     public void startInteraction(Entity entity) {
 

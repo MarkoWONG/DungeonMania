@@ -15,4 +15,14 @@ public abstract class CollectableEntity extends Entity{
     public void usedInBattle(PlayerCharacter player) {
         ; // default case for each collectable
     }
+
+    public int usedInAttack(int attackDamage) {
+        return attackDamage;
+    }
+
+    public int usedInDefense(int damage) {
+        return damage;
+    }
+
+
 }
