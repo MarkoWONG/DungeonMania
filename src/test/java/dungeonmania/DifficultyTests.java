@@ -79,7 +79,8 @@ public class DifficultyTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest2", "Hard");
 
-        IntStream.range(0,16).forEach(tick -> currController.tick(null, Direction.NONE));
+        IntStream.range(0,14).forEach(tick -> currController.tick(null, Direction.NONE));
+        currResponse = currController.tick(null, Direction.NONE);
 
         assertTrue(currResponse.getEntities()
                 .stream().map(EntityResponse::getType)
