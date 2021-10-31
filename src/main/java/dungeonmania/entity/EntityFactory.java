@@ -84,7 +84,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos,entityMap,20,5);
+        return new PlayerCharacter(startPos,20,5);
     }
 
     protected Entity makeWall(Position startPos) {
