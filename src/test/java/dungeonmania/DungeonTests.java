@@ -31,7 +31,7 @@ public class DungeonTests {
     public void testEntityMapCreation_MobsOnly() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("dungeon_moving", "Standard");
-        assertEquals(3, (int) currResponse.getEntities().size());
+        assertEquals(4, (int) currResponse.getEntities().size());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
@@ -49,7 +49,7 @@ public class DungeonTests {
     public void testEntityMapCreation_CollectableOnly() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("dungeon_collectable", "Standard");
-        assertEquals(11, (int) currResponse.getEntities().size());
+        assertEquals(12, (int) currResponse.getEntities().size());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("treasure")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("key")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("health_potion")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
@@ -70,6 +70,12 @@ public class DungeonTests {
 
         // get the potion, use it
         currController.tick(null, Direction.LEFT);
+
+        assertTrue(currResponse.getInventory()
+                .stream().map(ItemResponse::getType)
+                .collect(Collectors.toList())
+                .contains("invincibility_potion"));
+
         currController.tick("invincibility_potion", Direction.LEFT);
 
         // assert no potion in inventory

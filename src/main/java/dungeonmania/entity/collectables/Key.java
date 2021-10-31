@@ -7,7 +7,7 @@ public class Key extends CollectableEntity {
     private final int keyIdentifer;
     public Key(Position position, String keyIdentifer){
         super(new Position(position.getX(), position.getY(), 40));
-        this.keyIdentifer = Integer.parseInt(keyIdentifer);
+        this.keyIdentifer = !keyIdentifer.isBlank() ? Integer.parseInt(keyIdentifer) : -1;
     }
 
     @Override

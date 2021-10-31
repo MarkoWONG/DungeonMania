@@ -40,13 +40,14 @@ public class Dungeon {
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
         this.goalManager = new GoalManager(dungeonName,this);
-        this.movementManager = new MovementManager(character);
+        this.movementManager = new MovementManager();
         this.fightManager = new FightManager();
         this.gameMode = difficultySelector(gameMode);
         this.entityFactory = this.gameMode.createEntityFactory(entitiesMap);
         createEntitiesMap_FromJson(entitiesMap, dungeonName);
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
+        movementManager.setCharacter(character);
     }
 
     public void tick(String itemUsed, Direction movementDirection) {

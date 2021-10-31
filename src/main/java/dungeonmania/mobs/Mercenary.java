@@ -15,7 +15,7 @@ public class Mercenary extends Mob{
     private Armour armour;
 
     public Mercenary(Position position) {
-        super(position);
+        super(new Position(position.getX(), position.getY(),50));
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
             armour = new Armour();
@@ -61,6 +61,11 @@ public class Mercenary extends Mob{
 
     @Override
     public void move(Direction direction) {
-        super.move(MovementManager.shortestPath(super.getPosition(), charPosition));
+        if ( charPosition != null ) {
+            super.move(MovementManager.shortestPath(super.getPosition(), charPosition));
+        } else {
+            ;
+        }
+
     }
 }

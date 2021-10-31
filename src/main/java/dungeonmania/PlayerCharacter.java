@@ -14,7 +14,6 @@ import java.util.List;
 
 public class PlayerCharacter extends Entity implements Movement{
 
-    private Position position;
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
     private Integer Health;
@@ -23,8 +22,7 @@ public class PlayerCharacter extends Entity implements Movement{
     private Integer invisibleTicks;
 
     public PlayerCharacter(Position position, Integer health) {
-        super(position);
-        this.position = position;
+        super(new Position(position.getX(), position.getY(),50));
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
         this.Health = health;
@@ -42,7 +40,9 @@ public class PlayerCharacter extends Entity implements Movement{
     }
 
     @Override
-    public void move(Direction direction) {}
+    public void move(Direction direction) {
+        setPosition(getPosition().translateBy(direction));
+    }
 
 
 
@@ -178,10 +178,7 @@ public class PlayerCharacter extends Entity implements Movement{
     public void setAttackDamage(Integer attackDamage) {
         this.attackDamage = attackDamage;
     }
-
-    public Position getPosition() {
-        return this.position;
-    }
+    
 
     @Override
     public String getType() {
@@ -191,10 +188,6 @@ public class PlayerCharacter extends Entity implements Movement{
     @Override
     public boolean isInteractable() {
         return false;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public Integer getInvincibleTicks() {

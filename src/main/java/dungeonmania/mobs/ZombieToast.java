@@ -26,13 +26,6 @@ public class ZombieToast extends Mob{
     }
 
     @Override
-    public void move(Direction d) {
-        // get list of possible moves
-        // generate a random number within bounds of list length
-        // move in corresponding direction
-    }
-
-    @Override
     public void teleport(Position p) {
         // does nothing
     }

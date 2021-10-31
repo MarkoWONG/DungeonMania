@@ -19,9 +19,9 @@ public class Peaceful extends  Difficulty{
 
     public HashMap<Position, ArrayList<Entity>> simulate(HashMap<Position, ArrayList<Entity>> entitiesMap, Direction moveDir) {
         entitiesMap = movementManager.moveChar(entitiesMap,moveDir);
-//        interactionManager.doCharInteractions();
+        movementManager.doInteractions(entitiesMap);
         entitiesMap = movementManager.moveMobs(entitiesMap);
-//        interactionManager.doInteractions();
+        movementManager.doInteractions(entitiesMap);
 //        movementManager.doMercenarySpMove();
         return entitiesMap;
     }

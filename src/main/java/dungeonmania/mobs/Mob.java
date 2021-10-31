@@ -26,7 +26,7 @@ public abstract class Mob extends Entity implements Movement{
     @Override
     public void move(Direction d) {
         // just a standard move
-        position = position.translateBy(d);
+        setPosition(getPosition().translateBy(d));
     }
 
     /**
@@ -36,7 +36,7 @@ public abstract class Mob extends Entity implements Movement{
     @Override
     public void teleport(Position p) {
         // just a standard teleport
-        position = p;
+        setPosition(p);
     }
 
     public boolean isEnemy() {

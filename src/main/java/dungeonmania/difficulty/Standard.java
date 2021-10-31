@@ -20,10 +20,10 @@ public class Standard extends Difficulty {
     @Override
     public HashMap<Position, ArrayList<Entity>> simulate(HashMap<Position, ArrayList<Entity>> entitiesMap, Direction moveDir) {
         entitiesMap = movementManager.moveChar(entitiesMap,moveDir);
-//      interactionManager.doCharInteractions();
+        movementManager.doInteractions(entitiesMap);
         fightManager.charFights(entitiesMap);
         entitiesMap = movementManager.moveMobs(entitiesMap);
-//        interactionManager.doInteractions();
+        movementManager.doInteractions(entitiesMap);
         fightManager.charFights(entitiesMap);
 //        movementManager.doMercenarySpMove();
         fightManager.charFights(entitiesMap);

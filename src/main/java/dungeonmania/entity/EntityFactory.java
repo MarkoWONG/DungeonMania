@@ -47,7 +47,7 @@ public abstract class EntityFactory {
                 return makeToaster(startPos);
              case "mercenary":
                  return makeMercenary(startPos);
-             case "zombie":
+             case "zombie_toast":
                  return makeZombie(startPos);
              case "spider":
                  return makeSpider(startPos);
@@ -159,11 +159,11 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeSword(Position startPos) {
-        return new Arrow(startPos);
+        return new Sword(startPos,3);
     }
 
     protected Entity makeArmour(Position startPos) {
-        return new Arrow(startPos);
+        return new Armour(startPos);
     }
 
     protected Entity makeOneRing(Position startPos) {

@@ -17,7 +17,10 @@ import java.lang.Math;
 public class MovementManager {
     private PlayerCharacter player;
 
-    public MovementManager( PlayerCharacter player) {
+    public MovementManager() {
+    }
+
+    public void setCharacter(PlayerCharacter player) {
         this.player = player;
     }
 
@@ -48,11 +51,16 @@ public class MovementManager {
 
     }*/
 
-    private void doInteractions() {
-        // ???
-        // fights
-        // switches
-        // other things?? idk
+    public void doInteractions(HashMap<Position, ArrayList<Entity>> theMap) {
+        for (ArrayList<Entity> eachPosition : theMap.values()) {
+            for (Entity eachEntity : eachPosition) {
+                for (Entity eachOtherEntity : eachPosition) {
+                    if (!eachEntity.getId().equals(eachOtherEntity.getId())) {
+                        eachEntity.interact(eachOtherEntity);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -131,10 +139,12 @@ public class MovementManager {
         // if the player is walking into a boulder then move boulder
         Position newPlayerPos = player.getPosition().translateBy(direction);
         ArrayList<Entity> thingsInPosition = oldMap.get(newPlayerPos);
-        if (thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).count() == 1) {
-            Boulder boulder = (Boulder) thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).collect(Collectors.toList()).get(0);
-            if (checkMove(oldMap, boulder, direction)) {
-                boulder.move(direction);
+        if (thingsInPosition != null) {
+            if (thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).count() == 1) {
+                Boulder boulder = (Boulder) thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).collect(Collectors.toList()).get(0);
+                if (checkMove(oldMap, boulder, direction)) {
+                    boulder.move(direction);
+                }
             }
         }
     }
@@ -146,10 +156,11 @@ public class MovementManager {
     private Boolean checkMove(HashMap<Position, ArrayList<Entity>> oldMap, Entity entity, Direction direction) {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
         ArrayList<Entity> thingsInPosition = oldMap.get(newEntityPosition);
-
-        for(Entity e : thingsInPosition) {
-            if (e.getPosition().getLayer() >= entity.getPosition().getLayer()) {
-                return false;
+        if (thingsInPosition != null) {
+            for (Entity e : thingsInPosition) {
+                if (e.getPosition().getLayer() > entity.getPosition().getLayer()) {
+                    return false;
+                }
             }
         }
         return true;
