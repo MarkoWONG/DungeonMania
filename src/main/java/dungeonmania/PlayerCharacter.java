@@ -5,22 +5,25 @@ import dungeonmania.entity.Mob.Mob;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.buildable.Build;
+import dungeonmania.mobs.Mob;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerCharacter extends Entity {
+
+public class PlayerCharacter extends Entity implements Movement{
+
+    private Position position;
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
     private double Health;
     private double attackDamage;
-    private Position position;
     private Integer invincibleTicks;
     private Integer invisibleTicks;
-    
 
-    public PlayerCharacter(Position position) {
+    public PlayerCharacter(Position position, Double health, Double attack, Double defense) {
         super(position);
         this.position = position;
         this.inventory = new ArrayList<>();
@@ -31,18 +34,18 @@ public class PlayerCharacter extends Entity {
         this.invincibleTicks = 0;
     }
 
-
     public void addItemToInventory(CollectableEntity item) {
-        ; //REMEMBER TO Remove Entity from Map
+        inventory.add(item);
     }
 
-    public void addItemToInventory(Entity item) {
-        ;
+    public void removeItemFromInventory(CollectableEntity item) {
+        inventory.remove(item);
     }
 
-    public void removeItemFromInventory(CollectableEntity item){
-        
-    }
+    @Override
+    public void move(Direction direction) {}
+
+
 
     public void consume(List<String> items) {
         ArrayList<CollectableEntity> itemsTBD = new ArrayList<CollectableEntity>();
@@ -65,10 +68,6 @@ public class PlayerCharacter extends Entity {
 
 
 
-    @Override
-    public void fight(Mob mob) {
-
-     }
 
     @Override
     public void startInteraction(Entity entity) {

@@ -5,6 +5,10 @@ import dungeonmania.entity.collectables.potion.HealthPotion;
 import dungeonmania.entity.collectables.potion.InvincibilityPotion;
 import dungeonmania.entity.collectables.potion.InvisibilityPotion;
 import dungeonmania.entity.collectables.rare.OneRing;
+import dungeonmania.mobs.Mercenary;
+import dungeonmania.mobs.Mob;
+import dungeonmania.mobs.Spider;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
@@ -42,23 +46,19 @@ public abstract class Entity implements Interacts {
         return false;
     }
 
-    public void fight(Mob mob) {
-
+    public void move(Direction direction) {
+        ;
     }
+
 
     public void incrementTick(){}
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
 
-    // @Override
-    // public void startFight(PlayerCharacter playerCharacter) {
-    //     // playerCharacter.fight(this); example override for playerCharacter
-    // }
+     public void startFight(PlayerCharacter playerCharacter) {
+          playerCharacter.fight(this); // example override for playerCharacter
+     }
 
-    // @Override
-    // public void fight(Mob mob) {
-
-    // }
 
     @Override
     public void startInteraction(Entity entity) {

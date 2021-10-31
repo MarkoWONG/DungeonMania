@@ -9,6 +9,7 @@ import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.goal.GoalManager;
+import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
 import dungeonmania.util.Position;
@@ -39,13 +40,14 @@ public class Dungeon {
     public Dungeon(String dungeonName, String gameMode) {
         this.gameMode = difficultySelector(gameMode);
         this.entityFactory = this.gameMode.createEntityFactory(entitiesMap);
-        this.movementManager = new MovementManager();
-        this.interactionManager = new InteractionManager();
-        this.fightManager = new FightManager();
         this.goalManager = new GoalManager(dungeonName,this);
         createEntitiesMap_FromJson(entitiesMap, dungeonName);
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
+        this.movementManager = new MovementManager(character);
+        this.interactionManager = new InteractionManager();
+        this.fightManager = new FightManager();
+        this.entry = character.getPosition();
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -53,7 +55,7 @@ public class Dungeon {
             // for each in theCharacter inventory
                 // if the item is iteMused
                     // item.use()
-        // gameMode.simulate(movementDirection);
+        // this.entitiesMap = gameMode.simulate(movementDirection);
         // notifyOfTick();
     }
 
@@ -70,7 +72,8 @@ public class Dungeon {
 
     public void build(String item) {
         if (Build.getBuildables(getInventory()).contains(item)) {
-            character.addItemToInventory(entityFactory.create(item, null,null,null));
+            // can be safely typecast because we check if it's a valid item in the controller?
+            character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null));
             character.consume(Build.getRecipe(item));
         }
 

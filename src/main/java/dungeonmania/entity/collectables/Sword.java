@@ -26,7 +26,6 @@ public class Sword extends CollectableEntity{
     @Override
     public void interact(PlayerCharacter player){
         player.addItemToInventory(this);
-        player.setAttackDamage(player.getAttackDamage() + 2);
     }
 
     public void usedInBattle(PlayerCharacter player){
