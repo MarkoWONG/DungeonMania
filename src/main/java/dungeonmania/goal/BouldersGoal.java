@@ -8,6 +8,6 @@ public class BouldersGoal implements Goal{
 
     @Override
     public String toString() {
-        return ":boulder";
+        return compute() ? "" : ":boulders";
     }
 }
