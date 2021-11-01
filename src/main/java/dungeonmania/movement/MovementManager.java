@@ -123,6 +123,9 @@ public class MovementManager {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+                if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
+                    return true;
+                }
                 return false;
             }
         }
@@ -137,6 +140,9 @@ public class MovementManager {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+                if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
+                    return true;
+                }
                 return false;
             }
         }
