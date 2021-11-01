@@ -1,9 +1,7 @@
 package dungeonmania.mobs;
 
 import dungeonmania.entity.collectables.Armour;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-import dungeonmania.movement.Movement;
 import java.util.Random;
 
 public class ZombieToast extends Mob{
@@ -14,9 +12,9 @@ public class ZombieToast extends Mob{
         setHealth(health);
         Random rand = new Random(System.currentTimeMillis());
         if (rand.nextInt(5) == 4) {
-            setArmour(new Armour());
+            super.setArmour(new Armour());
         } else {
-            setArmour(null);
+            super.setArmour(null);
         }
     }
 
@@ -33,9 +31,9 @@ public class ZombieToast extends Mob{
     @Override
     public void takeDamage(int damage) {
         int reducedDamage = damage;
-        if (getArmour() != null) {
-            reducedDamage = getArmour().usedInDefense(reducedDamage);
-            getArmour().usedInBattle(this);
+        if (super.getArmour() != null) {
+            reducedDamage = super.getArmour().usedInDefense(reducedDamage);
+            super.getArmour().usedInBattle(this);
         }
         super.takeDamage(reducedDamage);
     }
