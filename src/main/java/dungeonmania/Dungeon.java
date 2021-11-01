@@ -87,10 +87,15 @@ public class Dungeon {
 
 
     public void build(String item) {
+        if (!item.equals("bow") && !item.equals("shield")) {
+            throw new IllegalArgumentException();
+        }
         if (Build.getBuildables(getInventory()).contains(item)) {
             // can be safely typecast because we check if it's a valid item in the controller?
             character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null));
             character.consume(Build.getRecipe(item));
+        } else {
+            throw new InvalidActionException("Missing required items");
         }
 
     }
