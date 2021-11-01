@@ -2,19 +2,15 @@ package dungeonmania.movement;
 
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.staticEnt.Boulder;
+import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
-import dungeonmania.movement.Movement;
-import dungeonmania.entity.Entity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.stream.Collectors;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class MovementManager {
     private PlayerCharacter player;
@@ -133,25 +129,43 @@ public class MovementManager {
         return true;
     }
 
+    public static Boolean staticCheckMove(Entity entity, Direction direction) {
+        Position newEntityPosition = entity.getPosition().translateBy(direction);
+        ArrayList<Entity> tile = entities.search(newEntityPosition);
+        for (Entity eachEntity : tile) {
+            if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
+                return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
+            }
+            if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * 
      * @param a the position of some entity a
      * @param b the position of some entity b
      * @return the direction a must travel to get to b
      */
-    public static Direction shortestPath(Position a, Position b) {
-        Position btwn = Position.calculatePositionBetween(a, b);
+    public static Direction shortestPath(Entity a, Entity b) {
+        Position btwn = Position.calculatePositionBetween(a.getPosition(), b.getPosition());
         int xDistance = btwn.getX();
         int yDistance = btwn.getY();
         Direction d = Direction.NONE;
 
         if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
-            d = (yDistance > 0) ? Direction.UP : Direction.DOWN;
+            d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
         } else { // further away on the x axis OR equal
             d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
         } 
 
-        return d;
+        if (staticCheckMove(a, d)) {
+            return d;
+        } else {
+            return Direction.NONE;
+        }
     }
 
 }
