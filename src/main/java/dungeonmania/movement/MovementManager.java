@@ -132,7 +132,7 @@ public class MovementManager {
         return true;
     }
 
-    public static Boolean staticCheckMove(Entity entity, Direction direction) {
+    public static Boolean staticCheckMove(Entity entity, Direction direction, EntityList entities) {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
         ArrayList<Entity> tile = entities.search(newEntityPosition);
         for (Entity eachEntity : tile) {
@@ -155,7 +155,7 @@ public class MovementManager {
      * @param b the position of some entity b
      * @return the direction a must travel to get to b
      */
-    public static Direction shortestPath(Entity a, Entity b) {
+    public static Direction shortestPath(Entity a, Entity b, EntityList entities) {
         Position btwn = Position.calculatePositionBetween(a.getPosition(), b.getPosition());
         int xDistance = btwn.getX();
         int yDistance = btwn.getY();
@@ -167,7 +167,7 @@ public class MovementManager {
             d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
         } 
 
-        if (staticCheckMove(a, d)) {
+        if (staticCheckMove(a, d, entities)) {
             return d;
         } else {
             return Direction.NONE;
