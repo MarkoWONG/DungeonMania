@@ -30,14 +30,14 @@ public class DungeonAdapterTests {
         Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
-        assertEquals(7, (int) currResponse.getEntities().size());
+        assertEquals(8, (int) currResponse.getEntities().size());
         // this test is already done by DungeonTests (more or less), so we'll keep it short
     }
 
     @Test
     public void testItemResponse() {
         Dungeon currDungeon = new Dungeon("dungeon_collectable","Standard");
-        IntStream.range(0,10).forEach(tick -> currDungeon.tick(null, Direction.DOWN));
+        IntStream.range(0,10).forEach(tick -> currDungeon.tick(null, Direction.LEFT));
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         List<String> allItems = currResponse.getInventory().stream().map(ItemResponse::getType).collect(Collectors.toList());
