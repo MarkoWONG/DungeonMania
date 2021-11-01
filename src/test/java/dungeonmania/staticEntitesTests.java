@@ -187,7 +187,7 @@ public class staticEntitesTests {
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.RIGHT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,3)));
         assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(5,3)));
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
