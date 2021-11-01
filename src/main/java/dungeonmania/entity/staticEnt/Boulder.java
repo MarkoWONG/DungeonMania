@@ -1,6 +1,7 @@
 package dungeonmania.entity.staticEnt;
-import dungeonmania.Movement;
+
 import dungeonmania.entity.Entity;
+import dungeonmania.movement.Movement;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -24,9 +25,15 @@ public class Boulder extends StaticEntity implements Movement{
  
     // move method
     // Assumes boulder move is always valid checked in collison 
+    @Override
     public void move(Direction playerDirection){
         Position newBoulderPostion = this.getPosition().translateBy(playerDirection);
         this.setPosition(newBoulderPostion);
+    }
+
+    @Override
+    public void teleport(Position position) {
+        this.setPosition(position);
     }
 
     //Checking if the new boulder position is valid Need to have a list of surrounding entities // in collision
