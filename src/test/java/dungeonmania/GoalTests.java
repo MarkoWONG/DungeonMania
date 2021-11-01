@@ -67,4 +67,11 @@ public class GoalTests {
         currResponse = currController.tick(null, Direction.RIGHT);
         assertEquals(":boulders",currResponse.getGoals());
     }
+
+    @Test
+    public void testAndGoalsComplete2() {
+        DungeonManiaController currController = new DungeonManiaController();
+        DungeonResponse currResponse = currController.newGame("advanced","Standard");
+        assertEquals("( :mercenary AND :treasure )",currResponse.getGoals());
+    }
 }
