@@ -19,6 +19,9 @@ public class Build {
         if (currInv.containsAll(Shield.getRecipe())) {
             output.add("shield");
         }
+        if (currInv.containsAll(Shield.getRecipe2())) {
+            output.add("shield");
+        }
         return output;
     }
 
