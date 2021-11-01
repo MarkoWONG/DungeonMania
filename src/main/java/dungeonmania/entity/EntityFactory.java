@@ -39,6 +39,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast_spawner")) {return makeToaster(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("mercenary")) {return makeMercenary(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast")) {return makeZombie(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("spider")) {return makeSpider(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("treasure")) {return makeTreasure(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("key")) {return makeKey(startPos, key);}
         if (entityType.toLowerCase(Locale.ROOT).contains("health_potion")) {return makeHealthPotion(startPos);}
@@ -52,7 +53,6 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("one_ring")) {return makeOneRing(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
-        
         return null;
     }
 
