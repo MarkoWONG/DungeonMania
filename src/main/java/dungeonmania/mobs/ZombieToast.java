@@ -11,7 +11,7 @@ public class ZombieToast extends Mob{
     private Armour armour;
 
     public ZombieToast(Position position, int health, int ad) {
-        super(position);
+        super(new Position(position.getX(), position.getY(),50));
         setAttackDamage(ad);
         setHealth(health);
         Random rand = new Random(System.currentTimeMillis());

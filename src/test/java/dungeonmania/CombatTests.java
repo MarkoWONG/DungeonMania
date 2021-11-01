@@ -22,7 +22,7 @@ public class CombatTests {
         Entity zombie = new ZombieToast(position, 10, 2);
         Entity floorSwitch = new Switch(position);
         Entity mercenary = new Mercenary(position, 1, square, 15, 10);
-        PlayerCharacter character = new PlayerCharacter(position, square, 20, 5);
+        PlayerCharacter character = new PlayerCharacter(position, 20, 5);
         square.add(character);
         square.add(spider);
         square.add(zombie);

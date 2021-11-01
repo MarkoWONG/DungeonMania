@@ -126,7 +126,7 @@ public class MovementManager {
             if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
-            if (eachEntity.getPosition().getLayer() > entity.getPosition().getLayer()) {
+            if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
                 return false;
             }
         }

@@ -159,19 +159,19 @@ public class CollisionTests {
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
 
-        controller.tick(null, Direction.RIGHT);
+        response = controller.tick(null, Direction.RIGHT);
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
 
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.RIGHT);
-        controller.tick(null, Direction.RIGHT);
-        controller.tick(null, Direction.UP);
+        response = controller.tick(null, Direction.DOWN);
+        response = controller.tick(null, Direction.RIGHT);
+        response = controller.tick(null, Direction.RIGHT);
+        response = controller.tick(null, Direction.UP);
 
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(3, 0))).count());
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
 
-        controller.tick(null, Direction.LEFT);
+        response = controller.tick(null, Direction.LEFT);
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         
@@ -182,21 +182,12 @@ public class CollisionTests {
         DungeonManiaController controller = new DungeonManiaController();
         DungeonResponse response = controller.newGame("mob_col", "Standard");
 
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(2, 1))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(0, 2))).count());
-
-        controller.tick(null, Direction.NONE);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(2, 1))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(0, 1))).count());
-
         for (int i = 0; i < 10; i++) {
-            controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(2, 1))).count());
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(0, 1))).count());
+            response = controller.tick(null, Direction.NONE);
+            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(0, -1))).count());
+            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, -1))).count());
+            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
+            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         }
-        // mobs cannot move as there is a mob in the other space
     }
 }

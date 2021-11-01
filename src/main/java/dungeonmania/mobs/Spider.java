@@ -16,7 +16,7 @@ public class Spider extends Mob {
      */
 
      public Spider(Position position, int health, int ad) {
-        super(position);
+        super(new Position(position.getX(), position.getY(),80));
         setAttackDamage(ad);
         setHealth(health);
      }
