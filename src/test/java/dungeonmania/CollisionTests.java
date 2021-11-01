@@ -176,18 +176,4 @@ public class CollisionTests {
         assertTrue(entityAtPosition("boulder",response,new Position(1, 0)));
         
     }
-
-    @Test
-    public void testCollisions_mobToMob() {
-        DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("mob_col", "Standard");
-
-        for (int i = 0; i < 10; i++) {
-            response = controller.tick(null, Direction.NONE);
-            assertTrue(entityAtPosition("zombie_toast",response,new Position(0, -1)));
-            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, -1)));
-            assertTrue(entityAtPosition("zombie_toast",response,new Position(0, 0)));
-            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, 0)));
-        }
-    }
 }
