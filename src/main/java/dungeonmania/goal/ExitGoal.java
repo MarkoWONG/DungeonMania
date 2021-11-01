@@ -8,6 +8,6 @@ public class ExitGoal implements Goal {
 
     @Override
     public String toString() {
-        return ":exit";
+        return compute() ? "" : ":exit";
     }
 }
