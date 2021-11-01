@@ -8,17 +8,15 @@ import java.util.Random;
 
 public class ZombieToast extends Mob{
 
-    private Armour armour;
-
     public ZombieToast(Position position, int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
         setAttackDamage(ad);
         setHealth(health);
         Random rand = new Random(System.currentTimeMillis());
         if (rand.nextInt(5) == 4) {
-            armour = new Armour();
+            setArmour(new Armour());
         } else {
-            armour = null;
+            setArmour(null);
         }
     }
 
@@ -35,9 +33,9 @@ public class ZombieToast extends Mob{
     @Override
     public void takeDamage(int damage) {
         int reducedDamage = damage;
-        if (armour != null) {
-            reducedDamage = armour.usedInDefense(reducedDamage);
-            armour.usedInBattle(this);
+        if (getArmour() != null) {
+            reducedDamage = getArmour().usedInDefense(reducedDamage);
+            getArmour().usedInBattle(this);
         }
         super.takeDamage(reducedDamage);
     }
