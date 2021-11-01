@@ -94,7 +94,7 @@ public class PlayerCharacter extends Entity implements Movement{
 
     @Override
     public void fight(Mob mob) {
-        int mobAttack = mob.getAttackDamage();
+        int mobAttack = mob.getAttackDamage() * mob.getHealth() / 10;
         mob.takeDamage(attack());
         takeDamage(mobAttack);
     }
@@ -115,13 +115,12 @@ public class PlayerCharacter extends Entity implements Movement{
         for (Mob mob : allies) {
             AD += mob.getAttackDamage();
         }
-        return AD;
+        return AD * getHealth() / 5;
     }   
 
     public void takeDamage(int damage) {
         ArrayList<String> typesUsed = new ArrayList<String>();
         int reducedDamage = damage;
-
         for (CollectableEntity e : inventory) {
             if (!typesUsed.contains(e.getType())) {
                 reducedDamage = e.usedInDefense(reducedDamage);
@@ -129,6 +128,7 @@ public class PlayerCharacter extends Entity implements Movement{
                 typesUsed.add(e.getType());
             }
         }
+        
         setHealth(getHealth() - reducedDamage);
     }  
     
