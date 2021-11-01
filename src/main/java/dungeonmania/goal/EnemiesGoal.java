@@ -9,6 +9,6 @@ public class EnemiesGoal implements Goal {
     @Override
     public String toString() {
         // mercenary represents all entities
-        return ":mercenary";
+        return compute() ? "" : ":mercenary";
     }
 }

@@ -22,6 +22,10 @@ public class Shield extends CollectableEntity {
         return Arrays.asList("wood","wood","treasure");
     }
 
+    public static List<String> getRecipe2() {
+        return Arrays.asList("wood","wood","key");
+    }
+
     public void usedInBattle(PlayerCharacter player){
         durability--;
         if (durability <= 0){
@@ -32,6 +36,11 @@ public class Shield extends CollectableEntity {
     @Override
     public String getType() {
         return "shield";
+    }
+
+    @Override
+    public int usedInDefense(int damage) {
+        return damage / 2;
     }
 
 }

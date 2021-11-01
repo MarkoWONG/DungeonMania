@@ -1,5 +1,7 @@
 package dungeonmania.mobs;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.Armour;
 import dungeonmania.mobs.faction.IFaction;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -7,15 +9,36 @@ import dungeonmania.movement.Movement;
 import dungeonmania.mobs.faction.*;
 
 public abstract class Mob extends Entity implements Movement{
-    private double health;
-    private double attackDamage;
+    private Integer health;
+    private Integer attackDamage;
     private Faction faction;
-    private Position position;
+    private Armour armour;
 
     public Mob (Position position) {
         super(position);
         this.faction = new Faction();
         faction.setFaction(new Enemy());
+    }
+
+    public void setArmour(Armour armour) {
+        this.armour = armour;
+    }
+
+    public Armour getArmour() {
+        return armour;
+    }
+
+    public void takeDamage(int damage) {
+        int reducedDamage = damage;
+        if (armour!= null) {
+            reducedDamage = armour.usedInDefense(reducedDamage);
+            armour.usedInBattle(this);
+        }
+        setHealth(getHealth() - damage);
+    }
+
+    public void startFight(PlayerCharacter playerCharacter) {
+        playerCharacter.fight(this); //example override for playerCharacter
     }
 
     /**
@@ -26,7 +49,7 @@ public abstract class Mob extends Entity implements Movement{
     @Override
     public void move(Direction d) {
         // just a standard move
-        position = position.translateBy(d);
+        setPosition(getPosition().translateBy(d));
     }
 
     /**
@@ -36,7 +59,7 @@ public abstract class Mob extends Entity implements Movement{
     @Override
     public void teleport(Position p) {
         // just a standard teleport
-        position = p;
+        setPosition(p);
     }
 
     public boolean isEnemy() {
@@ -55,19 +78,21 @@ public abstract class Mob extends Entity implements Movement{
         }
     }
 
-    @Override
-    public double getHealth() {
-        return health;
-    }
-    public int attack() {
-        return (int)attackDamage;
+    public void setAttackDamage(Integer attackDamage) {
+        this.attackDamage = attackDamage;
     }
 
-    public void setHealth(double health) {
+    @Override
+    public Integer getHealth() {
+        return health;
+    }
+
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public void setHealth(Integer health) {
         this.health = health;
     }
-    
-    public void takeDamage(int damage) {
-        setHealth(getHealth() - damage);
-    }
+
 }

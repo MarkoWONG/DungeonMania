@@ -4,7 +4,7 @@ import dungeonmania.entity.Entity;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 
-public class Sword extends CollectableEntity{
+public class Sword extends CollectableEntity implements Weapon{
 
     private int durability;
 
@@ -33,5 +33,10 @@ public class Sword extends CollectableEntity{
         if (durability <= 0){
             player.getInventory().removeIf(ent -> ent.equals(this));
         }
+    }
+
+    @Override
+    public int usedInAttack(int attackDamage) {
+        return attackDamage + 2;
     }
 }

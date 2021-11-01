@@ -1,7 +1,8 @@
 package dungeonmania.entity.staticEnt;
 
+import dungeonmania.EntityList;
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.Mob.Zombie;
+import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.HashMap;
@@ -9,27 +10,35 @@ import java.util.ArrayList;
 
 public class Portal extends StaticEntity{
 
-    private HashMap<Position, ArrayList<Entity>> entityMap;
+    private EntityList entities;
+    private String colour;
     private Position otherPortalPosition;
 
-    public Portal(Position position, String colour, HashMap<Position, ArrayList<Entity>> entityMap){
-        super(new Position(position.getX(), position.getY(), 80), "portal", colour);     
-        this.entityMap = entityMap;
+    public Portal(Position position, String colour, EntityList entityMap){
+        super(new Position(position.getX(), position.getY(), 80));
+        this.colour = colour;
+        this.entities = entityMap;
         this.otherPortalPosition = findOtherPortal(colour);
+    }
+
+    @Override
+    public String getType() {
+        return "portal";
+    }
+
+    public String getOtherInfo() {
+        return colour;
     }
 
     // portal should search for another portal on creation, if found it will set it's other portal reference, and also notify the other portal of its existence
     private Position findOtherPortal(String colour){
-        for (Position pos : entityMap.keySet()){
-            for (Entity ent : entityMap.get(pos)){
-                if (ent.getType().equals("portal") && ent.getOtherInfo().equals(colour) && !ent.equals(this)){
-                    Portal otherPortal = (Portal) ent;
-                    otherPortal.setOtherPortalPosition(this.getPosition());
-                    return pos;
-                }
+        ArrayList<Entity> allPortals = entities.search("portal");
+        for (Entity eachPortal : allPortals) {
+            if (eachPortal.getOtherInfo().equals(colour)) {
+                ((Portal) eachPortal).setOtherPortalPosition(this.getPosition());
+                return eachPortal.getPosition();
             }
         }
-        // for when the other portal does not exist yet
         return null;
     }
 
@@ -40,8 +49,8 @@ public class Portal extends StaticEntity{
 
 
     @Override
-    public void interact(Zombie zombie){
-        // DO Nothing
+    public void interact(ZombieToast zombie){
+        ;
     }
 
     @Override

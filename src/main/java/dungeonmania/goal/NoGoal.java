@@ -1,6 +1,7 @@
 package dungeonmania.goal;
 
-public class BouldersGoal implements Goal{
+public class NoGoal implements Goal{
+
     @Override
     public boolean compute() {
         return false;
@@ -8,6 +9,6 @@ public class BouldersGoal implements Goal{
 
     @Override
     public String toString() {
-        return compute() ? "" : ":boulders";
+        return "";
     }
 }

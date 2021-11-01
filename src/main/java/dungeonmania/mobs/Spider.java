@@ -15,22 +15,47 @@ public class Spider extends Mob {
      * Starts at -1, then moves to 0 and starts going in a circle
      */
 
-     public Spider() {
-        super();
+     public Spider(Position position, int health, int ad) {
+        super(new Position(position.getX(), position.getY(),80));
+        setAttackDamage(ad);
+        setHealth(health);
      }
+
+    @Override
+    public String getType() {
+        return "spider";
+    }
 
     @Override
     public void move(Direction direction) {
         switch(positionCounter) {
-            case -1: super.move(Direction.UP);
-            case 0 : super.move(Direction.RIGHT);
-            case 1 : super.move(Direction.DOWN);
-            case 2 : super.move(Direction.DOWN);
-            case 3 : super.move(Direction.LEFT);
-            case 4 : super.move(Direction.LEFT);
-            case 5 : super.move(Direction.UP);
-            case 6 : super.move(Direction.UP);
-            case 7 : super.move(Direction.RIGHT);
+            case -1:
+                super.move(Direction.UP);
+                break;
+            case 0 :
+                super.move(Direction.RIGHT);
+                break;
+            case 1 :
+                super.move(Direction.DOWN);
+                break;
+            case 2 :
+                super.move(Direction.DOWN);
+                break;
+            case 3 :
+                super.move(Direction.LEFT);
+                break;
+            case 4 :
+                super.move(Direction.LEFT);
+                break;
+            case 5 :
+                super.move(Direction.UP);
+                break;
+            case 6 :
+                super.move(Direction.UP);
+                break;
+            case 7 :
+                super.move(Direction.RIGHT);
+                break;
         }
         positionCounter = (positionCounter + 1) % 8;
     }

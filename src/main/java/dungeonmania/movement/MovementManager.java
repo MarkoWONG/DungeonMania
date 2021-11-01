@@ -1,98 +1,66 @@
 package dungeonmania.movement;
 
+import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.staticEnt.Boulder;
-import dungeonmania.mobs.Mob;
-import dungeonmania.movement.Movement;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.staticEnt.Door;
+import dungeonmania.mobs.Mob;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.stream.Collectors;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class MovementManager {
     private PlayerCharacter player;
+    private EntityList entities;
 
-    public MovementManager( PlayerCharacter player) {
+    public MovementManager(EntityList entities) {
+        this.entities = entities;
+    }
+
+    public void setCharacter(PlayerCharacter player) {
         this.player = player;
     }
 
-    /**
-//     *
-//     * @param direction the direction the player wants to move
-//     * @param entitiesMap the current map
-//     * @return the new map of the board
-//     */
-//    public HashMap<Position, ArrayList<Entity>> simulate(Direction direction, HashMap<Position, ArrayList<Entity>> entitiesMap) {
-//        newMap = new HashMap<>();
-//        oldMap = entitiesMap;
-//
-//        moveChar(direction);
-//        doInteractions();
-//        moveMobs();
-//        doInteractions();
-//
-//        return newMap;
-//    }
 
-/*    private void moveChar(Direction direction) {
-        checkBoulder(direction);
-        if (checkMove(player, direction)){
-            player.move(direction);
+    public void doInteractions() {
+        for (Entity eachEntity : entities) {
+            for (Entity eachOtherEntity : entities.searchTile(eachEntity)) {
+                eachEntity.startInteraction(eachOtherEntity);
+            }
         }
-        addToMap(player);
-
-    }*/
-
-    private void doInteractions() {
-        // ???
-        // fights
-        // switches
-        // other things?? idk
+        // clean up picked up items
+        for(int i = entities.size() - 1; i >= 0; --i) {
+            Entity curr = entities.get(i);
+            if(curr.getPosition() == null) {
+                entities.remove(i);
+            }
+        }
     }
 
 
-    private HashMap<Position, ArrayList<Entity>> moveChar(HashMap<Position, ArrayList<Entity>> oldMap, Direction moveDir) {
-        HashMap<Position, ArrayList<Entity>> newMap = new HashMap<>();
-        checkBoulder(oldMap,moveDir);
-        for (ArrayList<Entity> es : oldMap.values()) {
-            for (Entity e : es) {
-                if (e instanceof PlayerCharacter && checkMove(oldMap,player, moveDir) ) {
-                    e.move(moveDir); // needs to have something passed to it
-                }
-                Position currPosition = e.getPosition();
-                if (!newMap.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
-                    newMap.put(currPosition, new ArrayList<Entity>());
-                }
-                newMap.get(currPosition).add(e);
+    public void moveChar(Direction moveDir) {
+        checkBoulder(moveDir);
+        ArrayList<Entity> player = entities.search("player");
+        for (Entity thePlayer : player) {
+            if (checkMove(thePlayer,moveDir)) {
+                thePlayer.move(moveDir);
             }
         }
-        return newMap;
     }
 
     /**
      * calls move for every mob on the map
      * passes a random, possible direction for the mob to move
      */
-    private HashMap<Position, ArrayList<Entity>> moveMobs(HashMap<Position, ArrayList<Entity>> oldMap) {
-        HashMap<Position, ArrayList<Entity>> newMap = new HashMap<>();
-        for (ArrayList<Entity> es : oldMap.values()) {
-            for (Entity e : es) {
-                if (e instanceof Mob) {
-                    e.move(getRandDirection(oldMap,e)); // needs to have something passed to it
-                }
-                Position currPosition = e.getPosition();
-                if (!newMap.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
-                    newMap.put(currPosition, new ArrayList<Entity>());
-                }
-                newMap.get(currPosition).add(e);
+    public void moveMobs() {
+        for (Entity eachEntity : entities) {
+            if ( eachEntity instanceof Mob ) {
+                eachEntity.move(getRandDirection(eachEntity));
             }
         }
-        return newMap;
     }
 
     /**
@@ -100,26 +68,29 @@ public class MovementManager {
      * @param entity
      * @return a random direction the entity can move in
      */
-    private Direction getRandDirection(HashMap<Position, ArrayList<Entity>> oldMap, Entity entity) {
+    private Direction getRandDirection(Entity entity) {
         ArrayList<Direction> possibleMoves = new ArrayList<>();
 
-        if (checkMove(oldMap, entity, Direction.UP)) {
+        if (checkMove(entity, Direction.UP)) {
             possibleMoves.add(Direction.UP);
         }
-        if (checkMove(oldMap, entity, Direction.RIGHT)) {
+        if (checkMove(entity, Direction.RIGHT)) {
             possibleMoves.add(Direction.RIGHT);
         }
-        if (checkMove(oldMap, entity, Direction.DOWN)) {
+        if (checkMove(entity, Direction.DOWN)) {
             possibleMoves.add(Direction.DOWN);
         }
-        if (checkMove(oldMap, entity, Direction.LEFT)) {
+        if (checkMove(entity, Direction.LEFT)) {
             possibleMoves.add(Direction.LEFT);
         }
 
         Random rand = new Random(System.currentTimeMillis());
-        int x = rand.nextInt(possibleMoves.size());
+        if (possibleMoves.size() != 0) {
+            int x = rand.nextInt(possibleMoves.size());
+            return possibleMoves.get(x);
+        }
+        return Direction.NONE;
 
-        return possibleMoves.get(x);
     }
 
     /**
@@ -127,15 +98,16 @@ public class MovementManager {
      * if so, moves the boulder
      * @param direction where the character wants to move
      */
-    private void checkBoulder(HashMap<Position, ArrayList<Entity>> oldMap, Direction direction) {
-        // if the player is walking into a boulder then move boulder
+    private void checkBoulder(Direction direction) {
         Position newPlayerPos = player.getPosition().translateBy(direction);
-        ArrayList<Entity> thingsInPosition = oldMap.get(newPlayerPos);
-        if (thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).count() == 1) {
-            Boulder boulder = (Boulder) thingsInPosition.stream().filter(e -> e.getType().equals("boulder")).collect(Collectors.toList()).get(0);
-            if (checkMove(oldMap, boulder, direction)) {
-                boulder.move(direction);
+        ArrayList<Entity> tile = entities.search(newPlayerPos);
+        Entity theBoulder = tile.stream().filter(e -> e.getType().equals("boulder")).findFirst().orElse(null);
+        if (theBoulder != null) {
+            theBoulder.setPosition(theBoulder.getPosition().asLayer(70));
+            if (checkMove(theBoulder,direction)) {
+                theBoulder.move(direction);
             }
+            theBoulder.setPosition(theBoulder.getPosition().asLayer(100));
         }
     }
 
@@ -143,17 +115,38 @@ public class MovementManager {
      * @precondition the entity passed is movable (ie, implements movement)
      * @return true if the move is possible, false is not
      */
-    private Boolean checkMove(HashMap<Position, ArrayList<Entity>> oldMap, Entity entity, Direction direction) {
+    private Boolean checkMove(Entity entity, Direction direction) {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
-        ArrayList<Entity> thingsInPosition = oldMap.get(newEntityPosition);
-
-        for(Entity e : thingsInPosition) {
-            if (e.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+        ArrayList<Entity> tile = entities.search(newEntityPosition);
+        for (Entity eachEntity : tile) {
+            if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
+                return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
+            }
+            if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+                if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
+                    return true;
+                }
                 return false;
             }
         }
         return true;
+    }
 
+    public static Boolean staticCheckMove(Entity entity, Direction direction, EntityList entities) {
+        Position newEntityPosition = entity.getPosition().translateBy(direction);
+        ArrayList<Entity> tile = entities.search(newEntityPosition);
+        for (Entity eachEntity : tile) {
+            if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
+                return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
+            }
+            if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+                if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -162,19 +155,23 @@ public class MovementManager {
      * @param b the position of some entity b
      * @return the direction a must travel to get to b
      */
-    public static Direction shortestPath(Position a, Position b) {
-        Position btwn = Position.calculatePositionBetween(a, b);
+    public static Direction shortestPath(Entity a, Entity b, EntityList entities) {
+        Position btwn = Position.calculatePositionBetween(a.getPosition(), b.getPosition());
         int xDistance = btwn.getX();
         int yDistance = btwn.getY();
         Direction d = Direction.NONE;
 
         if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
-            d = (yDistance > 0) ? Direction.UP : Direction.DOWN;
+            d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
         } else { // further away on the x axis OR equal
             d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
         } 
 
-        return d;
+        if (staticCheckMove(a, d, entities)) {
+            return d;
+        } else {
+            return Direction.NONE;
+        }
     }
 
 }

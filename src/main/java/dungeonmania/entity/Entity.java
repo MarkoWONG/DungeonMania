@@ -8,14 +8,11 @@ import dungeonmania.entity.collectables.rare.OneRing;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Spider;
+import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Mob.*;
-// import dungeonmania.entity.collectables.*;
-// import dungeonmania.entity.collectables.potion.*;
-// import dungeonmania.entity.collectables.rare.*;
 
 import java.util.UUID;
 
@@ -23,13 +20,16 @@ public abstract class Entity implements Interacts {
 
     private Position position;
     private final String id;
+    private boolean hasFought;
+
     public Entity(Position position) {
         this.id = UUID.randomUUID().toString();
         this.position = position;
+        hasFought = false;
     }
 
     public void setPosition(Position newPosition) {
-        position = newPosition;
+        this.position = newPosition;
     }
 
     public Position getPosition() {
@@ -46,19 +46,42 @@ public abstract class Entity implements Interacts {
         return false;
     }
 
+    public void click(PlayerCharacter character) {} // nothing by default
+
     public void move(Direction direction) {
         ;
     }
+    public void fight(Entity e) {}
+
+    public void fight(Mob mob) {}
 
 
     public void incrementTick(){}
     // none of these do anything by default you need to override them in the specific class to implement the behaviour
     // startFight and startInteraction just call .fight(this) when overridden
 
-     public void startFight(PlayerCharacter playerCharacter) {
-          playerCharacter.fight(this); // example override for playerCharacter
-     }
+    public void startFight(PlayerCharacter playerCharacter) {
+        playerCharacter.fight(this); //example override for playerCharacter
+    }
 
+    public void setHasFought(Boolean value) {
+        hasFought = false;
+    }
+
+    public boolean hasFought() {
+        return hasFought;
+    }
+
+    public boolean canRevive() {
+        return false;
+    }
+    public void revive() {
+
+    }
+
+    public String getOtherInfo() {
+        return "";
+    }
 
     @Override
     public void startInteraction(Entity entity) {
@@ -116,7 +139,7 @@ public abstract class Entity implements Interacts {
     }
 
     @Override
-    public void interact(Zombie zombie) {
+    public void interact(ZombieToast zombie) {
 
     }
 
@@ -178,5 +201,9 @@ public abstract class Entity implements Interacts {
     @Override
     public void interact(OneRing oneRing) {
 
+    }
+
+    public Integer getHealth() {
+        return 1;
     }
 }

@@ -6,8 +6,10 @@ import dungeonmania.difficulty.Peaceful;
 import dungeonmania.difficulty.Standard;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
+import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.entity.collectables.CollectableEntity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goal.GoalManager;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
@@ -18,7 +20,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,70 +31,90 @@ public class Dungeon {
 
     private Difficulty gameMode;
     private PlayerCharacter character;
-    private HashMap<Position, ArrayList<Entity>> entitiesMap = new HashMap<>();
+    private EntityList entities;
     private MovementManager movementManager;
-    private InteractionManager interactionManager;
     private FightManager fightManager;
     private GoalManager goalManager;
     private EntityFactory entityFactory;
 
     public Dungeon(String dungeonName, String gameMode) {
-        this.gameMode = difficultySelector(gameMode);
-        this.entityFactory = this.gameMode.createEntityFactory(entitiesMap);
-        this.goalManager = new GoalManager(dungeonName,this);
-        createEntitiesMap_FromJson(entitiesMap, dungeonName);
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
-        this.movementManager = new MovementManager(character);
-        this.interactionManager = new InteractionManager();
-        this.fightManager = new FightManager();
+        this.entities = new EntityList();
+        this.goalManager = new GoalManager(dungeonName,this);
+        this.movementManager = new MovementManager(entities);
+        this.fightManager = new FightManager(entities);
+        this.gameMode = difficultySelector(gameMode);
+        this.entityFactory = this.gameMode.createEntityFactory(entities);
+        createEntitiesMap_FromJson(entities, dungeonName);
         this.entry = character.getPosition();
+        fightManager.setCharacter(character);
+        movementManager.setCharacter(character);
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
-        // if item is used
-            // for each in theCharacter inventory
-                // if the item is iteMused
-                    // item.use()
-        // this.entitiesMap = gameMode.simulate(movementDirection);
-        // notifyOfTick();
+        if (itemUsed != null) {
+            useItemId(itemUsed);
+        }
+        gameMode.simulate(entities,movementDirection);
+        notifyOfTick();
+    }
+
+    private void useItemId(String itemUsed) {
+        Entity givenItem = character.getItemById(itemUsed);
+        if (!(givenItem instanceof Usable)) {
+            throw new IllegalArgumentException();
+        }
+        if (!getInventory().contains(givenItem)) {
+            throw new InvalidActionException(givenItem.getType() + "not in inventory");
+        }
+        ((Usable) givenItem).useItem(character);
     }
 
     private void notifyOfTick() {
-        for (ArrayList<Entity> eachTile : entitiesMap.values()) {
-            for (Entity eachEntity : eachTile) {
-                eachEntity.incrementTick();
-            }
+        for(int i = entities.size() - 1; i >= 0; --i) {
+            entities.get(i).incrementTick();
         }
     }
 
-    public void deleteEntity(Entity entityTbd) {}
+    public void click(String entityId) {
+        Entity givenEntity = entities.searchId(entityId);
+        if (givenEntity == null) {
+            throw new IllegalArgumentException();
+        }
+        givenEntity.click(character);
+    }
 
 
     public void build(String item) {
+        if (!item.equals("bow") && !item.equals("shield")) {
+            throw new IllegalArgumentException();
+        }
         if (Build.getBuildables(getInventory()).contains(item)) {
             // can be safely typecast because we check if it's a valid item in the controller?
             character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null));
             character.consume(Build.getRecipe(item));
+        } else {
+            throw new InvalidActionException("Missing required items");
         }
 
     }
 
     // will always be given a valid string, we do the checking in the controller
-    private Difficulty difficultySelector(String gameMode) {
+    private Difficulty difficultySelector(String gameMode) throws IllegalArgumentException {
         switch (gameMode) {
             case ("Peaceful"):
-                return new Peaceful(this,movementManager,interactionManager,fightManager);
+                return new Peaceful(this,movementManager,fightManager);
             case ("Standard"):
-                return new Standard(this,movementManager,interactionManager,fightManager);
+                return new Standard(this,movementManager,fightManager);
             case ("Hard"):
-                return new Hard(this,movementManager,interactionManager,fightManager);
+                return new Hard(this,movementManager,fightManager);
             default:
-                return new Standard(this,movementManager,interactionManager,fightManager);
+                throw new IllegalArgumentException("Game mode does not exist");
         }
     }
 
-    private void createEntitiesMap_FromJson(HashMap<Position, ArrayList<Entity>> output, String dungeonName) throws IllegalArgumentException {
+    private void createEntitiesMap_FromJson(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
@@ -104,19 +125,15 @@ public class Dungeon {
         for (int i = 0; i < currEntities.length() ; i++) {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
-            String currEntType = currObj.getString("type");
-            String currEntColour = currObj.getString("colour");
-            String currDoorKey= currObj.getString("key");
-            String currKeyDoor = currObj.getString("door");
+            String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
+            String currEntColour = ((currObj.has("colour") && !currObj.isNull("colour"))) ? currObj.getString("colour") : "";
+            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
             Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
                 this.entry = currPosition;
             }
-            if (!output.containsKey(currPosition)) { // we can do this because position overrides hashCode and equals
-                output.put(currPosition, new ArrayList<Entity>());
-            }
-            output.get(currPosition).add(currEnt);
+            output.add(currEnt);
         }
     }
 
@@ -139,8 +156,8 @@ public class Dungeon {
         return character.getInventory();
     }
 
-    public HashMap<Position, ArrayList<Entity>> getEntitiesMap() {
-        return entitiesMap;
+    public ArrayList<Entity> getEntities() {
+        return entities;
     }
 
     public List<String> getBuildables() {

@@ -1,18 +1,23 @@
 package dungeonmania.entity.staticEnt;
 
+import dungeonmania.EntityList;
+import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.Mob.Zombie;
+import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;
     private int currentTickCount;
-    private HashMap<Position, ArrayList<Entity>> entityMap;
-    public Toaster(Position position, int tickTilSpawn, HashMap<Position, ArrayList<Entity>> entityMap){
+    private EntityList entityMap;
+    public Toaster(Position position, int tickTilSpawn, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 80));
         this.tickTilSpawn = tickTilSpawn;    
         this.currentTickCount = 0;
@@ -38,32 +43,17 @@ public class Toaster extends StaticEntity{
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
-            new Zombie(this.getPosition());
+            entityMap.add(new ZombieToast(this.getPosition(),10,2));
             currentTickCount = 0;
         }
     }
 
-    // Destory toaster if player with sword is adject to toaster 
-    public void destroyToaster(){
-        entityMap.get(this.getPosition()).removeIf(ent -> ent.getType().equals("zombie_toast_spawner"));
-        // for (Position checkPos : this.getPosition().getAdjacentPositions()){
-        //     for (Entity ent : entityMap.get(checkPos)){
-        //         for ()
-        //         if (ent.getType().equals("player") && playerHasSword(ent)){
-        //             return true;
-        //         }
-        //     }
-        // }
-        // return false;
+    @Override
+    public void click(PlayerCharacter character) {
+        for (Position adjPositions : this.getPosition().getAdjacentPositions() ) {
+            if (character.getPosition().equals(adjPositions.asLayer(50)) && character.hasWeapon()) {
+                entityMap.remove(this);
+            }
+        }
     }
-    // // Need access to player Inventory OR have this function in PlayerCharater class 
-    // private boolean playerHasSword(Entity playerEnt){
-    //     PlayerCharacter player = (PlayerCharacter) playerEnt;
-    //     for (CollectableEntity item : player.getInventory()){
-    //         if (item.getType().equals("sword")){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 }

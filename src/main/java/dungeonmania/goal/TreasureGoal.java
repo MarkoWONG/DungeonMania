@@ -8,6 +8,6 @@ public class TreasureGoal implements Goal{
 
     @Override
     public String toString() {
-        return compute() ? ":treasure" : "";
+        return compute() ? "" : ":treasure";
     }
 }

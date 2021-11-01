@@ -42,20 +42,20 @@ public class staticEntitesTests {
     @Test
     public void wallCollosion(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("maze", "standard");
+        DungeonResponse new_frame = dungeon.newGame("maze", "Standard");
 
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,1)));
-        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,1)));
-        new_frame = dungeon.tick("none", Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,1)));
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,2)));
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,3)));
         for (int i = 0; i < 10; i++){
-            new_frame = dungeon.tick("none", Direction.DOWN);
+            new_frame = dungeon.tick(null, Direction.DOWN);
             assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,3)));
         }
     }
@@ -63,17 +63,17 @@ public class staticEntitesTests {
     @Test
     public void exit(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("protalExit", "standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Standard");
         String orginal_goals = new_frame.getGoals();
 
-        new_frame = dungeon.tick("none", Direction.UP);
-        new_frame = dungeon.tick("none", Direction.UP);
-        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,0)));
         assertTrue(orginal_goals.equals(new_frame.getGoals()));
 
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,0)));
         assertTrue(new_frame.getGoals().length() == 0);
     }
@@ -81,22 +81,22 @@ public class staticEntitesTests {
     @Test
     public void openClosedDoors(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("key_test", "standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Standard");
 
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.UP);
         // playerPosition should be in the same postion as player don't have a key
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.UP);
         // playerPosition should be on top of the opened door (key used to open door)
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
 
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
         
         // playerPosition should be in the same postion as player don't have a key
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
     }
     
@@ -104,44 +104,44 @@ public class staticEntitesTests {
     @Test
     public void portals(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("protalExit", "standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Standard");
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
-        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,1)));
 
-        new_frame = dungeon.tick("none", Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,0)));
 
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,3)));
 
-        new_frame = dungeon.tick("none", Direction.LEFT);
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
 
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        new_frame = dungeon.tick("none", Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(0,1)));
     }
 
     @Test
-    public void standardSpawnZombies(){
+    public void StandardSpawnZombies(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("zombieSpawn", "standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/zombieSpawn", "Standard");
 
         for (int expected_zoms = 0; expected_zoms < 5; expected_zoms++){
             for (int i = 0; i < 19; i++){
-                new_frame = dungeon.tick("none", Direction.UP);
+                new_frame = dungeon.tick(null, Direction.UP);
                 assertTrue(entityCounter(new_frame, "zombie_toast") == expected_zoms);
             }
-            new_frame = dungeon.tick("none", Direction.UP);
+            new_frame = dungeon.tick(null, Direction.UP);
             assertTrue(entityCounter(new_frame, "zombie_toast") == (expected_zoms + 1));
         }
     }
@@ -149,14 +149,14 @@ public class staticEntitesTests {
     @Test
     public void hardSpawnZombies(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("zombieSpawn", "hard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/zombieSpawn", "Hard");
 
         for (int expected_zoms = 0; expected_zoms < 5; expected_zoms++){
             for (int i = 0; i < 14; i++){
-                new_frame = dungeon.tick("none", Direction.UP);
+                new_frame = dungeon.tick(null, Direction.UP);
                 assertTrue(entityCounter(new_frame, "zombie_toast") == expected_zoms);
             }
-            new_frame = dungeon.tick("none", Direction.UP);
+            new_frame = dungeon.tick(null, Direction.UP);
             assertTrue(entityCounter(new_frame, "zombie_toast") == (expected_zoms + 1));
         }
     }
@@ -164,35 +164,35 @@ public class staticEntitesTests {
     @Test
     public void destoryZombiesSpawner(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("zombie", "standard");
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.RIGHT);
+        DungeonResponse new_frame = dungeon.newGame("test_maps/zombie", "Standard");
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
-        new_frame = dungeon.tick("none", Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
         assertTrue(entityCounter(new_frame, "zombie_toast_spawner") == 1);
 
-        new_frame = dungeon.tick("none", Direction.UP);
+        new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(entityCounter(new_frame, "zombie_toast_spawner") == 0);
         
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,2)));
     }
 
     @Test
     public void boulderMovement(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("bomb", "standard");
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,2)));
+        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard");
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,3)));
         assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(5,3)));
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
         assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(4,5)));
-        new_frame = dungeon.tick("none", Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
         assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(4,5)));
         assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(4,6)));
@@ -201,14 +201,14 @@ public class staticEntitesTests {
     @Test
     public void switches(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("simpleBoulders", "standard");
-        new_frame = dungeon.tick("none", Direction.UP);
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        new_frame = dungeon.tick("none", Direction.DOWN);
-        new_frame = dungeon.tick("none", Direction.UP);
-        new_frame = dungeon.tick("none", Direction.LEFT);
-        new_frame = dungeon.tick("none", Direction.RIGHT);
-        new_frame = dungeon.tick("none", Direction.RIGHT);
+        DungeonResponse new_frame = dungeon.newGame("test_maps/simpleBoulders", "Standard");
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(new_frame.getGoals().length() == 0);
     }
 }

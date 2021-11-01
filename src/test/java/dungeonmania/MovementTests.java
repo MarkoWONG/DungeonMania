@@ -10,6 +10,11 @@ import dungeonmania.util.Position;
 import org.junit.jupiter.api.Test;
 
 public class MovementTests {
+
+    private boolean entityAtPosition(String type, DungeonResponse response, Position position) {
+        return response.getEntities().stream().filter(e -> e.getType().equals(type)).filter(e -> e.getPosition().equals(position)).count() == 1;
+    }
+
     @Test
     public void testMovement_player() {
         DungeonManiaController controller = new DungeonManiaController();

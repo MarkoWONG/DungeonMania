@@ -1,6 +1,8 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.EntityList;
+import dungeonmania.FightManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.movement.MovementManager;
@@ -14,17 +16,15 @@ public abstract class Difficulty {
 
     protected Dungeon dungref;
     protected MovementManager movementManager;
-    protected InteractionManager interactionManager;
     protected FightManager fightManager;
 
-    public Difficulty(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
+    public Difficulty(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
         this.dungref = dungRef;
         this.movementManager = movementManager;
-        this.interactionManager = interactionManager;
         this.fightManager = fightManager;
     }
 
-    abstract public HashMap<Position, ArrayList<Entity>> simulate(Direction movementDirection);
+    abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
-    abstract public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap);
+    abstract public EntityFactory createEntityFactory(EntityList entityMap);
 }

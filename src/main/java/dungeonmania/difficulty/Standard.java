@@ -1,6 +1,8 @@
 package dungeonmania.difficulty;
 
 import dungeonmania.Dungeon;
+import dungeonmania.EntityList;
+import dungeonmania.FightManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.StandardEntityFactory;
@@ -12,24 +14,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Standard extends Difficulty {
-    public Standard(Dungeon dungRef, MovementManager movementManager, InteractionManager interactionManager, FightManager fightManager) {
-        super(dungRef,movementManager,interactionManager,fightManager);
+    public Standard(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
+        super(dungRef,movementManager,fightManager);
     }
 
     @Override
-    public HashMap<Position, ArrayList<Entity>> simulate(Direction movementDirection) {
-//        movementManager.moveChar(movementDirection);
-//        interactionManager.doCharInteractions();
-//        fightManager.doCharFights();
-//        movementManager.moveMobs();
-//        interactionManager.doInteractions();
-//        fightManager.doCharFights();
+    public void simulate(EntityList entitiesMap, Direction moveDir) {
+        movementManager.moveChar(moveDir);
+        movementManager.doInteractions();
+        fightManager.doCharFights();
+        movementManager.moveMobs();
+        movementManager.doInteractions();
+        fightManager.doCharFights();
 //        movementManager.doMercenarySpMove();
-//        fightManager.resetHasFought();
+        fightManager.doCharFights();
+        fightManager.resetHasFought();
     }
 
     @Override
-    public EntityFactory createEntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
+    public EntityFactory createEntityFactory(EntityList entityMap) {
         return new StandardEntityFactory(entityMap);
     }
 }

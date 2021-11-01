@@ -1,5 +1,6 @@
 package dungeonmania.entity;
 
+import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.buildable.Bow;
 import dungeonmania.entity.collectables.buildable.Shield;
@@ -7,6 +8,9 @@ import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
+import dungeonmania.mobs.Mercenary;
+import dungeonmania.mobs.Spider;
+import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
@@ -16,10 +20,10 @@ import java.util.Random;
 
 public abstract class EntityFactory {
 
-    protected HashMap<Position, ArrayList<Entity>> entityMap;
+    protected EntityList entityMap;
     protected Random random;
 
-    public EntityFactory(HashMap<Position, ArrayList<Entity>> entityMap) {
+    public EntityFactory(EntityList entityMap) {
         this.entityMap = entityMap;
         this.random = new Random(System.currentTimeMillis());
     }
@@ -34,17 +38,17 @@ public abstract class EntityFactory {
                 return makeExit(startPos);
             case "boulder":
                 return makeBoulder(startPos);
-            case "floorswitch":
+            case "switch":
                 return makeFloorSwitch(startPos);
             case "door":
                 return makeDoor(startPos, key);
             case "portal":
                 return makePortal(startPos, colour);
-            case "toaster":
+            case "zombie_toast_spawner":
                 return makeToaster(startPos);
              case "mercenary":
                  return makeMercenary(startPos);
-             case "zombie":
+             case "zombie_toast":
                  return makeZombie(startPos);
              case "spider":
                  return makeSpider(startPos);
@@ -52,11 +56,11 @@ public abstract class EntityFactory {
                 return makeTreasure(startPos);
             case "key":
                 return makeKey(startPos, key);
-            case "healthpotion":
+            case "health_potion":
                 return makeHealthPotion(startPos);
-            case "invincibilitypotion":
+            case "invincibility_potion":
                 return makeInvincibilityPotion(startPos);
-            case "invisibilitypotion":
+            case "invisibility_potion":
                 return makeInvisibilityPotion(startPos);
             case "wood":
                 return makeWood(startPos);
@@ -68,7 +72,7 @@ public abstract class EntityFactory {
                 return makeSword(startPos);
             case "armour":
                 return makeArmour(startPos);
-            case "onering":
+            case "one_ring":
                 return makeOneRing(startPos);
             case "shield":
                 return makeShield();
@@ -80,7 +84,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos);
+        return new PlayerCharacter(startPos,20,2);
     }
 
     protected Entity makeWall(Position startPos) {
@@ -112,15 +116,15 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return new Mercenary(startPos);
+        return new Mercenary(startPos,1,entityMap,15,4);
     }
 
     protected Entity makeZombie(Position startPos) {
-        return new Zombie(startPos);
+        return new ZombieToast(startPos,10,2);
     }
 
     protected Entity makeSpider(Position startPos) {
-        return new Spider(startPos);
+        return new Spider(startPos,5,6);
     }
 
     protected Entity makeTreasure(Position startPos) {
@@ -136,7 +140,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeInvincibilityPotion(Position startPos) {
-        return new InvincibilityPotion(startPos);
+        return new InvincibilityPotion(startPos,true);
     }
 
     protected Entity makeInvisibilityPotion(Position startPos) {
@@ -156,11 +160,11 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeSword(Position startPos) {
-        return new Arrow(startPos);
+        return new Sword(startPos,3);
     }
 
     protected Entity makeArmour(Position startPos) {
-        return new Arrow(startPos);
+        return new Armour(startPos);
     }
 
     protected Entity makeOneRing(Position startPos) {

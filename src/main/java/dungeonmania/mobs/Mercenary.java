@@ -1,55 +1,91 @@
 package dungeonmania.mobs;
-import dungeonmania.util.Position;
-
-import java.util.Random;
-
+import dungeonmania.EntityList;
+import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.Armour;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
+import java.util.Random;
+
+
+
+import static java.lang.Math.abs;
 
 public class Mercenary extends Mob{
+    private EntityList entities;
+    private PlayerCharacter characterTracker;
     private int price;
     private Position charPosition;
     private int battleRadius;
     private Boolean battleInRadius;
-    private Armour armour;
 
-    public Mercenary() {
-        super();
+    public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
+        super(new Position(position.getX(), position.getY(),50));
+        setAttackDamage(ad);
+        setHealth(health);
+        this.entities = entities;
+        this.price = price;
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
-            armour = new Armour();
+            setArmour(new Armour());
         } else {
-            armour = null;
+            setArmour(null);
         }
     }
-    
+
+    @Override
+    public boolean isInteractable() {
+        return true;
+    }
+
     /**
      * bribe the mercenary to change its faction. 
      * the amount given is cumilative
      * @param amount an amount of money given
      * @return false if its not enough, true if the merc has become an ally
      */
-    public Boolean bribe(int amount) {
+    public void bribe(int amount) {
         price -= amount;
         if (price > 0) {
-            return false;
+            return;
         }
         super.changeFaction("ally");
-        return true;
+    }
+
+    @Override
+    public String getType() {
+        return "mercenary";
+    }
+
+    @Override
+    public void click(PlayerCharacter character) {
+        Entity treasure = character.getItemByType("treasure");
+        if (treasure == null) {
+            throw new InvalidActionException("Gold is required to bribe");
+        }
+        Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
+        if (abs(posBetween.getX()) == 2 ||  abs(posBetween.getY()) == 2) {
+            bribe(1);
+        } else {
+            throw new InvalidActionException("Mercenary out of range");
+        }
+    }
+
+    @Override
+    public void move(Direction direction) {
+        this.characterTracker = entities.findPlayer();
+        super.move(MovementManager.shortestPath(this, characterTracker, entities));
     }
 
     @Override
     public void takeDamage(int damage) {
         int reducedDamage = damage;
-        if (armour != null) {
-            reducedDamage = armour.usedInDefense(reducedDamage);
-            armour.usedInBattle(this);
+        if (getArmour() != null) {
+            reducedDamage = getArmour().usedInDefense(reducedDamage);
+            getArmour().usedInBattle(this);
         }
         super.takeDamage(reducedDamage);
-    }
-
-    @Override
-    public void move(Direction direction) {
-        super.move(MovementManager.shortestPath(super.getPosition(), charPosition));
     }
 }

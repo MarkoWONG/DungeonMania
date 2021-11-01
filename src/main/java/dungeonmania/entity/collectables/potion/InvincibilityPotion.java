@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-   
-    private HashMap<Position, ArrayList<Entity>> entityMap;
 
-    public InvincibilityPotion(Position position){
+    private boolean enabled;
+
+    public InvincibilityPotion(Position position, boolean enabled){
         super(new Position(position.getX(), position.getY(), 40));
+        this.enabled = enabled;
     }
 
     @Override
@@ -25,8 +26,10 @@ public class InvincibilityPotion extends PotionEntity implements Usable{
     }
 
     public void useItem(PlayerCharacter player){
-        player.setInvincibleTicks(5);
-        player.removeItemFromInventory(this);
+        if (enabled) {
+            player.setInvincibleTicks(5);
+            player.removeItemFromInventory(this);
+        }
     }
 
     @Override
