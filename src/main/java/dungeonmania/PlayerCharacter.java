@@ -121,7 +121,6 @@ public class PlayerCharacter extends Entity implements Movement{
     public void takeDamage(int damage) {
         ArrayList<String> typesUsed = new ArrayList<String>();
         int reducedDamage = damage;
-
         for (CollectableEntity e : inventory) {
             if (!typesUsed.contains(e.getType())) {
                 reducedDamage = e.usedInDefense(reducedDamage);
@@ -129,6 +128,7 @@ public class PlayerCharacter extends Entity implements Movement{
                 typesUsed.add(e.getType());
             }
         }
+        
         setHealth(getHealth() - reducedDamage);
     }  
     

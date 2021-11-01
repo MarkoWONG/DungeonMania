@@ -80,4 +80,14 @@ public class Mercenary extends Mob{
     public void move(Direction direction) {
         super.move(MovementManager.shortestPath(super.getPosition(), characterTracker.getPosition()));
     }
+
+    @Override
+    public void takeDamage(int damage) {
+        int reducedDamage = damage;
+        if (getArmour() != null) {
+            reducedDamage = getArmour().usedInDefense(reducedDamage);
+            getArmour().usedInBattle(this);
+        }
+        super.takeDamage(reducedDamage);
+    }
 }

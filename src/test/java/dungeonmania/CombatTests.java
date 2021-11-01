@@ -2,9 +2,14 @@ package dungeonmania;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+
 import dungeonmania.EntityList;
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.Armour;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.mobs.Spider;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.mobs.Mercenary;
@@ -27,94 +32,118 @@ public class CombatTests {
         Entity floorSwitch = new Switch(position);
         Mob mercenary = new Mercenary(position, 1, square, 15, 4);
         while (mercenary.getArmour() != null) {
-            mercenary = new ZombieToast(position, 10, 2);
+            mercenary = new Mercenary(position, 1, square, 15, 4);
         }
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
+
+
+        Position otherPosition = new Position(2,2,2);
+        Mob otherZombie = new ZombieToast(otherPosition, 10, 2);
+
         square.add(character);
         square.add(spider);
         square.add(zombie);
+        square.add(otherZombie);
         square.add(mercenary);
         square.add(floorSwitch);
 
         //do the fights
         FightManager fightManager = new FightManager(square);
         fightManager.setCharacter(character);
-        fightManager.doCharFights();
+        
 
         assertTrue(zombie.getArmour() == null);
         assertTrue(mercenary.getArmour() == null);
         assertTrue(character.getInventory().isEmpty());
-        
+
+        // spider dies
+        fightManager.doCharFights();
         assertTrue(character.getHealth() == 9);
         assertTrue(spider.getHealth() == -3 );
         assertTrue(zombie.getHealth() == 4);
         assertTrue(mercenary.getHealth() == 9);
-
+        assertTrue(otherZombie.getHealth() == 10);
         assertTrue(square.contains(character));
         assertTrue(square.contains(zombie));
         assertFalse(square.contains(spider));
         assertTrue(square.contains(mercenary));
         assertTrue(square.contains(floorSwitch));
 
+        // nothing should die
         fightManager.doCharFights();
         assertTrue(character.getHealth() == 6);
         assertTrue(zombie.getHealth() == 1);
         assertTrue(mercenary.getHealth() == 6);
-
+        assertTrue(otherZombie.getHealth() == 10);
         assertTrue(square.contains(character));
         assertTrue(square.contains(zombie));
+        assertFalse(square.contains(spider));
+        assertTrue(square.contains(mercenary));
+        assertTrue(square.contains(floorSwitch));
+
+        // zombie dies
+        fightManager.doCharFights();
+        assertTrue(character.getHealth() == 4);
+        assertTrue(zombie.getHealth() == -1);
+        assertTrue(mercenary.getHealth() == 4);
+        assertTrue(otherZombie.getHealth() == 10);
+        assertTrue(square.contains(character));
+        assertFalse(square.contains(zombie));
+        assertFalse(square.contains(spider));
+        assertTrue(square.contains(mercenary));
+        assertTrue(square.contains(floorSwitch));
+
+
+        Mob lastZombie = new ZombieToast(position, 10, 4);
+        square.add(lastZombie);
+
+        // player dies on this tick
+        fightManager.doCharFights();
+        assertTrue(character.getHealth() == -1);
+        assertTrue(mercenary.getHealth() == 3);
+        assertFalse(square.contains(character));
+        assertFalse(square.contains(zombie));
         assertFalse(square.contains(spider));
         assertTrue(square.contains(mercenary));
         assertTrue(square.contains(floorSwitch));
     }
 
     @Test
-    public void testCombat_playerVsMercenary() {
-
-    }
-
-    @Test
-    public void testCombat_playerDeath() {
-
-    }
-
-    @Test
-    public void testCombat_eventOrder() {
-    }
-
-/*
-    @Test
-    public void testItemsInFights() {
+    public void testCombat_armour() {
         Position position = new Position(0,0,0);
-        PlayerCharacter character = new PlayerCharacter(position, 20);
-        
-        
-        Entity mercenary = new Mercenary(position);
-
-        while (!mercenary.hasArmour()) {
-            mercenary = new Mercenary(position);
+        EntityList square = new EntityList();
+        Mob zombie = new ZombieToast(position, 10, 2);
+        while (zombie.getArmour() == null) {
+            zombie = new ZombieToast(position, 10, 2);
         }
-        
-        
-        CollectableEntity playerArmour = new Armour();
-        CollectableEntity sword = new Sword();
-        CollectableEntity bow = new Bow();
+        Mob mercenary = new Mercenary(position, 1, square, 15, 4);
+        while (mercenary.getArmour() == null) {
+            mercenary = new Mercenary(position, 1, square, 15, 4);
+        }
 
-        character.addItemToInventory(playerArmour);
-        character.addItemToInventory(sword);
-        character.addItemToInventory(bow);
+        PlayerCharacter character = new PlayerCharacter(position, 20, 1);
+        Armour armoura = new Armour();
+        Armour armourb = new Armour();
+        ArrayList<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        inventory.add(armoura);
+        inventory.add(armourb);
+        character.setInventory(inventory);
 
-        ArrayList<Entity> square = new ArrayList<Entity>();
-        square.add((Entity)character);
+        square.add(character);
+        square.add(zombie);
         square.add(mercenary);
-        //do the fights
-        FightManager fightManager = new FightManager();
-        fightManager.doCharFights(character, square);
+        assertTrue(zombie.getArmour().getDurability() == 3);
+        assertTrue(mercenary.getArmour().getDurability() == 3);
 
-
-        assertEqual(character.getHealth(), 17);
-        assertEqual(mercenary.getHealth(), 3);
+        FightManager fightManager = new FightManager(square);
+        fightManager.setCharacter(character);
+        fightManager.doCharFights();
+        
+        assertTrue(character.getHealth() == 16);
+        assertTrue(zombie.getHealth() == 8);
+        assertTrue(zombie.getArmour().getDurability() == 2);
+        assertTrue(mercenary.getHealth() == 14);
+        assertTrue(mercenary.getArmour().getDurability() == 2);
     }
-}
-*/
+
 }
