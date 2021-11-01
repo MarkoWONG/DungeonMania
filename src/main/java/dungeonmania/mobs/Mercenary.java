@@ -4,14 +4,12 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.util.Position;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
+import java.util.Random;
+
+
 
 import static java.lang.Math.abs;
 
@@ -78,6 +76,16 @@ public class Mercenary extends Mob{
     @Override
     public void move(Direction direction) {
         this.characterTracker = entities.findPlayer();
-        super.move(MovementManager.shortestPath(super.getPosition(), characterTracker.getPosition()));
+        super.move(MovementManager.shortestPath(this, characterTracker, entities));
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        int reducedDamage = damage;
+        if (getArmour() != null) {
+            reducedDamage = getArmour().usedInDefense(reducedDamage);
+            getArmour().usedInBattle(this);
+        }
+        super.takeDamage(reducedDamage);
     }
 }

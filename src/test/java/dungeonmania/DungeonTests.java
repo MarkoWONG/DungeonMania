@@ -153,14 +153,14 @@ public class DungeonTests {
         DungeonResponse currResponse = currController.newGame("buildableEntities", "Standard");
 
         IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.UP));
-        currController.build("bow");
+        currResponse = currController.build("bow");
         assertTrue(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)
                 .collect(Collectors.toList())
                 .contains("bow"));
 
         IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.UP));
-        currController.build("shield");
+        currResponse = currController.build("shield");
         assertTrue(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)
                 .collect(Collectors.toList())

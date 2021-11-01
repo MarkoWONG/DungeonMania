@@ -22,6 +22,9 @@ public class Armour extends CollectableEntity{
     public String getType() {
         return "armour";
     }
+    public int getDurability() {
+        return durability;
+    }
 
     @Override
     public void startInteraction(Entity entity) {

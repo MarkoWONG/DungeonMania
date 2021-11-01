@@ -12,6 +12,14 @@
     }
   ],
   "goal-condition": {
-    "goal": "treasure"
+    "goal": "AND",
+    "subgoals": [
+      {
+        "goal": "boulders"
+      },
+      {
+        "goal": "treasure"
+      }
+    ]
   }
 }
