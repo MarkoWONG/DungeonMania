@@ -83,7 +83,7 @@ public class CollisionTests {
 
         for (int i = 0; i <10; i++) {
             response = controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, 1)));
         }
     }
 
@@ -93,17 +93,17 @@ public class CollisionTests {
         DungeonResponse response = controller.newGame("player_door", "Standard");
 
         response = controller.tick(null, Direction.RIGHT);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
+        assertTrue(entityAtPosition("player",response,new Position(1, 0)));
 
         // player now has the key
 
         response = controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
+        assertTrue(entityAtPosition("player",response,new Position(1, 0)));
         // player cannot go through door that is locked
 
         response = controller.tick(null, Direction.RIGHT);
         response = controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(2, 1))).count());
+        assertTrue(entityAtPosition("player",response,new Position(2, 1)));
         // player is able to move through a door they have the key for
     }
 
@@ -114,7 +114,7 @@ public class CollisionTests {
 
         for (int i = 0; i < 10; i++) {
             response =  controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, 1)));
         }
 
         response =  controller.tick(null, Direction.UP); // gets key
@@ -123,7 +123,7 @@ public class CollisionTests {
 
         for (int i = 0; i < 10; i++) {
             response = controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, 1)));
         }
         // zombie cannot move anywhere even with an open door
         
@@ -136,7 +136,7 @@ public class CollisionTests {
 
         for (int i = 0; i < 10; i++) {
             controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
+            assertTrue(entityAtPosition("mercenary",response,new Position(1, 1)));
         }
 
         controller.tick(null, Direction.UP); // gets key
@@ -145,7 +145,7 @@ public class CollisionTests {
 
         for (int i = 0; i < 10; i++) {
             controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
+            assertTrue(entityAtPosition("mercenary",response,new Position(1, 1)));
         }
         // merc cannot move anywhere even with an open door
         
@@ -156,24 +156,24 @@ public class CollisionTests {
         DungeonManiaController controller = new DungeonManiaController();
         DungeonResponse response = controller.newGame("player_boulder", "Standard");
 
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
+        assertTrue(entityAtPosition("player",response,new Position(0, 0)));
+        assertTrue(entityAtPosition("boulder",response,new Position(1, 0)));
 
         response = controller.tick(null, Direction.RIGHT);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
+        assertTrue(entityAtPosition("player",response,new Position(1, 0)));
+        assertTrue(entityAtPosition("boulder",response,new Position(2, 0)));
 
         response = controller.tick(null, Direction.DOWN);
         response = controller.tick(null, Direction.RIGHT);
         response = controller.tick(null, Direction.RIGHT);
         response = controller.tick(null, Direction.UP);
 
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(3, 0))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
+        assertTrue(entityAtPosition("player",response,new Position(3, 0)));
+        assertTrue(entityAtPosition("boulder",response,new Position(2, 0)));
 
         response = controller.tick(null, Direction.LEFT);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
+        assertTrue(entityAtPosition("player",response,new Position(2, 0)));
+        assertTrue(entityAtPosition("boulder",response,new Position(1, 0)));
         
     }
 
@@ -184,10 +184,10 @@ public class CollisionTests {
 
         for (int i = 0; i < 10; i++) {
             response = controller.tick(null, Direction.NONE);
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(0, -1))).count());
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, -1))).count());
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
-            assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(0, -1)));
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, -1)));
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(0, 0)));
+            assertTrue(entityAtPosition("zombie_toast",response,new Position(1, 0)));
         }
     }
 }
