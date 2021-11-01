@@ -29,58 +29,31 @@ public abstract class EntityFactory {
     }
 
     public Entity create(String entityType, Position startPos, String colour, String key) {
-        switch (entityType.toLowerCase(Locale.ROOT)) {
-            case "player":
-                return makePlayer(startPos);
-            case "wall":
-                return makeWall(startPos);
-            case "exit":
-                return makeExit(startPos);
-            case "boulder":
-                return makeBoulder(startPos);
-            case "switch":
-                return makeFloorSwitch(startPos);
-            case "door":
-                return makeDoor(startPos, key);
-            case "portal":
-                return makePortal(startPos, colour);
-            case "zombie_toast_spawner":
-                return makeToaster(startPos);
-             case "mercenary":
-                 return makeMercenary(startPos);
-             case "zombie_toast":
-                 return makeZombie(startPos);
-             case "spider":
-                 return makeSpider(startPos);
-            case "treasure":
-                return makeTreasure(startPos);
-            case "key":
-                return makeKey(startPos, key);
-            case "health_potion":
-                return makeHealthPotion(startPos);
-            case "invincibility_potion":
-                return makeInvincibilityPotion(startPos);
-            case "invisibility_potion":
-                return makeInvisibilityPotion(startPos);
-            case "wood":
-                return makeWood(startPos);
-            case "arrow":
-                return makeArrow(startPos);
-            case "bomb":
-                return makeBomb(startPos);
-            case "sword":
-                return makeSword(startPos);
-            case "armour":
-                return makeArmour(startPos);
-            case "one_ring":
-                return makeOneRing(startPos);
-            case "shield":
-                return makeShield();
-            case "bow":
-                return makeBow();
-            default:
-                return null; // should never happen
-        }
+        if (entityType.toLowerCase(Locale.ROOT).contains("player")) {return makePlayer(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("wall")) {return makeWall(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("exit")) {return makeExit(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("boulder")) {return makeBoulder(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("switch")) {return makeFloorSwitch(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("door")) {return makeDoor(startPos, key);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("portal")) {return makePortal(startPos, colour);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast_spawner")) {return makeToaster(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("mercenary")) {return makeMercenary(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast")) {return makeZombie(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("treasure")) {return makeTreasure(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("key")) {return makeKey(startPos, key);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("health_potion")) {return makeHealthPotion(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("invincibility_potion")) {return makeInvincibilityPotion(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("invisibility_potion")) {return makeInvisibilityPotion(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("wood")) {return makeWood(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("arrow")) {return makeArrow(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("bomb")) {return makeBomb(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("sword")) {return makeSword(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("armour")) {return makeArmour(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("one_ring")) {return makeOneRing(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
+        if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
+        
+        return null;
     }
 
     protected Entity makePlayer(Position startPos) {
