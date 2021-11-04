@@ -108,27 +108,18 @@ public class staticEntitesTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,1)));
 
         new_frame = dungeon.tick(null, Direction.LEFT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(0,1)));
 
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.UP);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,0)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
 
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,3)));
-
-        new_frame = dungeon.tick(null, Direction.LEFT);
-        new_frame = dungeon.tick(null, Direction.UP);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
-
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        new_frame = dungeon.tick(null, Direction.DOWN);
-        new_frame = dungeon.tick(null, Direction.LEFT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(0,1)));
     }
 
     @Test
@@ -159,25 +150,6 @@ public class staticEntitesTests {
             new_frame = dungeon.tick(null, Direction.UP);
             assertTrue(entityCounter(new_frame, "zombie_toast") == (expected_zoms + 1));
         }
-    }
-
-    @Test
-    public void destoryZombiesSpawner(){
-        DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/zombie", "Standard");
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
-        assertTrue(entityCounter(new_frame, "zombie_toast_spawner") == 1);
-
-        new_frame = dungeon.tick(null, Direction.UP);
-        assertTrue(entityCounter(new_frame, "zombie_toast_spawner") == 0);
-        
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        new_frame = dungeon.tick(null, Direction.DOWN);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,2)));
     }
 
     @Test
