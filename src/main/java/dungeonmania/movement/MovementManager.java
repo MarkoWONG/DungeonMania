@@ -5,6 +5,7 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
+import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import java.lang.Math;
@@ -142,6 +143,11 @@ public class MovementManager {
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
                 if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
                     return true;
+                }
+                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
+                    ((Spider) eachEntity).changeDirection();
+                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
+                    ((Spider) entity).changeDirection();
                 }
                 return false;
             }

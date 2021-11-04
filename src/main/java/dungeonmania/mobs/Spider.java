@@ -5,6 +5,7 @@ import dungeonmania.util.Position;
 
 public class Spider extends Mob {
     private int positionCounter = -1;
+    private int moveDirection = 1; // 1 for movement clockwise, -1 for anticlockwise
     /**
      * Spider position guide
      * 7 > 0 > 1
@@ -57,7 +58,11 @@ public class Spider extends Mob {
                 super.move(Direction.RIGHT);
                 break;
         }
-        positionCounter = (positionCounter + 1) % 8;
+        positionCounter = (positionCounter + moveDirection) % 8;
+    }
+
+    public void changeDirection() {
+        moveDirection = moveDirection * -1;
     }
 
     @Override
