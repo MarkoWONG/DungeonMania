@@ -20,7 +20,7 @@ public class Peaceful extends  Difficulty{
 
     public void simulate(EntityList entitiesMap, Direction moveDir) {
         movementManager.moveChar(moveDir);
-        movementManager.doInteractions();
+//        movementManager.doInteractions();
         movementManager.moveMobs();
         movementManager.doInteractions();
 //        movementManager.doMercenarySpMove();
