@@ -8,6 +8,7 @@ import dungeonmania.mobs.ZombieToast;
 import dungeonmania.mobs.Spider;
 import dungeonmania.util.Position;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 public class Portal extends StaticEntity{
@@ -53,26 +54,26 @@ public class Portal extends StaticEntity{
 
     @Override
     public void interact(PlayerCharacter player){
-        System.out.println("teleporting to " + otherPortalPosition.toString());
-        player.setPosition(otherPortalPosition);
+        // System.out.println("teleporting to " + otherPortalPosition.toString());
+        player.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), player.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Mercenary mercenary){
-        System.out.println("teleporting to " + otherPortalPosition.toString());
-        mercenary.setPosition(otherPortalPosition);
+        // System.out.println("teleporting to " + otherPortalPosition.toString());
+        mercenary.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), mercenary.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Boulder boulder){
-        System.out.println("teleporting to " + otherPortalPosition.toString());
-        boulder.setPosition(otherPortalPosition);
+        // System.out.println("teleporting to " + otherPortalPosition.toString());
+        boulder.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), boulder.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Spider spider){
-        System.out.println("teleporting to " + otherPortalPosition.toString());
-        spider.setPosition(otherPortalPosition);
+        // System.out.println("teleporting to " + otherPortalPosition.toString());
+        spider.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), spider.getPosition().getLayer()));
     }
 
     //Getters and Setters 
