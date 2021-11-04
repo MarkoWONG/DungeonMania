@@ -41,6 +41,15 @@ public class PlayerCharacter extends Entity implements Movement{
         inventory.remove(item);
     }
 
+    public void removeItemFromInventory(String id) {
+        for(int i = inventory.size() - 1; i >= 0; --i) {
+            CollectableEntity current = inventory.get(i);
+            if (inventory.get(i).getId().equals(id)) {
+                inventory.remove(current);
+            }
+        }
+    }
+
     @Override
     public void move(Direction direction) {
         setPosition(getPosition().translateBy(direction));
@@ -49,16 +58,16 @@ public class PlayerCharacter extends Entity implements Movement{
 
 
     public void consume(List<String> items) {
-        ArrayList<CollectableEntity> itemsTBD = new ArrayList<CollectableEntity>();
+        ArrayList<String> itemsTBD = new ArrayList<>();
         for (String eachString : items) {
             for (CollectableEntity eachItem : inventory) {
-                if (eachItem.getType().equals(eachString)) {
-                    itemsTBD.add(eachItem);
+                if (eachItem.getType().equals(eachString) && !itemsTBD.contains(eachItem.getId())) {
+                    itemsTBD.add(eachItem.getId());
                     break;
                 }
             }
         }
-        for (CollectableEntity eachItemTBD : itemsTBD) {
+        for (String eachItemTBD : itemsTBD) {
             removeItemFromInventory(eachItemTBD);
         }
     }
@@ -94,9 +103,11 @@ public class PlayerCharacter extends Entity implements Movement{
 
     @Override
     public void fight(Mob mob) {
-        int mobAttack = mob.getAttackDamage() * mob.getHealth() / 10;
-        mob.takeDamage(attack());
-        takeDamage(mobAttack);
+        if (mob.isEnemy()) {
+            int mobAttack = mob.getAttackDamage() * mob.getHealth() / 10;
+            mob.takeDamage(attack());
+            takeDamage(mobAttack);
+        }
     }
 
     public int attack() {
