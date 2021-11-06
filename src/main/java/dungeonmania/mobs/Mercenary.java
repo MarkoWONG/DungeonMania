@@ -78,7 +78,9 @@ public class Mercenary extends Mob{
             if (characterTracker.getInvincibleTicks() > 0) {
                 super.move(direction);
             }
-            super.move(MovementManager.shortestPath(this, characterTracker, entities));
+            else{
+                super.move(MovementManager.shortestPath(this, characterTracker, entities));
+            }
         }
         // if (characterTracker.getInvincibleTicks() > 0 || characterTracker.getInvisibleTicks() > 0) {
         //     super.move(direction);

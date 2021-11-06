@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-
+    private static final int effectDuration = 5;
     private boolean enabled;
 
     public InvincibilityPotion(Position position, boolean enabled){
@@ -27,7 +27,7 @@ public class InvincibilityPotion extends PotionEntity implements Usable{
 
     public void useItem(PlayerCharacter player){
         if (enabled) {
-            player.setInvincibleTicks(5);
+            player.setInvincibleTicks(effectDuration);
             player.removeItemFromInventory(this);
         }
     }

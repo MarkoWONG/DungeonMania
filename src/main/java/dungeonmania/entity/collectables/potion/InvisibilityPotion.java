@@ -7,6 +7,7 @@ import dungeonmania.PlayerCharacter;
 
 public class InvisibilityPotion extends PotionEntity implements Usable{
     private static final int effectDuration = 5;
+    
     public InvisibilityPotion(Position position){
         super(new Position(position.getX(), position.getY(), 40));
     }
