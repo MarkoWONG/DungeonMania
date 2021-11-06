@@ -35,7 +35,7 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("OrGoal","Standard");
 
-        assertEquals("( :boulders OR :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder OR :treasure )",currResponse.getGoals());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("OrGoal","Standard");
 
-        assertEquals("( :boulders OR :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder OR :treasure )",currResponse.getGoals());
 
         currResponse = currController.tick(null, Direction.RIGHT);
         assertEquals("",currResponse.getGoals());
@@ -54,7 +54,7 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("AndGoal","Standard");
 
-        assertEquals("( :boulders AND :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder AND :treasure )",currResponse.getGoals());
     }
 
     @Test
@@ -62,10 +62,10 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("AndGoal","Standard");
 
-        assertEquals("( :boulders AND :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder AND :treasure )",currResponse.getGoals());
 
         currResponse = currController.tick(null, Direction.RIGHT);
-        assertEquals(":boulders",currResponse.getGoals());
+        assertEquals(":boulder",currResponse.getGoals());
     }
 
     @Test
