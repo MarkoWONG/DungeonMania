@@ -6,7 +6,7 @@ import dungeonmania.PlayerCharacter;
 
 
 public class InvisibilityPotion extends PotionEntity implements Usable{
-
+    private static final int effectDuration = 5;
     public InvisibilityPotion(Position position){
         super(new Position(position.getX(), position.getY(), 40));
     }
@@ -28,7 +28,7 @@ public class InvisibilityPotion extends PotionEntity implements Usable{
     }
 
     public void useItem(PlayerCharacter player){
-        player.setInvisibleTicks(5);
+        player.setInvisibleTicks(effectDuration);
         player.removeItemFromInventory(this);
     }
 

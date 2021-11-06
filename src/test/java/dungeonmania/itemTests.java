@@ -330,22 +330,27 @@ public class itemTests {
    public void invisibilityPotion(){
        DungeonManiaController dungeon = new DungeonManiaController();
        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Standard");
-       for (int i = 0; i < 1; i++){
-            new_frame = dungeon.tick(null, Direction.RIGHT);
-        }
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,1)));
        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
        new_frame = dungeon.tick(null, Direction.LEFT);
+       new_frame = dungeon.tick(null, Direction.LEFT);
        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,1)));
-       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
        new_frame = dungeon.tick(null, Direction.UP);
        assertTrue(inventoryItemCount(new_frame, "invisibility_potion") == 1);
        new_frame = dungeon.tick(getItemId(new_frame, "invisibility_potion"), Direction.DOWN);
-       new_frame = dungeon.tick(null, Direction.RIGHT);
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
-       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
-       new_frame = dungeon.tick(null, Direction.RIGHT);
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,1)));
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(0,1)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-1,1)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-3,1)));
        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
    }
 
@@ -476,40 +481,30 @@ public class itemTests {
 
    @Test
    public void usingKey(){
-       DungeonManiaController dungeon = new DungeonManiaController();
-       DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Standard");
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
+    DungeonManiaController dungeon = new DungeonManiaController();
+    DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Standard");
 
-       new_frame = dungeon.tick(null, Direction.UP);
-       // playerPosition should be in the same postion as player don't have a key
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
+    new_frame = dungeon.tick(null, Direction.UP);
+    // playerPosition should be in the same postion as player don't have a key
+    assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
-       new_frame = dungeon.tick(null, Direction.RIGHT);
-       new_frame = dungeon.tick(null, Direction.DOWN);
-       // player has incorrect key
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
-       
-       new_frame = dungeon.tick(null, Direction.UP);
-       // playerPosition should be on top of the opened door (key used to open door)
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
+    new_frame = dungeon.tick(null, Direction.RIGHT);
+    // can't open door with incorrect key
+    new_frame = dungeon.tick(null, Direction.DOWN);
+    assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
 
-       new_frame = dungeon.tick(null, Direction.DOWN);
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
+    new_frame = dungeon.tick(null, Direction.UP);
+    // playerPosition should be on top of the opened door (key used to open door)
+    assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
 
-       // collect key and 2 wood and build a shield
-       new_frame = dungeon.tick(null, Direction.RIGHT);
-       new_frame = dungeon.tick(null, Direction.DOWN);
-       new_frame = dungeon.tick(null, Direction.DOWN);
-       new_frame = dungeon.build("shield");
-
-       // no key = locked door
-       new_frame = dungeon.tick(null, Direction.DOWN);
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
-
-    //    // collect key and open door
-    //    new_frame = dungeon.tick(null, Direction.RIGHT);
-    //    new_frame = dungeon.tick(null, Direction.DOWN);
-    //    assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,5)));
+    new_frame = dungeon.tick(null, Direction.DOWN);
+    assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
+    
+    // playerPosition should be in the same postion as player don't have a key
+    new_frame = dungeon.tick(null, Direction.RIGHT);
+    new_frame = dungeon.tick(null, Direction.DOWN);
+    new_frame = dungeon.tick(null, Direction.DOWN);
+    assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
    }
 
    // test one_ring item (respawn and drop rate) in fighting tests

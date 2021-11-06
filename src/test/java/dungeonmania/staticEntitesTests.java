@@ -102,16 +102,6 @@ public class staticEntitesTests {
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
-
-        // // use key to build
-        // new_frame = dungeon.build("shield");
-        // new_frame = dungeon.tick(null, Direction.DOWN);
-        // assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
-        
-        // new_frame = dungeon.tick(null, Direction.RIGHT);
-        // new_frame = dungeon.tick(null, Direction.DOWN);
-        // assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,5)));
-
     }
     
     // test portals
