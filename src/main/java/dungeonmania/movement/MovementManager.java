@@ -55,10 +55,14 @@ public class MovementManager {
     /**
      * calls move for every mob on the map
      * passes a random, possible direction for the mob to move
+     * if the player is invincible, it runs away
      */
     public void moveMobs() {
         for (Entity eachEntity : entities) {
             if ( eachEntity instanceof Mob ) {
+                if (player.getInvincibleTicks() > 0 && !(player.getInvisibleTicks() > 0)) {
+                    eachEntity.move(runAway(eachEntity));
+                }
                 eachEntity.move(getRandDirection(eachEntity));
             }
         }
@@ -92,6 +96,31 @@ public class MovementManager {
         }
         return Direction.NONE;
 
+    }
+    
+    /**
+     * Calculates the shortest path, then inverts that direction to run away
+     * If the move is valid, that direction is returned. Otherwise, none.
+     * @precondition the player is invincible
+     * @param entity
+     * @return Direction taken to get away from player
+     */
+    private Direction runAway(Entity entity) {
+        Direction path = shortestPath(entity, player, entities);
+        Direction newPath = Direction.NONE;
+        switch (path) {
+            case UP: newPath = Direction.DOWN;
+            case LEFT: newPath = Direction.RIGHT;
+            case DOWN: newPath = Direction.UP;
+            case RIGHT: newPath = Direction.LEFT;
+            case NONE: newPath = Direction.NONE;
+        }
+
+        if (checkMove(entity, newPath)) {
+            return newPath;
+        } else {
+            return Direction.NONE;
+        }
     }
 
     /**

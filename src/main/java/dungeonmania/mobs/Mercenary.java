@@ -9,8 +9,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import java.util.Random;
 
-
-
 import static java.lang.Math.abs;
 
 public class Mercenary extends Mob{
@@ -75,6 +73,9 @@ public class Mercenary extends Mob{
 
     @Override
     public void move(Direction direction) {
+        if (characterTracker.getInvincibleTicks() > 0 || characterTracker.getInvisibleTicks() > 0) {
+            super.move(direction);
+        }
         this.characterTracker = entities.findPlayer();
         super.move(MovementManager.shortestPath(this, characterTracker, entities));
     }
