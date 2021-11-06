@@ -12,7 +12,7 @@ import java.util.List;
 // really doesnt follow it all, but it still does the adapting
 public class DungeonResponseAdapter {
 
-    private Dungeon dungeon;
+    private transient Dungeon dungeon;
 
     public DungeonResponseAdapter(Dungeon dungRef) {
         this.dungeon = dungRef;

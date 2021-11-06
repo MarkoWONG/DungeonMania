@@ -7,7 +7,7 @@ import dungeonmania.entity.staticEnt.Exit;
 
 public class ExitGoal implements Goal {
 
-    private EntityList entities;
+    private transient EntityList entities;
 
     public ExitGoal(EntityList entities) {
         this.entities = entities;

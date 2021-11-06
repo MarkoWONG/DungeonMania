@@ -6,7 +6,7 @@ import dungeonmania.entity.collectables.Treasure;
 
 public class TreasureGoal implements Goal{
 
-    private EntityList entities;
+    private transient EntityList entities;
 
     public TreasureGoal(EntityList entities) {
         this.entities = entities;

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Bomb extends CollectableEntity implements Usable{
-    private EntityList entityMap;
+    private transient EntityList entityMap;
 
     public Bomb(Position position, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 40));

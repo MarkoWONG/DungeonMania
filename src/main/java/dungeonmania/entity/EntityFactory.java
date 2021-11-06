@@ -20,7 +20,7 @@ import java.util.Random;
 
 public abstract class EntityFactory {
 
-    protected EntityList entityMap;
+    protected transient EntityList entityMap;
     protected Random random;
 
     public EntityFactory(EntityList entityMap) {

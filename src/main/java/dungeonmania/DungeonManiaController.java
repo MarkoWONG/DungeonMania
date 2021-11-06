@@ -1,11 +1,15 @@
 package dungeonmania;
 
+import com.google.gson.Gson;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +54,23 @@ public class DungeonManiaController {
     }
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {
-        return null;
+        Gson gson = new Gson();
+        try {
+            Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
+            Path newitemPath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
+            File newItem = new File(String.valueOf(newitemPath));
+            newItem.createNewFile();
+            System.out.println(gson.toJson(currDungeon));
+//            FileOutputStream saveGameFileStream = new FileOutputStream(saveLocation);
+//            ObjectOutputStream saveGameObjStream = new ObjectOutputStream(saveGameFileStream);
+//            saveGameObjStream.writeObject(currDungeon);
+//            saveGameObjStream.close();
+//            saveGameFileStream.close();
+        } catch (Exception e) { // we can disregard all exceptions since the two stream constructors which throw the exceptions are always provided a different name
+            System.out.println(e);
+            return currAdapter.createDungResponse();
+        }
+        return currAdapter.createDungResponse();
     }
 
     public DungeonResponse loadGame(String name) throws IllegalArgumentException {

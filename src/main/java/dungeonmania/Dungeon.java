@@ -32,10 +32,10 @@ public class Dungeon {
     private Difficulty gameMode;
     private PlayerCharacter character;
     private EntityList entities;
-    private MovementManager movementManager;
-    private FightManager fightManager;
-    private GoalManager goalManager;
-    private EntityFactory entityFactory;
+    private transient MovementManager movementManager;
+    private transient FightManager fightManager;
+    private transient GoalManager goalManager;
+    private transient EntityFactory entityFactory;
 
     public Dungeon(String dungeonName, String gameMode) {
         this.name = dungeonName;

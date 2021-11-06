@@ -6,7 +6,7 @@ import dungeonmania.entity.staticEnt.Switch;
 
 public class BouldersGoal implements Goal{
 
-    private EntityList entities;
+    private transient EntityList entities;
 
     public BouldersGoal(EntityList entities) {
         this.entities = entities;

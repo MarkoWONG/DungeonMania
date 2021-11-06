@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Portal extends StaticEntity{
 
-    private EntityList entities;
+    private transient EntityList entities;
     private String colour;
     private Position otherPortalPosition;
 

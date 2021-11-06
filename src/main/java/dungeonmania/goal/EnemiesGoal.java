@@ -6,7 +6,7 @@ import dungeonmania.mobs.Mob;
 
 public class EnemiesGoal implements Goal {
 
-    private EntityList entities;
+    private transient EntityList entities;
 
     public EnemiesGoal(EntityList entities) {
         this.entities = entities;

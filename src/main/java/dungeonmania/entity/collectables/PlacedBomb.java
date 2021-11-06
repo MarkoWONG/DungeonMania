@@ -7,7 +7,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
 
 public class PlacedBomb extends StaticEntity {
-    private EntityList entities;
+    private transient EntityList entities;
 
     public PlacedBomb(Position position, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 100));

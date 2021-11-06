@@ -16,8 +16,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Mercenary extends Mob{
-    private EntityList entities;
-    private PlayerCharacter characterTracker;
+    private transient EntityList entities;
+    private transient PlayerCharacter characterTracker;
     private int price;
     private Position charPosition;
     private int battleRadius;

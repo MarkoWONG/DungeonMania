@@ -14,8 +14,8 @@ import java.util.Random;
 
 
 public class MovementManager {
-    private PlayerCharacter player;
-    private EntityList entities;
+    private transient PlayerCharacter player;
+    private transient EntityList entities;
 
     public MovementManager(EntityList entities) {
         this.entities = entities;
