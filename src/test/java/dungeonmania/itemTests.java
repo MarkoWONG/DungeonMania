@@ -5,9 +5,13 @@ import dungeonmania.entity.collectables.Sword;
 import dungeonmania.entity.collectables.buildable.Bow;
 import dungeonmania.entity.collectables.buildable.Shield;
 import dungeonmania.entity.collectables.potion.HealthPotion;
+import dungeonmania.mobs.*;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -171,14 +175,11 @@ public class itemTests {
        assertTrue(inventoryItemCount(new_frame, "arrow") == 3);
    }
 
-//    @Test
-//    public void swordStatChange(){
-//        PlayerCharacter player = new PlayerCharacter(new Position(0,0,0));
-//        assertTrue(player.getAttackDamage() == 1);
-//        Sword sword = new Sword(new Position(0,0,0), 3);
-//        player.addItemToInventory(sword);
-//        assertTrue(player.getAttackDamage() == 3);
-//    }
+   @Test
+   public void swordDurablity(){
+    
+        
+   }
 // needs to be rewritten or replaced
 //    @Test
 //    public void armourStatUpdate(){
@@ -309,22 +310,49 @@ public class itemTests {
        }
        assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 1);
        new_frame = dungeon.tick(null, Direction.RIGHT);
-       new_frame = dungeon.tick(getItemId(new_frame, "invincibility_potion"), Direction.DOWN);
-       assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,2)));
+       new_frame = dungeon.tick(null, Direction.RIGHT);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,1)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+       new_frame = dungeon.tick(getItemId(new_frame, "invincibility_potion"), Direction.NONE);
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,4)));
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,1)));
+       new_frame = dungeon.tick(null, Direction.DOWN);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,2)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,5)));
+       new_frame = dungeon.tick(null, Direction.RIGHT);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,2)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,6)));
+       new_frame = dungeon.tick(null, Direction.LEFT);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,2)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,7)));
+       new_frame = dungeon.tick(null, Direction.DOWN);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,3)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,8)));
+       // potion wore out
+       new_frame = dungeon.tick(null, Direction.DOWN);
+       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,4)));
+       assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,7)));
    }
    @Test
    public void hardInvincibilityPotion(){
        DungeonManiaController dungeon = new DungeonManiaController();
        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Hard");
-       for (int i = 0; i < 3; i++){
-           new_frame = dungeon.tick(null, Direction.RIGHT);
-       }
-       assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 1);
-       new_frame = dungeon.tick(getItemId(new_frame, "invincibility_potion"), Direction.RIGHT);
-       new_frame = dungeon.tick(null, Direction.DOWN);
-       assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
-       assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,2)));
+       for (int i = 0; i < 3; i++){ 
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        }
+        assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 1);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+        new_frame = dungeon.tick(getItemId(new_frame, "invincibility_potion"), Direction.NONE);
+        //potion no effect
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,1)));
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        // player dies
+        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(7,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(7,2)));
    }
    @Test
    public void invisibilityPotion(){
@@ -382,6 +410,7 @@ public class itemTests {
        new_frame = dungeon.tick(null, Direction.RIGHT);
        assertTrue(!checkEntityOnPosition(new_frame, "switch", new Position(5,3)));
        assertTrue(!checkEntityOnPosition(new_frame, "boulder", new Position(5,3)));
+       assertTrue(!checkEntityOnPosition(new_frame, "bomb", new Position(5,2)));
        assertTrue(!checkEntityOnPosition(new_frame, "wall", new Position(6,3)));
        assertTrue(!checkEntityOnPosition(new_frame, "wall", new Position(6,2)));
        assertTrue(!checkEntityOnPosition(new_frame, "wall", new Position(6,1)));
@@ -401,6 +430,7 @@ public class itemTests {
        new_frame = dungeon.tick(getItemId(new_frame,"bomb"), Direction.LEFT);
        assertTrue(!checkEntityOnPosition(new_frame, "switch", new Position(5,3)));
        assertTrue(!checkEntityOnPosition(new_frame, "boulder", new Position(5,3)));
+       assertTrue(!checkEntityOnPosition(new_frame, "bomb", new Position(5,2)));
        assertTrue(!checkEntityOnPosition(new_frame, "wall", new Position(6,3)));
        assertTrue(!checkEntityOnPosition(new_frame, "wall", new Position(6,2)));
        assertTrue(!checkEntityOnPosition(new_frame, "wall", new Position(6,1)));

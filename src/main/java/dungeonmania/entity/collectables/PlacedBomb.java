@@ -40,5 +40,6 @@ public class PlacedBomb extends StaticEntity {
                 }
             }
         }
+        entities.remove(this);
     }   
 }
