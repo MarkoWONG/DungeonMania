@@ -35,7 +35,7 @@ public class Mercenary extends Mob{
 
     @Override
     public boolean isInteractable() {
-        return true;
+        return isEnemy();
     }
 
     /**
