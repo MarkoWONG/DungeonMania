@@ -21,7 +21,11 @@ public class Door extends StaticEntity{
 
     @Override
     public String getType() {
-        return "door";
+        if (isOpen) {
+            return "door_open";
+        } else {
+            return "door";
+        }
     }
 
 
