@@ -73,10 +73,10 @@ public class Mercenary extends Mob{
 
     @Override
     public void move(Direction direction) {
+        this.characterTracker = entities.findPlayer();
         if (characterTracker.getInvincibleTicks() > 0 || characterTracker.getInvisibleTicks() > 0) {
             super.move(direction);
         }
-        this.characterTracker = entities.findPlayer();
         super.move(MovementManager.shortestPath(this, characterTracker, entities));
     }
 
