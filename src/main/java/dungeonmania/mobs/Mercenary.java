@@ -7,6 +7,10 @@ import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -64,8 +68,9 @@ public class Mercenary extends Mob{
             throw new InvalidActionException("Gold is required to bribe");
         }
         Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
-        if (abs(posBetween.getX()) == 2 ||  abs(posBetween.getY()) == 2) {
+        if (abs(posBetween.getX()) <= 2 ||  abs(posBetween.getY()) <= 2) {
             bribe(1);
+            character.consume(new ArrayList<String>(List.of("treasure")));
         } else {
             throw new InvalidActionException("Mercenary out of range");
         }
