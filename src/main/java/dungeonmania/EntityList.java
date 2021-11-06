@@ -42,7 +42,7 @@ public class EntityList extends ArrayList<Entity> {
      * @return
      */
     public ArrayList<Entity> searchTile(Entity entity) {
-        if (entity.getPosition() == null) {
+        if (entity == null || entity.getPosition() == null) {
             return new ArrayList<>();
         }
         ArrayList<Entity> input = search(entity.getPosition());

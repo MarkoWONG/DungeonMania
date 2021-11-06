@@ -1,6 +1,7 @@
 package dungeonmania.goal;
 
 import dungeonmania.Dungeon;
+import dungeonmania.EntityList;
 import dungeonmania.util.FileLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,13 +52,13 @@ public class GoalManager {
                 arg2 = doGoal(currSubGoals.getJSONObject(1));
                 return new OrGoal(arg1, arg2);
             case ("enemies"):
-                return new EnemiesGoal();
+                return new EnemiesGoal((EntityList) dungRef.getEntities());
             case ("treasure"):
-                return new TreasureGoal();
+                return new TreasureGoal((EntityList) dungRef.getEntities());
             case ("exit"):
-                return new ExitGoal();
+                return new ExitGoal((EntityList) dungRef.getEntities());
             case("boulders"):
-                return new BouldersGoal();
+                return new BouldersGoal((EntityList) dungRef.getEntities());
             default:
                 return null;
         }
