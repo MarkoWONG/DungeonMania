@@ -5,9 +5,13 @@ import dungeonmania.entity.collectables.Sword;
 import dungeonmania.entity.collectables.buildable.Bow;
 import dungeonmania.entity.collectables.buildable.Shield;
 import dungeonmania.entity.collectables.potion.HealthPotion;
+import dungeonmania.mobs.*;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -171,14 +175,11 @@ public class itemTests {
        assertTrue(inventoryItemCount(new_frame, "arrow") == 3);
    }
 
-//    @Test
-//    public void swordStatChange(){
-//        PlayerCharacter player = new PlayerCharacter(new Position(0,0,0));
-//        assertTrue(player.getAttackDamage() == 1);
-//        Sword sword = new Sword(new Position(0,0,0), 3);
-//        player.addItemToInventory(sword);
-//        assertTrue(player.getAttackDamage() == 3);
-//    }
+   @Test
+   public void swordDurablity(){
+    
+        
+   }
 // needs to be rewritten or replaced
 //    @Test
 //    public void armourStatUpdate(){
