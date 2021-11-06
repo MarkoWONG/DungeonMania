@@ -72,7 +72,10 @@ public class Dungeon {
     }
 
     private void notifyOfTick() {
-        for(int i = entities.size() - 1; i >= 0; --i) {
+        // for(int i = entities.size() - 1; i >= 0; --i) {
+        //     entities.get(i).incrementTick();
+        // }
+        for(int i = 0; i < entities.size(); i++) {
             entities.get(i).incrementTick();
         }
     }

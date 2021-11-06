@@ -28,6 +28,8 @@
         "mercenary": "images/tileset/entities/ranger.png",
         "switch": "images/tileset/floor_switch.png",
         "invincibility_potion": "images/tileset/items/potion_10.png",
+        "invisibility_potion": "images/tileset/items/potion_2.png",
+        "health_potion": "images/tileset/items/potion_4.png",
         "sword": "images/tileset/items/sword_silver.png",
         "portal": "images/tileset/entities/portal_00.png",
         "portal_blue": "images/tileset/entities/portal_00.png",

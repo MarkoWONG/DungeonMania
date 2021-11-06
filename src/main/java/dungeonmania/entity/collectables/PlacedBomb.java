@@ -18,6 +18,7 @@ public class PlacedBomb extends Bomb {
             for (Entity eachEntity : entities.search(eachPos)) {
                 if (eachEntity.getType().equals("switch") && ((Switch) eachEntity).getSwitchOn()) {
                     denotate();
+                    return;
                 }
             }
         }
