@@ -39,11 +39,11 @@ public class Portal extends StaticEntity{
         for (Entity eachPortal : allPortals) {
             if (eachPortal.getOtherInfo().equals(colour)) {
                 ((Portal) eachPortal).setOtherPortalPosition(this.getPosition());
-                System.out.println("linked up portal");
+                // System.out.println("linked up portal");
                 return eachPortal.getPosition();
             }
         }
-        System.out.println("no other portal found yet");
+        // System.out.println("no other portal found yet");
         return null;
     }
 

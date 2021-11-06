@@ -64,18 +64,16 @@ public class staticEntitesTests {
     public void exit(){
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Standard");
-        String orginal_goals = new_frame.getGoals();
 
         new_frame = dungeon.tick(null, Direction.UP);
         new_frame = dungeon.tick(null, Direction.UP);
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,0)));
-        assertTrue(orginal_goals.equals(new_frame.getGoals()));
 
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,0)));
-        assertTrue(new_frame.getGoals().length() == 0);
+        assertTrue(":exit".equals(new_frame.getGoals()));
     }
 
     @Test
@@ -88,6 +86,10 @@ public class staticEntitesTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
+        // can't open door with incorrect key
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
+
         new_frame = dungeon.tick(null, Direction.UP);
         // playerPosition should be on top of the opened door (key used to open door)
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,1)));
@@ -96,8 +98,20 @@ public class staticEntitesTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
         
         // playerPosition should be in the same postion as player don't have a key
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.DOWN);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
+
+        // // use key to build
+        // new_frame = dungeon.build("shield");
+        // new_frame = dungeon.tick(null, Direction.DOWN);
+        // assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
+        
+        // new_frame = dungeon.tick(null, Direction.RIGHT);
+        // new_frame = dungeon.tick(null, Direction.DOWN);
+        // assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,5)));
+
     }
     
     // test portals
