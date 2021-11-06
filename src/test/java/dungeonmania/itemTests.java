@@ -402,7 +402,8 @@ public class itemTests {
        new_frame = dungeon.tick(null, Direction.RIGHT);
        new_frame = dungeon.tick(null, Direction.RIGHT);
        new_frame = dungeon.tick(null, Direction.RIGHT);
-       new_frame = dungeon.tick(getItemId(new_frame,"bomb"), Direction.LEFT);
+       new_frame = dungeon.tick(getItemId(new_frame,"bomb"), Direction.NONE);
+       new_frame = dungeon.tick(null, Direction.LEFT);
        new_frame = dungeon.tick(null, Direction.LEFT);
        new_frame = dungeon.tick(null, Direction.DOWN);
        new_frame = dungeon.tick(null, Direction.RIGHT);
