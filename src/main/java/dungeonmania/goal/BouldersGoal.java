@@ -24,6 +24,6 @@ public class BouldersGoal implements Goal{
 
     @Override
     public String toString() {
-        return compute() ? "" : ":boulders";
+        return compute() ? "" : ":boulder";
     }
 }
