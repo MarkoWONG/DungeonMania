@@ -143,11 +143,21 @@ public class PlayerCharacter extends Entity implements Movement{
     public void takeDamage(int damage) {
         ArrayList<String> typesUsed = new ArrayList<String>();
         int reducedDamage = damage;
-        for (CollectableEntity e : inventory) {
-            if (!typesUsed.contains(e.getType())) {
-                reducedDamage = e.usedInDefense(reducedDamage);
-                e.usedInBattle(this);
-                typesUsed.add(e.getType());
+        // for (CollectableEntity e : inventory) {
+        //     if (!typesUsed.contains(e.getType())) {
+        //         reducedDamage = e.usedInDefense(reducedDamage);
+        //         e.usedInBattle(this);
+        //         typesUsed.add(e.getType());
+        //     }
+        // }
+        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
+            CollectableEntity currentEnt = iterator.next();
+            if (!typesUsed.contains(currentEnt.getType())) {
+                reducedDamage = currentEnt.usedInDefense(reducedDamage);
+                if (currentEnt.usedInBattle(this)){
+                    iterator.remove();
+                }
+                typesUsed.add(currentEnt.getType());
             }
         }
         

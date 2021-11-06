@@ -38,6 +38,7 @@ public class Armour extends CollectableEntity{
 
     public boolean usedInBattle(PlayerCharacter player){
         durability--;
+        // System.out.println("armour durablity is now: " + durability);
         if (durability <= 0){
             return true;
             // player.getInventory().removeIf(ent -> ent.equals(this));
