@@ -15,16 +15,16 @@ public abstract class CollectableEntity extends Entity{
         entity.interact(this);
     }
 
-    public void usedInBattle(PlayerCharacter player) {
-        ; // default case for each collectable
+    public boolean usedInBattle(PlayerCharacter player) {
+        return false; // default case for each collectable
     }
 
-    public void usedInBattle(ZombieToast zombie) {
-        ;
+    public boolean usedInBattle(ZombieToast zombie) {
+        return false;
     }
 
-    public void usedInBattle(Mercenary mercenary) {
-        ;
+    public boolean usedInBattle(Mercenary mercenary) {
+        return false;
     }
 
     public int usedInAttack(int attackDamage) {

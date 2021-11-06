@@ -28,11 +28,13 @@ public class Sword extends CollectableEntity implements Weapon{
         player.addItemToInventory(this);
     }
 
-    public void usedInBattle(PlayerCharacter player){
+    public boolean usedInBattle(PlayerCharacter player){
         durability--;
         if (durability <= 0){
-            player.getInventory().removeIf(ent -> ent.equals(this));
+            return true;
+            // player.getInventory().removeIf(ent -> ent.equals(this));
         }
+        return false;
     }
 
     @Override

@@ -26,11 +26,13 @@ public class Shield extends CollectableEntity {
         return Arrays.asList("wood","wood","key");
     }
 
-    public void usedInBattle(PlayerCharacter player){
+    public boolean usedInBattle(PlayerCharacter player){
         durability--;
         if (durability <= 0){
-            player.getInventory().removeIf(ent -> ent.equals(this));
+            return true;
+            // player.getInventory().removeIf(ent -> ent.equals(this));
         }
+        return false;
     }
 
     @Override

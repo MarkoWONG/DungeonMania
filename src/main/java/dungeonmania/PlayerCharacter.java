@@ -11,7 +11,7 @@ import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Iterator;
 
 public class PlayerCharacter extends Entity implements Movement{
 
@@ -115,13 +115,24 @@ public class PlayerCharacter extends Entity implements Movement{
         ArrayList<String> typesUsed = new ArrayList<String>();
 
 
-        for (CollectableEntity e : inventory) {
-            if (!typesUsed.contains(e.getType())) {
-                AD = e.usedInAttack(AD);
-                e.usedInBattle(this);
-                typesUsed.add(e.getType());
+        // for (CollectableEntity e : inventory) {
+        //     if (!typesUsed.contains(e.getType())) {
+        //         AD = e.usedInAttack(AD);
+        //         e.usedInBattle(this);
+        //         typesUsed.add(e.getType());
+        //     }
+        // }
+        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
+            CollectableEntity currentEnt = iterator.next();
+            if (!typesUsed.contains(currentEnt.getType())) {
+                AD = currentEnt.usedInAttack(AD);
+                if (currentEnt.usedInBattle(this)){
+                    iterator.remove();
+                }
+                typesUsed.add(currentEnt.getType());
             }
         }
+        
 
         for (Mob mob : allies) {
             AD += mob.getAttackDamage();

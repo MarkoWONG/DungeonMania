@@ -177,18 +177,23 @@ public class itemTests {
 
    @Test
    public void swordDurablity(){
-    
+
         
    }
-// needs to be rewritten or replaced
-//    @Test
-//    public void armourStatUpdate(){
-//        PlayerCharacter player = new PlayerCharacter(new Position(0,0,0));
-//        assertTrue(!player.getHasArmour());
-//        Armour armour = new Armour(new Position(0,0,0));
-//        player.addItemToInventory(armour);
-//        assertTrue(player.getHasArmour());
-//    }
+   @Test
+   public void armourStatUpdate(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
+
+        //pick up armour
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        // fight enemy 
+        new_frame = dungeon.tick(null, Direction.UP);
+        assertTrue(inventoryItemCount(new_frame, "armour") == 1);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        assertTrue(inventoryItemCount(new_frame, "armour") == 0);
+   }
 //
 //    @Test
 //    public void bowDurablity(){
