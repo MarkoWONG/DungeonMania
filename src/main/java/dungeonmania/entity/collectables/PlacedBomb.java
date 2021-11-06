@@ -1,15 +1,22 @@
 package dungeonmania.entity.collectables;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.staticEnt.StaticEntity;
 import dungeonmania.entity.staticEnt.Switch;
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
 
-public class PlacedBomb extends Bomb {
+public class PlacedBomb extends StaticEntity {
     private EntityList entities;
+
     public PlacedBomb(Position position, EntityList entityMap){
-        super(new Position(position.getX(), position.getY(), 100), entityMap);
+        super(new Position(position.getX(), position.getY(), 100));
         this.entities = entityMap;
+    }
+
+    @Override
+    public String getType() {
+        return "bomb";
     }
 
     @Override
