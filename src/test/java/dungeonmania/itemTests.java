@@ -304,7 +304,7 @@ public class itemTests {
    public void StandardInvincibilityPotion(){
        DungeonManiaController dungeon = new DungeonManiaController();
        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Standard");
-       for (int i = 0; i < 3; i++){
+       for (int i = 0; i < 3; i++){ 
            new_frame = dungeon.tick(null, Direction.RIGHT);
        }
        assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 1);

@@ -61,9 +61,13 @@ public class MovementManager {
         for (Entity eachEntity : entities) {
             if ( eachEntity instanceof Mob ) {
                 if (player.getInvincibleTicks() > 0 && !(player.getInvisibleTicks() > 0)) {
-                    eachEntity.move(runAway(eachEntity));
+                    Direction runawaydir = runAway(eachEntity);
+                    System.out.println("runaway in " + runawaydir.toString());
+                    eachEntity.move(runawaydir);
                 }
-                eachEntity.move(getRandDirection(eachEntity));
+                else{
+                    eachEntity.move(getRandDirection(eachEntity));
+                }
             }
         }
     }
@@ -107,13 +111,21 @@ public class MovementManager {
      */
     private Direction runAway(Entity entity) {
         Direction path = shortestPath(entity, player, entities);
-        Direction newPath = Direction.NONE;
-        switch (path) {
-            case UP: newPath = Direction.DOWN;
-            case LEFT: newPath = Direction.RIGHT;
-            case DOWN: newPath = Direction.UP;
-            case RIGHT: newPath = Direction.LEFT;
-            case NONE: newPath = Direction.NONE;
+        Direction newPath;
+        if (path.toString().equals("UP")){
+            newPath = Direction.DOWN;
+        }
+        else if (path.toString().equals("LEFT")){
+            newPath = Direction.RIGHT;
+        }
+        else if (path.toString().equals("DOWN")){
+            newPath = Direction.UP;
+        }
+        else if (path.toString().equals("RIGHT")){
+            newPath = Direction.LEFT;
+        }
+        else{
+            newPath = Direction.NONE;
         }
 
         if (checkMove(entity, newPath)) {
