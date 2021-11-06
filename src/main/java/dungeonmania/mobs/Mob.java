@@ -2,7 +2,6 @@ package dungeonmania.mobs;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
-import dungeonmania.mobs.faction.IFaction;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.movement.Movement;
