@@ -55,25 +55,25 @@ public class Portal extends StaticEntity{
     @Override
     public void interact(PlayerCharacter player){
         // System.out.println("teleporting to " + otherPortalPosition.toString());
-        player.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), player.getPosition().getLayer()));
+        player.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), player.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Mercenary mercenary){
         // System.out.println("teleporting to " + otherPortalPosition.toString());
-        mercenary.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), mercenary.getPosition().getLayer()));
+        mercenary.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), mercenary.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Boulder boulder){
         // System.out.println("teleporting to " + otherPortalPosition.toString());
-        boulder.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), boulder.getPosition().getLayer()));
+        boulder.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), boulder.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Spider spider){
         // System.out.println("teleporting to " + otherPortalPosition.toString());
-        spider.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getX(), spider.getPosition().getLayer()));
+        spider.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), spider.getPosition().getLayer()));
     }
 
     //Getters and Setters 
