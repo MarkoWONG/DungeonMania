@@ -311,7 +311,6 @@ public class itemTests {
         // fight enemy 
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(inventoryItemCount(new_frame, "shield") == 0);
-        assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(-1, 9)));
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-1, 9)));
     }
 
@@ -581,10 +580,24 @@ public class itemTests {
 
     // test one_ring item (respawn and drop rate) in fighting tests
     @Test
-    public void oneRingPickUp(){
+    public void oneRing(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/one_ring", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/one_ring", "Hard");
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(inventoryItemCount(new_frame, "one_ring") == 1);
+        // fight enemy and dies activing one_ring
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        
+        //fight enemy
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,1)));
+        
+        
+        // defeated by enemy
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(5,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,2)));
+
     }
 }

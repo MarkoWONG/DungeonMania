@@ -83,7 +83,7 @@ public abstract class Entity implements Interacts {
     public boolean canRevive() {
         return false;
     }
-    public void revive() {
+    public void revive(Entity e) {
 
     }
 

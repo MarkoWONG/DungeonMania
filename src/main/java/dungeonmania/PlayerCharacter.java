@@ -21,6 +21,7 @@ public class PlayerCharacter extends Entity implements Movement{
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
     private Integer Health;
+    private Integer startingHealth;
     private Integer attackDamage;
     private Integer invincibleTicks;
     private Integer invisibleTicks;
@@ -30,6 +31,7 @@ public class PlayerCharacter extends Entity implements Movement{
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
         this.Health = health;
+        this.startingHealth = health;
         this.attackDamage = ad;
         this.invisibleTicks = 0;
         this.invincibleTicks = 0;
@@ -94,11 +96,12 @@ public class PlayerCharacter extends Entity implements Movement{
     }
 
     @Override
-    public void revive() {
-        for (CollectableEntity e : inventory) {
-            if (e.getType().equals("one_ring")) {
-                setHealth(20);
-                inventory.remove(e);
+    public void revive(Entity e) {
+        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
+            CollectableEntity currentEnt = iterator.next();
+            if (currentEnt.getType().equals("one_ring")) {
+                setHealth(startingHealth);
+                iterator.remove();
             }
         }
     }
