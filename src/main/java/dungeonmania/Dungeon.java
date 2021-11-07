@@ -1,5 +1,7 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.difficulty.Difficulty;
 import dungeonmania.difficulty.Hard;
 import dungeonmania.difficulty.Peaceful;
@@ -22,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Dungeon {
 
     private String name;
@@ -32,10 +34,10 @@ public class Dungeon {
     private Difficulty gameMode;
     private PlayerCharacter character;
     private EntityList entities;
-    private transient MovementManager movementManager;
-    private transient FightManager fightManager;
-    private transient GoalManager goalManager;
-    private transient EntityFactory entityFactory;
+    private MovementManager movementManager;
+    private FightManager fightManager;
+    private GoalManager goalManager;
+    private EntityFactory entityFactory;
 
     public Dungeon(String dungeonName, String gameMode) {
         this.name = dungeonName;
@@ -46,10 +48,14 @@ public class Dungeon {
         this.fightManager = new FightManager(entities);
         this.gameMode = difficultySelector(gameMode);
         this.entityFactory = this.gameMode.createEntityFactory(entities);
-        createEntitiesMap_FromJson(entities, dungeonName);
+        createNewEntitiesMap(entities, dungeonName);
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
+    }
+
+    public Dungeon (JSONObject saveGame) {
+        ;
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -117,7 +123,7 @@ public class Dungeon {
         }
     }
 
-    private void createEntitiesMap_FromJson(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
+    private void createNewEntitiesMap(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
