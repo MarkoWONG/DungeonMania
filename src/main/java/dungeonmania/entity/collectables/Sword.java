@@ -13,6 +13,11 @@ public class Sword extends CollectableEntity implements Weapon{
         this.durability = durability;
     }
 
+    public Sword(int durability) {
+        super(null);
+        this.durability = durability;
+    }
+
     @Override
     public String getType() {
         return "sword";

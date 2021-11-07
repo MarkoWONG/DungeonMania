@@ -65,8 +65,10 @@ public class DungeonManiaController {
             Path newitemPath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
             File newItem = new File(String.valueOf(newitemPath));
             newItem.createNewFile();
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writerWithDefaultPrettyPrinter().writeValue(newItem,currDungeon);
+            FileWriter saveGameWriter = new FileWriter(newItem);
+            String gameData = DungeonJSONAdapter.toJSON(currDungeon).toString();
+            saveGameWriter.write(gameData);
+            saveGameWriter.close();
         } catch (Exception e) { // we can disregard all exceptions since the two stream constructors which throw the exceptions are always provided a different name
             System.out.println(e);
             return currAdapter.createDungResponse();
@@ -80,6 +82,7 @@ public class DungeonManiaController {
             Path saveGamePath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
             String saveGame = new String(Files.readAllBytes(saveGamePath));
             currDungeon = new Dungeon(new JSONObject(saveGame));
+            currAdapter = new DungeonResponseAdapter(currDungeon);
         } catch (Exception e) {
             System.out.println(e);
             return currAdapter.createDungResponse();

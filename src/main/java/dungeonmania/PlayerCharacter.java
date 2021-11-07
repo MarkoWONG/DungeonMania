@@ -35,6 +35,10 @@ public class PlayerCharacter extends Entity implements Movement{
         this.invincibleTicks = 0;
     }
 
+    public void replaceInventory(ArrayList<CollectableEntity> newInv) {
+        this.inventory = newInv;
+    }
+
     public void addItemToInventory(CollectableEntity item) {
         inventory.add(item);
         item.setPosition(null);

@@ -18,6 +18,11 @@ public class Peaceful extends  Difficulty{
         super(dungRef,movementManager,fightManager);
     }
 
+    @Override
+    public String getMode() {
+        return "Peaceful";
+    }
+
     public void simulate(EntityList entitiesMap, Direction moveDir) {
         movementManager.moveChar(moveDir);
 //        movementManager.doInteractions();

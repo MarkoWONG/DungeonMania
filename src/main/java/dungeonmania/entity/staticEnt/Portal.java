@@ -33,6 +33,10 @@ public class Portal extends StaticEntity{
         return colour;
     }
 
+    public String getOtherInfoType() {
+        return "colour";
+    }
+
     // portal should search for another portal on creation, if found it will set it's other portal reference, and also notify the other portal of its existence
     private Position findOtherPortal(String colour){
         ArrayList<Entity> allPortals = entities.search("portal");

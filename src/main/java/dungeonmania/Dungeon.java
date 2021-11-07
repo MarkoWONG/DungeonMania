@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -55,7 +56,13 @@ public class Dungeon {
     }
 
     public Dungeon (JSONObject saveGame) {
-        ;
+        this(saveGame.getString("name"),saveGame.getString("gamemode"));
+        entitiesFromJSON(saveGame.getJSONArray("entities"),entities);
+        character.replaceInventory(inventoryFromJSON(saveGame.getJSONArray("inventory")));
+        this.id = saveGame.getString("id");
+        PlayerCharacter thePlayer = entities.findPlayer();
+        fightManager.setCharacter(thePlayer);
+        movementManager.setCharacter(thePlayer);
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -131,6 +138,11 @@ public class Dungeon {
             throw new IllegalArgumentException("Dungeon does not exist");
         }
         JSONArray currEntities = new JSONObject(currFileStr).getJSONArray("entities");
+        entitiesFromJSON(currEntities,output);
+    }
+
+    private void entitiesFromJSON(JSONArray currEntities, ArrayList<Entity> input) {
+        input.clear();
         for (int i = 0; i < currEntities.length() ; i++) {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
@@ -142,11 +154,27 @@ public class Dungeon {
                 this.character = (PlayerCharacter) currEnt;
                 this.entry = currPosition;
             }
-            output.add(currEnt);
+            input.add(currEnt);
         }
     }
 
+    private ArrayList<CollectableEntity> inventoryFromJSON(JSONArray currInventory) {
+        ArrayList<CollectableEntity> newInv = new ArrayList<>();
+        for (int i = 0; i < currInventory.length() ; i++) {
+            JSONObject currObj = currInventory.getJSONObject(i);
+            String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
+            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
+            Entity currEnt = entityFactory.create(currEntType, null,null,currDoorKey);
+            newInv.add((CollectableEntity) currEnt);
+        }
+        return newInv;
+    }
+
     // Getters for creating a DungeonResponse
+
+    public String getGamemode() {
+        return gameMode.getMode();
+    }
 
     public String getName() {
         return name;
