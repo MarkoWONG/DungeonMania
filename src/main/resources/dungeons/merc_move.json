@@ -1,0 +1,29 @@
+{
+    "entities": [
+    {
+        "x": 0,
+        "y": 0,
+        "type": "player"
+    },
+    {
+        "x": 1,
+        "y": 0,
+        "type": "sword"
+    },
+    {
+        "x": 3,
+        "y": 0,
+        "type": "zombie_toast"
+    },
+    {
+        "x": -5,
+        "y": 0,
+        "type": "mercenary"
+    },
+    {
+        "x": 3,
+        "y": 3,
+        "type": "invincibility_potion"
+    }
+]
+}
