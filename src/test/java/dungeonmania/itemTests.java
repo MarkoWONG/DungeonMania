@@ -338,7 +338,6 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-3,2)));
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(-3,3)));
-        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(-3,3)));
     }
 
     @Test
