@@ -3,8 +3,6 @@ import dungeonmania.EntityList;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 public class Bomb extends CollectableEntity implements Usable{
     private EntityList entityMap;

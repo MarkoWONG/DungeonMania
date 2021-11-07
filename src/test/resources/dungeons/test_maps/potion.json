@@ -26,9 +26,9 @@
             "type": "health_potion"
         },
         {
-            "x": 0,
+            "x": 1,
             "y": 1,
-            "type": "health_potion"
+            "type": "armour"
         },
         {
             "x": 0,

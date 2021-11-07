@@ -10,9 +10,11 @@ import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Spider;
+import dungeonmania.mobs.Subscriber;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
@@ -20,6 +22,7 @@ public abstract class EntityFactory {
 
     protected EntityList entityMap;
     protected Random random;
+    private ArrayList<Subscriber> subscribers = new ArrayList<>();
 
     public EntityFactory(EntityList entityMap) {
         this.entityMap = entityMap;
@@ -54,8 +57,22 @@ public abstract class EntityFactory {
         return null;
     }
 
+    private Entity subscribe(Entity e) {
+        PlayerCharacter player = entityMap.findPlayer(); 
+        if (e instanceof Subscriber && player != null) { // && player exists already
+            player.addSubscriber((Subscriber) e);
+        } else if (e instanceof Subscriber) { // && player does not exist yet
+            subscribers.add((Subscriber) e);
+        }
+        return e;
+    }
+
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos,20,2);
+        Entity player = new PlayerCharacter(startPos,20,2);
+        for (Subscriber s : subscribers) {
+            ((PlayerCharacter) player).addSubscriber(s);
+        }
+        return player;
     }
 
     protected Entity makeWall(Position startPos) {
@@ -87,7 +104,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return new Mercenary(startPos,1,entityMap,15,4);
+        return subscribe(new Mercenary(startPos,1,entityMap,15,4));
     }
 
     protected Entity makeZombie(Position startPos) {

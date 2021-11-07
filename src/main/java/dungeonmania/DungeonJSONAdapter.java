@@ -2,7 +2,6 @@ package dungeonmania;
 
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
-import dungeonmania.util.Position;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

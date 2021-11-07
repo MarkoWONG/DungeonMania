@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 

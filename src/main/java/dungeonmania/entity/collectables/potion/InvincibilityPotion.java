@@ -3,11 +3,9 @@ import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-    private static final int effectDuration = 5;
+    private static final int effectDuration = 20;
     private boolean enabled;
 
     public InvincibilityPotion(Position position, boolean enabled){

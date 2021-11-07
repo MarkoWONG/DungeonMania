@@ -4,11 +4,9 @@ import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.Mercenary;
-import dungeonmania.mobs.ZombieToast;
 import dungeonmania.mobs.Spider;
 import dungeonmania.util.Position;
 
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 public class Portal extends StaticEntity{
@@ -37,17 +35,19 @@ public class Portal extends StaticEntity{
         return "colour";
     }
 
-    // portal should search for another portal on creation, if found it will set it's other portal reference, and also notify the other portal of its existence
+    /**
+     * Find the other portal location if any
+     * @param colour
+     * @return other portal location
+     */
     private Position findOtherPortal(String colour){
         ArrayList<Entity> allPortals = entities.search("portal");
         for (Entity eachPortal : allPortals) {
             if (eachPortal.getOtherInfo().equals(colour)) {
                 ((Portal) eachPortal).setOtherPortalPosition(this.getPosition());
-                // System.out.println("linked up portal");
                 return eachPortal.getPosition();
             }
         }
-        // System.out.println("no other portal found yet");
         return null;
     }
 
@@ -58,25 +58,21 @@ public class Portal extends StaticEntity{
 
     @Override
     public void interact(PlayerCharacter player){
-        // System.out.println("teleporting to " + otherPortalPosition.toString());
         player.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), player.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Mercenary mercenary){
-        // System.out.println("teleporting to " + otherPortalPosition.toString());
         mercenary.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), mercenary.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Boulder boulder){
-        // System.out.println("teleporting to " + otherPortalPosition.toString());
         boulder.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), boulder.getPosition().getLayer()));
     }
 
     @Override
     public void interact(Spider spider){
-        // System.out.println("teleporting to " + otherPortalPosition.toString());
         spider.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), spider.getPosition().getLayer()));
     }
 

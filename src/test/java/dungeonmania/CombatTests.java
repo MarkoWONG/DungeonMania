@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
-import dungeonmania.EntityList;
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
@@ -15,7 +14,6 @@ import dungeonmania.mobs.ZombieToast;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Mob;
 import dungeonmania.entity.staticEnt.Switch;
-import dungeonmania.PlayerCharacter;
 import org.junit.jupiter.api.Test;
 
 public class CombatTests {

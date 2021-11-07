@@ -3,15 +3,10 @@ package dungeonmania.difficulty;
 import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.FightManager;
-import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.HardEntityFactory;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Hard extends Difficulty{
     public Hard(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
