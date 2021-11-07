@@ -9,10 +9,12 @@ import java.util.List;
 public class Shield extends CollectableEntity {
 
     private Integer durability;
+    private static final int startingDurability = 3;
 
     public Shield() {
         super(null);
-        this.durability = 3 * 2;
+        // times 2 as items are used twice per battle one for attacking and one for defending
+        this.durability = startingDurability * 2;
     }
 
     public static List<String> getRecipe() {

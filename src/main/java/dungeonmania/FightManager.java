@@ -32,7 +32,7 @@ public class FightManager {
                 if (!curr.canRevive()) {
                     entities.remove(i);
                 } else {
-                    curr.revive();
+                    curr.revive(curr);
                 }
             }
         }

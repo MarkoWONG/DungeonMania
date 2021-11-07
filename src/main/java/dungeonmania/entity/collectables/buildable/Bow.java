@@ -10,10 +10,12 @@ import java.util.List;
 public class Bow extends CollectableEntity implements Weapon {
 
     private Integer durability;
+    private static final int startingDurability = 3;
 
     public Bow() {
         super(null);
-        this.durability = 3 * 2;
+        // times 2 as items are used twice per battle one for attacking and one for defending
+        this.durability = startingDurability * 2;
     }
 
     public boolean usedInBattle(PlayerCharacter player){
