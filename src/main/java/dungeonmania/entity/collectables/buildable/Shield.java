@@ -2,9 +2,6 @@ package dungeonmania.entity.collectables.buildable;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.CollectableEntity;
-import dungeonmania.entity.staticEnt.Exit;
-import dungeonmania.entity.staticEnt.Wall;
-import dungeonmania.util.Position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +10,9 @@ public class Shield extends CollectableEntity {
 
     private Integer durability;
 
-    public Shield(Integer durability) {
+    public Shield() {
         super(null);
-        this.durability = durability * 2;
+        this.durability = 3 * 2;
     }
 
     public static List<String> getRecipe() {
@@ -30,7 +27,6 @@ public class Shield extends CollectableEntity {
         durability--;
         if (durability <= 0){
             return true;
-            // player.getInventory().removeIf(ent -> ent.equals(this));
         }
         return false;
     }

@@ -13,8 +13,6 @@ import dungeonmania.mobs.Spider;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
@@ -133,7 +131,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeSword(Position startPos) {
-        return new Sword(startPos,3);
+        return new Sword(startPos);
     }
 
     protected Entity makeArmour(Position startPos) {
@@ -146,7 +144,7 @@ public abstract class EntityFactory {
 
     protected Entity makeBow() { return new Bow(); }
 
-    protected Entity makeShield() { return new Shield(3); }
+    protected Entity makeShield() { return new Shield(); }
 
 
 }

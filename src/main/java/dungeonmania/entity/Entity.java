@@ -65,7 +65,7 @@ public abstract class Entity implements Interacts {
     }
 
     public void setHasFought(Boolean value) {
-        hasFought = false;
+        hasFought = value;
     }
 
     public boolean hasFought() {

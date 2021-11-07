@@ -21,6 +21,7 @@ public class FightManager {
         for (Entity e : currTile) {
             if (!e.hasFought()) {
                 e.startFight(character);
+                e.setHasFought(true);
             }
         }
         cleanUp();

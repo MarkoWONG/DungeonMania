@@ -7,10 +7,13 @@ import dungeonmania.util.Position;
 public class Sword extends CollectableEntity implements Weapon{
 
     private int durability;
+    private static final int startingDurability = 3;
 
-    public Sword(Position position, int durability){
+    public Sword(Position position){
         super(new Position(position.getX(), position.getY(), 40));
-        this.durability = durability * 2;
+        
+        // times 2 as items are used twice per battle one for attacking and one for defending
+        this.durability = startingDurability * 2; 
     }
 
     @Override
