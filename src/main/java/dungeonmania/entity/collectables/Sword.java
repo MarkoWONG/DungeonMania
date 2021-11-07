@@ -16,6 +16,10 @@ public class Sword extends CollectableEntity implements Weapon{
         this.durability = startingDurability * 2; 
     }
 
+    public Sword() {
+        super(null);
+    }
+
     @Override
     public String getType() {
         return "sword";

@@ -10,8 +10,21 @@ public class Key extends CollectableEntity {
         this.keyIdentifer = !keyIdentifer.isBlank() ? Integer.parseInt(keyIdentifer) : -1;
     }
 
+    public Key(String keyIdentifer) {
+        super(null);
+        this.keyIdentifer = !keyIdentifer.isBlank() ? Integer.parseInt(keyIdentifer) : -1;
+    }
+
     @Override
     public String getType() {
+        return "key";
+    }
+
+    public String getOtherInfo() {
+        return String.valueOf(keyIdentifer);
+    }
+
+    public String getOtherInfoType() {
         return "key";
     }
 

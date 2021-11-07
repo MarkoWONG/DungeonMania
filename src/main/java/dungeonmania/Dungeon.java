@@ -1,5 +1,7 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.difficulty.Difficulty;
 import dungeonmania.difficulty.Hard;
 import dungeonmania.difficulty.Peaceful;
@@ -19,10 +21,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Dungeon {
 
     private String name;
@@ -46,10 +49,20 @@ public class Dungeon {
         this.fightManager = new FightManager(entities);
         this.gameMode = difficultySelector(gameMode);
         this.entityFactory = this.gameMode.createEntityFactory(entities);
-        createEntitiesMap_FromJson(entities, dungeonName);
+        createNewEntitiesMap(entities, dungeonName);
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
+    }
+
+    public Dungeon (JSONObject saveGame) {
+        this(saveGame.getString("name"),saveGame.getString("gamemode"));
+        entitiesFromJSON(saveGame.getJSONArray("entities"),entities);
+        character.replaceInventory(inventoryFromJSON(saveGame.getJSONArray("inventory")));
+        this.id = saveGame.getString("id");
+        PlayerCharacter thePlayer = entities.findPlayer();
+        fightManager.setCharacter(thePlayer);
+        movementManager.setCharacter(thePlayer);
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -117,7 +130,7 @@ public class Dungeon {
         }
     }
 
-    private void createEntitiesMap_FromJson(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
+    private void createNewEntitiesMap(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
@@ -125,6 +138,11 @@ public class Dungeon {
             throw new IllegalArgumentException("Dungeon does not exist");
         }
         JSONArray currEntities = new JSONObject(currFileStr).getJSONArray("entities");
+        entitiesFromJSON(currEntities,output);
+    }
+
+    private void entitiesFromJSON(JSONArray currEntities, ArrayList<Entity> input) {
+        input.clear();
         for (int i = 0; i < currEntities.length() ; i++) {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
@@ -136,11 +154,27 @@ public class Dungeon {
                 this.character = (PlayerCharacter) currEnt;
                 this.entry = currPosition;
             }
-            output.add(currEnt);
+            input.add(currEnt);
         }
     }
 
+    private ArrayList<CollectableEntity> inventoryFromJSON(JSONArray currInventory) {
+        ArrayList<CollectableEntity> newInv = new ArrayList<>();
+        for (int i = 0; i < currInventory.length() ; i++) {
+            JSONObject currObj = currInventory.getJSONObject(i);
+            String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
+            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
+            Entity currEnt = entityFactory.create(currEntType, null,null,currDoorKey);
+            newInv.add((CollectableEntity) currEnt);
+        }
+        return newInv;
+    }
+
     // Getters for creating a DungeonResponse
+
+    public String getGamemode() {
+        return gameMode.getMode();
+    }
 
     public String getName() {
         return name;

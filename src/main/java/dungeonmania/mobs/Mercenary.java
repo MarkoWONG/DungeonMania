@@ -17,7 +17,7 @@ import static java.lang.Math.abs;
 
 public class Mercenary extends Mob{
     private EntityList entities;
-    private PlayerCharacter characterTracker;
+    private  PlayerCharacter characterTracker;
     private int price;
     private Position charPosition;
     private int battleRadius;

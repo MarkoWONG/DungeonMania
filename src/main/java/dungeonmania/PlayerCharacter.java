@@ -1,5 +1,7 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class PlayerCharacter extends Entity implements Movement{
 
     private ArrayList<CollectableEntity> inventory;
@@ -30,6 +33,10 @@ public class PlayerCharacter extends Entity implements Movement{
         this.attackDamage = ad;
         this.invisibleTicks = 0;
         this.invincibleTicks = 0;
+    }
+
+    public void replaceInventory(ArrayList<CollectableEntity> newInv) {
+        this.inventory = newInv;
     }
 
     public void addItemToInventory(CollectableEntity item) {

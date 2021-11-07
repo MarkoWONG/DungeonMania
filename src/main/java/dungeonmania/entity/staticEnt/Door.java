@@ -28,6 +28,14 @@ public class Door extends StaticEntity{
         }
     }
 
+    public String getOtherInfo() {
+        return String.valueOf(key);
+    }
+
+    public String getOtherInfoType() {
+        return "key";
+    }
+
 
     @Override
     public void startInteraction(Entity entity) {

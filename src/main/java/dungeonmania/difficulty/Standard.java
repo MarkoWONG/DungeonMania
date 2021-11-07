@@ -19,6 +19,11 @@ public class Standard extends Difficulty {
     }
 
     @Override
+    public String getMode() {
+        return "Standard";
+    }
+
+    @Override
     public void simulate(EntityList entitiesMap, Direction moveDir) {
         movementManager.moveChar(moveDir);
 //        movementManager.doInteractions();

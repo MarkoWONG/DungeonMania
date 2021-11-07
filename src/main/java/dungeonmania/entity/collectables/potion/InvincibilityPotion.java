@@ -15,6 +15,11 @@ public class InvincibilityPotion extends PotionEntity implements Usable{
         this.enabled = enabled;
     }
 
+    public InvincibilityPotion(boolean enabled) {
+        super(null);
+        this.enabled = enabled;
+    }
+
     @Override
     public void startInteraction(Entity entity) {
         entity.interact(this);

@@ -12,6 +12,10 @@ public class InvisibilityPotion extends PotionEntity implements Usable{
         super(new Position(position.getX(), position.getY(), 40));
     }
 
+    public InvisibilityPotion() {
+        super(null);
+    }
+
     @Override
     public String getType() {
         return "invisibility_potion";
