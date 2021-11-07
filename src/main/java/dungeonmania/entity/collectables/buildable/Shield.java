@@ -15,7 +15,7 @@ public class Shield extends CollectableEntity {
 
     public Shield(Integer durability) {
         super(null);
-        this.durability = durability;
+        this.durability = durability * 2;
     }
 
     public static List<String> getRecipe() {

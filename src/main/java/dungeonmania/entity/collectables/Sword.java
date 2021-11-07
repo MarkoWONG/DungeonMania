@@ -10,7 +10,7 @@ public class Sword extends CollectableEntity implements Weapon{
 
     public Sword(Position position, int durability){
         super(new Position(position.getX(), position.getY(), 40));
-        this.durability = durability;
+        this.durability = durability * 2;
     }
 
     @Override

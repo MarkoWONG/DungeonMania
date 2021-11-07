@@ -181,15 +181,20 @@ public class itemTests {
         
    }
    @Test
-   public void armourStatUpdate(){
+   public void armourDurablity(){
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
 
+        assertTrue(inventoryItemCount(new_frame, "armour") == 0);
         //pick up armour
         new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(inventoryItemCount(new_frame, "armour") == 1);
+        
         new_frame = dungeon.tick(null, Direction.RIGHT);
         // fight enemy 
         new_frame = dungeon.tick(null, Direction.UP);
+        assertTrue(inventoryItemCount(new_frame, "armour") == 1);
+        new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(inventoryItemCount(new_frame, "armour") == 1);
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(inventoryItemCount(new_frame, "armour") == 0);

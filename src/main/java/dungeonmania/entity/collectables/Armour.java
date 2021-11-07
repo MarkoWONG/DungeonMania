@@ -10,12 +10,12 @@ public class Armour extends CollectableEntity{
     private int durability;
     public Armour() {
         super(null);
-        this.durability = 3;
+        this.durability = 3 * 2;
     }
 
     public Armour(Position position){
         super(new Position(position.getX(), position.getY(), 40));
-        this.durability = 3;
+        this.durability = 3 * 2;
     }
 
     @Override
