@@ -265,12 +265,6 @@ public class itemTests {
         // fight enemy 
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(inventoryItemCount(new_frame, "bow") == 0);
-
-        // TODO: EXTRA BUG found Mercenary does not die
-        new_frame = dungeon.tick(null, Direction.LEFT);
-        new_frame = dungeon.tick(null, Direction.LEFT);
-        new_frame = dungeon.tick(null, Direction.LEFT);
-
     }
 
 
