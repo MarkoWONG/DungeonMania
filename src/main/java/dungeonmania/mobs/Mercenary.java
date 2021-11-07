@@ -9,7 +9,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -19,9 +18,9 @@ public class Mercenary extends Mob{
     private EntityList entities;
     private  PlayerCharacter characterTracker;
     private int price;
-    private Position charPosition;
-    private int battleRadius;
-    private Boolean battleInRadius;
+    // private Position charPosition;
+    // private int battleRadius;
+    // private Boolean battleInRadius;
 
     public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
@@ -87,10 +86,6 @@ public class Mercenary extends Mob{
                 super.move(MovementManager.shortestPath(this, characterTracker, entities));
             }
         }
-        // if (characterTracker.getInvincibleTicks() > 0 || characterTracker.getInvisibleTicks() > 0) {
-        //     super.move(direction);
-        // }
-        // super.move(MovementManager.shortestPath(this, characterTracker, entities));
     }
 
     @Override

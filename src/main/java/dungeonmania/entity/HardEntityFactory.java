@@ -5,8 +5,6 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.potion.InvincibilityPotion;
 import dungeonmania.entity.staticEnt.Toaster;
 import dungeonmania.util.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HardEntityFactory extends EntityFactory{
 

@@ -3,15 +3,8 @@ package dungeonmania.entity.staticEnt;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
-import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
-
-import java.util.HashMap;
-import java.util.ArrayList;
-
-import static java.lang.Math.abs;
-
 
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;

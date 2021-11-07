@@ -2,7 +2,6 @@ package dungeonmania.entity.collectables;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.Mercenary;
-import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 

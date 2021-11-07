@@ -1,12 +1,8 @@
 package dungeonmania;
 
-import dungeonmania.goal.Goal;
-import dungeonmania.goal.GoalManager;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 

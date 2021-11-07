@@ -1,7 +1,6 @@
 package dungeonmania;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dungeonmania.response.models.DungeonResponse;
@@ -11,9 +10,9 @@ import org.junit.jupiter.api.Test;
 
 public class MovementTests {
 
-    private boolean entityAtPosition(String type, DungeonResponse response, Position position) {
-        return response.getEntities().stream().filter(e -> e.getType().equals(type)).filter(e -> e.getPosition().equals(position)).count() == 1;
-    }
+    // private boolean entityAtPosition(String type, DungeonResponse response, Position position) {
+    //     return response.getEntities().stream().filter(e -> e.getType().equals(type)).filter(e -> e.getPosition().equals(position)).count() == 1;
+    // }
 
     @Test
     public void testMovement_player() {

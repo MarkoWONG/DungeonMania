@@ -1,10 +1,8 @@
 package dungeonmania;
 
 import dungeonmania.entity.Entity;
-import dungeonmania.util.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FightManager {
 

@@ -4,11 +4,9 @@ import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.Mercenary;
-import dungeonmania.mobs.ZombieToast;
 import dungeonmania.mobs.Spider;
 import dungeonmania.util.Position;
 
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 public class Portal extends StaticEntity{

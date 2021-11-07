@@ -62,7 +62,6 @@ public class MovementManager {
             if ( eachEntity instanceof Mob ) {
                 if (player.getInvincibleTicks() > 0 && !(player.getInvisibleTicks() > 0)) {
                     Direction runawaydir = runAway(eachEntity);
-                    System.out.println("runaway in " + runawaydir.toString());
                     eachEntity.move(runawaydir);
                 }
                 else{
