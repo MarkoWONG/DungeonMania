@@ -14,13 +14,13 @@ import java.util.Random;
 
 import static java.lang.Math.abs;
 
-public class Mercenary extends Mob{
+public class Mercenary extends Mob implements Subscriber{
     private EntityList entities;
-    private  PlayerCharacter characterTracker;
+    private Position charPosition;
+    private Boolean charIsInvisible;
+    private Boolean charIsInvincible;
     private int price;
-    // private Position charPosition;
-    // private int battleRadius;
-    // private Boolean battleInRadius;
+    private int battleRadius;
 
     public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
@@ -28,6 +28,10 @@ public class Mercenary extends Mob{
         setHealth(health);
         this.entities = entities;
         this.price = price;
+        this.charPosition = null;
+        this.charIsInvincible = false;
+        this.charIsInvisible = false;
+        this.battleRadius = 5;
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
             setArmour(new Armour());
@@ -77,15 +81,36 @@ public class Mercenary extends Mob{
 
     @Override
     public void move(Direction direction) {
-        this.characterTracker = entities.findPlayer();
-        if (characterTracker !=null && characterTracker.getInvisibleTicks() <= 0){
-            if (characterTracker.getInvincibleTicks() > 0) {
-                super.move(direction);
+        if (charPosition != null && !charIsInvisible){
+            if (charIsInvincible) {
+                super.move(MovementManager.invertDirection(direction));
             }
-            else{
-                super.move(MovementManager.shortestPath(this, characterTracker, entities));
+            else {
+                super.move(MovementManager.shortestPath(this, charPosition, entities));
             }
         }
+    }
+
+    @Override
+    public void notifyFight() {
+        if (! (charIsInvincible || charIsInvisible) && battleInRadius()) {
+            move(MovementManager.shortestPath(this, charPosition, entities));
+        }
+    }
+
+    @Override
+    public void notifyMove(Direction direction) {
+        charPosition = charPosition.translateBy(direction);
+    }
+
+    @Override
+    public void notifyInvisible(Boolean isInvisible) {
+        charIsInvisible = isInvisible;
+    }
+
+    @Override
+    public void notifyInvincible(Boolean isInvincible){
+        charIsInvincible = isInvincible;
     }
 
     @Override
@@ -96,5 +121,16 @@ public class Mercenary extends Mob{
             getArmour().usedInBattle(this);
         }
         super.takeDamage(reducedDamage);
+    }
+
+    private Boolean battleInRadius() {
+        int xDiff = abs(super.getPosition().getX() - charPosition.getX());
+        int yDiff = abs(super.getPosition().getY() - charPosition.getY());
+
+        if (xDiff + yDiff <= battleRadius) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
