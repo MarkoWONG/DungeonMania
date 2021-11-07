@@ -201,12 +201,12 @@ public class itemTests {
         for (int i = 0; i < 7; i++){
             new_frame = dungeon.tick(null, Direction.DOWN);
         }
-        
+
         // fight enemy 
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(inventoryItemCount(new_frame, "sword") == 0);
-            
     }
+
     @Test
     public void armourDurablity(){
         DungeonManiaController dungeon = new DungeonManiaController();
@@ -232,6 +232,45 @@ public class itemTests {
 
     @Test
     public void bowDurablity(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
+
+        assertTrue(inventoryItemCount(new_frame, "bow") == 0);
+        // make bow
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick(null, Direction.LEFT);
+        }
+        new_frame = dungeon.build("bow");
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+
+        // move to next ememy
+        for (int i = 0; i < 2; i++){
+            new_frame = dungeon.tick(null, Direction.UP);
+        }
+
+        // fight enemy 
+        new_frame = dungeon.tick(null, Direction.UP);
+        assertTrue(inventoryItemCount(new_frame, "bow") == 1);
+
+        // move to next ememy
+        for (int i = 0; i < 5; i++){
+            new_frame = dungeon.tick(null, Direction.DOWN);
+        }
+
+        // fight enemy 
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        assertTrue(inventoryItemCount(new_frame, "bow") == 1);
+
+        // fight enemy 
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        assertTrue(inventoryItemCount(new_frame, "bow") == 0);
+
+        // TODO: EXTRA BUG found Mercenary does not die
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+
     }
 
 
