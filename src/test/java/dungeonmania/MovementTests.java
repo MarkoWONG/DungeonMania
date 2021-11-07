@@ -62,17 +62,17 @@ public class MovementTests {
         DungeonResponse response = controller.newGame("merc_mov", "Standard");
         // player is at 0,0 and merc is at 10,0
 
-        controller.tick(null, null);
+        controller.tick(null, Direction.DOWN);
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(9, 0))).count());
         
-        controller.tick(null, null);
+        controller.tick(null, Direction.DOWN);
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(8, 0))).count());
         
-        controller.tick(null, null);
-        controller.tick(null, null);
-        controller.tick(null, null);
-        controller.tick(null, null);
-        controller.tick(null, null);
+        controller.tick(null, Direction.DOWN);
+        controller.tick(null, Direction.DOWN);
+        controller.tick(null, Direction.DOWN);
+        controller.tick(null, Direction.DOWN);
+        controller.tick(null, Direction.DOWN);
         assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(3, 0))).count());
         
         controller.tick(null, Direction.DOWN);
@@ -105,7 +105,7 @@ public class MovementTests {
         for (int i = 0; i < 20; i++) {
             Position prev = response.getEntities().get(0).getPosition();
             
-            controller.tick(null, null);
+            controller.tick(null, Direction.DOWN);
 
             Position current = response.getEntities().get(0).getPosition();
             assert(Position.isAdjacent(start, current)); // new position is still in the movement area
