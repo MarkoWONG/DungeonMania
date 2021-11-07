@@ -72,7 +72,7 @@ public class DungeonAdapterTests {
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         String goals = currResponse.getGoals();
-        assertTrue(goals.contains("enemies"));
+        assertTrue(goals.contains("mercenary"));
         assertTrue(goals.contains("treasure"));
         assertTrue(goals.contains("AND"));
     }
