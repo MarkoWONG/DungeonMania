@@ -11,7 +11,7 @@ import java.io.IOException;
 // use the composite pattern!!!
 public class GoalManager {
 
-    private transient Dungeon dungRef;
+    private Dungeon dungRef;
     private Goal goal;
 
     public GoalManager(String dungeonName, Dungeon dungRef) {

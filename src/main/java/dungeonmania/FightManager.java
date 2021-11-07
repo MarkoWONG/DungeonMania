@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class FightManager {
 
-    private transient PlayerCharacter character;
-    private transient EntityList entities;
+    private PlayerCharacter character;
+    private EntityList entities;
 
     public FightManager(EntityList entities) {
         this.entities = entities;

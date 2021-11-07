@@ -16,7 +16,7 @@ import static java.lang.Math.abs;
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;
     private int currentTickCount;
-    private transient EntityList entityMap;
+    private EntityList entityMap;
     public Toaster(Position position, int tickTilSpawn, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 80));
         this.tickTilSpawn = tickTilSpawn;    

@@ -14,9 +14,9 @@ import java.util.HashMap;
 
 public abstract class Difficulty {
 
-    protected transient Dungeon dungref;
-    protected transient MovementManager movementManager;
-    protected transient FightManager fightManager;
+    protected Dungeon dungref;
+    protected MovementManager movementManager;
+    protected FightManager fightManager;
 
     public Difficulty(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
         this.dungref = dungRef;

@@ -1,13 +1,19 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -54,18 +60,13 @@ public class DungeonManiaController {
     }
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {
-        Gson gson = new Gson();
         try {
             Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
             Path newitemPath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
             File newItem = new File(String.valueOf(newitemPath));
             newItem.createNewFile();
-            System.out.println(gson.toJson(currDungeon));
-//            FileOutputStream saveGameFileStream = new FileOutputStream(saveLocation);
-//            ObjectOutputStream saveGameObjStream = new ObjectOutputStream(saveGameFileStream);
-//            saveGameObjStream.writeObject(currDungeon);
-//            saveGameObjStream.close();
-//            saveGameFileStream.close();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writerWithDefaultPrettyPrinter().writeValue(newItem,currDungeon);
         } catch (Exception e) { // we can disregard all exceptions since the two stream constructors which throw the exceptions are always provided a different name
             System.out.println(e);
             return currAdapter.createDungResponse();
@@ -74,11 +75,34 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse loadGame(String name) throws IllegalArgumentException {
-        return null;
+        try {
+            Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
+            Path saveGamePath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
+            String saveGame = new String(Files.readAllBytes(saveGamePath));
+            currDungeon = new Dungeon(new JSONObject(saveGame));
+        } catch (Exception e) {
+            System.out.println(e);
+            return currAdapter.createDungResponse();
+        }
+        return currAdapter.createDungResponse();
     }
 
     public List<String> allGames() {
-        return new ArrayList<>();
+        try {
+            Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
+            File[] files = new File(String.valueOf(saveGamesFolder)).listFiles();
+            ArrayList<String> output = new ArrayList<>();
+            for (File eachFile : files) {
+                String eachName = eachFile.getName().substring(0, eachFile.getName().lastIndexOf('.'));
+                output.add(eachName);
+            }
+            return output;
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ArrayList<>();
+        }
+
+
     }
     // itemUsed refers to the id!!
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
