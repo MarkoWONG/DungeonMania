@@ -128,8 +128,8 @@ public class PlayerCharacter extends Entity implements Movement{
                 AD = currentEnt.usedInAttack(AD);
                 if (currentEnt.usedInBattle(this)){
                     iterator.remove();
+                    typesUsed.add(currentEnt.getType());
                 }
-                typesUsed.add(currentEnt.getType());
             }
         }
         
@@ -156,8 +156,8 @@ public class PlayerCharacter extends Entity implements Movement{
                 reducedDamage = currentEnt.usedInDefense(reducedDamage);
                 if (currentEnt.usedInBattle(this)){
                     iterator.remove();
+                    typesUsed.add(currentEnt.getType());
                 }
-                typesUsed.add(currentEnt.getType());
             }
         }
         
