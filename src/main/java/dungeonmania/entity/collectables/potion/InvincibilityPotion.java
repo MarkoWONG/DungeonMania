@@ -5,7 +5,7 @@ import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-    private static final int effectDuration = 5;
+    private static final int effectDuration = 20;
     private boolean enabled;
 
     public InvincibilityPotion(Position position, boolean enabled){

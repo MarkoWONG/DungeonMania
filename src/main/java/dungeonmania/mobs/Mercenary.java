@@ -83,7 +83,8 @@ public class Mercenary extends Mob implements Subscriber{
     public void move(Direction direction) {
         if (charPosition != null && !charIsInvisible){
             if (charIsInvincible) {
-                super.move(MovementManager.invertDirection(direction));
+                Direction newMove = MovementManager.invertDirection(MovementManager.shortestPath(this, charPosition, entities));
+                super.move(MovementManager.staticCheckMove(this, newMove, entities) ? newMove : Direction.NONE);
             }
             else {
                 super.move(MovementManager.shortestPath(this, charPosition, entities));

@@ -1,6 +1,5 @@
 package dungeonmania.mobs;
 
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public interface Subscriber {

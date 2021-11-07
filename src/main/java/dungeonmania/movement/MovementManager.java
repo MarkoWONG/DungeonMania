@@ -170,7 +170,7 @@ public class MovementManager {
 
         if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
             d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
-        } else { // further away on the x axis OR equal
+        } else if (Math.abs(yDistance) < Math.abs(xDistance)) { // further away on the x axis OR equal
             d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
         } 
 
