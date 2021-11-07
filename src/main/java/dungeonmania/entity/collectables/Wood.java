@@ -8,6 +8,10 @@ public class Wood extends CollectableEntity{
         super(new Position(position.getX(), position.getY(), 40));
     }
 
+    public Wood() {
+        super(null);
+    }
+
     @Override
     public String getType() {
         return "wood";

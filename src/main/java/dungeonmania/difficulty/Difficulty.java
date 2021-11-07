@@ -24,6 +24,8 @@ public abstract class Difficulty {
         this.fightManager = fightManager;
     }
 
+    abstract public String getMode();
+
     abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
     abstract public EntityFactory createEntityFactory(EntityList entityMap);

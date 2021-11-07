@@ -21,7 +21,7 @@ public class PersistenceTests {
         DungeonResponse currResponse = currController.newGame("dungeon_static", "Standard");
 
         currResponse = currController.saveGame("dungeon_static-1636179960394");
-        assert currController.allGames().contains("dungeon_static (6/11/2021, 5:26:00 PM)");
+        assert currController.allGames().contains("dungeon_static-1636179960394");
 
         currResponse = currController.loadGame("dungeon_static-1636179960394");
 
@@ -41,7 +41,7 @@ public class PersistenceTests {
         DungeonResponse currResponse = currController.newGame("dungeon_static", "Standard");
         currController.tick(null, Direction.RIGHT);
         currResponse = currController.saveGame("dungeon_static-1636179961410");
-        assert currController.allGames().contains("dungeon_static (6/11/2021, 5:26:01 PM)");
+        assert currController.allGames().contains("dungeon_static-1636179961410");
         currResponse = currController.newGame("dungeon_static", "Standard"); // reset the level
         currResponse = currController.loadGame("dungeon_static-1636179961410"); // restore the level state
 
@@ -65,7 +65,7 @@ public class PersistenceTests {
         currResponse = currController.tick(invisPotionId, Direction.LEFT);
         // with the item used, save the game
         currController.saveGame("difficultytest-1636179960394");
-        assert currController.allGames().contains("difficultytest (6/11/2021, 5:26:00 PM)");
+        assert currController.allGames().contains("difficultytest-1636179960394");
         currController.newGame("difficultytest", "Standard"); // reset
         currController.loadGame("difficultytest-1636179960394"); // restore
 
@@ -88,7 +88,7 @@ public class PersistenceTests {
         currResponse = currController.tick(null, Direction.RIGHT);
         assertEquals(":boulder",currResponse.getGoals()); // this is what we hope to see at the end
         currController.saveGame("AndGoal-1636179960394");
-        assert currController.allGames().contains("AndGoal (6/11/2021, 5:26:00 PM)");
+        assert currController.allGames().contains("AndGoal-1636179960394");
         currController.newGame("AndGoal", "Standard"); // reset
         currController.loadGame("AndGoal-1636179960394"); // restore
         assertEquals(":boulder",currResponse.getGoals()); //

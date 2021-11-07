@@ -9,6 +9,10 @@ public class Treasure extends CollectableEntity{
         super(new Position(position.getX(), position.getY(), 40));
     }
 
+    public Treasure() {
+        super(null);
+    }
+
     @Override
     public String getType() {
         return "treasure";

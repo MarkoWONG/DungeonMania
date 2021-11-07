@@ -99,46 +99,79 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeTreasure(Position startPos) {
+        if (startPos == null) {
+            return new Treasure();
+        }
         return new Treasure(startPos);
     }
 
     protected Entity makeKey(Position startPos, String keyValue) {
+        if (startPos == null) {
+            return new Key(keyValue);
+        }
         return new Key(startPos, keyValue);
     }
 
     protected Entity makeHealthPotion(Position startPos) {
+        if (startPos == null) {
+            return new HealthPotion();
+        }
         return new HealthPotion(startPos);
     }
 
     protected Entity makeInvincibilityPotion(Position startPos) {
+        if (startPos == null) {
+            return new InvincibilityPotion(true);
+        }
         return new InvincibilityPotion(startPos,true);
     }
 
     protected Entity makeInvisibilityPotion(Position startPos) {
+        if (startPos == null) {
+            return new InvisibilityPotion();
+        }
         return new InvisibilityPotion(startPos);
     }
 
     protected Entity makeWood(Position startPos) {
+        if (startPos == null) {
+            return new Wood();
+        }
         return new Wood(startPos);
     }
 
     protected Entity makeArrow(Position startPos) {
+        if (startPos == null) {
+            return new Arrow();
+        }
         return new Arrow(startPos);
     }
 
     protected Entity makeBomb(Position startPos) {
+        if (startPos == null) {
+            return new Bomb(entityMap);
+        }
         return new Bomb(startPos,entityMap);
     }
 
     protected Entity makeSword(Position startPos) {
+        if (startPos == null) {
+            return new Sword();
+        }
         return new Sword(startPos);
     }
 
     protected Entity makeArmour(Position startPos) {
+        if (startPos == null) {
+            return new Armour();
+        }
         return new Armour(startPos);
     }
 
     protected Entity makeOneRing(Position startPos) {
+        if (startPos == null) {
+            return new OneRing();
+        }
         return new OneRing(startPos);
     }
 

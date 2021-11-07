@@ -14,6 +14,11 @@ public class Bomb extends CollectableEntity implements Usable{
         this.entityMap = entityMap;   
     }
 
+    public Bomb(EntityList entityMap) {
+        super(null);
+        this.entityMap = entityMap;
+    }
+
     @Override
     public void startInteraction(Entity entity) {
         entity.interact(this);

@@ -33,7 +33,15 @@ public abstract class Entity implements Interacts {
     }
 
     public Position getPosition() {
-        return this.position;
+        return position;
+    }
+
+    public int getXPos() {
+        return position.getX();
+    }
+
+    public int getYPos() {
+        return position.getY();
     }
 
     public String getId() {
@@ -80,6 +88,10 @@ public abstract class Entity implements Interacts {
     }
 
     public String getOtherInfo() {
+        return "";
+    }
+
+    public String getOtherInfoType() {
         return "";
     }
 

@@ -26,6 +26,9 @@ public class HardEntityFactory extends EntityFactory{
 
     @Override
     protected Entity makeInvincibilityPotion(Position startPos) {
-        return new InvincibilityPotion(startPos,false);
+        if (startPos == null) {
+            return new InvincibilityPotion(true);
+        }
+        return new InvincibilityPotion(startPos,true);
     }
 }

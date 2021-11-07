@@ -18,6 +18,11 @@ public class Hard extends Difficulty{
         super(dungRef,movementManager,fightManager);
     }
 
+    @Override
+    public String getMode() {
+        return "Hard";
+    }
+
     // same simulation as standard difficulty, only entity factory has changes
     @Override
     public void simulate(EntityList entitiesMap, Direction moveDir) {
