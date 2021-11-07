@@ -99,8 +99,8 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     @Override
-    public void notifyMove(Direction direction) {
-        charPosition = charPosition.translateBy(direction);
+    public void notifyMove(Position position) {
+        charPosition = position;
     }
 
     @Override

@@ -74,7 +74,7 @@ public class PlayerCharacter extends Entity implements Movement{
     public void move(Direction direction) {
         setPosition(getPosition().translateBy(direction));
         for(Subscriber s: subscribers) {
-            s.notifyMove(direction);
+            s.notifyMove(super.getPosition());
         }
     }
 
