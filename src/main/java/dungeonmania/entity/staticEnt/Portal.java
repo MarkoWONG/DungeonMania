@@ -25,7 +25,12 @@ public class Portal extends StaticEntity{
 
     @Override
     public String getType() {
-        return "portal_" + getOtherInfo().toLowerCase(Locale.ROOT);
+        if (colour.equals("")) {
+            return "portal";
+        } else {
+            return "portal_" + getOtherInfo().toLowerCase(Locale.ROOT);
+        }
+
     }
 
     public String getOtherInfo() {
