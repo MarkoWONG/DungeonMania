@@ -73,6 +73,8 @@ public class Dungeon {
         }
         gameMode.simulate(entities,movementDirection);
         notifyOfTick();
+        doSpawns();
+        tick++;
     }
 
     private void useItemId(String itemUsed) {
@@ -93,7 +95,6 @@ public class Dungeon {
         for(int i = 0; i < entities.size(); i++) {
             entities.get(i).incrementTick();
         }
-        tick++;
     }
 
     public void click(String entityId) {
@@ -105,15 +106,14 @@ public class Dungeon {
     }
 
     public void doSpawns() {
-        if (tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
-            entityFactory.create("mercenary", entry, "", "");
+        if (tick != 0 && tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
+            entities.add(entityFactory.create("mercenary", entry, "", ""));
         }
     }
 
     private void spawnSpiders() {
-        ArrayList<Entity> spoods = entities.search("spider");
-        for (int n = spoods.size(); n < 10; n++) {
-            entityFactory.create("spider", SpawnManager.getRandPosition(entities), "", "");
+        for (int n = 0; n < 5 && entities.search("spider").size() < 10; n++) {
+            entities.add(entityFactory.create("spider", SpawnManager.getRandPosition(entities), "", ""));
         }
     }
 
