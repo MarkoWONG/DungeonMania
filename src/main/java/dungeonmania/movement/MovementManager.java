@@ -124,8 +124,11 @@ public class MovementManager {
             if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
+            if (eachEntity.getType().equals(entity.getType())) {
+                return false;
+            }
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
-                if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
+                if ((eachEntity instanceof Mob && entity instanceof PlayerCharacter) || (eachEntity instanceof PlayerCharacter && entity instanceof Mob)) {
                     return true;
                 }
                 return false;
