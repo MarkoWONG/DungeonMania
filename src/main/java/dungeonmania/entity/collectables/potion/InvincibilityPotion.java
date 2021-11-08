@@ -5,7 +5,7 @@ import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-    private static final int effectDuration = 20;
+    private static final int effectDuration = 5;
     private boolean enabled;
 
     public InvincibilityPotion(Position position, boolean enabled){
@@ -31,8 +31,8 @@ public class InvincibilityPotion extends PotionEntity implements Usable{
     public void useItem(PlayerCharacter player){
         if (enabled) {
             player.setInvincibleTicks(effectDuration);
-            player.removeItemFromInventory(this);
         }
+        player.removeItemFromInventory(this);
     }
 
     @Override
