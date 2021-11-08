@@ -8,6 +8,7 @@ import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.Weapon;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.mobs.Mob;
+import dungeonmania.mobs.Subscriber;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -20,6 +21,7 @@ public class PlayerCharacter extends Entity implements Movement{
 
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
+    private ArrayList<Subscriber> subscribers;
     private Integer Health;
     private Integer startingHealth;
     private Integer attackDamage;
@@ -30,11 +32,20 @@ public class PlayerCharacter extends Entity implements Movement{
         super(new Position(position.getX(), position.getY(),50));
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
+        this.subscribers = new ArrayList<>();
         this.Health = health;
         this.startingHealth = health;
         this.attackDamage = ad;
         this.invisibleTicks = 0;
         this.invincibleTicks = 0;
+    }
+
+    public void addSubscriber(Subscriber s) {
+        subscribers.add(s);
+    }
+
+    public void removeSubscriber(Subscriber s) {
+        subscribers.remove(s);
     }
 
     public void replaceInventory(ArrayList<CollectableEntity> newInv) {
@@ -62,6 +73,9 @@ public class PlayerCharacter extends Entity implements Movement{
     @Override
     public void move(Direction direction) {
         setPosition(getPosition().translateBy(direction));
+        for(Subscriber s: subscribers) {
+            s.notifyMove(super.getPosition());
+        }
     }
 
 
@@ -117,6 +131,9 @@ public class PlayerCharacter extends Entity implements Movement{
             int mobAttack = mob.getAttackDamage() * mob.getHealth() / 10;
             mob.takeDamage(attack());
             takeDamage(mobAttack);
+            for(Subscriber s: subscribers) {
+                s.notifyFight();
+            }
         }
     }
 
@@ -157,7 +174,7 @@ public class PlayerCharacter extends Entity implements Movement{
         }
         
         setHealth(getHealth() - reducedDamage);
-    }  
+    }
     
     @Override
     public void startInteraction(Entity entity) {
@@ -262,9 +279,23 @@ public class PlayerCharacter extends Entity implements Movement{
     public void incrementTick() {
         if (invincibleTicks > 0) {
             invincibleTicks--;
+            for(Subscriber s: subscribers) {
+                s.notifyInvincible(true);
+            }
+        } else {
+            for(Subscriber s: subscribers) {
+                s.notifyInvincible(false);
+            }
         }
         if (invisibleTicks > 0) {
             invisibleTicks--;
+            for(Subscriber s: subscribers) {
+                s.notifyInvisible(true);
+            }
+        } else {
+            for(Subscriber s: subscribers) {
+                s.notifyInvisible(false);
+            }
         }
     }
 

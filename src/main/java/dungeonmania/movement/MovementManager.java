@@ -59,14 +59,8 @@ public class MovementManager {
      */
     public void moveMobs() {
         for (Entity eachEntity : entities) {
-            if ( eachEntity instanceof Mob ) {
-                if (player.getInvincibleTicks() > 0 && !(player.getInvisibleTicks() > 0)) {
-                    Direction runawaydir = runAway(eachEntity);
-                    eachEntity.move(runawaydir);
-                }
-                else{
-                    eachEntity.move(getRandDirection(eachEntity));
-                }
+            if ( eachEntity instanceof Mob && !(player.getInvisibleTicks() > 0)) {
+                eachEntity.move(getRandDirection(eachEntity));
             }
         }
     }
@@ -99,39 +93,6 @@ public class MovementManager {
         }
         return Direction.NONE;
 
-    }
-    
-    /**
-     * Calculates the shortest path, then inverts that direction to run away
-     * If the move is valid, that direction is returned. Otherwise, none.
-     * @precondition the player is invincible
-     * @param entity
-     * @return Direction taken to get away from player
-     */
-    private Direction runAway(Entity entity) {
-        Direction path = shortestPath(entity, player, entities);
-        Direction newPath;
-        if (path.toString().equals("UP")){
-            newPath = Direction.DOWN;
-        }
-        else if (path.toString().equals("LEFT")){
-            newPath = Direction.RIGHT;
-        }
-        else if (path.toString().equals("DOWN")){
-            newPath = Direction.UP;
-        }
-        else if (path.toString().equals("RIGHT")){
-            newPath = Direction.LEFT;
-        }
-        else{
-            newPath = Direction.NONE;
-        }
-
-        if (checkMove(entity, newPath)) {
-            return newPath;
-        } else {
-            return Direction.NONE;
-        }
     }
 
     /**
@@ -197,25 +158,43 @@ public class MovementManager {
 
     /**
      * 
-     * @param a the position of some entity a
-     * @param b the position of some entity b
+     * @param a some entity a
+     * @param b destination position
      * @return the direction a must travel to get to b
      */
-    public static Direction shortestPath(Entity a, Entity b, EntityList entities) {
-        Position btwn = Position.calculatePositionBetween(a.getPosition(), b.getPosition());
+    public static Direction shortestPath(Entity a, Position b, EntityList entities) {
+        Position btwn = Position.calculatePositionBetween(a.getPosition(), b);
         int xDistance = btwn.getX();
         int yDistance = btwn.getY();
         Direction d = Direction.NONE;
 
         if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
             d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
-        } else { // further away on the x axis OR equal
+        } else if (Math.abs(yDistance) < Math.abs(xDistance)) { // further away on the x axis OR equal
             d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
         } 
 
         if (staticCheckMove(a, d, entities)) {
             return d;
         } else {
+            return Direction.NONE;
+        }
+    }
+
+    public static Direction invertDirection(Direction d) {
+        if (d.toString().equals("UP")){
+            return Direction.DOWN;
+        }
+        else if (d.toString().equals("LEFT")){
+            return Direction.RIGHT;
+        }
+        else if (d.toString().equals("DOWN")){
+            return Direction.UP;
+        }
+        else if (d.toString().equals("RIGHT")){
+            return Direction.LEFT;
+        }
+        else{
             return Direction.NONE;
         }
     }
