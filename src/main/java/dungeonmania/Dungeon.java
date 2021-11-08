@@ -112,7 +112,7 @@ public class Dungeon {
     }
 
     private void spawnSpiders() {
-        for (int n = 0; n < 5 && entities.search("spider").size() < 10; n++) {
+        for (int n = 0; n < 5 && entities.search("spider").size() < 4; n++) {
             entities.add(entityFactory.create("spider", SpawnManager.getRandPosition(entities), "", ""));
         }
     }
