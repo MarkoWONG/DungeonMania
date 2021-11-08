@@ -8,6 +8,7 @@ import dungeonmania.mobs.Spider;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Portal extends StaticEntity{
 
@@ -24,7 +25,7 @@ public class Portal extends StaticEntity{
 
     @Override
     public String getType() {
-        return "portal";
+        return "portal_" + getOtherInfo().toLowerCase(Locale.ROOT);
     }
 
     public String getOtherInfo() {
@@ -41,14 +42,12 @@ public class Portal extends StaticEntity{
      * @return other portal location
      */
     private Position findOtherPortal(String colour){
-        ArrayList<Entity> allPortals = entities.search("portal");
-        for (Entity eachPortal : allPortals) {
-            if (eachPortal.getOtherInfo().equals(colour)) {
-                ((Portal) eachPortal).setOtherPortalPosition(this.getPosition());
-                return eachPortal.getPosition();
-            }
+        ArrayList<Entity> matchingPortals = entities.search("portal_"+ getOtherInfo().toLowerCase(Locale.ROOT));
+        for (Entity eachPortal : matchingPortals) {
+            ((Portal) eachPortal).setOtherPortalPosition(this.getPosition());
+            return eachPortal.getPosition();
         }
-        return null;
+        return this.getPosition(); // dont teleport if no matching portal
     }
 
     @Override
