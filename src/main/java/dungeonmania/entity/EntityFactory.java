@@ -30,7 +30,6 @@ public abstract class EntityFactory {
     }
 
     public Entity create(String entityType, Position startPos, String colour, String key) {
-        if (startPos == null) {return null;}
         if (entityType.toLowerCase(Locale.ROOT).contains("player")) {return makePlayer(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("wall")) {return makeWall(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("exit")) {return makeExit(startPos);}
