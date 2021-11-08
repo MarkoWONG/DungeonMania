@@ -2,6 +2,9 @@ package dungeonmania;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.util.Direction;
@@ -138,7 +141,23 @@ public class staticEntitesTests {
             }
             new_frame = dungeon.tick(null, Direction.UP);
             assertTrue(entityCounter(new_frame, "zombie_toast") == (expected_zoms + 1));
+            assertTrue(adjectSpawning(new_frame, new Position(4,2)));
         }
+    }
+
+    private boolean adjectSpawning(DungeonResponse new_frame, Position locationOfSpawner){
+        ArrayList<Position> cardAdjList = new ArrayList<Position>();
+        cardAdjList.add(locationOfSpawner.translateBy(Direction.UP));
+        cardAdjList.add(locationOfSpawner.translateBy(Direction.DOWN));
+        cardAdjList.add(locationOfSpawner.translateBy(Direction.RIGHT));
+        cardAdjList.add(locationOfSpawner.translateBy(Direction.LEFT));
+        boolean zombieAdject = false;
+        for (Position pos : cardAdjList){
+            if (checkEntityOnPosition(new_frame, "zombie_toast", pos)){
+                zombieAdject = true;
+            } 
+        }
+        return zombieAdject;
     }
 
     @Test
@@ -153,6 +172,7 @@ public class staticEntitesTests {
             }
             new_frame = dungeon.tick(null, Direction.UP);
             assertTrue(entityCounter(new_frame, "zombie_toast") == (expected_zoms + 1));
+            assertTrue(adjectSpawning(new_frame, new Position(4,2)));
         }
     }
 

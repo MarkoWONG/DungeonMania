@@ -9,7 +9,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.mobs.Mob;
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;
