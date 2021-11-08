@@ -57,8 +57,8 @@ public class DungeonManiaController {
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {
         try {
-            Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
-            Path newitemPath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
+            Path saveGamesFolder = Paths.get("./savegames/");
+            Path newitemPath = Path.of(saveGamesFolder + "/" + name + ".dungeon").toAbsolutePath().normalize();
             File newItem = new File(String.valueOf(newitemPath));
             newItem.createNewFile();
             FileWriter saveGameWriter = new FileWriter(newItem);
@@ -74,8 +74,8 @@ public class DungeonManiaController {
 
     public DungeonResponse loadGame(String name) throws IllegalArgumentException {
         try {
-            Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
-            Path saveGamePath = Path.of(saveGamesFolder + "/" + name + ".dungeon");
+            Path saveGamesFolder = Paths.get("./savegames/");
+            Path saveGamePath = Path.of(saveGamesFolder + "/" + name + ".dungeon").toAbsolutePath().normalize();
             String saveGame = new String(Files.readAllBytes(saveGamePath));
             currDungeon = new Dungeon(new JSONObject(saveGame));
             currAdapter = new DungeonResponseAdapter(currDungeon);
@@ -88,7 +88,7 @@ public class DungeonManiaController {
 
     public List<String> allGames() {
         try {
-            Path saveGamesFolder = Paths.get(FileLoader.class.getResource("/savegames/").toURI());
+            Path saveGamesFolder = Paths.get("./savegames/");
             File[] files = new File(String.valueOf(saveGamesFolder)).listFiles();
             ArrayList<String> output = new ArrayList<>();
             for (File eachFile : files) {

@@ -23,7 +23,7 @@ public class DungeonTests {
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("boulder")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("switch")).filter(e -> e.getPosition().equals(new Position(3, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("door")).filter(e -> e.getPosition().equals(new Position(4, 0))).count());
-        assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("portal")).filter(e -> e.getPosition().equals(new Position(5, 0))).count());
+        assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("portal_blue")).filter(e -> e.getPosition().equals(new Position(5, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast_spawner")).filter(e -> e.getPosition().equals(new Position(6, 0))).count());
     }
 
