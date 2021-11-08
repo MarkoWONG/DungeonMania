@@ -13,6 +13,7 @@ import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goal.GoalManager;
+import dungeonmania.mobs.SpawnManager;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
@@ -29,6 +30,7 @@ public class Dungeon {
 
     private String name;
     private String id;
+    private int tick;
     private Position entry;
 
     private Difficulty gameMode;
@@ -52,6 +54,7 @@ public class Dungeon {
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
+        spawnSpiders();
     }
 
     public Dungeon (JSONObject saveGame) {
@@ -90,6 +93,7 @@ public class Dungeon {
         for(int i = 0; i < entities.size(); i++) {
             entities.get(i).incrementTick();
         }
+        tick++;
     }
 
     public void click(String entityId) {
@@ -100,6 +104,18 @@ public class Dungeon {
         givenEntity.click(character);
     }
 
+    public void doSpawns() {
+        if (tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
+            entityFactory.create("mercenary", entry, "", "");
+        }
+    }
+
+    private void spawnSpiders() {
+        ArrayList<Entity> spoods = entities.search("spider");
+        for (int n = spoods.size(); n < 10; n++) {
+            entityFactory.create("spider", SpawnManager.getRandPosition(entities), "", "");
+        }
+    }
 
     public void build(String item) {
         if (!item.equals("bow") && !item.equals("shield")) {
