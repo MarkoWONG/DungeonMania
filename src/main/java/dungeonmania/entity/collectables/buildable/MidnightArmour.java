@@ -13,10 +13,6 @@ public class MidnightArmour extends BuildableEntity{
         this.recipeUsed = new ArrayList<String>();
     }
 
-    public static List<String> getRecipe() {
-        return Arrays.asList("sun_stone","armour");
-    }
-
     @Override
     public String getType() {
         return "midnight_armour";

@@ -728,8 +728,9 @@ public class itemTests {
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
         // collect materials
+        new_frame = dungeon.tick(null, Direction.DOWN);
         for (int i = 0; i < 3; i++){
-            new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
         }
         assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
         assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));

@@ -8,6 +8,7 @@ import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
+import dungeonmania.mobs.Assassin;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Spider;
 import dungeonmania.mobs.Subscriber;
@@ -39,6 +40,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("portal")) {return makePortal(startPos, colour);}
         if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast_spawner")) {return makeToaster(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("mercenary")) {return makeMercenary(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("assassin")) {return makeAssassin(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast")) {return makeZombie(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("spider")) {return makeSpider(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("treasure")) {return makeTreasure(startPos);}
@@ -106,6 +108,10 @@ public abstract class EntityFactory {
 
     protected Entity makeMercenary(Position startPos) {
         return subscribe(new Mercenary(startPos,1,entityMap,15,4));
+    }
+
+    protected Entity makeAssassin(Position startPos) {
+        return subscribe(new Assassin(startPos,1,entityMap,15,4));
     }
 
     protected Entity makeZombie(Position startPos) {
