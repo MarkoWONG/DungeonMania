@@ -2,12 +2,14 @@ package dungeonmania;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
-
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 public class itemTests {
     /**
@@ -635,6 +637,44 @@ public class itemTests {
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(5,2)));
         assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,2)));
+    }
 
+    @Test
+    public void MidnightArmour(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/midnight_Armour", "Standard");
+
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick(null, Direction.RIGHT);
+        }
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+
+        // wait for zombie spawn
+        for (int i = 0; i < 14; i++){
+            new_frame = dungeon.tick(null, Direction.DOWN);
+        }
+
+        assertTrue(inventoryItemCount(new_frame, "midnight_armour") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("midnight_armour", "midnight_armour"));
+        new_frame = dungeon.build("midnight_armour");
+        assertTrue(inventoryItemCount(new_frame, "midnight_armour") == 1);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("midnight_armour"));
+
+        // spawn zombie
+        assertTrue(entityCounter(new_frame, "zombie_toast") == 0);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        assertTrue(checkEntityOnPosition(new_frame, "zombie_toast", new Position(3,5)));
+        assertEquals(new_frame.getBuildables(), Arrays.asList());
+
+        // kill zombie
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        assertTrue(entityCounter(new_frame, "zombie_toast") == 0);
+
+        // craftable again as no more zombie
+        new_frame = dungeon.tick(null, Direction.UP);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("midnight_armour"));
+        new_frame = dungeon.build("midnight_armour");
+        assertTrue(inventoryItemCount(new_frame, "midnight_armour") == 2);
     }
 }
