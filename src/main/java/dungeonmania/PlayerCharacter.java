@@ -95,8 +95,8 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
-    public List<String> getBuildables() {
-        return BuildableEntity.getBuildables(inventory);
+    public List<String> getBuildables(EntityList entities) {
+        return BuildableEntity.getBuildables(inventory, entities);
     }
 
     @Override

@@ -40,6 +40,7 @@
         "door_open": "images/tileset/walls/wooden/door_unlocked.png",
         "shield": "images/tileset/items/shield.png",
         "armour": "images/tileset/items/armour.png",
+        "midnight_armour": "images/tileset/entities/midnight_armour.png",
         "key": "images/tileset/items/key_gold.png",
         "key_gold": "images/tileset/items/key_gold.png",
         "key_silver": "images/tileset/items/key_silver.png",

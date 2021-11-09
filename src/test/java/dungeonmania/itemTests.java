@@ -641,7 +641,7 @@ public class itemTests {
     @Test
     public void MidnightArmour(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/midnight_Armour", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/midnightArmour", "Standard");
 
         for (int i = 0; i < 3; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
@@ -655,7 +655,7 @@ public class itemTests {
         }
 
         assertTrue(inventoryItemCount(new_frame, "midnight_armour") == 0);
-        assertEquals(new_frame.getBuildables(), Arrays.asList("midnight_armour", "midnight_armour"));
+        assertEquals(new_frame.getBuildables(), Arrays.asList("midnight_armour"));
         new_frame = dungeon.build("midnight_armour");
         assertTrue(inventoryItemCount(new_frame, "midnight_armour") == 1);
         assertEquals(new_frame.getBuildables(), Arrays.asList("midnight_armour"));

@@ -52,7 +52,7 @@ public class Toaster extends StaticEntity{
             
             // spawn zombie if valid
             if (validDirIndexes.size() > 0){
-                Direction validDir = randomDirection(validDirIndexes.size());
+                Direction validDir = randomDirection(validDirIndexes);
                 newZombie.move(validDir);
                 entityList.add(newZombie);
             }
@@ -64,9 +64,10 @@ public class Toaster extends StaticEntity{
         }
     }
 
-    private Direction randomDirection(int size) {
-        int pick = new Random().nextInt(size);
-        return Direction.values()[pick];
+    private Direction randomDirection(ArrayList<Integer> validDirIndexes) {
+        int pick = new Random().nextInt(validDirIndexes.size());
+        int validRandDir = validDirIndexes.get(pick);
+        return Direction.values()[validRandDir];
     }
 
     private Boolean checkMove(Entity entity, Direction direction) {

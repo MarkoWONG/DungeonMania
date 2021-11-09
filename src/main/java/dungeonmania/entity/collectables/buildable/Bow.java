@@ -1,6 +1,7 @@
 package dungeonmania.entity.collectables.buildable;
 
 import dungeonmania.entity.collectables.Weapon;
+import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class Bow extends BuildableEntity implements Weapon {
         return false;
     }
 
-    public boolean buildable(ArrayList<String> inventory) {
+    public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (materialCounter(inventory, "wood") >= 1 && materialCounter(inventory, "arrow") >= 3){
             recipeUsed = Arrays.asList("wood", "arrow", "arrow", "arrow");
             return true;

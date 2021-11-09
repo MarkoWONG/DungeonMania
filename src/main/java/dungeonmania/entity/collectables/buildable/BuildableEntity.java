@@ -1,4 +1,5 @@
 package dungeonmania.entity.collectables.buildable;
+import dungeonmania.EntityList;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 
@@ -14,7 +15,7 @@ public abstract class BuildableEntity extends CollectableEntity{
         super(null);
     }
 
-    public abstract boolean buildable(ArrayList<String> inventory);
+    public abstract boolean buildable(ArrayList<String> inventory, EntityList entities);
 
     public int materialCounter(ArrayList<String> inventory, String material){
         int counter = 0;
@@ -46,11 +47,11 @@ public abstract class BuildableEntity extends CollectableEntity{
      * @param inventory
      * @return list of builable types
      */
-    public static List<String> getBuildables(ArrayList<CollectableEntity> inventory) {
+    public static List<String> getBuildables(ArrayList<CollectableEntity> inventory, EntityList entities) {
         ArrayList<String> output = new ArrayList<>();
         ArrayList<String> currInv = (ArrayList<String>) inventory.stream().map(Entity::getType).collect(Collectors.toList());
         for (BuildableEntity buildableEnt : buildables){
-            if (buildableEnt.buildable(currInv)){
+            if (buildableEnt.buildable(currInv, entities)){
                 output.add(buildableEnt.getType());
             }
         }

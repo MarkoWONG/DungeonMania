@@ -54,6 +54,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("one_ring")) {return makeOneRing(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
+        if (entityType.toLowerCase(Locale.ROOT).contains("sun_stone")) {return makeSunStone(startPos);}
         return null;
     }
 
@@ -190,6 +191,12 @@ public abstract class EntityFactory {
             return new OneRing();
         }
         return new OneRing(startPos);
+    }
+    protected Entity makeSunStone(Position startPos) {
+        if (startPos == null) {
+            return new SunStone();
+        }
+        return new SunStone(startPos);
     }
 
     protected Entity makeBow() { return new Bow(); }

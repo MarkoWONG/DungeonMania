@@ -122,7 +122,7 @@ public class Dungeon {
             throw new IllegalArgumentException();
         }
         // check if buildable type has the materials
-        else if (BuildableEntity.getBuildables(getInventory()).contains(item)) {
+        else if (BuildableEntity.getBuildables(getInventory(), entities).contains(item)) {
             character.addItemToInventory(target);
             character.consume(target.getRecipeUsed());
         }
@@ -213,7 +213,7 @@ public class Dungeon {
     }
 
     public List<String> getBuildables() {
-        return character.getBuildables();
+        return character.getBuildables(entities);
     }
 
 

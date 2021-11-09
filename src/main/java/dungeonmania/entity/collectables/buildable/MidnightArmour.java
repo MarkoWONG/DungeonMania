@@ -2,6 +2,7 @@ package dungeonmania.entity.collectables.buildable;
 
 import java.util.Arrays;
 import java.util.List;
+import dungeonmania.EntityList;
 import java.util.ArrayList;
 
 public class MidnightArmour extends BuildableEntity{
@@ -23,11 +24,11 @@ public class MidnightArmour extends BuildableEntity{
         return "midnight_armour";
     }
 
-    public boolean buildable(ArrayList<String> inventory) {
+    public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (
             materialCounter(inventory, "sun_stone") >= 1 && 
             materialCounter(inventory, "armour") >= 1 &&
-            checkNozombies()
+            checkNozombies(entities)
         ){
             recipeUsed = Arrays.asList("sun_stone","armour");
             return true;
@@ -35,9 +36,11 @@ public class MidnightArmour extends BuildableEntity{
         return false;
     }
 
-    private static boolean checkNozombies(){
-        //TODO
-        return true;
+    private boolean checkNozombies(EntityList entities){
+        if (entities.search("zombie_toast").size() == 0){
+            return true;
+        }
+        return false;
     }
 
     @Override

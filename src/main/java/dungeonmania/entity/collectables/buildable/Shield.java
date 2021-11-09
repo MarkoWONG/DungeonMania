@@ -4,6 +4,7 @@ import dungeonmania.PlayerCharacter;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import dungeonmania.EntityList;
 import java.util.List;
 
 public class Shield extends BuildableEntity {
@@ -18,7 +19,7 @@ public class Shield extends BuildableEntity {
         this.recipeUsed = new ArrayList<String>();
     }
 
-    public boolean buildable(ArrayList<String> inventory) {
+    public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (materialCounter(inventory, "wood") >= 2){
             if (materialCounter(inventory, "treasure") >= 1){
                 recipeUsed = Arrays.asList("wood","wood","treasure");
@@ -34,14 +35,6 @@ public class Shield extends BuildableEntity {
         }
         return false;
     }
-
-    // public static List<String> getRecipe() {
-    //     return Arrays.asList("wood","wood","treasure");
-    // }
-
-    // public static List<String> getRecipe2() {
-    //     return Arrays.asList("wood","wood","key");
-    // }
 
     public boolean usedInBattle(PlayerCharacter player){
         durability--;
