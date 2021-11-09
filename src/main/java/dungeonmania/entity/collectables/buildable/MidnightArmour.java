@@ -10,9 +10,7 @@ public class MidnightArmour extends BuildableEntity{
     private List<String> recipeUsed;
 
     public MidnightArmour() {
-        // times 2 as items are used twice per battle one for attacking and one for defending
         this.recipeUsed = new ArrayList<String>();
-
     }
 
     public static List<String> getRecipe() {

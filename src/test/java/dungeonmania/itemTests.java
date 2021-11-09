@@ -676,4 +676,98 @@ public class itemTests {
         new_frame = dungeon.build("midnight_armour");
         assertTrue(inventoryItemCount(new_frame, "midnight_armour") == 2);
     }
+
+    @Test
+    public void SceptreCraftingArrowKey(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        // collect materials
+        for (int i = 0; i < 4; i++){
+            new_frame = dungeon.tick(null, Direction.LEFT);
+        }
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
+        new_frame = dungeon.build("spectre");
+        assertEquals(new_frame.getBuildables(), Arrays.asList());
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+    }
+
+    @Test
+    public void SceptreCraftingArrowTreasure(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        // collect materials
+        for (int i = 0; i < 2; i++){
+            new_frame = dungeon.tick(null, Direction.LEFT);
+        }
+        for (int i = 0; i < 2; i++){
+            new_frame = dungeon.tick(null, Direction.DOWN);
+        }
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
+        new_frame = dungeon.build("spectre");
+        assertEquals(new_frame.getBuildables(), Arrays.asList());
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+    }
+    @Test
+    public void SceptreCraftingWoodKey(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        // collect materials
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick(null, Direction.DOWN);
+        }
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
+        new_frame = dungeon.build("spectre");
+        assertEquals(new_frame.getBuildables(), Arrays.asList());
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+    }
+    @Test
+    public void SceptreCraftingWoodTreasure(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        // collect materials
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick(null, Direction.RIGHT);
+        }
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
+        new_frame = dungeon.build("spectre");
+        assertEquals(new_frame.getBuildables(), Arrays.asList());
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+    }
+
+    @Test
+    public void SceptreBribeDurablity(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Hard");
+        // collect materials
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick(null, Direction.RIGHT);
+        }
+        new_frame = dungeon.build("spectre");
+        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+
+        // move to mercenary 
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        for (int i = 0; i < 3; i++){
+            new_frame = dungeon.tick(null, Direction.DOWN);
+        }
+
+        new_frame = dungeon.interact("mercenary");
+        assertTrue(inventoryItemCount(new_frame, "teasure") == 1);
+        for (int i = 0; i < 5; i++){
+            new_frame = dungeon.tick(null, Direction.RIGHT);
+            new_frame = dungeon.tick(null, Direction.LEFT);
+        }
+        // mind control wore off
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+
+        // player dies
+        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(8,12)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(8,12)));
+    }
 }
