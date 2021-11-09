@@ -1,29 +1,47 @@
 package dungeonmania.entity.collectables.buildable;
 
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.collectables.CollectableEntity;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Shield extends CollectableEntity {
+public class Shield extends BuildableEntity {
 
     private Integer durability;
     private static final int startingDurability = 3;
+    private List<String> recipeUsed;
 
     public Shield() {
-        super(null);
         // times 2 as items are used twice per battle one for attacking and one for defending
         this.durability = startingDurability * 2;
+        this.recipeUsed = new ArrayList<String>();
     }
 
-    public static List<String> getRecipe() {
-        return Arrays.asList("wood","wood","treasure");
+    public boolean buildable(ArrayList<String> inventory) {
+        if (materialCounter(inventory, "wood") >= 2){
+            if (materialCounter(inventory, "treasure") >= 1){
+                recipeUsed = Arrays.asList("wood","wood","treasure");
+                return true;
+            }
+            else if (materialCounter(inventory, "key") >= 1){
+                recipeUsed = Arrays.asList("wood","wood","key");
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
     }
 
-    public static List<String> getRecipe2() {
-        return Arrays.asList("wood","wood","key");
-    }
+    // public static List<String> getRecipe() {
+    //     return Arrays.asList("wood","wood","treasure");
+    // }
+
+    // public static List<String> getRecipe2() {
+    //     return Arrays.asList("wood","wood","key");
+    // }
 
     public boolean usedInBattle(PlayerCharacter player){
         durability--;
@@ -41,6 +59,10 @@ public class Shield extends CollectableEntity {
     @Override
     public int usedInDefense(int damage) {
         return damage / 2;
+    }
+
+    public List<String> getRecipeUsed() {
+        return this.recipeUsed;
     }
 
 }

@@ -6,7 +6,7 @@ import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.Weapon;
-import dungeonmania.entity.collectables.buildable.Build;
+import dungeonmania.entity.collectables.buildable.BuildableEntity;
 import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Subscriber;
 import dungeonmania.util.Direction;
@@ -96,7 +96,7 @@ public class PlayerCharacter extends Entity implements Movement{
     }
 
     public List<String> getBuildables() {
-        return Build.getBuildables(inventory);
+        return BuildableEntity.getBuildables(inventory);
     }
 
     @Override

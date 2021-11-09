@@ -1,21 +1,22 @@
 package dungeonmania.entity.collectables.buildable;
 
-import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Weapon;
 import dungeonmania.PlayerCharacter;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Bow extends CollectableEntity implements Weapon {
+public class Bow extends BuildableEntity implements Weapon {
 
     private Integer durability;
     private static final int startingDurability = 3;
+    private List<String> recipeUsed;
 
     public Bow() {
-        super(null);
         // times 2 as items are used twice per battle one for attacking and one for defending
         this.durability = startingDurability * 2;
+        this.recipeUsed = new ArrayList<String>();
     }
 
     public boolean usedInBattle(PlayerCharacter player){
@@ -26,8 +27,12 @@ public class Bow extends CollectableEntity implements Weapon {
         return false;
     }
 
-    public static List<String> getRecipe() {
-        return Arrays.asList("wood","arrow","arrow");
+    public boolean buildable(ArrayList<String> inventory) {
+        if (materialCounter(inventory, "wood") >= 1 && materialCounter(inventory, "arrow") >= 3){
+            recipeUsed = Arrays.asList("wood", "arrow", "arrow", "arrow");
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -39,4 +44,9 @@ public class Bow extends CollectableEntity implements Weapon {
     public int usedInAttack(int attackDamage) {
         return attackDamage * 2;
     }
+
+    public List<String> getRecipeUsed() {
+        return this.recipeUsed;
+    }
+    
 }

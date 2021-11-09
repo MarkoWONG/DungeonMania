@@ -170,7 +170,7 @@ public class itemTests {
     @Test
     public void sword(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/fighting_items", "Standard");
 
         assertTrue(inventoryItemCount(new_frame, "sword") == 0);
         //pick up sword
@@ -212,7 +212,7 @@ public class itemTests {
     @Test
     public void armour(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/fighting_items", "Standard");
 
         assertTrue(inventoryItemCount(new_frame, "armour") == 0);
         //pick up armour
@@ -242,15 +242,14 @@ public class itemTests {
     @Test
     public void bow(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/fighting_items", "Standard");
 
         assertTrue(inventoryItemCount(new_frame, "bow") == 0);
         // make bow
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 4; i++){
             new_frame = dungeon.tick(null, Direction.LEFT);
         }
         new_frame = dungeon.build("bow");
-        new_frame = dungeon.tick(null, Direction.LEFT);
         new_frame = dungeon.tick(null, Direction.LEFT);
 
         // move to next ememy
@@ -286,7 +285,7 @@ public class itemTests {
     @Test
     public void shield(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("fighting_items", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/fighting_items", "Standard");
 
         assertTrue(inventoryItemCount(new_frame, "shield") == 0);
         // make bow
