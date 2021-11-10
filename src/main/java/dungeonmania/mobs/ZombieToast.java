@@ -1,8 +1,8 @@
 package dungeonmania.mobs;
 
+import dungeonmania.RandomManager;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.util.Position;
-import java.util.Random;
 
 public class ZombieToast extends Mob{
 
@@ -10,7 +10,7 @@ public class ZombieToast extends Mob{
         super(new Position(position.getX(), position.getY(),50));
         setAttackDamage(ad);
         setHealth(health);
-        Random rand = new Random(System.currentTimeMillis());
+        RandomManager rand = RandomManager.getRandomManager();
         if (rand.nextInt(5) == 4) {
             super.setArmour(new Armour());
         } else {

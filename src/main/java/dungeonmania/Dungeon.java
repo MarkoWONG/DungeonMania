@@ -32,6 +32,7 @@ public class Dungeon {
     private String id;
     private int tick;
     private Position entry;
+    private Long seed;
 
     private Difficulty gameMode;
     private PlayerCharacter character;
@@ -40,9 +41,12 @@ public class Dungeon {
     private FightManager fightManager;
     private GoalManager goalManager;
     private EntityFactory entityFactory;
+    private RandomManager randomManager;
 
-    public Dungeon(String dungeonName, String gameMode) {
+    public Dungeon(String dungeonName, String gameMode, Long seed) {
         this.name = dungeonName;
+        this.seed = seed;
+        this.randomManager = RandomManager.getRandomManager(seed);
         this.id = UUID.randomUUID().toString();
         this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);
@@ -56,6 +60,24 @@ public class Dungeon {
         movementManager.setCharacter(character);
         spawnSpiders();
     }
+
+    public Dungeon(String dungeonName, String gameMode) {
+        this.name = dungeonName;
+        this.seed = System.currentTimeMillis();
+        this.randomManager = RandomManager.getRandomManager(seed);
+        this.id = UUID.randomUUID().toString();
+        this.entities = new EntityList();
+        this.goalManager = new GoalManager(dungeonName,this);
+        this.movementManager = new MovementManager(entities);
+        this.fightManager = new FightManager(entities);
+        this.gameMode = difficultySelector(gameMode);
+        this.entityFactory = this.gameMode.createEntityFactory(entities);
+        createNewEntitiesMap(entities, dungeonName);
+        this.entry = character.getPosition();
+        fightManager.setCharacter(character);
+        movementManager.setCharacter(character);
+        spawnSpiders();
+    } 
 
     public Dungeon (JSONObject saveGame) {
         this(saveGame.getString("name"),saveGame.getString("gamemode"));

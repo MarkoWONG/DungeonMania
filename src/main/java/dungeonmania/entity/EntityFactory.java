@@ -16,17 +16,14 @@ import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Random;
 
 public abstract class EntityFactory {
 
     protected EntityList entityMap;
-    protected Random random;
     private ArrayList<Subscriber> subscribers = new ArrayList<>();
 
     public EntityFactory(EntityList entityMap) {
         this.entityMap = entityMap;
-        this.random = new Random(System.currentTimeMillis());
     }
 
     public Entity create(String entityType, Position startPos, String colour, String key) {

@@ -2,12 +2,12 @@ package dungeonmania.entity.staticEnt;
 
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.RandomManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 import dungeonmania.util.Direction;
 import dungeonmania.mobs.Mob;
-import java.util.Random;
 import java.util.ArrayList;
 
 public class Toaster extends StaticEntity{
@@ -65,7 +65,8 @@ public class Toaster extends StaticEntity{
     }
 
     private Direction randomDirection(int size) {
-        int pick = new Random().nextInt(size);
+        RandomManager rand = RandomManager.getRandomManager(); 
+        int pick = rand.nextInt(size);
         return Direction.values()[pick];
     }
 

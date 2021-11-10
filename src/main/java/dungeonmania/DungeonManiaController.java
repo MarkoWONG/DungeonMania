@@ -20,8 +20,14 @@ public class DungeonManiaController {
 
     private Dungeon currDungeon;
     private DungeonResponseAdapter currAdapter;
+    private Long seed;
 
     public DungeonManiaController() {
+        this.seed = System.currentTimeMillis();
+    }
+
+    public DungeonManiaController(Long seed) {
+        this.seed = seed;
     }
 
     public String getSkin() {
@@ -50,7 +56,7 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
-        currDungeon = new Dungeon(dungeonName,gameMode);
+        currDungeon = new Dungeon(dungeonName,gameMode,seed);
         this.currAdapter = new DungeonResponseAdapter(currDungeon);
         return currAdapter.createDungResponse();
     }

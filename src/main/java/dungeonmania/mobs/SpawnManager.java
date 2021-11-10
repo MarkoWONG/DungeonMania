@@ -1,9 +1,9 @@
 package dungeonmania.mobs;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import dungeonmania.EntityList;
+import dungeonmania.RandomManager;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
 
@@ -38,7 +38,7 @@ public class SpawnManager {
         if (possible.size() == 0) {
             return null;
         }
-        Random rand = new Random(System.currentTimeMillis());
+        RandomManager rand = RandomManager.getRandomManager();
         int x = rand.nextInt(possible.size());
 
         return possible.get(x);
