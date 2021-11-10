@@ -1,15 +1,15 @@
 package dungeonmania.mobs;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
+import dungeonmania.entity.collectables.BribeMaterial;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -66,17 +66,39 @@ public class Mercenary extends Mob implements Subscriber{
 
     @Override
     public void click(PlayerCharacter character) {
-        Entity treasure = character.getItemByType("treasure");
-        if (treasure == null) {
-            throw new InvalidActionException("Gold is required to bribe");
+        BribeMaterial bribeMat = searchBribeMaterial(character);
+        if (bribeMat == null) {
+            throw new InvalidActionException("bribe material is required to bribe");
         }
         Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
-        if (abs(posBetween.getX()) <= 2 ||  abs(posBetween.getY()) <= 2) {
-            bribe(1);
-            character.consume(new ArrayList<String>(List.of("treasure")));
+        if (abs(posBetween.getX()) <= 2 || abs(posBetween.getY()) <= 2) {
+            bribe(bribeMat.getBribeAmount(price));
+            bribeMat.usedInBribe(character);
         } else {
             throw new InvalidActionException("Mercenary out of range");
         }
+    }
+
+    private BribeMaterial searchBribeMaterial(PlayerCharacter character){
+        // get all avaliable bribe Materials
+        ArrayList<BribeMaterial> bribeMats = new ArrayList<BribeMaterial>();
+        for (CollectableEntity ent : character.getInventory()){
+            if (ent instanceof BribeMaterial){
+                bribeMats.add((BribeMaterial) ent);
+            }
+        }
+
+        // return the highest Piority birbe Material (spectre -> sun_stone -> teasure)
+        BribeMaterial highestPiorityMat = null;
+        if (bribeMats.size() > 0){
+            highestPiorityMat = bribeMats.get(0);
+            for (BribeMaterial mat: bribeMats){
+                if (highestPiorityMat.getBribePriority() < mat.getBribePriority()){
+                    highestPiorityMat = mat;
+                }
+            }
+        }
+        return highestPiorityMat;
     }
 
     @Override

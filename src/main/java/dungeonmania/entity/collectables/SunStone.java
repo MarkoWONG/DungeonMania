@@ -3,7 +3,7 @@ import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 
-public class SunStone extends CollectableEntity{
+public class SunStone extends CollectableEntity implements BribeMaterial{
 
     public SunStone(Position position){
         super(new Position(position.getX(), position.getY(), 40));
@@ -15,6 +15,16 @@ public class SunStone extends CollectableEntity{
     @Override
     public String getType() {
         return "sun_stone";
+    }
+
+    public int getBribeAmount(int price){
+        return 1;
+    }
+    public void usedInBribe(PlayerCharacter player){
+        player.removeItemFromInventory(this);
+    }
+    public int getBribePriority(){
+        return 2;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package dungeonmania.entity.collectables.buildable;
+import dungeonmania.EntityList;
+import dungeonmania.entity.collectables.BribeMaterial;
+import dungeonmania.PlayerCharacter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import dungeonmania.EntityList;
-import java.util.ArrayList;
 
-public class Spectre extends BuildableEntity{
+public class Spectre extends BuildableEntity implements BribeMaterial{
 
     private List<String> recipeUsed;
 
@@ -17,6 +19,17 @@ public class Spectre extends BuildableEntity{
     public String getType() {
         return "spectre";
     }
+
+    public int getBribeAmount(int price){
+        return price;
+    }
+    public void usedInBribe(PlayerCharacter player){
+        player.removeItemFromInventory(this);
+    }
+    public int getBribePriority(){
+        return 3;
+    }
+
 
     public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (materialCounter(inventory, "sun_stone") >= 1){
@@ -52,7 +65,7 @@ public class Spectre extends BuildableEntity{
         }
         return false;
     }
-
+ 
     public List<String> getRecipeUsed() {
         return this.recipeUsed;
     }
