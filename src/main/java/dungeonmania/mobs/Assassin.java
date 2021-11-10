@@ -58,13 +58,22 @@ public class Assassin extends Mob implements Subscriber{
         if (bribeMat == null) {
             throw new InvalidActionException("bribe material is required to bribe");
         }
-        Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
-        if (abs(posBetween.getX()) <= 2 || abs(posBetween.getY()) <= 2) {
+        if (checkBribeRange(charPosition, this.getPosition())) {
             bribe(bribeMat.getBribeAmount(price), bribeMat.getBribeDuration());
             bribeMat.usedInBribe(character);
         } else {
-            throw new InvalidActionException("Mercenary out of range");
+            throw new InvalidActionException("Assassin out of range");
         }
+    }
+
+    private boolean checkBribeRange(Position characterPos, Position thisPos){
+        if (abs(characterPos.getX()-thisPos.getX()) <= 2 && characterPos.getY() == thisPos.getY()){
+            return true;
+        }
+        else if (abs(characterPos.getY()-thisPos.getY()) <= 2 && characterPos.getX() == thisPos.getX()){
+            return true;
+        }
+        return false;
     }
 
     /**

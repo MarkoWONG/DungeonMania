@@ -4,9 +4,12 @@ import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
+import dungeonmania.exceptions.InvalidActionException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -782,34 +785,42 @@ public class itemTests {
         
         new_frame = dungeon.build("spectre");
         assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
-        
+        String id = getEntityId(new_frame, "assassin");
+        assertThrows(InvalidActionException.class, () -> {dungeon.interact(id);});
+
+        new_frame = dungeon.tick(null, Direction.LEFT);
         // move to assassin 
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 2; i++){
             new_frame = dungeon.tick(null, Direction.UP);
         }
-
+        
         assertTrue(iteractable(new_frame, getEntityId(new_frame, "assassin")));
         new_frame = dungeon.interact(getEntityId(new_frame, "assassin"));
         assertTrue(inventoryItemCount(new_frame, "treasure") == 1);
         assertTrue(!iteractable(new_frame, getEntityId(new_frame, "assassin")));
 
-        for (int i = 0; i < 5; i++){
+        // move to battle/vist ally
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.UP);
+
+        for (int i = 0; i < 3; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
             new_frame = dungeon.tick(null, Direction.LEFT);
             assertTrue(!iteractable(new_frame, getEntityId(new_frame, "assassin")));
         }
         new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(iteractable(new_frame, getEntityId(new_frame, "assassin")));
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(9,2)));
-        assertTrue(checkEntityOnPosition(new_frame, "assassin", new Position(9,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "assassin", new Position(8,2)));
         // mind control wore off
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.DOWN);
 
         // enemy dies
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(9,4)));
-        assertTrue(!checkEntityOnPosition(new_frame, "assassin", new Position(9,4)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,4)));
+        assertTrue(!checkEntityOnPosition(new_frame, "assassin", new Position(8,4)));
     }
 
     @Test
@@ -826,9 +837,9 @@ public class itemTests {
         new_frame = dungeon.build("spectre");
         assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
         
+        new_frame = dungeon.tick(null, Direction.LEFT);
         // move to mercenary 
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 2; i++){
             new_frame = dungeon.tick(null, Direction.DOWN);
         }
 
@@ -837,21 +848,27 @@ public class itemTests {
         assertTrue(inventoryItemCount(new_frame, "treasure") == 1);
         assertTrue(!iteractable(new_frame, getEntityId(new_frame, "mercenary")));
 
-        for (int i = 0; i < 5; i++){
+        // move to battle/vist ally
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.DOWN);
+
+        for (int i = 0; i < 3; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
             new_frame = dungeon.tick(null, Direction.LEFT);
             assertTrue(!iteractable(new_frame, getEntityId(new_frame, "mercenary")));
         }
         new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(iteractable(new_frame, getEntityId(new_frame, "mercenary")));
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(9,8)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(9,8)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,8)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(8,8)));
         // mind control wore off
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.DOWN);
 
         // enemy dies
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(9, 10)));
-        assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(9, 10)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8, 10)));
+        assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(8, 10)));
     }
 }
