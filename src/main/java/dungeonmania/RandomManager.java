@@ -1,6 +1,7 @@
 package dungeonmania;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class RandomManager {
     private static RandomManager instance;
@@ -11,7 +12,7 @@ public class RandomManager {
 
     private RandomManager(Long seed){}
 
-    public static synchronized RandomManager getRandomManager() {
+    public static RandomManager getRandomManager() {
         if (instance == null) {
             instance = new RandomManager();
             seed = System.currentTimeMillis();
@@ -20,7 +21,7 @@ public class RandomManager {
         return instance;
     }
 
-    public static synchronized RandomManager getRandomManager(Long newSeed) {
+    public static RandomManager getRandomManager(Long newSeed) {
         if (instance == null) {
             instance = new RandomManager();
             seed = newSeed;
@@ -31,5 +32,9 @@ public class RandomManager {
 
     public int nextInt(int bound) {
         return random.nextInt(bound);
+    }
+
+    public String generateID() {
+        return UUID.nameUUIDFromBytes(Integer.toString(random.nextInt()).getBytes()).toString();
     }
 }

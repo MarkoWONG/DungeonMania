@@ -30,7 +30,7 @@ public class DungeonTests {
     public void testEntityMapCreation_MobsOnly() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("dungeon_moving", "Standard");
-        assertTrue(1 >= currResponse.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
+        assert(1 <= currResponse.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
     }

@@ -13,8 +13,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
-
-import java.util.UUID;
+import dungeonmania.RandomManager;
 
 public abstract class Entity implements Interacts {
 
@@ -23,9 +22,10 @@ public abstract class Entity implements Interacts {
     private boolean hasFought;
 
     public Entity(Position position) {
-        this.id = UUID.randomUUID().toString();
         this.position = position;
         hasFought = false;
+        RandomManager rand = RandomManager.getRandomManager();
+        this.id = rand.generateID();
     }
 
     public void setPosition(Position newPosition) {
