@@ -10,9 +10,11 @@ import java.util.List;
 public class Spectre extends BuildableEntity implements BribeMaterial{
 
     private List<String> recipeUsed;
+    private int bribeDuration;
 
     public Spectre() {
         this.recipeUsed = new ArrayList<String>();
+        this.bribeDuration = 10;
     }
 
     @Override
@@ -20,16 +22,19 @@ public class Spectre extends BuildableEntity implements BribeMaterial{
         return "spectre";
     }
 
+    public void usedInBribe(PlayerCharacter player){
+       
+    }
     public int getBribeAmount(int price){
         return price;
-    }
-    public void usedInBribe(PlayerCharacter player){
-        player.removeItemFromInventory(this);
     }
     public int getBribePriority(){
         return 3;
     }
 
+    public int getBribeDuration(){
+        return bribeDuration;
+    }
 
     public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (materialCounter(inventory, "sun_stone") >= 1){

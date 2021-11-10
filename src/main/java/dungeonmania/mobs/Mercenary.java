@@ -21,6 +21,7 @@ public class Mercenary extends Mob implements Subscriber{
     private Boolean charIsInvincible;
     private int price;
     private int battleRadius;
+    private int bribeDuration;
 
     public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
@@ -32,6 +33,7 @@ public class Mercenary extends Mob implements Subscriber{
         this.charIsInvincible = false;
         this.charIsInvisible = false;
         this.battleRadius = 5;
+        this.bribeDuration = -1;
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
             setArmour(new Armour());
@@ -43,20 +45,6 @@ public class Mercenary extends Mob implements Subscriber{
     @Override
     public boolean isInteractable() {
         return isEnemy();
-    }
-
-    /**
-     * bribe the mercenary to change its faction. 
-     * the amount given is cumilative
-     * @param amount an amount of money given
-     * @return false if its not enough, true if the merc has become an ally
-     */
-    public void bribe(int amount) {
-        price -= amount;
-        if (price > 0) {
-            return;
-        }
-        super.changeFaction("ally");
     }
 
     @Override
@@ -72,11 +60,26 @@ public class Mercenary extends Mob implements Subscriber{
         }
         Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
         if (abs(posBetween.getX()) <= 2 || abs(posBetween.getY()) <= 2) {
-            bribe(bribeMat.getBribeAmount(price));
+            bribe(bribeMat.getBribeAmount(price), bribeMat.getBribeDuration());
             bribeMat.usedInBribe(character);
         } else {
             throw new InvalidActionException("Mercenary out of range");
         }
+    }
+
+    /**
+     * bribe the mercenary to change its faction. 
+     * the amount given is cumilative
+     * @param amount an amount of money given
+     * @return false if its not enough, true if the merc has become an ally
+     */
+    public void bribe(int amount, int bribeDuration) {
+        price -= amount;
+        if (price > 0) {
+            return;
+        }
+        this.bribeDuration = bribeDuration;
+        super.changeFaction("ally");
     }
 
     private BribeMaterial searchBribeMaterial(PlayerCharacter character){
@@ -110,6 +113,12 @@ public class Mercenary extends Mob implements Subscriber{
             }
             else {
                 super.move(MovementManager.shortestPath(this, charPosition, entities));
+            }
+            if (bribeDuration == 0){
+                super.changeFaction("enemy");
+            }
+            else if (bribeDuration > -1){
+                bribeDuration--;
             }
         }
     }

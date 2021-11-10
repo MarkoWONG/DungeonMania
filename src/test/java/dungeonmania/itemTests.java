@@ -74,6 +74,20 @@ public class itemTests {
         }
         return null;
     }
+    /**
+    * Returns the entity id
+    * @param frame
+    * @param type
+    * @return itemId
+    */
+    public String getEntityId(DungeonResponse frame, String type){
+        for (EntityResponse ent : frame.getEntities()){
+            if (ent.getType().equals(type)){
+                return ent.getId();
+            }
+        }
+        return null;
+    }
 
     @Test
     public void singleCollectionTest(){
@@ -757,8 +771,8 @@ public class itemTests {
             new_frame = dungeon.tick(null, Direction.DOWN);
         }
 
-        new_frame = dungeon.interact("mercenary");
-        assertTrue(inventoryItemCount(new_frame, "teasure") == 1);
+        new_frame = dungeon.interact(getEntityId(new_frame, "mercenary"));
+        assertTrue(inventoryItemCount(new_frame, "treasure") == 1);
         for (int i = 0; i < 5; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
             new_frame = dungeon.tick(null, Direction.LEFT);
