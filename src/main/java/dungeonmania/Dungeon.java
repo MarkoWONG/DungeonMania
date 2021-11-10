@@ -106,6 +106,10 @@ public class Dungeon {
         if (tick != 0 && tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
             entities.add(entityFactory.create("mercenary", entry, "", ""));
         }
+        if (tick != 0 && tick % 50 == 0) {
+            Position p = SpawnManager.getRandPosition(entities);
+            if (p != null) {entities.add(entityFactory.create("hydra", p, "", ""));}
+        }
     }
 
     private void spawnSpiders() {
