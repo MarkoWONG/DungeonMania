@@ -2,6 +2,7 @@ package dungeonmania.mobs;
 
 import java.util.Random;
 
+import dungeonmania.PlayerCharacter;
 import dungeonmania.util.Position;
 
 public class Hydra extends Mob{
@@ -20,6 +21,10 @@ public class Hydra extends Mob{
         setAttackDamage(health);
         setAttackDamage(ad);
         this.rand = rand;
+    }
+
+    public void startFight(PlayerCharacter playerCharacter) {
+        playerCharacter.fight(this); //example override for playerCharacter
     }
 
     public void takeDamage(int damage, boolean usingAnduril) {

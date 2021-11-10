@@ -58,6 +58,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
         if (entityType.toLowerCase(Locale.ROOT).contains("sun_stone")) {return makeSunStone(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("hydra")) {return makeHydra(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("anduril")) {return makeAnduril(startPos);}
         return null;
     }
 
@@ -205,6 +206,14 @@ public abstract class EntityFactory {
         }
         return new SunStone(startPos);
     }
+
+    protected Entity makeAnduril(Position startPos) {
+        if (startPos == null) {
+            return new Anduril();
+        }
+        return new Anduril(startPos);
+    }
+    
 
     protected Entity makeHydra(Position startPos) {
         //return new Hydra(startPos);
