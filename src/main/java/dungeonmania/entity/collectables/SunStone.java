@@ -21,7 +21,7 @@ public class SunStone extends CollectableEntity implements BribeMaterial{
         return 1;
     }
     public void usedInBribe(PlayerCharacter player){
-        player.removeItemFromInventory(this);
+        
     }
     public int getBribePriority(){
         return 2;
