@@ -33,6 +33,6 @@ public class HardEntityFactory extends EntityFactory{
 
     @Override
     protected Entity makeHydra(Position startPos) {
-        return new Hydra(startPos, 5, 20);
+        return new Hydra(startPos, 5, 20, random);
     }
 }

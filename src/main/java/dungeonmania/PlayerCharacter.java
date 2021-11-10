@@ -162,7 +162,6 @@ public class PlayerCharacter extends Entity implements Movement{
             }
         }
         
-
         for (CollectableEntity e : inventory) {
             if (e.getType().equals("bow")) {
                 AD = e.usedInAttack(AD);
@@ -205,6 +204,14 @@ public class PlayerCharacter extends Entity implements Movement{
         }
 
         for (CollectableEntity e : inventory) {
+            if (e.getType().equals("midnight_armour")) {
+                AD = e.usedInAttack(AD);
+                weaponsUsed.add(e);
+                break;
+            }
+        }
+
+        for (CollectableEntity e : inventory) {
             if (e.getType().equals("bow")) {
                 AD = e.usedInAttack(AD);
                 weaponsUsed.add(e);
@@ -224,16 +231,35 @@ public class PlayerCharacter extends Entity implements Movement{
     }
 
     public void takeDamage(int damage) {
-        ArrayList<String> typesUsed = new ArrayList<String>();
+        ArrayList<CollectableEntity> typesUsed = new ArrayList<CollectableEntity>();
         int reducedDamage = damage;
-        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
-            CollectableEntity currentEnt = iterator.next();
-            if (!typesUsed.contains(currentEnt.getType())) {
-                reducedDamage = currentEnt.usedInDefense(reducedDamage);
-                if (currentEnt.usedInBattle(this)){
-                    iterator.remove();
-                    typesUsed.add(currentEnt.getType());
-                }
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("midnight_armour")) {
+                reducedDamage = e.usedInDefense(reducedDamage);
+                typesUsed.add(e);
+                break;
+            }
+        }
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("shield")) {
+                damage = e.usedInDefense(damage);
+                typesUsed.add(e);
+                break;
+            }
+        }   
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("armour")) {
+                damage = e.usedInDefense(damage);
+                typesUsed.add(e);
+                break;
+            }
+        }
+
+        for (CollectableEntity e : typesUsed) {
+            if (e.usedInBattle(this)) {
+                inventory.remove(e);
             }
         }
         

@@ -57,6 +57,25 @@ public class MovementTests {
     }
 
     @Test
+    public void testMovement_hydra() {
+        DungeonManiaController controller = new DungeonManiaController();
+        DungeonResponse response = controller.newGame("hydra_mov", "Hard");
+
+        assertEquals(6, response.getEntities().size());
+        assertEquals(response.getEntities().get(0).getPosition(), new Position(1, 1, 50));
+        
+        for (int i = 0; i < 10; i++) {
+            Position prev = response.getEntities().get(0).getPosition();
+            
+            controller.tick(null, Direction.NONE);
+
+            Position current = response.getEntities().get(0).getPosition();
+            assert(Position.isAdjacent(prev, current));
+        }
+        
+    }
+
+    @Test
     public void testMovement_mercenary() {
         DungeonManiaController controller = new DungeonManiaController();
         DungeonResponse response = controller.newGame("merc_mov", "Standard");

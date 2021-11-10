@@ -67,6 +67,10 @@ public class CombatTests {
         assertTrue(square.contains(mercenary));
         assertTrue(square.contains(floorSwitch));
 
+        for (Entity e : square) {
+            e.setHasFought(false);
+        }
+
         // nothing should die
         fightManager.doCharFights();
         assertTrue(character.getHealth() == 6);
@@ -79,6 +83,10 @@ public class CombatTests {
         assertTrue(square.contains(mercenary));
         assertTrue(square.contains(floorSwitch));
 
+
+        for (Entity e : square) {
+            e.setHasFought(false);
+        }
         // zombie dies
         fightManager.doCharFights();
         assertTrue(character.getHealth() == 4);
@@ -91,7 +99,9 @@ public class CombatTests {
         assertTrue(square.contains(mercenary));
         assertTrue(square.contains(floorSwitch));
 
-
+        for (Entity e : square) {
+            e.setHasFought(false);
+        }
         Mob lastZombie = new ZombieToast(position, 10, 4);
         square.add(lastZombie);
 
@@ -130,8 +140,8 @@ public class CombatTests {
         square.add(character);
         square.add(zombie);
         square.add(mercenary);
-        assertTrue(zombie.getArmour().getDurability() == 3);
-        assertTrue(mercenary.getArmour().getDurability() == 3);
+        assertTrue(zombie.getArmour().getDurability() == 6);
+        assertTrue(mercenary.getArmour().getDurability() == 6);
 
         FightManager fightManager = new FightManager(square);
         fightManager.setCharacter(character);
