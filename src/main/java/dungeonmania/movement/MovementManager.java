@@ -8,13 +8,11 @@ import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-import java.lang.Math;
+//import java.lang.Math;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Random;
 
 
@@ -210,6 +208,9 @@ public class MovementManager {
             return Direction.NONE;
         }
         */
+        if (a.getPosition().equals(b)) {
+            return Direction.NONE;
+        }
         return dijksra(a, b, entities);
     }
 
@@ -232,25 +233,19 @@ public class MovementManager {
     }
 
     private static Direction dijksra(Entity a, Position b, EntityList entities) {
+        
         List<Position> grid = entities.grid(a);
 
-        //let dist be a Map<Position, Double>
         Map<Position, Double> dist = new HashMap<>();
-        //let prev be a Map<Position, Position>
         Map<Position, Position> prev = new HashMap<>();
-        //let queue be a Queue<Position> of every position in grid
         List<Position> queue = new ArrayList<>();
 
-        //for each Position p in grid:
-        //    dist[p] := infinity
-        //    previous[p] := null
-        //dist[source] := 0
         for (Position p : grid) {
             dist.put(p, Double.POSITIVE_INFINITY);
             prev.put(p, null);
             queue.add(p);
         }
-        dist.replace(a.getPosition(), 0.0);
+        dist.replace(b.asLayer(0), 0.0);
 
         while (!queue.isEmpty()) {
             // get node with smallest distance
@@ -259,8 +254,8 @@ public class MovementManager {
 
             // get neighbours
             List<Position> neighbours = u.getAdjacentPositions();
-
-            for (Position v : neighbours) {
+            for (int i = 1; i < 8; i = i+2) { // we only want directly adjacent, not diagonal
+                Position v = neighbours.get(i);
                 if (queue.contains(v)) {
                     Double tempDistance = dist.get(u) + 1; // * u.movementFactor();
                     if (tempDistance < dist.get(v)) {
@@ -269,6 +264,7 @@ public class MovementManager {
                     }
                 }
             }
+            
         }
 
         // return the direction of the shortest path
@@ -277,17 +273,15 @@ public class MovementManager {
         Double min = Double.POSITIVE_INFINITY;
 
         List<Position> neighbours = a.getPosition().getAdjacentPositions();
-        for (int i = 1; i < 8; i = i+2) { // we only want directly adjacent, not diagonal
-            if (dist.get(neighbours.get(i)) < min) {
+        for (int i = 1; i < 8; i = i+2) { 
+            if (dist.containsKey(neighbours.get(i)) && dist.get(neighbours.get(i)) < min) {
                 min = dist.get(neighbours.get(i));
                 if (i == 1) {path = Direction.UP;}
                 if (i == 3) {path = Direction.RIGHT;}
                 if (i == 5) {path = Direction.DOWN;}
                 if (i == 7) {path = Direction.LEFT;}
-                
-            }
+            } 
         }
-
         return path;
     }
 
@@ -295,7 +289,7 @@ public class MovementManager {
         Position shortest = null;
         Double min = Double.POSITIVE_INFINITY; 
         for (Position p : queue) {
-            if (dist.get(p) < min) {
+            if (dist.get(p) <= min) {
                 shortest = p;
                 min = dist.get(p);
             }
