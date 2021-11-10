@@ -38,8 +38,7 @@ public class SpawnManager {
         if (possible.size() == 0) {
             return null;
         }
-        RandomManager rand = RandomManager.getRandomManager();
-        int x = rand.nextInt(possible.size());
+        int x = RandomManager.nextInt(possible.size());
 
         return possible.get(x);
     }

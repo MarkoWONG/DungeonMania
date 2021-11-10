@@ -12,6 +12,8 @@ import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
+
+
 import dungeonmania.PlayerCharacter;
 import dungeonmania.RandomManager;
 
@@ -24,8 +26,7 @@ public abstract class Entity implements Interacts {
     public Entity(Position position) {
         this.position = position;
         hasFought = false;
-        RandomManager rand = RandomManager.getRandomManager();
-        this.id = rand.generateID();
+        this.id = RandomManager.generateID();
     }
 
     public void setPosition(Position newPosition) {

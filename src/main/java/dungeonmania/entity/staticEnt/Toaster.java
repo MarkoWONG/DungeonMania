@@ -65,8 +65,7 @@ public class Toaster extends StaticEntity{
     }
 
     private Direction randomDirection(int size) {
-        RandomManager rand = RandomManager.getRandomManager(); 
-        int pick = rand.nextInt(size);
+        int pick = RandomManager.nextInt(size);
         return Direction.values()[pick];
     }
 

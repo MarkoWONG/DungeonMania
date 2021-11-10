@@ -87,8 +87,7 @@ public class MovementManager {
         }
 
         if (possibleMoves.size() != 0) {
-            RandomManager rand = RandomManager.getRandomManager();
-            int x = rand.nextInt(possibleMoves.size());
+            int x = RandomManager.nextInt(possibleMoves.size());
             return possibleMoves.get(x);
         }
         return Direction.NONE;

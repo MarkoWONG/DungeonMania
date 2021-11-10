@@ -46,7 +46,7 @@ public class Dungeon {
     public Dungeon(String dungeonName, String gameMode, Long seed) {
         this.name = dungeonName;
         this.seed = seed;
-        this.randomManager = RandomManager.getRandomManager(seed);
+        this.randomManager = new RandomManager(seed);
         this.id = UUID.randomUUID().toString();
         this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);
@@ -64,7 +64,7 @@ public class Dungeon {
     public Dungeon(String dungeonName, String gameMode) {
         this.name = dungeonName;
         this.seed = System.currentTimeMillis();
-        this.randomManager = RandomManager.getRandomManager(seed);
+        this.randomManager = new RandomManager(seed);
         this.id = UUID.randomUUID().toString();
         this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);

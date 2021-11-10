@@ -10,8 +10,7 @@ public class ZombieToast extends Mob{
         super(new Position(position.getX(), position.getY(),50));
         setAttackDamage(ad);
         setHealth(health);
-        RandomManager rand = RandomManager.getRandomManager();
-        if (rand.nextInt(5) == 4) {
+        if (RandomManager.nextInt(5) == 4) {
             super.setArmour(new Armour());
         } else {
             super.setArmour(null);
