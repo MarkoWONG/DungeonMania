@@ -22,10 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Dungeon {
 
@@ -139,12 +137,12 @@ public class Dungeon {
 
     // will always be given a valid string, we do the checking in the controller
     private Difficulty difficultySelector(String gameMode) throws IllegalArgumentException {
-        switch (gameMode) {
-            case ("Peaceful"):
+        switch (gameMode.toLowerCase(Locale.ROOT)) {
+            case ("peaceful"):
                 return new Peaceful(this,movementManager,fightManager);
-            case ("Standard"):
+            case ("standard"):
                 return new Standard(this,movementManager,fightManager);
-            case ("Hard"):
+            case ("hard"):
                 return new Hard(this,movementManager,fightManager);
             default:
                 throw new IllegalArgumentException("Game mode does not exist");
