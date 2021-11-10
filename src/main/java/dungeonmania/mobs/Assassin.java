@@ -1,15 +1,15 @@
 package dungeonmania.mobs;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
+import dungeonmania.entity.collectables.BribeMaterial;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -21,6 +21,7 @@ public class Assassin extends Mob implements Subscriber{
     private Boolean charIsInvincible;
     private int price;
     private int battleRadius;
+    private int bribeDuration;
 
     public Assassin(Position position, int price, EntityList entities,int health, int ad) {
         super(new Position(position.getX(), position.getY(),50));
@@ -32,6 +33,7 @@ public class Assassin extends Mob implements Subscriber{
         this.charIsInvincible = false;
         this.charIsInvisible = false;
         this.battleRadius = 5;
+        this.bribeDuration = -1;
         Random rand = new Random();
         if (rand.nextInt(5) == 4) {
             setArmour(new Armour());
@@ -45,20 +47,6 @@ public class Assassin extends Mob implements Subscriber{
         return isEnemy();
     }
 
-    /**
-     * bribe the mercenary to change its faction. 
-     * the amount given is cumilative
-     * @param amount an amount of money given
-     * @return false if its not enough, true if the merc has become an ally
-     */
-    public void bribe(int amount) {
-        price -= amount;
-        if (price > 0) {
-            return;
-        }
-        super.changeFaction("ally");
-    }
-
     @Override
     public String getType() {
         return "assassin";
@@ -66,17 +54,54 @@ public class Assassin extends Mob implements Subscriber{
 
     @Override
     public void click(PlayerCharacter character) {
-        Entity treasure = character.getItemByType("treasure");
-        if (treasure == null) {
-            throw new InvalidActionException("Gold is required to bribe");
+        BribeMaterial bribeMat = searchBribeMaterial(character);
+        if (bribeMat == null) {
+            throw new InvalidActionException("bribe material is required to bribe");
         }
         Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
-        if (abs(posBetween.getX()) <= 2 ||  abs(posBetween.getY()) <= 2) {
-            bribe(1);
-            character.consume(new ArrayList<String>(List.of("treasure")));
+        if (abs(posBetween.getX()) <= 2 || abs(posBetween.getY()) <= 2) {
+            bribe(bribeMat.getBribeAmount(price), bribeMat.getBribeDuration());
+            bribeMat.usedInBribe(character);
         } else {
             throw new InvalidActionException("Mercenary out of range");
         }
+    }
+
+    /**
+     * bribe the mercenary to change its faction. 
+     * the amount given is cumilative
+     * @param amount an amount of money given
+     * @return false if its not enough, true if the merc has become an ally
+     */
+    public void bribe(int amount, int bribeDuration) {
+        price -= amount;
+        if (price > 0) {
+            return;
+        }
+        this.bribeDuration = bribeDuration;
+        super.changeFaction("ally");
+    }
+
+    private BribeMaterial searchBribeMaterial(PlayerCharacter character){
+        // get all avaliable bribe Materials
+        ArrayList<BribeMaterial> bribeMats = new ArrayList<BribeMaterial>();
+        for (CollectableEntity ent : character.getInventory()){
+            if (ent instanceof BribeMaterial){
+                bribeMats.add((BribeMaterial) ent);
+            }
+        }
+
+        // return the highest Piority birbe Material (spectre -> sun_stone -> teasure)
+        BribeMaterial highestPiorityMat = null;
+        if (bribeMats.size() > 0){
+            highestPiorityMat = bribeMats.get(0);
+            for (BribeMaterial mat: bribeMats){
+                if (highestPiorityMat.getBribePriority() < mat.getBribePriority()){
+                    highestPiorityMat = mat;
+                }
+            }
+        }
+        return highestPiorityMat;
     }
 
     @Override
@@ -88,6 +113,12 @@ public class Assassin extends Mob implements Subscriber{
             }
             else {
                 super.move(MovementManager.shortestPath(this, charPosition, entities));
+            }
+            if (bribeDuration == 0){
+                super.changeFaction("enemy");
+            }
+            else if (bribeDuration > -1){
+                bribeDuration--;
             }
         }
     }
