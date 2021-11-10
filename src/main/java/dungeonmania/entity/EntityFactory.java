@@ -21,12 +21,12 @@ import java.util.Random;
 public abstract class EntityFactory {
 
     protected EntityList entityMap;
-    protected Random random;
+    protected Random currRandom;
     private ArrayList<Subscriber> subscribers = new ArrayList<>();
 
-    public EntityFactory(EntityList entityMap) {
+    public EntityFactory(EntityList entityMap, Random currRandom) {
         this.entityMap = entityMap;
-        this.random = new Random(System.currentTimeMillis());
+        this.currRandom = currRandom;
     }
 
     public Entity create(String entityType, Position startPos, String colour, String key) {
@@ -100,15 +100,15 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeToaster(Position startPos) {
-        return new Toaster(startPos,20,entityMap);
+        return new Toaster(startPos,20,entityMap,currRandom);
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return subscribe(new Mercenary(startPos,1,entityMap,15,4));
+        return subscribe(new Mercenary(startPos,1,entityMap,15,4,currRandom));
     }
 
     protected Entity makeZombie(Position startPos) {
-        return new ZombieToast(startPos,10,2);
+        return new ZombieToast(startPos,10,2, currRandom);
     }
 
     protected Entity makeSpider(Position startPos) {

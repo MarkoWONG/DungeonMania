@@ -7,6 +7,8 @@ import dungeonmania.entity.EntityFactory;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 
+import java.util.Random;
+
 public abstract class Difficulty {
 
     protected Dungeon dungref;
@@ -23,5 +25,5 @@ public abstract class Difficulty {
 
     abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
-    abstract public EntityFactory createEntityFactory(EntityList entityMap);
+    abstract public EntityFactory createEntityFactory(EntityList entityMap, Random currRandom);
 }

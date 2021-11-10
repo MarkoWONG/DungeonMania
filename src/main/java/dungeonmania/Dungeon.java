@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Dungeon {
@@ -40,16 +41,20 @@ public class Dungeon {
     private FightManager fightManager;
     private GoalManager goalManager;
     private EntityFactory entityFactory;
+    private Random currRandom;
+    private Long currSeed;
 
-    public Dungeon(String dungeonName, String gameMode) {
+    public Dungeon(String dungeonName, String gameMode, Long seed) {
+        this.currSeed = seed;
+        this.currRandom = new Random(seed);
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
         this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);
-        this.movementManager = new MovementManager(entities);
+        this.movementManager = new MovementManager(entities,currRandom);
         this.fightManager = new FightManager(entities);
         this.gameMode = difficultySelector(gameMode);
-        this.entityFactory = this.gameMode.createEntityFactory(entities);
+        this.entityFactory = this.gameMode.createEntityFactory(entities,currRandom);
         createNewEntitiesMap(entities, dungeonName);
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
@@ -58,7 +63,7 @@ public class Dungeon {
     }
 
     public Dungeon (JSONObject saveGame) {
-        this(saveGame.getString("name"),saveGame.getString("gamemode"));
+        this(saveGame.getString("name"),saveGame.getString("gamemode"),saveGame.getLong("seed"));
         entitiesFromJSON(saveGame.getJSONArray("entities"),entities);
         character.replaceInventory(inventoryFromJSON(saveGame.getJSONArray("inventory")));
         this.id = saveGame.getString("id");
@@ -113,7 +118,7 @@ public class Dungeon {
 
     private void spawnSpiders() {
         for (int n = 0; n < 5 && entities.search("spider").size() < 4; n++) {
-            Position p = SpawnManager.getRandPosition(entities);
+            Position p = SpawnManager.getRandPosition(entities,currRandom);
             if (p != null) {entities.add(entityFactory.create("spider", p, "", ""));}
         }
     }
@@ -198,6 +203,10 @@ public class Dungeon {
 
     public String getId() {
         return id;
+    }
+
+    public Long getCurrSeed() {
+        return currSeed;
     }
 
 

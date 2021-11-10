@@ -1,5 +1,6 @@
 package dungeonmania.movement;
 
+import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
@@ -16,9 +17,12 @@ import java.util.Random;
 public class MovementManager {
     private PlayerCharacter player;
     private EntityList entities;
+    private Random currRandom;
 
-    public MovementManager(EntityList entities) {
+    public MovementManager(EntityList entities, Random currRandom) {
         this.entities = entities;
+        this.currRandom = currRandom;
+
     }
 
     public void setCharacter(PlayerCharacter player) {
@@ -86,7 +90,7 @@ public class MovementManager {
             possibleMoves.add(Direction.LEFT);
         }
 
-        Random rand = new Random(System.currentTimeMillis());
+        Random rand = currRandom;
         if (possibleMoves.size() != 0) {
             int x = rand.nextInt(possibleMoves.size());
             return possibleMoves.get(x);
