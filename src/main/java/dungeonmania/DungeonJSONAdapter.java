@@ -15,6 +15,7 @@ public class DungeonJSONAdapter {
         main.put("name",currDungeon.getName());
         main.put("id",currDungeon.getId());
         main.put("gamemode",currDungeon.getGamemode());
+        main.put("seed",currDungeon.getCurrSeed());
         main.put("entities",entitiesToJSON(currDungeon.getEntities()));
         main.put("inventory", InventoryToJSON(currDungeon.getInventory()));
         return main;

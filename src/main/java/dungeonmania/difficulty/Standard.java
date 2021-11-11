@@ -8,6 +8,8 @@ import dungeonmania.entity.StandardEntityFactory;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 
+import java.util.Random;
+
 public class Standard extends Difficulty {
     public Standard(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
         super(dungRef,movementManager,fightManager);
@@ -32,7 +34,7 @@ public class Standard extends Difficulty {
     }
 
     @Override
-    public EntityFactory createEntityFactory(EntityList entityMap) {
-        return new StandardEntityFactory(entityMap);
+    public EntityFactory createEntityFactory(EntityList entityMap, Random currRandom) {
+        return new StandardEntityFactory(entityMap, currRandom);
     }
 }

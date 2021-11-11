@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
@@ -20,23 +21,24 @@ public class CombatTests {
 
     @Test
     public void testCombat_playerVsMob() {
+        Random testingRandom = new Random(1213);
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
         Entity spider = new Spider(position, 5, 6);
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2,testingRandom);
         while (zombie.getArmour() != null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2,testingRandom);
         }
         Entity floorSwitch = new Switch(position);
-        Mob mercenary = new Mercenary(position, 1, square, 15, 4);
+        Mob mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         while (mercenary.getArmour() != null) {
-            mercenary = new Mercenary(position, 1, square, 15, 4);
+            mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         }
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
 
 
         Position otherPosition = new Position(2,2,2);
-        Mob otherZombie = new ZombieToast(otherPosition, 10, 2);
+        Mob otherZombie = new ZombieToast(otherPosition, 10, 2,testingRandom);
 
         square.add(character);
         square.add(spider);
@@ -92,7 +94,7 @@ public class CombatTests {
         assertTrue(square.contains(floorSwitch));
 
 
-        Mob lastZombie = new ZombieToast(position, 10, 4);
+        Mob lastZombie = new ZombieToast(position, 10, 4,testingRandom);
         square.add(lastZombie);
 
         // player dies on this tick
@@ -108,15 +110,16 @@ public class CombatTests {
 
     @Test
     public void testCombat_armour() {
+        Random testingRandom = new Random(1213);
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2,testingRandom);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2,testingRandom);
         }
-        Mob mercenary = new Mercenary(position, 1, square, 15, 4);
+        Mob mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         while (mercenary.getArmour() == null) {
-            mercenary = new Mercenary(position, 1, square, 15, 4);
+            mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         }
 
         PlayerCharacter character = new PlayerCharacter(position, 20, 1);
