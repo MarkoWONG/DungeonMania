@@ -18,7 +18,7 @@ public class Hydra extends Mob{
 
     public Hydra(Position position, int health, int ad, Random rand) {
         super(new Position(position.getX(), position.getY(),50));
-        setAttackDamage(health);
+        setHealth(health);
         setAttackDamage(ad);
         this.rand = rand;
     }

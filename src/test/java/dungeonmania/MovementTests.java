@@ -67,7 +67,7 @@ public class MovementTests {
         for (int i = 0; i < 10; i++) {
             Position prev = response.getEntities().get(0).getPosition();
             
-            controller.tick(null, Direction.NONE);
+            response = controller.tick(null, Direction.NONE);
 
             Position current = response.getEntities().get(0).getPosition();
             assert(Position.isAdjacent(prev, current));
