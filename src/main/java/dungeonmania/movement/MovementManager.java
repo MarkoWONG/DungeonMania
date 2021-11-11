@@ -19,13 +19,34 @@ import java.util.Random;
 public class MovementManager {
     private PlayerCharacter player;
     private EntityList entities;
+    private HashMap<Entity, Integer> ticksTilMove;
 
     public MovementManager(EntityList entities) {
         this.entities = entities;
+        this.ticksTilMove = new HashMap<>();
+        initTicksTilMove();
     }
 
     public void setCharacter(PlayerCharacter player) {
         this.player = player;
+    }
+
+    private void initTicksTilMove() {
+        for (Entity e : entities) {
+            if (e.getType() == "player") {
+                ticksTilMove.put(e, 1);
+            } else {
+                ticksTilMove.put(e, calcMovFactor(e.getPosition()));
+            }
+        }
+    }
+
+    private int calcMovFactor(Position p) {
+        int mov_factor = 1;
+        for (Entity e : entities.search(p)) {
+            mov_factor *= e.getMovementFactor();
+        }
+        return mov_factor;
     }
 
 
@@ -49,8 +70,12 @@ public class MovementManager {
         checkBoulder(moveDir);
         ArrayList<Entity> player = entities.search("player");
         for (Entity thePlayer : player) {
-            if (checkMove(thePlayer,moveDir)) {
+            if (checkMove(thePlayer,moveDir) && ticksTilMove.get(thePlayer) == 1) {
                 thePlayer.move(moveDir);
+                ticksTilMove.replace(thePlayer, 1);
+            } else {
+                int m = ticksTilMove.get(thePlayer);
+                ticksTilMove.replace(thePlayer, m-1);
             }
         }
     }
@@ -63,7 +88,13 @@ public class MovementManager {
     public void moveMobs() {
         for (Entity eachEntity : entities) {
             if ( eachEntity instanceof Mob && !(player.getInvisibleTicks() > 0)) {
-                eachEntity.move(getRandDirection(eachEntity));
+                if (ticksTilMove.get(eachEntity) == 1) {
+                    eachEntity.move(getRandDirection(eachEntity));
+                    ticksTilMove.replace(eachEntity, calcMovFactor(eachEntity.getPosition()));
+                } else {
+                    int m = ticksTilMove.get(eachEntity);
+                    ticksTilMove.replace(eachEntity, m-1);
+                }
             }
         }
     }
@@ -252,12 +283,18 @@ public class MovementManager {
             Position u = getDijkstraMin(queue, dist);
             queue.remove(u);
 
+            int mov_factor = 1;
+            for (Entity e : entities.search(u)) {
+                mov_factor *= e.getMovementFactor();
+            }
+
             // get neighbours
             List<Position> neighbours = u.getAdjacentPositions();
             for (int i = 1; i < 8; i = i+2) { // we only want directly adjacent, not diagonal
                 Position v = neighbours.get(i);
+                
                 if (queue.contains(v)) {
-                    Double tempDistance = dist.get(u) + 1; // * u.movementFactor();
+                    Double tempDistance = dist.get(u) + mov_factor;
                     if (tempDistance < dist.get(v)) {
                         dist.replace(v, tempDistance);
                         prev.replace(v, u);

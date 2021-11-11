@@ -21,7 +21,7 @@ public abstract class Entity implements Interacts {
     private Position position;
     private final String id;
     private boolean hasFought;
-    private Double movementFactor = 1.0;
+    private int movementFactor = 1;
 
     public Entity(Position position) {
         this.id = UUID.randomUUID().toString();
@@ -45,11 +45,11 @@ public abstract class Entity implements Interacts {
         return position.getY();
     }
 
-    public Double getMovementFactor() {
+    public int getMovementFactor() {
         return movementFactor;
     }
     
-    public void setMovementFactor(Double movementFactor) {
+    public void setMovementFactor(int movementFactor) {
         this.movementFactor = movementFactor;
     }
 

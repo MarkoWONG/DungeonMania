@@ -5,9 +5,9 @@ import dungeonmania.util.Position;
 
 public class SwampTile extends Entity{
 
-    public SwampTile(Position position) {
+    public SwampTile(Position position, int mov_factor) {
         super(position);
-        super.setMovementFactor(2.0);
+        super.setMovementFactor(mov_factor);
     }
 
     @Override
