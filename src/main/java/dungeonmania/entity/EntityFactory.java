@@ -8,6 +8,7 @@ import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
+import dungeonmania.entity.floorTiles.SwampTile;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Spider;
 import dungeonmania.mobs.Subscriber;
@@ -29,7 +30,7 @@ public abstract class EntityFactory {
         this.currRandom = currRandom;
     }
 
-    public Entity create(String entityType, Position startPos, String colour, String key) {
+    public Entity create(String entityType, Position startPos, String colour, String key, int mov_factor) {
         if (entityType.toLowerCase(Locale.ROOT).contains("player")) {return makePlayer(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("wall")) {return makeWall(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("exit")) {return makeExit(startPos);}
@@ -54,6 +55,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("one_ring")) {return makeOneRing(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
+        if (entityType.toLowerCase(Locale.ROOT).contains("swamp_tile")) {return makeSwampTile(startPos, mov_factor);}
         return null;
     }
 
@@ -195,6 +197,10 @@ public abstract class EntityFactory {
     protected Entity makeBow() { return new Bow(); }
 
     protected Entity makeShield() { return new Shield(); }
+
+    protected Entity makeSwampTile(Position startPos, int mov_factor) {
+        return new SwampTile(startPos, mov_factor);
+    }
 
 
 }

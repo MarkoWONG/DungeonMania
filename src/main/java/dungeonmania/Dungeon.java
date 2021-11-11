@@ -58,6 +58,7 @@ public class Dungeon {
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
         spawnSpiders();
+        movementManager.initTicksTilMove(entities);
     }
 
     public Dungeon (JSONObject saveGame) {
@@ -110,14 +111,14 @@ public class Dungeon {
 
     public void doSpawns() {
         if (tick != 0 && tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
-            entities.add(entityFactory.create("mercenary", entry, "", ""));
+            entities.add(entityFactory.create("mercenary", entry, "", "", 1));
         }
     }
 
     private void spawnSpiders() {
         for (int n = 0; n < 5 && entities.search("spider").size() < 4; n++) {
-            Position p = SpawnManager.getRandPosition(entities,currRandom);
-            if (p != null) {entities.add(entityFactory.create("spider", p, "", ""));}
+            Position p = SpawnManager.getRandPosition(entities, currRandom);
+            if (p != null) {entities.add(entityFactory.create("spider", p, "", "", 1));}
         }
     }
 
@@ -127,7 +128,7 @@ public class Dungeon {
         }
         if (Build.getBuildables(getInventory()).contains(item)) {
             // can be safely typecast because we check if it's a valid item in the controller?
-            character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null));
+            character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null, 1));
             character.consume(Build.getRecipe(item));
         } else {
             throw new InvalidActionException("Missing required items");
@@ -168,7 +169,8 @@ public class Dungeon {
             String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
             String currEntColour = ((currObj.has("colour") && !currObj.isNull("colour"))) ? currObj.getString("colour") : "";
             String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
-            Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey);
+            int currMovFactor =  ((currObj.has("movement_factor") && !currObj.isNull("movement_factor"))) ? currObj.getInt("movement_factor") : 1;
+            Entity currEnt = entityFactory.create(currEntType, currPosition,currEntColour,currDoorKey, currMovFactor);
             if ( currEntType.equals("player") ) {
                 this.character = (PlayerCharacter) currEnt;
                 this.entry = currPosition;
@@ -183,7 +185,7 @@ public class Dungeon {
             JSONObject currObj = currInventory.getJSONObject(i);
             String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
             String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
-            Entity currEnt = entityFactory.create(currEntType, null,null,currDoorKey);
+            Entity currEnt = entityFactory.create(currEntType, null,null,currDoorKey, 1);
             newInv.add((CollectableEntity) currEnt);
         }
         return newInv;
