@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class PlayerCharacter extends Entity implements Movement{
 
     private ArrayList<CollectableEntity> inventory;
