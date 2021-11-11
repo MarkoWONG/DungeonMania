@@ -149,9 +149,9 @@ public class CombatTests {
         
         assertTrue(character.getHealth() == 16);
         assertTrue(zombie.getHealth() == 8);
-        assertTrue(zombie.getArmour().getDurability() == 2);
+        assertTrue(zombie.getArmour().getDurability() == 5);
         assertTrue(mercenary.getHealth() == 14);
-        assertTrue(mercenary.getArmour().getDurability() == 2);
+        assertTrue(mercenary.getArmour().getDurability() == 5);
     }
 
 }

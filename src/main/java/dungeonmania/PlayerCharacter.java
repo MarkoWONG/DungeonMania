@@ -244,14 +244,14 @@ public class PlayerCharacter extends Entity implements Movement{
 
         for (CollectableEntity e : inventory) {
             if (e.getType().equals("shield")) {
-                damage = e.usedInDefense(damage);
+                reducedDamage = e.usedInDefense(reducedDamage);
                 typesUsed.add(e);
                 break;
             }
         }   
         for (CollectableEntity e : inventory) {
             if (e.getType().equals("armour")) {
-                damage = e.usedInDefense(damage);
+                reducedDamage = e.usedInDefense(reducedDamage);
                 typesUsed.add(e);
                 break;
             }
