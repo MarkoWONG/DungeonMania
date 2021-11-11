@@ -3,9 +3,12 @@ package dungeonmania;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
+import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class EntityList extends ArrayList<Entity> {
@@ -73,5 +76,39 @@ public class EntityList extends ArrayList<Entity> {
             }
         }
         return null;
+    }
+
+    /**
+     * generate a list of positions an entity can move to
+     * @param position the position of the entity, used to get the layer to determine available positions
+     * @return a list of the possible positions an entity can move to
+     */
+    public List<Position> grid(Entity entity) {
+        
+        int maxX = 0;
+        int minX = 0;
+        int maxY = 0;
+        int minY = 0;
+
+        for (Entity e : this) {
+            Position p = e.getPosition();
+            maxX = Math.max(p.getX(), maxX);
+            minX = Math.min(p.getX(), minX);
+            maxY = Math.max(p.getY(), maxY);
+            minY = Math.min(p.getY(), minY);
+        }
+
+        ArrayList<Position> positions = new ArrayList<>();
+        // get the positions on the map a mob can spawn
+        for (int i = minX; i <= maxX; i++) {
+            for (int j = minY; j <= maxY; j++) {
+                Position newPos = new Position(i,j);
+                if (MovementManager.staticCheckMove(entity, newPos, this)) {
+                    positions.add(newPos);
+                }
+            }
+        }
+
+        return positions;
     }
 }
