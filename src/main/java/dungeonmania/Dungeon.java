@@ -55,6 +55,7 @@ public class Dungeon {
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
         spawnSpiders();
+        character.startGame();
     }
 
     public Dungeon (JSONObject saveGame) {

@@ -21,6 +21,11 @@ public class Assassin extends Mercenary{
     }
 
     @Override
+    public String getType() {
+        return "assassin";
+    }
+
+    @Override
     public void click(PlayerCharacter character) {
         BribeMaterial bribeMat = searchBribeMaterial(character);
         OneRing ringBribe = searchOneRing(character);

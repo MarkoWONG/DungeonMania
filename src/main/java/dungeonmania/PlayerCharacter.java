@@ -78,6 +78,12 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
+    public void startGame() {
+        for(Subscriber s: subscribers) {
+            s.notifyMove(super.getPosition());
+        }
+    }
+
 
 
     public void consume(List<String> items) {
