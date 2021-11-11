@@ -57,11 +57,8 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("one_ring")) {return makeOneRing(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
-<<<<<<< src/main/java/dungeonmania/entity/EntityFactory.java
         if (entityType.toLowerCase(Locale.ROOT).contains("sun_stone")) {return makeSunStone(startPos);}
-=======
         if (entityType.toLowerCase(Locale.ROOT).contains("swamp_tile")) {return makeSwampTile(startPos, mov_factor);}
->>>>>>> src/main/java/dungeonmania/entity/EntityFactory.java
         return null;
     }
 
@@ -116,7 +113,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeAssassin(Position startPos) {
-        return subscribe(new Assassin(startPos,1,entityMap,15,4));
+        return subscribe(new Assassin(startPos,1,entityMap,15,4,currRandom));
     }
 
     protected Entity makeZombie(Position startPos) {

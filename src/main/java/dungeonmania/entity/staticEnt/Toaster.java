@@ -55,7 +55,7 @@ public class Toaster extends StaticEntity{
             
             // spawn zombie if valid
             if (validDirIndexes.size() > 0){
-                Direction validDir = randomDirection(validDirIndexes);
+                Direction validDir = randomDirection(validDirIndexes.size());
                 newZombie.move(validDir);
                 entityList.add(newZombie);
             }

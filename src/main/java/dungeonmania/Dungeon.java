@@ -126,20 +126,12 @@ public class Dungeon {
         if (target == null) {
             throw new IllegalArgumentException();
         }
-<<<<<<< src/main/java/dungeonmania/Dungeon.java
         // check if buildable type has the materials
         else if (BuildableEntity.getBuildables(getInventory(), entities).contains(item)) {
             character.addItemToInventory(target);
             character.consume(target.getRecipeUsed());
         }
         else {
-=======
-        if (Build.getBuildables(getInventory()).contains(item)) {
-            // can be safely typecast because we check if it's a valid item in the controller?
-            character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null, 1));
-            character.consume(Build.getRecipe(item));
-        } else {
->>>>>>> src/main/java/dungeonmania/Dungeon.java
             throw new InvalidActionException("Missing required items");
         }
     }

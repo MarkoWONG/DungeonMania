@@ -16,8 +16,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Assassin extends Mercenary{
-    public Assassin(Position position, int price, EntityList entities,int health, int ad) {
-        super(new Position(position.getX(), position.getY(),50),price,entities,health,ad);
+    public Assassin(Position position, int price, EntityList entities,int health, int ad, Random currRandom) {
+        super(new Position(position.getX(), position.getY(),50),price,entities,health,ad, currRandom);
     }
 
     @Override
