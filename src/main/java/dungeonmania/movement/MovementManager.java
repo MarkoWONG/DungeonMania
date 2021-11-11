@@ -24,14 +24,13 @@ public class MovementManager {
     public MovementManager(EntityList entities) {
         this.entities = entities;
         this.ticksTilMove = new HashMap<>();
-        initTicksTilMove();
     }
 
     public void setCharacter(PlayerCharacter player) {
         this.player = player;
     }
 
-    private void initTicksTilMove() {
+    public void initTicksTilMove(EntityList entities) {
         for (Entity e : entities) {
             if (e.getType() == "player") {
                 ticksTilMove.put(e, 1);
