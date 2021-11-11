@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public abstract class BuildableEntity extends CollectableEntity{
-    private static final List<BuildableEntity> buildables = Arrays.asList(new Bow(), new Shield(), new MidnightArmour(), new Spectre());
+    private static final List<BuildableEntity> buildables = Arrays.asList(new Bow(), new Shield(), new MidnightArmour(), new Sceptre());
     
     public BuildableEntity(){
         super(null);

@@ -104,6 +104,11 @@
             "x": 7,
             "y": 5,
             "type": "treasure"
+        },
+        {
+            "x": 6,
+            "y": 3,
+            "type": "one_ring"
         }
     ]
 }

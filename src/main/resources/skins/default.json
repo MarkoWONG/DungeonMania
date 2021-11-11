@@ -46,7 +46,7 @@
         "key_silver": "images/tileset/items/key_silver.png",
         "one_ring": "images/tileset/items/ring_0_special.png",
         "sun_stone": "images/tileset/entities/sun_stone.png",
-        "spectre": "images/tileset/entities/sceptre.png",
+        "sceptre": "images/tileset/entities/sceptre.png",
         "assassin": "images/tileset/entities/assassin.png"
     }
     

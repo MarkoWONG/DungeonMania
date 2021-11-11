@@ -711,22 +711,22 @@ public class itemTests {
     @Test
     public void SceptreCraftingArrowKey(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/sceptre", "Standard");
         // collect materials
         for (int i = 0; i < 4; i++){
             new_frame = dungeon.tick(null, Direction.LEFT);
         }
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
-        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
-        new_frame = dungeon.build("spectre");
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("sceptre"));
+        new_frame = dungeon.build("sceptre");
         assertEquals(new_frame.getBuildables(), Arrays.asList());
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 1);
     }
 
     @Test
     public void SceptreCraftingArrowTreasure(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/sceptre", "Standard");
         // collect materials
         for (int i = 0; i < 2; i++){
             new_frame = dungeon.tick(null, Direction.LEFT);
@@ -734,47 +734,47 @@ public class itemTests {
         for (int i = 0; i < 2; i++){
             new_frame = dungeon.tick(null, Direction.DOWN);
         }
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
-        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
-        new_frame = dungeon.build("spectre");
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("sceptre"));
+        new_frame = dungeon.build("sceptre");
         assertEquals(new_frame.getBuildables(), Arrays.asList());
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 1);
     }
     @Test
     public void SceptreCraftingWoodKey(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/sceptre", "Standard");
         // collect materials
         for (int i = 0; i < 3; i++){
             new_frame = dungeon.tick(null, Direction.DOWN);
         }
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
-        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
-        new_frame = dungeon.build("spectre");
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("sceptre"));
+        new_frame = dungeon.build("sceptre");
         assertEquals(new_frame.getBuildables(), Arrays.asList());
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 1);
     }
     @Test
     public void SceptreCraftingWoodTreasure(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/sceptre", "Standard");
         // collect materials
         new_frame = dungeon.tick(null, Direction.DOWN);
         for (int i = 0; i < 3; i++){
         new_frame = dungeon.tick(null, Direction.RIGHT);
         }
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 0);
-        assertEquals(new_frame.getBuildables(), Arrays.asList("spectre"));
-        new_frame = dungeon.build("spectre");
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 0);
+        assertEquals(new_frame.getBuildables(), Arrays.asList("sceptre"));
+        new_frame = dungeon.build("sceptre");
         assertEquals(new_frame.getBuildables(), Arrays.asList());
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 1);
     }
 
 
     @Test
     public void SceptreBribeAssassinDurablity(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/sceptre", "Standard");
 
         // collect materials
         new_frame = dungeon.tick(null, Direction.DOWN);
@@ -782,8 +782,8 @@ public class itemTests {
             new_frame = dungeon.tick(null, Direction.RIGHT);
         }
         
-        new_frame = dungeon.build("spectre");
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+        new_frame = dungeon.build("sceptre");
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 1);
         String id = getEntityId(new_frame, "assassin");
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(id);});
 
@@ -825,7 +825,7 @@ public class itemTests {
     @Test
     public void SceptreBribeMercenaryDurablity(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/sceptre", "Standard");
 
         // collect materials
         new_frame = dungeon.tick(null, Direction.DOWN);
@@ -833,8 +833,8 @@ public class itemTests {
             new_frame = dungeon.tick(null, Direction.RIGHT);
         }
         
-        new_frame = dungeon.build("spectre");
-        assertTrue(inventoryItemCount(new_frame, "spectre") == 1);
+        new_frame = dungeon.build("sceptre");
+        assertTrue(inventoryItemCount(new_frame, "sceptre") == 1);
         
         new_frame = dungeon.tick(null, Direction.LEFT);
         // move to mercenary 
