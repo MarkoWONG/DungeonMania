@@ -1,4 +1,5 @@
 package dungeonmania.mobs;
+import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
@@ -22,7 +23,7 @@ public class Mercenary extends Mob implements Subscriber{
     private int price;
     private int battleRadius;
 
-    public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
+    public Mercenary(Position position, int price, EntityList entities,int health, int ad, Random currRandom) {
         super(new Position(position.getX(), position.getY(),50));
         setAttackDamage(ad);
         setHealth(health);
@@ -32,8 +33,8 @@ public class Mercenary extends Mob implements Subscriber{
         this.charIsInvincible = false;
         this.charIsInvisible = false;
         this.battleRadius = 5;
-        Random rand = new Random();
-        if (rand.nextInt(5) == 4) {
+        int rand = currRandom.nextInt(5);
+        if (rand == 4) {
             setArmour(new Armour());
         } else {
             setArmour(null);

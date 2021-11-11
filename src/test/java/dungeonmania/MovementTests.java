@@ -1,12 +1,14 @@
 package dungeonmania;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import dungeonmania.response.models.DungeonResponse;
+import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MovementTests {
 
@@ -17,43 +19,40 @@ public class MovementTests {
     @Test
     public void testMovement_player() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("player_mov", "Standard");
-        controller.tick(null, Direction.RIGHT);
-        assertEquals(1, response.getEntities().size());
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(1, 0));
+        DungeonResponse response = controller.newGame("player_mov", "Peaceful");
+        response = controller.tick(null, Direction.RIGHT);
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
 
-        controller.tick(null, Direction.DOWN);
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(1, 1));
+        response = controller.tick(null, Direction.DOWN);
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
 
-        controller.tick(null, Direction.LEFT);
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(0, 1));
+        response = controller.tick(null, Direction.LEFT);
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(0, 1))).count());
 
-        controller.tick(null, Direction.UP);
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(0, 0));
+        response = controller.tick(null, Direction.UP);
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(0, 0))).count());
 
         for (int i = 0; i < 10; i++) {
-            controller.tick(null, Direction.RIGHT);
+            response =controller.tick(null, Direction.RIGHT);
         }
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(10, 0));
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("player")).filter(e -> e.getPosition().equals(new Position(10, 0))).count());
     }
 
     @Test
     public void testMovement_zombie() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("zombie_mov", "Standard");
+        DungeonResponse response = controller.newGame("zombie_mov", "Standard",123L);
 
-        assertEquals(1, response.getEntities().size());
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(0, 0));
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 1))).count());
         
         for (int i = 0; i < 10; i++) {
-            Position prev = response.getEntities().get(0).getPosition();
-            
-            controller.tick(null, null);
-
-            Position current = response.getEntities().get(0).getPosition();
-            assert(Position.isAdjacent(prev, current));
+            response = controller.tick(null, Direction.NONE);
+            // isAdjacent is bugged (doesn't do absolute value) or we would use that here
         }
-        
+        Position finalPos = response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).map(EntityResponse::getPosition).collect(Collectors.toList()).get(0);
+        assertEquals(finalPos, new Position(1,1));
+
+
     }
 
     @Test
@@ -95,25 +94,13 @@ public class MovementTests {
     @Test
     public void testMovement_spider() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("spider_mov", "Standard");
-        assertEquals(1, response.getEntities().size());
-        assertEquals(response.getEntities().get(0).getPosition(), new Position(1, 1));
-
-        Position start = response.getEntities().get(0).getPosition();
-        Position prevprev = response.getEntities().get(0).getPosition();
-
+        DungeonResponse response = controller.newGame("spider_mov", "Standard", 123L);
+        response = controller.tick(null, Direction.DOWN);
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         for (int i = 0; i < 20; i++) {
-            Position prev = response.getEntities().get(0).getPosition();
-            
-            controller.tick(null, Direction.DOWN);
-
-            Position current = response.getEntities().get(0).getPosition();
-            assert(Position.isAdjacent(start, current)); // new position is still in the movement area
-            assert(Position.isAdjacent(prev, current)); // new position is next to the old one
-            assertFalse(prevprev.equals(current)); // spood has not gone back the way it came
-
-            prevprev = prev;
+            response = controller.tick(null, Direction.DOWN);
         }
+        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("spider")).filter(e -> e.getPosition().equals(new Position(1, 2))).count());
     }
 
 }

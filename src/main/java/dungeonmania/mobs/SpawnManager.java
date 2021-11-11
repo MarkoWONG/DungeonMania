@@ -3,6 +3,7 @@ package dungeonmania.mobs;
 import java.util.ArrayList;
 import java.util.Random;
 
+import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
@@ -32,14 +33,13 @@ public class SpawnManager {
      * @param map
      * @return a randomly generated, valid spawn position
      */
-    public static Position getRandPosition(EntityList map){
+    public static Position getRandPosition(EntityList map, Random currRandom){
         ArrayList<Position> possible = positions(map);
         // generate random number in the range of the list length
         if (possible.size() == 0) {
             return null;
         }
-        Random rand = new Random(System.currentTimeMillis());
-        int x = rand.nextInt(possible.size());
+        int x = currRandom.nextInt(possible.size());
 
         return possible.get(x);
     }
