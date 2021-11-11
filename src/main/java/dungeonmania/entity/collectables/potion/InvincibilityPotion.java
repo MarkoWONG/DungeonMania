@@ -3,15 +3,18 @@ import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 public class InvincibilityPotion extends PotionEntity implements Usable{
-
+    private static final int effectDuration = 5;
     private boolean enabled;
 
     public InvincibilityPotion(Position position, boolean enabled){
         super(new Position(position.getX(), position.getY(), 40));
+        this.enabled = enabled;
+    }
+
+    public InvincibilityPotion(boolean enabled) {
+        super(null);
         this.enabled = enabled;
     }
 
@@ -27,9 +30,9 @@ public class InvincibilityPotion extends PotionEntity implements Usable{
 
     public void useItem(PlayerCharacter player){
         if (enabled) {
-            player.setInvincibleTicks(5);
-            player.removeItemFromInventory(this);
+            player.setInvincibleTicks(effectDuration);
         }
+        player.removeItemFromInventory(this);
     }
 
     @Override

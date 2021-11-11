@@ -5,7 +5,11 @@ import dungeonmania.PlayerCharacter;
 
 public class OneRing extends rareEntity{
     public OneRing(Position position){
-        super(new Position(position.getX(), position.getY(), 40), "one_ring");  
+        super(new Position(position.getX(), position.getY(), 40));
+    }
+
+    public OneRing() {
+        super(null);
     }
 
     @Override

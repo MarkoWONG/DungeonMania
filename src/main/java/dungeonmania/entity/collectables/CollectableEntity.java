@@ -2,7 +2,6 @@ package dungeonmania.entity.collectables;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.Mercenary;
-import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
@@ -15,16 +14,16 @@ public abstract class CollectableEntity extends Entity{
         entity.interact(this);
     }
 
-    public void usedInBattle(PlayerCharacter player) {
-        ; // default case for each collectable
+    public boolean usedInBattle(PlayerCharacter player) {
+        return false; // default case for each collectable
     }
 
-    public void usedInBattle(ZombieToast zombie) {
-        ;
+    public boolean usedInBattle(ZombieToast zombie) {
+        return false;
     }
 
-    public void usedInBattle(Mercenary mercenary) {
-        ;
+    public boolean usedInBattle(Mercenary mercenary) {
+        return false;
     }
 
     public int usedInAttack(int attackDamage) {

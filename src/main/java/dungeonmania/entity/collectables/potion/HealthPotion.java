@@ -1,20 +1,19 @@
 package dungeonmania.entity.collectables.potion;
 import dungeonmania.entity.Entity;
-import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 
 public class HealthPotion extends PotionEntity implements Usable{
 
-    private boolean healthPotionUsed;
 
     public HealthPotion(Position position){
         super(new Position(position.getX(), position.getY(), 40));
-        this.healthPotionUsed = false;
+    }
+
+    public HealthPotion() {
+        super(null);
     }
 
     @Override
@@ -34,9 +33,7 @@ public class HealthPotion extends PotionEntity implements Usable{
     }
 
     public void useItem(PlayerCharacter player){
-        if (!healthPotionUsed){
-            player.setHealth(10);
-            player.removeItemFromInventory(this);
-        }
+        player.setHealth(10);
+        player.removeItemFromInventory(this);
     }
 }

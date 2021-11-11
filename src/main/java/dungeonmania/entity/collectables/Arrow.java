@@ -8,6 +8,10 @@ public class Arrow extends CollectableEntity {
         super(new Position(position.getX(), position.getY(), 40));
     }
 
+    public Arrow() {
+        super(null);
+    }
+
     @Override
     public String getType() {
         return "arrow";

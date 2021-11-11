@@ -1,12 +1,17 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class EntityList extends ArrayList<Entity> {
+
+    private final String id = UUID.randomUUID().toString();
 
     public ArrayList<Entity> search(Position position) {
         ArrayList<Entity> output = new ArrayList<>();
@@ -42,7 +47,7 @@ public class EntityList extends ArrayList<Entity> {
      * @return
      */
     public ArrayList<Entity> searchTile(Entity entity) {
-        if (entity.getPosition() == null) {
+        if (entity == null || entity.getPosition() == null) {
             return new ArrayList<>();
         }
         ArrayList<Entity> input = search(entity.getPosition());

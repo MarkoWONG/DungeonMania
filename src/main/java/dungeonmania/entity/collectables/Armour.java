@@ -8,14 +8,18 @@ import dungeonmania.util.Position;
 public class Armour extends CollectableEntity{
 
     private int durability;
+    private static final int startingDurability = 3;
+
     public Armour() {
         super(null);
-        this.durability = 3;
+        // times 2 as items are used twice per battle one for attacking and one for defending
+        this.durability = startingDurability * 2;
     }
 
     public Armour(Position position){
         super(new Position(position.getX(), position.getY(), 40));
-        this.durability = 3;
+        // times 2 as items are used twice per battle one for attacking and one for defending
+        this.durability = startingDurability * 2;
     }
 
     @Override
@@ -36,11 +40,14 @@ public class Armour extends CollectableEntity{
         player.addItemToInventory(this);
     }
 
-    public void usedInBattle(PlayerCharacter player){
+    public boolean usedInBattle(PlayerCharacter player){
         durability--;
+        // System.out.println("armour durablity is now: " + durability);
         if (durability <= 0){
-            player.getInventory().removeIf(ent -> ent.equals(this));
+            return true;
+            // player.getInventory().removeIf(ent -> ent.equals(this));
         }
+        return false;
     }
 
     public void usedInBattle(Mob mob) {

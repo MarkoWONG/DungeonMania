@@ -1,10 +1,12 @@
 package dungeonmania.movement;
 
+import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
+import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import java.lang.Math;
@@ -15,9 +17,12 @@ import java.util.Random;
 public class MovementManager {
     private PlayerCharacter player;
     private EntityList entities;
+    private Random currRandom;
 
-    public MovementManager(EntityList entities) {
+    public MovementManager(EntityList entities, Random currRandom) {
         this.entities = entities;
+        this.currRandom = currRandom;
+
     }
 
     public void setCharacter(PlayerCharacter player) {
@@ -54,10 +59,11 @@ public class MovementManager {
     /**
      * calls move for every mob on the map
      * passes a random, possible direction for the mob to move
+     * if the player is invincible, it runs away
      */
     public void moveMobs() {
         for (Entity eachEntity : entities) {
-            if ( eachEntity instanceof Mob ) {
+            if ( eachEntity instanceof Mob && !(player.getInvisibleTicks() > 0)) {
                 eachEntity.move(getRandDirection(eachEntity));
             }
         }
@@ -84,7 +90,7 @@ public class MovementManager {
             possibleMoves.add(Direction.LEFT);
         }
 
-        Random rand = new Random(System.currentTimeMillis());
+        Random rand = currRandom;
         if (possibleMoves.size() != 0) {
             int x = rand.nextInt(possibleMoves.size());
             return possibleMoves.get(x);
@@ -122,8 +128,11 @@ public class MovementManager {
             if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
+            if (eachEntity.getType().equals(entity.getType())) {
+                return false;
+            }
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
-                if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
+                if ((eachEntity instanceof Mob && entity instanceof PlayerCharacter) || (eachEntity instanceof PlayerCharacter && entity instanceof Mob)) {
                     return true;
                 }
                 return false;
@@ -143,6 +152,11 @@ public class MovementManager {
                 if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
                     return true;
                 }
+                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
+                    ((Spider) eachEntity).changeDirection();
+                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
+                    ((Spider) entity).changeDirection();
+                }
                 return false;
             }
         }
@@ -151,25 +165,43 @@ public class MovementManager {
 
     /**
      * 
-     * @param a the position of some entity a
-     * @param b the position of some entity b
+     * @param a some entity a
+     * @param b destination position
      * @return the direction a must travel to get to b
      */
-    public static Direction shortestPath(Entity a, Entity b, EntityList entities) {
-        Position btwn = Position.calculatePositionBetween(a.getPosition(), b.getPosition());
+    public static Direction shortestPath(Entity a, Position b, EntityList entities) {
+        Position btwn = Position.calculatePositionBetween(a.getPosition(), b);
         int xDistance = btwn.getX();
         int yDistance = btwn.getY();
         Direction d = Direction.NONE;
 
         if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
             d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
-        } else { // further away on the x axis OR equal
+        } else if (Math.abs(yDistance) < Math.abs(xDistance)) { // further away on the x axis OR equal
             d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
         } 
 
         if (staticCheckMove(a, d, entities)) {
             return d;
         } else {
+            return Direction.NONE;
+        }
+    }
+
+    public static Direction invertDirection(Direction d) {
+        if (d.toString().equals("UP")){
+            return Direction.DOWN;
+        }
+        else if (d.toString().equals("LEFT")){
+            return Direction.RIGHT;
+        }
+        else if (d.toString().equals("DOWN")){
+            return Direction.UP;
+        }
+        else if (d.toString().equals("RIGHT")){
+            return Direction.LEFT;
+        }
+        else{
             return Direction.NONE;
         }
     }

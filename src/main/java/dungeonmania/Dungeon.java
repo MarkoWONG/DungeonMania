@@ -1,5 +1,7 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.difficulty.Difficulty;
 import dungeonmania.difficulty.Hard;
 import dungeonmania.difficulty.Peaceful;
@@ -11,6 +13,7 @@ import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goal.GoalManager;
+import dungeonmania.mobs.SpawnManager;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
@@ -19,14 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Dungeon {
 
     private String name;
     private String id;
+    private int tick;
     private Position entry;
 
     private Difficulty gameMode;
@@ -36,20 +39,35 @@ public class Dungeon {
     private FightManager fightManager;
     private GoalManager goalManager;
     private EntityFactory entityFactory;
+    private Random currRandom;
+    private Long currSeed;
 
-    public Dungeon(String dungeonName, String gameMode) {
+    public Dungeon(String dungeonName, String gameMode, Long seed) {
+        this.currSeed = seed;
+        this.currRandom = new Random(seed);
         this.name = dungeonName;
         this.id = UUID.randomUUID().toString();
         this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);
-        this.movementManager = new MovementManager(entities);
+        this.movementManager = new MovementManager(entities,currRandom);
         this.fightManager = new FightManager(entities);
         this.gameMode = difficultySelector(gameMode);
-        this.entityFactory = this.gameMode.createEntityFactory(entities);
-        createEntitiesMap_FromJson(entities, dungeonName);
+        this.entityFactory = this.gameMode.createEntityFactory(entities,currRandom);
+        createNewEntitiesMap(entities, dungeonName);
         this.entry = character.getPosition();
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
+        spawnSpiders();
+    }
+
+    public Dungeon (JSONObject saveGame) {
+        this(saveGame.getString("name"),saveGame.getString("gamemode"),saveGame.getLong("seed"));
+        entitiesFromJSON(saveGame.getJSONArray("entities"),entities);
+        character.replaceInventory(inventoryFromJSON(saveGame.getJSONArray("inventory")));
+        this.id = saveGame.getString("id");
+        PlayerCharacter thePlayer = entities.findPlayer();
+        fightManager.setCharacter(thePlayer);
+        movementManager.setCharacter(thePlayer);
     }
 
     public void tick(String itemUsed, Direction movementDirection) {
@@ -58,6 +76,8 @@ public class Dungeon {
         }
         gameMode.simulate(entities,movementDirection);
         notifyOfTick();
+        doSpawns();
+        tick++;
     }
 
     private void useItemId(String itemUsed) {
@@ -72,7 +92,10 @@ public class Dungeon {
     }
 
     private void notifyOfTick() {
-        for(int i = entities.size() - 1; i >= 0; --i) {
+        // for(int i = entities.size() - 1; i >= 0; --i) {
+        //     entities.get(i).incrementTick();
+        // }
+        for(int i = 0; i < entities.size(); i++) {
             entities.get(i).incrementTick();
         }
     }
@@ -85,6 +108,18 @@ public class Dungeon {
         givenEntity.click(character);
     }
 
+    public void doSpawns() {
+        if (tick != 0 && tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
+            entities.add(entityFactory.create("mercenary", entry, "", ""));
+        }
+    }
+
+    private void spawnSpiders() {
+        for (int n = 0; n < 5 && entities.search("spider").size() < 4; n++) {
+            Position p = SpawnManager.getRandPosition(entities,currRandom);
+            if (p != null) {entities.add(entityFactory.create("spider", p, "", ""));}
+        }
+    }
 
     public void build(String item) {
         if (!item.equals("bow") && !item.equals("shield")) {
@@ -102,19 +137,19 @@ public class Dungeon {
 
     // will always be given a valid string, we do the checking in the controller
     private Difficulty difficultySelector(String gameMode) throws IllegalArgumentException {
-        switch (gameMode) {
-            case ("Peaceful"):
+        switch (gameMode.toLowerCase(Locale.ROOT)) {
+            case ("peaceful"):
                 return new Peaceful(this,movementManager,fightManager);
-            case ("Standard"):
+            case ("standard"):
                 return new Standard(this,movementManager,fightManager);
-            case ("Hard"):
+            case ("hard"):
                 return new Hard(this,movementManager,fightManager);
             default:
                 throw new IllegalArgumentException("Game mode does not exist");
         }
     }
 
-    private void createEntitiesMap_FromJson(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
+    private void createNewEntitiesMap(ArrayList<Entity> output, String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
@@ -122,6 +157,11 @@ public class Dungeon {
             throw new IllegalArgumentException("Dungeon does not exist");
         }
         JSONArray currEntities = new JSONObject(currFileStr).getJSONArray("entities");
+        entitiesFromJSON(currEntities,output);
+    }
+
+    private void entitiesFromJSON(JSONArray currEntities, ArrayList<Entity> input) {
+        input.clear();
         for (int i = 0; i < currEntities.length() ; i++) {
             JSONObject currObj = currEntities.getJSONObject(i);
             Position currPosition = new Position(currObj.getInt("x"),currObj.getInt("y"));
@@ -133,11 +173,27 @@ public class Dungeon {
                 this.character = (PlayerCharacter) currEnt;
                 this.entry = currPosition;
             }
-            output.add(currEnt);
+            input.add(currEnt);
         }
     }
 
+    private ArrayList<CollectableEntity> inventoryFromJSON(JSONArray currInventory) {
+        ArrayList<CollectableEntity> newInv = new ArrayList<>();
+        for (int i = 0; i < currInventory.length() ; i++) {
+            JSONObject currObj = currInventory.getJSONObject(i);
+            String currEntType = ((currObj.has("type") && !currObj.isNull("type"))) ? currObj.getString("type") : "";
+            String currDoorKey =  ((currObj.has("key") && !currObj.isNull("key"))) ? String.valueOf(currObj.getInt("key")) : "";
+            Entity currEnt = entityFactory.create(currEntType, null,null,currDoorKey);
+            newInv.add((CollectableEntity) currEnt);
+        }
+        return newInv;
+    }
+
     // Getters for creating a DungeonResponse
+
+    public String getGamemode() {
+        return gameMode.getMode();
+    }
 
     public String getName() {
         return name;
@@ -145,6 +201,10 @@ public class Dungeon {
 
     public String getId() {
         return id;
+    }
+
+    public Long getCurrSeed() {
+        return currSeed;
     }
 
 

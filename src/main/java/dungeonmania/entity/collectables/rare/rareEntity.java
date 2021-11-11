@@ -4,7 +4,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entity.collectables.CollectableEntity;
 
 public abstract class rareEntity extends CollectableEntity {
-    public rareEntity(Position position, String type){
+    public rareEntity(Position position){
         super(position);
     }
 

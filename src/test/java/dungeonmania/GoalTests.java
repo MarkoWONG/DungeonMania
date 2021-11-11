@@ -1,12 +1,8 @@
 package dungeonmania;
 
-import dungeonmania.goal.Goal;
-import dungeonmania.goal.GoalManager;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +31,7 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("OrGoal","Standard");
 
-        assertEquals("( :boulders OR :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder OR :treasure )",currResponse.getGoals());
     }
 
     @Test
@@ -43,7 +39,7 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("OrGoal","Standard");
 
-        assertEquals("( :boulders OR :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder OR :treasure )",currResponse.getGoals());
 
         currResponse = currController.tick(null, Direction.RIGHT);
         assertEquals("",currResponse.getGoals());
@@ -54,7 +50,7 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("AndGoal","Standard");
 
-        assertEquals("( :boulders AND :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder AND :treasure )",currResponse.getGoals());
     }
 
     @Test
@@ -62,10 +58,10 @@ public class GoalTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("AndGoal","Standard");
 
-        assertEquals("( :boulders AND :treasure )",currResponse.getGoals());
+        assertEquals("( :boulder AND :treasure )",currResponse.getGoals());
 
         currResponse = currController.tick(null, Direction.RIGHT);
-        assertEquals(":boulders",currResponse.getGoals());
+        assertEquals(":boulder",currResponse.getGoals());
     }
 
     @Test

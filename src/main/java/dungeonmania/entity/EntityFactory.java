@@ -10,22 +10,23 @@ import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Spider;
+import dungeonmania.mobs.Subscriber;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
 public abstract class EntityFactory {
 
     protected EntityList entityMap;
-    protected Random random;
+    protected Random currRandom;
+    private ArrayList<Subscriber> subscribers = new ArrayList<>();
 
-    public EntityFactory(EntityList entityMap) {
+    public EntityFactory(EntityList entityMap, Random currRandom) {
         this.entityMap = entityMap;
-        this.random = new Random(System.currentTimeMillis());
+        this.currRandom = currRandom;
     }
 
     public Entity create(String entityType, Position startPos, String colour, String key) {
@@ -56,8 +57,22 @@ public abstract class EntityFactory {
         return null;
     }
 
+    private Entity subscribe(Entity e) {
+        PlayerCharacter player = entityMap.findPlayer(); 
+        if (e instanceof Subscriber && player != null) { // && player exists already
+            player.addSubscriber((Subscriber) e);
+        } else if (e instanceof Subscriber) { // && player does not exist yet
+            subscribers.add((Subscriber) e);
+        }
+        return e;
+    }
+
     protected Entity makePlayer(Position startPos) {
-        return new PlayerCharacter(startPos,20,2);
+        Entity player = new PlayerCharacter(startPos,20,2);
+        for (Subscriber s : subscribers) {
+            ((PlayerCharacter) player).addSubscriber(s);
+        }
+        return player;
     }
 
     protected Entity makeWall(Position startPos) {
@@ -85,15 +100,15 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeToaster(Position startPos) {
-        return new Toaster(startPos,20,entityMap);
+        return new Toaster(startPos,20,entityMap,currRandom);
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return new Mercenary(startPos,1,entityMap,15,4);
+        return subscribe(new Mercenary(startPos,1,entityMap,15,4,currRandom));
     }
 
     protected Entity makeZombie(Position startPos) {
-        return new ZombieToast(startPos,10,2);
+        return new ZombieToast(startPos,10,2, currRandom);
     }
 
     protected Entity makeSpider(Position startPos) {
@@ -101,52 +116,85 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeTreasure(Position startPos) {
+        if (startPos == null) {
+            return new Treasure();
+        }
         return new Treasure(startPos);
     }
 
     protected Entity makeKey(Position startPos, String keyValue) {
+        if (startPos == null) {
+            return new Key(keyValue);
+        }
         return new Key(startPos, keyValue);
     }
 
     protected Entity makeHealthPotion(Position startPos) {
+        if (startPos == null) {
+            return new HealthPotion();
+        }
         return new HealthPotion(startPos);
     }
 
     protected Entity makeInvincibilityPotion(Position startPos) {
+        if (startPos == null) {
+            return new InvincibilityPotion(true);
+        }
         return new InvincibilityPotion(startPos,true);
     }
 
     protected Entity makeInvisibilityPotion(Position startPos) {
+        if (startPos == null) {
+            return new InvisibilityPotion();
+        }
         return new InvisibilityPotion(startPos);
     }
 
     protected Entity makeWood(Position startPos) {
+        if (startPos == null) {
+            return new Wood();
+        }
         return new Wood(startPos);
     }
 
     protected Entity makeArrow(Position startPos) {
+        if (startPos == null) {
+            return new Arrow();
+        }
         return new Arrow(startPos);
     }
 
     protected Entity makeBomb(Position startPos) {
+        if (startPos == null) {
+            return new Bomb(entityMap);
+        }
         return new Bomb(startPos,entityMap);
     }
 
     protected Entity makeSword(Position startPos) {
-        return new Sword(startPos,3);
+        if (startPos == null) {
+            return new Sword();
+        }
+        return new Sword(startPos);
     }
 
     protected Entity makeArmour(Position startPos) {
+        if (startPos == null) {
+            return new Armour();
+        }
         return new Armour(startPos);
     }
 
     protected Entity makeOneRing(Position startPos) {
+        if (startPos == null) {
+            return new OneRing();
+        }
         return new OneRing(startPos);
     }
 
     protected Entity makeBow() { return new Bow(); }
 
-    protected Entity makeShield() { return new Shield(3); }
+    protected Entity makeShield() { return new Shield(); }
 
 
 }

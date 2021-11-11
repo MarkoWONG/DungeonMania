@@ -21,7 +21,19 @@ public class Door extends StaticEntity{
 
     @Override
     public String getType() {
-        return "door";
+        if (isOpen) {
+            return "door_open";
+        } else {
+            return "door";
+        }
+    }
+
+    public String getOtherInfo() {
+        return String.valueOf(key);
+    }
+
+    public String getOtherInfoType() {
+        return "key";
     }
 
 
@@ -42,6 +54,7 @@ public class Door extends StaticEntity{
             if (item.getType().equals("key")){
                 Key playerKey = (Key) item;
                 if (playerKey.getKeyIdentifer() == key){
+                    player.removeItemFromInventory(item);
                     unlock();
                     return true;
                 }

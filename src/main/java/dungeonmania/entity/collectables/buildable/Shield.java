@@ -2,9 +2,6 @@ package dungeonmania.entity.collectables.buildable;
 
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.CollectableEntity;
-import dungeonmania.entity.staticEnt.Exit;
-import dungeonmania.entity.staticEnt.Wall;
-import dungeonmania.util.Position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +9,12 @@ import java.util.List;
 public class Shield extends CollectableEntity {
 
     private Integer durability;
+    private static final int startingDurability = 3;
 
-    public Shield(Integer durability) {
+    public Shield() {
         super(null);
-        this.durability = durability;
+        // times 2 as items are used twice per battle one for attacking and one for defending
+        this.durability = startingDurability * 2;
     }
 
     public static List<String> getRecipe() {
@@ -26,11 +25,12 @@ public class Shield extends CollectableEntity {
         return Arrays.asList("wood","wood","key");
     }
 
-    public void usedInBattle(PlayerCharacter player){
+    public boolean usedInBattle(PlayerCharacter player){
         durability--;
         if (durability <= 0){
-            player.getInventory().removeIf(ent -> ent.equals(this));
+            return true;
         }
+        return false;
     }
 
     @Override

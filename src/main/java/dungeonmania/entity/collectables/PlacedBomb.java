@@ -1,15 +1,24 @@
 package dungeonmania.entity.collectables;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.staticEnt.StaticEntity;
 import dungeonmania.entity.staticEnt.Switch;
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
 
-public class PlacedBomb extends Bomb {
+public class PlacedBomb extends StaticEntity {
+    @JsonBackReference
     private EntityList entities;
+
     public PlacedBomb(Position position, EntityList entityMap){
-        super(new Position(position.getX(), position.getY(), 100), entityMap);
+        super(new Position(position.getX(), position.getY(), 100));
         this.entities = entityMap;
+    }
+
+    @Override
+    public String getType() {
+        return "bomb";
     }
 
     @Override
@@ -18,6 +27,7 @@ public class PlacedBomb extends Bomb {
             for (Entity eachEntity : entities.search(eachPos)) {
                 if (eachEntity.getType().equals("switch") && ((Switch) eachEntity).getSwitchOn()) {
                     denotate();
+                    return;
                 }
             }
         }
@@ -32,5 +42,6 @@ public class PlacedBomb extends Bomb {
                 }
             }
         }
+        entities.remove(this);
     }   
 }

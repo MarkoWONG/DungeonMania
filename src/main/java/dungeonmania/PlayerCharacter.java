@@ -1,23 +1,29 @@
 package dungeonmania;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.Weapon;
 import dungeonmania.entity.collectables.buildable.Build;
 import dungeonmania.mobs.Mob;
+import dungeonmania.mobs.Subscriber;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class PlayerCharacter extends Entity implements Movement{
 
     private ArrayList<CollectableEntity> inventory;
     private ArrayList<Mob> allies;
+    private ArrayList<Subscriber> subscribers;
     private Integer Health;
+    private Integer startingHealth;
     private Integer attackDamage;
     private Integer invincibleTicks;
     private Integer invisibleTicks;
@@ -26,10 +32,24 @@ public class PlayerCharacter extends Entity implements Movement{
         super(new Position(position.getX(), position.getY(),50));
         this.inventory = new ArrayList<>();
         this.allies = new ArrayList<>();
+        this.subscribers = new ArrayList<>();
         this.Health = health;
+        this.startingHealth = health;
         this.attackDamage = ad;
         this.invisibleTicks = 0;
         this.invincibleTicks = 0;
+    }
+
+    public void addSubscriber(Subscriber s) {
+        subscribers.add(s);
+    }
+
+    public void removeSubscriber(Subscriber s) {
+        subscribers.remove(s);
+    }
+
+    public void replaceInventory(ArrayList<CollectableEntity> newInv) {
+        this.inventory = newInv;
     }
 
     public void addItemToInventory(CollectableEntity item) {
@@ -41,24 +61,36 @@ public class PlayerCharacter extends Entity implements Movement{
         inventory.remove(item);
     }
 
+    public void removeItemFromInventory(String id) {
+        for(int i = inventory.size() - 1; i >= 0; --i) {
+            CollectableEntity current = inventory.get(i);
+            if (inventory.get(i).getId().equals(id)) {
+                inventory.remove(current);
+            }
+        }
+    }
+
     @Override
     public void move(Direction direction) {
         setPosition(getPosition().translateBy(direction));
+        for(Subscriber s: subscribers) {
+            s.notifyMove(super.getPosition());
+        }
     }
 
 
 
     public void consume(List<String> items) {
-        ArrayList<CollectableEntity> itemsTBD = new ArrayList<CollectableEntity>();
+        ArrayList<String> itemsTBD = new ArrayList<>();
         for (String eachString : items) {
             for (CollectableEntity eachItem : inventory) {
-                if (eachItem.getType().equals(eachString)) {
-                    itemsTBD.add(eachItem);
+                if (eachItem.getType().equals(eachString) && !itemsTBD.contains(eachItem.getId())) {
+                    itemsTBD.add(eachItem.getId());
                     break;
                 }
             }
         }
-        for (CollectableEntity eachItemTBD : itemsTBD) {
+        for (String eachItemTBD : itemsTBD) {
             removeItemFromInventory(eachItemTBD);
         }
     }
@@ -78,11 +110,12 @@ public class PlayerCharacter extends Entity implements Movement{
     }
 
     @Override
-    public void revive() {
-        for (CollectableEntity e : inventory) {
-            if (e.getType().equals("one_ring")) {
-                setHealth(20);
-                inventory.remove(e);
+    public void revive(Entity e) {
+        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
+            CollectableEntity currentEnt = iterator.next();
+            if (currentEnt.getType().equals("one_ring")) {
+                setHealth(startingHealth);
+                iterator.remove();
             }
         }
     }
@@ -94,23 +127,31 @@ public class PlayerCharacter extends Entity implements Movement{
 
     @Override
     public void fight(Mob mob) {
-        int mobAttack = mob.getAttackDamage() * mob.getHealth() / 10;
-        mob.takeDamage(attack());
-        takeDamage(mobAttack);
+        if (mob.isEnemy()) {
+            int mobAttack = mob.getAttackDamage() * mob.getHealth() / 10;
+            mob.takeDamage(attack());
+            takeDamage(mobAttack);
+            for(Subscriber s: subscribers) {
+                s.notifyFight();
+            }
+        }
     }
 
     public int attack() {
         int AD = (int)getAttackDamage();
         ArrayList<String> typesUsed = new ArrayList<String>();
 
-
-        for (CollectableEntity e : inventory) {
-            if (!typesUsed.contains(e.getType())) {
-                AD = e.usedInAttack(AD);
-                e.usedInBattle(this);
-                typesUsed.add(e.getType());
+        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
+            CollectableEntity currentEnt = iterator.next();
+            if (!typesUsed.contains(currentEnt.getType())) {
+                AD = currentEnt.usedInAttack(AD);
+                if (currentEnt.usedInBattle(this)){
+                    iterator.remove();
+                    typesUsed.add(currentEnt.getType());
+                }
             }
         }
+        
 
         for (Mob mob : allies) {
             AD += mob.getAttackDamage();
@@ -121,16 +162,19 @@ public class PlayerCharacter extends Entity implements Movement{
     public void takeDamage(int damage) {
         ArrayList<String> typesUsed = new ArrayList<String>();
         int reducedDamage = damage;
-        for (CollectableEntity e : inventory) {
-            if (!typesUsed.contains(e.getType())) {
-                reducedDamage = e.usedInDefense(reducedDamage);
-                e.usedInBattle(this);
-                typesUsed.add(e.getType());
+        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
+            CollectableEntity currentEnt = iterator.next();
+            if (!typesUsed.contains(currentEnt.getType())) {
+                reducedDamage = currentEnt.usedInDefense(reducedDamage);
+                if (currentEnt.usedInBattle(this)){
+                    iterator.remove();
+                    typesUsed.add(currentEnt.getType());
+                }
             }
         }
         
         setHealth(getHealth() - reducedDamage);
-    }  
+    }
     
     @Override
     public void startInteraction(Entity entity) {
@@ -235,9 +279,23 @@ public class PlayerCharacter extends Entity implements Movement{
     public void incrementTick() {
         if (invincibleTicks > 0) {
             invincibleTicks--;
+            for(Subscriber s: subscribers) {
+                s.notifyInvincible(true);
+            }
+        } else {
+            for(Subscriber s: subscribers) {
+                s.notifyInvincible(false);
+            }
         }
         if (invisibleTicks > 0) {
             invisibleTicks--;
+            for(Subscriber s: subscribers) {
+                s.notifyInvisible(true);
+            }
+        } else {
+            for(Subscriber s: subscribers) {
+                s.notifyInvisible(false);
+            }
         }
     }
 

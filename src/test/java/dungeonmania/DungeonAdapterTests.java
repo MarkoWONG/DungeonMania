@@ -1,14 +1,10 @@
 package dungeonmania;
 
-import dungeonmania.difficulty.Standard;
-import dungeonmania.entity.Entity;
 import dungeonmania.response.models.DungeonResponse;
-import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,7 +15,7 @@ public class DungeonAdapterTests {
 
     @Test
     public void testDungeonName() {
-        Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
+        Dungeon currDungeon = new Dungeon("dungeon_static","Standard",123L);
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         assertEquals("dungeon_static",currResponse.getDungeonName());
@@ -27,21 +23,20 @@ public class DungeonAdapterTests {
 
     @Test
     public void testEntityOnly() {
-        Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
+        Dungeon currDungeon = new Dungeon("dungeon_static","Standard",123L);
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
-        assertEquals(8, (int) currResponse.getEntities().size());
+        assertTrue(8 <= (int) currResponse.getEntities().size());
         // this test is already done by DungeonTests (more or less), so we'll keep it short
     }
 
     @Test
     public void testItemResponse() {
-        Dungeon currDungeon = new Dungeon("dungeon_collectable","Standard");
+        Dungeon currDungeon = new Dungeon("dungeon_collectable","Standard",123L);
         IntStream.range(0,10).forEach(tick -> currDungeon.tick(null, Direction.LEFT));
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         List<String> allItems = currResponse.getInventory().stream().map(ItemResponse::getType).collect(Collectors.toList());
-        assertEquals(10, (int) allItems.size());
         assertTrue(allItems.contains("key"));
         assertTrue(allItems.contains("health_potion"));
         assertTrue(allItems.contains("invincibility_potion"));
@@ -56,7 +51,7 @@ public class DungeonAdapterTests {
 
     @Test
     public void testBuildableContents() {
-        Dungeon currDungeon = new Dungeon("buildableEntities","Standard");
+        Dungeon currDungeon = new Dungeon("buildableEntities","Standard",123L);
         IntStream.range(0,6).forEach(tick -> currDungeon.tick(null, Direction.UP));
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
@@ -68,11 +63,11 @@ public class DungeonAdapterTests {
 
     @Test
     public void testGoalContents() {
-        Dungeon currDungeon = new Dungeon("advanced","Standard");
+        Dungeon currDungeon = new Dungeon("advanced","Standard",123L);
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         String goals = currResponse.getGoals();
-        assertTrue(goals.contains("enemies"));
+        assertTrue(goals.contains("mercenary"));
         assertTrue(goals.contains("treasure"));
         assertTrue(goals.contains("AND"));
     }

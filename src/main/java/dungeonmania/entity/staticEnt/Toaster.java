@@ -1,27 +1,27 @@
 package dungeonmania.entity.staticEnt;
 
+import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
-import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
-
-import java.util.HashMap;
+import dungeonmania.util.Direction;
+import dungeonmania.mobs.Mob;
+import java.util.Random;
 import java.util.ArrayList;
-
-import static java.lang.Math.abs;
-
 
 public class Toaster extends StaticEntity{
     private int tickTilSpawn;
     private int currentTickCount;
-    private EntityList entityMap;
-    public Toaster(Position position, int tickTilSpawn, EntityList entityMap){
+    private EntityList entityList;
+    private Random currRandom;
+    public Toaster(Position position, int tickTilSpawn, EntityList entityList, Random currRandom){
         super(new Position(position.getX(), position.getY(), 80));
         this.tickTilSpawn = tickTilSpawn;    
         this.currentTickCount = 0;
-        this.entityMap = entityMap;
+        this.entityList = entityList;
+        this.currRandom = currRandom;
     }
 
     @Override
@@ -43,16 +43,54 @@ public class Toaster extends StaticEntity{
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
-            entityMap.add(new ZombieToast(this.getPosition(),10,2));
+            ZombieToast newZombie = new ZombieToast(this.getPosition(),10,2,currRandom);
+            // check if a valid position is possible
+            ArrayList<Integer> validDirIndexes = new ArrayList<Integer>();
+            // -1 because we don't want NONE Direction
+            for (Integer dir_index = 0; dir_index < Direction.values().length - 1; dir_index++){
+                if (checkMove(newZombie, Direction.values()[dir_index])){
+                    validDirIndexes.add(dir_index);
+                }
+            }
+            
+            // spawn zombie if valid
+            if (validDirIndexes.size() > 0){
+                Direction validDir = randomDirection(validDirIndexes.size());
+                newZombie.move(validDir);
+                entityList.add(newZombie);
+            }
+            else{
+                // remove newZombie as none was created
+                newZombie = null;
+            }
             currentTickCount = 0;
         }
+    }
+
+    private Direction randomDirection(int size) {
+        int pick = currRandom.nextInt(size);
+        return Direction.values()[pick];
+    }
+
+    private Boolean checkMove(Entity entity, Direction direction) {
+        Position newEntityPosition = entity.getPosition().translateBy(direction);
+        ArrayList<Entity> tile = entityList.search(newEntityPosition);
+        for (Entity eachEntity : tile) {
+            if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
+                if (eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public void click(PlayerCharacter character) {
         for (Position adjPositions : this.getPosition().getAdjacentPositions() ) {
             if (character.getPosition().equals(adjPositions.asLayer(50)) && character.hasWeapon()) {
-                entityMap.remove(this);
+                entityList.remove(this);
             }
         }
     }

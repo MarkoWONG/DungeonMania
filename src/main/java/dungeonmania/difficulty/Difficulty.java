@@ -3,14 +3,11 @@ package dungeonmania.difficulty;
 import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.FightManager;
-import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Random;
 
 public abstract class Difficulty {
 
@@ -24,7 +21,9 @@ public abstract class Difficulty {
         this.fightManager = fightManager;
     }
 
+    abstract public String getMode();
+
     abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
-    abstract public EntityFactory createEntityFactory(EntityList entityMap);
+    abstract public EntityFactory createEntityFactory(EntityList entityMap, Random currRandom);
 }

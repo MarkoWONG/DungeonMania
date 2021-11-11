@@ -23,8 +23,6 @@ public class Boulder extends StaticEntity implements Movement{
     }
 
  
-    // move method
-    // Assumes boulder move is always valid checked in collison 
     @Override
     public void move(Direction playerDirection){
         Position newBoulderPostion = this.getPosition().translateBy(playerDirection);
@@ -35,19 +33,5 @@ public class Boulder extends StaticEntity implements Movement{
     public void teleport(Position position) {
         this.setPosition(position);
     }
-
-    //Checking if the new boulder position is valid Need to have a list of surrounding entities // in collision
-    // private boolean validPos(Position pos){
-    //     boolean valid = true;
-    //     for (Entity ent : entitiesMap.getPosition(pos)){
-    //         if (ent.getType().equals("switch")){
-    //             valid = true;
-    //         }
-    //         else {
-    //             valid = false;
-    //         }
-    //     }
-    //     return valid;
-    // }
 
 }

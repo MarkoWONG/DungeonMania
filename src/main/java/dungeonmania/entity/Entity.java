@@ -33,7 +33,15 @@ public abstract class Entity implements Interacts {
     }
 
     public Position getPosition() {
-        return this.position;
+        return position;
+    }
+
+    public int getXPos() {
+        return position.getX();
+    }
+
+    public int getYPos() {
+        return position.getY();
     }
 
     public String getId() {
@@ -65,7 +73,7 @@ public abstract class Entity implements Interacts {
     }
 
     public void setHasFought(Boolean value) {
-        hasFought = false;
+        hasFought = value;
     }
 
     public boolean hasFought() {
@@ -75,11 +83,15 @@ public abstract class Entity implements Interacts {
     public boolean canRevive() {
         return false;
     }
-    public void revive() {
+    public void revive(Entity e) {
 
     }
 
     public String getOtherInfo() {
+        return "";
+    }
+
+    public String getOtherInfoType() {
         return "";
     }
 

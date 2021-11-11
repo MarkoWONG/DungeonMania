@@ -3,8 +3,6 @@ import dungeonmania.EntityList;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 public class Bomb extends CollectableEntity implements Usable{
     private EntityList entityMap;
@@ -12,6 +10,11 @@ public class Bomb extends CollectableEntity implements Usable{
     public Bomb(Position position, EntityList entityMap){
         super(new Position(position.getX(), position.getY(), 40));
         this.entityMap = entityMap;   
+    }
+
+    public Bomb(EntityList entityMap) {
+        super(null);
+        this.entityMap = entityMap;
     }
 
     @Override
