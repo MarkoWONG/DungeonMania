@@ -148,7 +148,7 @@ public class DungeonTests {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("buildableEntities", "Standard");
 
-        IntStream.range(0,3).forEach(tick -> currController.tick(null, Direction.UP));
+        IntStream.range(0,4).forEach(tick -> currController.tick(null, Direction.UP));
         currResponse = currController.build("bow");
         assertTrue(currResponse.getInventory()
                 .stream().map(ItemResponse::getType)

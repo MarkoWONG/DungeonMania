@@ -9,7 +9,7 @@ import dungeonmania.difficulty.Standard;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.EntityFactory;
 import dungeonmania.entity.collectables.Usable;
-import dungeonmania.entity.collectables.buildable.Build;
+import dungeonmania.entity.collectables.buildable.BuildableEntity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goal.GoalManager;
@@ -58,6 +58,7 @@ public class Dungeon {
         fightManager.setCharacter(character);
         movementManager.setCharacter(character);
         spawnSpiders();
+        character.startGame();
         movementManager.initTicksTilMove(entities);
     }
 
@@ -93,9 +94,6 @@ public class Dungeon {
     }
 
     private void notifyOfTick() {
-        // for(int i = entities.size() - 1; i >= 0; --i) {
-        //     entities.get(i).incrementTick();
-        // }
         for(int i = 0; i < entities.size(); i++) {
             entities.get(i).incrementTick();
         }
@@ -123,17 +121,19 @@ public class Dungeon {
     }
 
     public void build(String item) {
-        if (!item.equals("bow") && !item.equals("shield")) {
+        BuildableEntity target = BuildableEntity.findBuildable(item);
+        // check if target is a buildable type
+        if (target == null) {
             throw new IllegalArgumentException();
         }
-        if (Build.getBuildables(getInventory()).contains(item)) {
-            // can be safely typecast because we check if it's a valid item in the controller?
-            character.addItemToInventory((CollectableEntity) entityFactory.create(item, null,null,null, 1));
-            character.consume(Build.getRecipe(item));
-        } else {
+        // check if buildable type has the materials
+        else if (BuildableEntity.getBuildables(getInventory(), entities).contains(item)) {
+            character.addItemToInventory(target);
+            character.consume(target.getRecipeUsed());
+        }
+        else {
             throw new InvalidActionException("Missing required items");
         }
-
     }
 
     // will always be given a valid string, we do the checking in the controller
@@ -223,7 +223,7 @@ public class Dungeon {
     }
 
     public List<String> getBuildables() {
-        return character.getBuildables();
+        return character.getBuildables(entities);
     }
 
 

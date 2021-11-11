@@ -6,7 +6,7 @@ import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.Weapon;
-import dungeonmania.entity.collectables.buildable.Build;
+import dungeonmania.entity.collectables.buildable.BuildableEntity;
 import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Subscriber;
 import dungeonmania.util.Direction;
@@ -78,6 +78,12 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
+    public void startGame() {
+        for(Subscriber s: subscribers) {
+            s.notifyMove(super.getPosition());
+        }
+    }
+
 
 
     public void consume(List<String> items) {
@@ -95,8 +101,8 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
-    public List<String> getBuildables() {
-        return Build.getBuildables(inventory);
+    public List<String> getBuildables(EntityList entities) {
+        return BuildableEntity.getBuildables(inventory, entities);
     }
 
     @Override
@@ -132,7 +138,7 @@ public class PlayerCharacter extends Entity implements Movement{
             mob.takeDamage(attack());
             takeDamage(mobAttack);
             for(Subscriber s: subscribers) {
-                s.notifyFight();
+                s.notifyFight(this.getPosition());
             }
         }
     }
@@ -236,6 +242,7 @@ public class PlayerCharacter extends Entity implements Movement{
         this.allies = allies;
     }
 
+    @Override
     public Integer getHealth() {
         return this.Health;
     }

@@ -1,0 +1,114 @@
+{
+    "entities": [
+        {
+            "x": 4,
+            "y": 4,
+            "type": "player"
+        },
+        {
+            "x": 4,
+            "y": 5,
+            "type": "wood"
+        },
+        {
+            "x": 4,
+            "y": 6,
+            "type": "key"
+        },
+        {
+            "x": 4,
+            "y": 7,
+            "type": "sun_stone"
+        },
+        {
+            "x": 3,
+            "y": 4,
+            "type": "arrow"
+        },
+        {
+            "x": 2,
+            "y": 4,
+            "type": "arrow"
+        },
+        {
+            "x": 1,
+            "y": 4,
+            "type": "key"
+        },
+        {
+            "x": 0,
+            "y": 4,
+            "type": "sun_stone"
+        },
+        {
+            "x": 2,
+            "y": 5,
+            "type": "treasure"
+        },
+        {
+            "x": 2,
+            "y": 6,
+            "type": "sun_stone"
+        },
+        {
+            "x": 5,
+            "y": 5,
+            "type": "treasure"
+        },
+        {
+            "x": 6,
+            "y": 5,
+            "type": "sun_stone"
+        },
+        {
+            "x": 5,
+            "y": 1,
+            "type": "wall"
+        },
+        {
+            "x": 5,
+            "y": 2,
+            "type": "wall"
+        },
+        {
+            "x": 6,
+            "y": 2,
+            "type": "wall"
+        },
+        {
+            "x": 6,
+            "y": 1,
+            "type": "assassin"
+        },
+        {
+            "x": 5,
+            "y": 8,
+            "type": "wall"
+        },
+        {
+            "x": 5,
+            "y": 9,
+            "type": "wall"
+        },
+        {
+            "x": 6,
+            "y": 8,
+            "type": "wall"
+        },
+        {
+            "x": 6,
+            "y": 9,
+            "type": "mercenary"
+        },
+        {
+            "x": 7,
+            "y": 5,
+            "type": "treasure"
+        },
+        {
+            "x": 6,
+            "y": 3,
+            "type": "one_ring"
+        }
+    ]
+}

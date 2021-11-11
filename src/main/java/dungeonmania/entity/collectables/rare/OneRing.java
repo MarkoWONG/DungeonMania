@@ -30,4 +30,8 @@ public class OneRing extends rareEntity{
     public void useItem(PlayerCharacter player){
         player.removeItemFromInventory(this);
     }
+
+    public void usedInBribe(PlayerCharacter playerCharacter) {
+        playerCharacter.removeItemFromInventory(this);
+    }
 }

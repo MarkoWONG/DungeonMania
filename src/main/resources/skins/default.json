@@ -40,9 +40,14 @@
         "door_open": "images/tileset/walls/wooden/door_unlocked.png",
         "shield": "images/tileset/items/shield.png",
         "armour": "images/tileset/items/armour.png",
+        "midnight_armour": "images/tileset/entities/midnight_armour.png",
         "key": "images/tileset/items/key_gold.png",
         "key_gold": "images/tileset/items/key_gold.png",
         "key_silver": "images/tileset/items/key_silver.png",
-        "one_ring": "images/tileset/items/ring_0_special.png"
+        "one_ring": "images/tileset/items/ring_0_special.png",
+        "sun_stone": "images/tileset/entities/sun_stone.png",
+        "sceptre": "images/tileset/entities/sceptre.png",
+        "assassin": "images/tileset/entities/assassin.png"
     }
+    
 }

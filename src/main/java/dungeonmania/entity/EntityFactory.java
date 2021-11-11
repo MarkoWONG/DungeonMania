@@ -8,6 +8,7 @@ import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
+import dungeonmania.mobs.Assassin;
 import dungeonmania.entity.floorTiles.SwampTile;
 import dungeonmania.mobs.Mercenary;
 import dungeonmania.mobs.Spider;
@@ -40,6 +41,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("portal")) {return makePortal(startPos, colour);}
         if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast_spawner")) {return makeToaster(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("mercenary")) {return makeMercenary(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("assassin")) {return makeAssassin(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("zombie_toast")) {return makeZombie(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("spider")) {return makeSpider(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("treasure")) {return makeTreasure(startPos);}
@@ -55,6 +57,7 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("one_ring")) {return makeOneRing(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
+        if (entityType.toLowerCase(Locale.ROOT).contains("sun_stone")) {return makeSunStone(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("swamp_tile")) {return makeSwampTile(startPos, mov_factor);}
         return null;
     }
@@ -107,6 +110,10 @@ public abstract class EntityFactory {
 
     protected Entity makeMercenary(Position startPos) {
         return subscribe(new Mercenary(startPos,1,entityMap,15,4,currRandom));
+    }
+
+    protected Entity makeAssassin(Position startPos) {
+        return subscribe(new Assassin(startPos,1,entityMap,15,4,currRandom));
     }
 
     protected Entity makeZombie(Position startPos) {
@@ -192,6 +199,12 @@ public abstract class EntityFactory {
             return new OneRing();
         }
         return new OneRing(startPos);
+    }
+    protected Entity makeSunStone(Position startPos) {
+        if (startPos == null) {
+            return new SunStone();
+        }
+        return new SunStone(startPos);
     }
 
     protected Entity makeBow() { return new Bow(); }

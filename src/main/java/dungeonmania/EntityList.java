@@ -13,8 +13,6 @@ import java.util.UUID;
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class EntityList extends ArrayList<Entity> {
 
-    private final String id = UUID.randomUUID().toString();
-
     public ArrayList<Entity> search(Position position) {
         ArrayList<Entity> output = new ArrayList<>();
         int givenX = position.getX();
