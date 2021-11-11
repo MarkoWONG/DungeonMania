@@ -132,7 +132,7 @@ public class PlayerCharacter extends Entity implements Movement{
             mob.takeDamage(attack());
             takeDamage(mobAttack);
             for(Subscriber s: subscribers) {
-                s.notifyFight();
+                s.notifyFight(this.getPosition());
             }
         }
     }
@@ -236,6 +236,7 @@ public class PlayerCharacter extends Entity implements Movement{
         this.allies = allies;
     }
 
+    @Override
     public Integer getHealth() {
         return this.Health;
     }

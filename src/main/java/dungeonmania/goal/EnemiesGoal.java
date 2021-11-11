@@ -14,7 +14,7 @@ public class EnemiesGoal implements Goal {
     @Override
     public boolean compute() {
         for (Entity eachEntity : entities) {
-            if (eachEntity instanceof Mob && eachEntity.getPosition() != null) {
+            if (eachEntity instanceof Mob && eachEntity.getPosition() != null && ((Mob) eachEntity).isEnemy()) {
                 return false;
             }
         }

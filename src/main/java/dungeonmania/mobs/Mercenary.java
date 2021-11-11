@@ -44,7 +44,7 @@ public class Mercenary extends Mob implements Subscriber{
 
     @Override
     public boolean isInteractable() {
-        return isEnemy();
+        return isEnemy() && checkBribeRange(getCharacterPos(),this.getPosition());
     }
 
     @Override
@@ -52,11 +52,17 @@ public class Mercenary extends Mob implements Subscriber{
         return "mercenary";
     }
 
+    public Position getCharacterPos() { return charPosition; }
+
+    public int getPrice() {
+        return price;
+    }
+
     @Override
     public void click(PlayerCharacter character) {
         BribeMaterial bribeMat = searchBribeMaterial(character);
         if (bribeMat == null) {
-            throw new InvalidActionException("bribe material is required to bribe");
+            throw new InvalidActionException("Bribe material is required to bribe");
         }
         if (checkBribeRange(charPosition, this.getPosition())) {
             bribe(bribeMat.getBribeAmount(price), bribeMat.getBribeDuration());
@@ -66,7 +72,7 @@ public class Mercenary extends Mob implements Subscriber{
         }
     }
 
-    private boolean checkBribeRange(Position characterPos, Position thisPos){
+    protected boolean checkBribeRange(Position characterPos, Position thisPos){
         if (abs(characterPos.getX()-thisPos.getX()) <= 2 && characterPos.getY() == thisPos.getY()){
             return true;
         }
@@ -101,16 +107,16 @@ public class Mercenary extends Mob implements Subscriber{
         }
 
         // return the highest Piority birbe Material (spectre -> sun_stone -> teasure)
-        BribeMaterial highestPiorityMat = null;
+        BribeMaterial highestPriorityMat = null;
         if (bribeMats.size() > 0){
-            highestPiorityMat = bribeMats.get(0);
+            highestPriorityMat = bribeMats.get(0);
             for (BribeMaterial mat: bribeMats){
-                if (highestPiorityMat.getBribePriority() < mat.getBribePriority()){
-                    highestPiorityMat = mat;
+                if (highestPriorityMat.getBribePriority() < mat.getBribePriority()){
+                    highestPriorityMat = mat;
                 }
             }
         }
-        return highestPiorityMat;
+        return highestPriorityMat;
     }
 
     @Override
@@ -133,9 +139,9 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     @Override
-    public void notifyFight() {
+    public void notifyFight(Position position) {
         if (! (charIsInvincible || charIsInvisible) && battleInRadius()) {
-            move(MovementManager.shortestPath(this, charPosition, entities));
+            move(MovementManager.shortestPath(this, position, entities));
         }
     }
 

@@ -29,6 +29,10 @@ public class Shield extends BuildableEntity {
                 recipeUsed = Arrays.asList("wood","wood","key");
                 return true;
             }
+            else if (materialCounter(inventory, "sun_stone") >= 1){
+                recipeUsed = Arrays.asList("wood","wood");
+                return true;
+            }
             else{
                 return false;
             }

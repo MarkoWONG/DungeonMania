@@ -59,6 +59,10 @@ public class Door extends StaticEntity{
                     return true;
                 }
             }
+            if (item.getType().equals("sun_stone")){
+                unlock();
+                return true;
+            }
         }
         return false;
     }
