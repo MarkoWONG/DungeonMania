@@ -94,9 +94,9 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     @Override
-    public void notifyFight() {
+    public void notifyFight(Position position) {
         if (! (charIsInvincible || charIsInvisible) && battleInRadius()) {
-            move(MovementManager.shortestPath(this, charPosition, entities));
+            move(MovementManager.shortestPath(this, position, entities));
         }
     }
 

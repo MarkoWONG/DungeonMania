@@ -1,7 +1,5 @@
 package dungeonmania;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
@@ -11,10 +9,10 @@ import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Subscriber;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
+
 
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class PlayerCharacter extends Entity implements Movement{
@@ -132,7 +130,7 @@ public class PlayerCharacter extends Entity implements Movement{
             mob.takeDamage(attack());
             takeDamage(mobAttack);
             for(Subscriber s: subscribers) {
-                s.notifyFight();
+                s.notifyFight(this.getPosition());
             }
         }
     }
@@ -236,6 +234,7 @@ public class PlayerCharacter extends Entity implements Movement{
         this.allies = allies;
     }
 
+    @Override
     public Integer getHealth() {
         return this.Health;
     }
