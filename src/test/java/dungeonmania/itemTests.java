@@ -313,7 +313,6 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-3, 6)));
     }
 
-
     @Test
     public void shield(){
         DungeonManiaController dungeon = new DungeonManiaController();
