@@ -77,8 +77,8 @@ public class MovementManager {
                 thePlayer.move(moveDir);
                 ticksTilMove.replace(thePlayer, 1);
             } else {
-                int m = ticksTilMove.get(thePlayer);
-                ticksTilMove.replace(thePlayer, m-1);
+                // int m = ticksTilMove.get(thePlayer);
+                // ticksTilMove.replace(thePlayer, m-1);
             }
         }
     }

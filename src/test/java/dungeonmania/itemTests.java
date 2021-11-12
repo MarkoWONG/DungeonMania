@@ -110,7 +110,7 @@ public class itemTests {
     @Test
     public void singleCollectionTest(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard",1636704092283L);
 
         //move to collect sword
         for (int i = 0; i < 4; i++){
@@ -124,7 +124,7 @@ public class itemTests {
     @Test
     public void muiltpleCollectionTest(){
     DungeonManiaController dungeon = new DungeonManiaController();
-    DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard");
+    DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard", 1636704092283L);
 
     //move to collect sword
     for (int i = 0; i < 4; i++){
@@ -160,7 +160,7 @@ public class itemTests {
     @Test
     public void duplicateItemCollectionTest(){
     DungeonManiaController dungeon = new DungeonManiaController();
-    DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard");
+    DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard", 1636704092283L);
 
     //move to collect sword
     for (int i = 0; i < 4; i++){
@@ -346,7 +346,7 @@ public class itemTests {
     @Test
     public void StandardInvincibilityPotion(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Standard", 1636704092283L);
         for (int i = 0; i < 3; i++){ 
             new_frame = dungeon.tick(null, Direction.RIGHT);
         }
@@ -356,37 +356,37 @@ public class itemTests {
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
         new_frame = dungeon.tick(getItemId(new_frame, "invincibility_potion"), Direction.NONE);
         assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 0);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,2)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,1)));
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,3)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(4,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(4,1)));
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(7,3)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,1)));
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,3)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
-        new_frame = dungeon.tick(null, Direction.LEFT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,3)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(1,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,1)));
+        new_frame = dungeon.tick(null, Direction.UP);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(1,1)));
         
         // potion wore out
-        new_frame = dungeon.tick(null, Direction.LEFT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,3)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
+        new_frame = dungeon.tick(null, Direction.UP);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(6,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,1)));
     }
 
     @Test
     public void hardInvincibilityPotion(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Hard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Hard",1636704092283L);
         for (int i = 0; i < 3; i++){ 
             new_frame = dungeon.tick(null, Direction.RIGHT);
         }
@@ -395,25 +395,25 @@ public class itemTests {
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,2)));
         new_frame = dungeon.tick(getItemId(new_frame, "invincibility_potion"), Direction.NONE);
         assertTrue(inventoryItemCount(new_frame, "invincibility_potion") == 0);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
         //potion no effect
         new_frame = dungeon.tick(null, Direction.DOWN);
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(7,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(7,1)));
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(8,2)));
         // player dies
-        new_frame = dungeon.tick(null, Direction.DOWN);
-        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(8,3)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(8,3)));
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(7,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(7,2)));
     }
 
     @Test
     public void invisibilityPotion(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/potion", "Standard",1636704092283L);
         // Starting position
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,1)));
         assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
@@ -428,7 +428,7 @@ public class itemTests {
         new_frame = dungeon.tick(null, Direction.LEFT);
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
         new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(inventoryItemCount(new_frame, "invisibility_potion") == 1);
         
@@ -439,27 +439,27 @@ public class itemTests {
         new_frame = dungeon.tick(null, Direction.LEFT);
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(0,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-1,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-2,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-3,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(6,1)));
 
         //potion wore off
         new_frame = dungeon.tick(null, Direction.LEFT);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(-4,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(2,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,1)));
     }
 
     @Test
     public void placeBomb(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard", 1636704092283L);
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(inventoryItemCount(new_frame, "bomb") == 1);
@@ -472,7 +472,7 @@ public class itemTests {
     @Test
     public void activateBombBoulderNotOnSwitch(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard", 1636704092283L);
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.RIGHT);
@@ -494,7 +494,7 @@ public class itemTests {
     @Test
     public void activateBombBoulderAlreadyOnSwitch(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard", 1636704092283L);
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.DOWN);
@@ -514,7 +514,7 @@ public class itemTests {
     @Test
     public void craftingOneAtATime(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/crafting", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/crafting", "Standard", 1636704092283L);
 
         for (int i = 0; i < 4; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
@@ -540,7 +540,7 @@ public class itemTests {
     @Test
     public void craftingAllAtATime(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/crafting", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/crafting", "Standard", 1636704092283L);
         for (int i = 0; i < 4; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
         }
@@ -563,7 +563,7 @@ public class itemTests {
     @Test
     public void onlyOneKeyTest(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("advanced-2", "Standard", 1636704092283L);
 
         //move to collect key
         for (int i = 0; i < 10; i++){
@@ -587,13 +587,14 @@ public class itemTests {
     @Test
     public void usingKey(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Peaceful", 1636704092283L);
 
         new_frame = dungeon.tick(null, Direction.UP);
         // playerPosition should be in the same postion as player don't have a key
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
         // can't open door with incorrect key
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,2)));
@@ -612,32 +613,34 @@ public class itemTests {
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,4)));
     }
 
-    // test one_ring item (respawn and drop rate) in fighting tests
     @Test
     public void oneRing(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/one_ring", "Hard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/one_ring", "Hard", 1636711331450L);
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(inventoryItemCount(new_frame, "one_ring") == 1);
         // fight enemy and dies activing one_ring
         new_frame = dungeon.tick(null, Direction.RIGHT);
         
         //fight enemy
-        new_frame = dungeon.tick(null, Direction.RIGHT);
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(5,1)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,1)));
+        assertTrue(inventoryItemCount(new_frame, "one_ring") == 0);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(4,1)));
         
-        
+        new_frame = dungeon.tick(null, Direction.DOWN);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,2)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(4,2)));
+
         // defeated by enemy
         new_frame = dungeon.tick(null, Direction.DOWN);
-        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(5,2)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(5,2)));
+        assertTrue(!checkEntityOnPosition(new_frame, "player", new Position(4,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(4,3)));
     }
 
     @Test
     public void MidnightArmour(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/midnightArmour", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/midnightArmour", "Standard", 1636711524052L);
 
         for (int i = 0; i < 3; i++){
             new_frame = dungeon.tick(null, Direction.RIGHT);
