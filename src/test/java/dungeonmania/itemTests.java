@@ -797,7 +797,7 @@ public class itemTests {
     @Test
     public void SceptreBribeMercenaryDurablity(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard", 1636711524052L);
+        DungeonResponse new_frame = dungeon.newGame("test_maps/spectre", "Standard", 1636713824112L);
 
         // collect materials
         new_frame = dungeon.tick(null, Direction.DOWN);
@@ -819,7 +819,7 @@ public class itemTests {
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(iteractable(new_frame, getEntityId(new_frame, "mercenary")));
         new_frame = dungeon.interact(getEntityId(new_frame, "mercenary"));
-        assertTrue(inventoryItemCount(new_frame, "treasure") == 2);
+        assertTrue(inventoryItemCount(new_frame, "treasure") == 1);
         assertTrue(!iteractable(new_frame, getEntityId(new_frame, "mercenary")));
         // move with ally
         new_frame = dungeon.tick(null, Direction.DOWN);
@@ -830,18 +830,18 @@ public class itemTests {
             assertTrue(!iteractable(new_frame, getEntityId(new_frame, "mercenary")));
         }
         new_frame = dungeon.tick(null, Direction.RIGHT);
-        assertTrue(iteractable(new_frame, getEntityId(new_frame, "mercenary")));
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(14,11)));
-        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(14, 11)));
-        // mind control wore off
         // make sure assassin does not kill us
-        assertTrue(iteractable(new_frame, getEntityId(new_frame, "assassin")));
+        assertTrue(iteractable(new_frame, getEntityId(new_frame, "mercenary")));
+        new_frame = dungeon.interact(getEntityId(new_frame, "assassin"));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(13,11)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(13, 11)));
+        // mind control wore off
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.RIGHT);
 
         // enemy dies
-        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(16, 11)));
-        assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(16, 11)));
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(15, 11)));
+        assertTrue(!checkEntityOnPosition(new_frame, "mercenary", new Position(15, 11)));
     }
 
     //test normal bribe
