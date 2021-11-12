@@ -73,6 +73,9 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     protected boolean checkBribeRange(Position characterPos, Position thisPos){
+        if (characterPos == null){
+            return false;
+        }
         if (abs(characterPos.getX()-thisPos.getX()) <= 2 && characterPos.getY() == thisPos.getY()){
             return true;
         }
