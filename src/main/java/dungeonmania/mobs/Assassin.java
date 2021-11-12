@@ -1,19 +1,14 @@
 package dungeonmania.mobs;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.collectables.Armour;
 import dungeonmania.entity.collectables.BribeMaterial;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.rare.OneRing;
 import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.movement.MovementManager;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static java.lang.Math.abs;
 
 public class Assassin extends Mercenary{
     public Assassin(Position position, int price, EntityList entities,int health, int ad, Random currRandom) {
@@ -32,12 +27,14 @@ public class Assassin extends Mercenary{
         if (bribeMat == null) {
             throw new InvalidActionException("Bribe material is required to bribe");
         }
-        if (ringBribe == null) {
+        if (!bribeMat.getType().equals("sceptre") && ringBribe == null) {
             throw new InvalidActionException("One ring is required to bribe this boss");
         }
         if (checkBribeRange(getCharacterPos(), this.getPosition())) {
             bribe(bribeMat.getBribeAmount(getPrice()), bribeMat.getBribeDuration());
-            ringBribe.usedInBribe(character);
+            if (!bribeMat.getType().equals("sceptre")){
+                ringBribe.usedInBribe(character);
+            }
             bribeMat.usedInBribe(character);
         } else {
             throw new InvalidActionException("Mercenary out of range");

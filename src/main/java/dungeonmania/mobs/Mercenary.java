@@ -1,5 +1,4 @@
 package dungeonmania.mobs;
-import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.Armour;
