@@ -207,4 +207,6 @@ public class staticEntitesTests {
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(new_frame.getGoals().length() == 0);
     }
+
+    //spawn tile test elsewhere
 }
