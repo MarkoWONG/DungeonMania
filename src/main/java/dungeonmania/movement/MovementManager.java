@@ -34,7 +34,7 @@ public class MovementManager {
     public void initTicksTilMove(EntityList entities) {
         for (Entity e : entities) {
             if (! ticksTilMove.containsKey(e)) {
-                if (e.getType() == "player") {
+                if (e.getType().equals("player")) {
                     ticksTilMove.put(e, 1);
                 } else {
                     ticksTilMove.put(e, calcMovFactor(e.getPosition()));
@@ -76,9 +76,9 @@ public class MovementManager {
             if (checkMove(thePlayer,moveDir) && ticksTilMove.get(thePlayer) == 1) {
                 thePlayer.move(moveDir);
                 ticksTilMove.replace(thePlayer, 1);
-            } else {
-                // int m = ticksTilMove.get(thePlayer);
-                // ticksTilMove.replace(thePlayer, m-1);
+            } else if (checkMove(thePlayer,moveDir) && ticksTilMove.get(thePlayer) > 1) {
+                int m = ticksTilMove.get(thePlayer);
+                ticksTilMove.replace(thePlayer, m-1);
             }
         }
     }
