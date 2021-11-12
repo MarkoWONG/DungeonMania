@@ -109,11 +109,15 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeMercenary(Position startPos) {
-        return subscribe(new Mercenary(startPos,1,entityMap,15,4,currRandom));
+        if (currRandom.nextInt(100) < 30) {
+            return makeAssassin(startPos);
+        } else {
+            return subscribe(new Mercenary(startPos,1,entityMap,15,4,currRandom));
+        }
     }
 
     protected Entity makeAssassin(Position startPos) {
-        return subscribe(new Assassin(startPos,1,entityMap,15,4,currRandom));
+        return subscribe(new Assassin(startPos,1,entityMap,15,10,currRandom));
     }
 
     protected Entity makeZombie(Position startPos) {
