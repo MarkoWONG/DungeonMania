@@ -1,6 +1,5 @@
 package dungeonmania.movement;
 
-import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
@@ -9,7 +8,6 @@ import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-//import java.lang.Math;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -160,6 +158,9 @@ public class MovementManager {
             if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
+            if (eachEntity.getType().equals("player") && direction.equals(Direction.NONE)){
+                return true;
+            }
             if (eachEntity.getType().equals(entity.getType())) {
                 return false;
             }
@@ -224,23 +225,6 @@ public class MovementManager {
      * @return the direction a must travel to get to b
      */
     public static Direction shortestPath(Entity a, Position b, EntityList entities) {
-        /*Position btwn = Position.calculatePositionBetween(a.getPosition(), b);
-        int xDistance = btwn.getX();
-        int yDistance = btwn.getY();
-        Direction d = Direction.NONE;
-
-        if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
-            d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
-        } else if (Math.abs(yDistance) < Math.abs(xDistance)) { // further away on the x axis OR equal
-            d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
-        } 
-
-        if (staticCheckMove(a, d, entities)) {
-            return d;
-        } else {
-            return Direction.NONE;
-        }
-        */
         if (a.getPosition().equals(b)) {
             return Direction.NONE;
         }
