@@ -53,7 +53,7 @@ public class DungeonManiaController {
         // TODO: remove after testing
         Long random_seed = System.currentTimeMillis();
         System.out.println("seed was: " + random_seed);
-        currDungeon = new Dungeon(dungeonName,gameMode, random_seed);
+        currDungeon = new Dungeon(dungeonName,gameMode, 1636713824112L);
         this.currAdapter = new DungeonResponseAdapter(currDungeon);
         return currAdapter.createDungResponse();
     }
