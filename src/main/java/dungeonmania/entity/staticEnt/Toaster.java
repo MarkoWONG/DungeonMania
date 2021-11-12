@@ -1,6 +1,5 @@
 package dungeonmania.entity.staticEnt;
 
-import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
@@ -43,7 +42,7 @@ public class Toaster extends StaticEntity{
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
-            ZombieToast newZombie = new ZombieToast(this.getPosition(),10,2,currRandom);
+            ZombieToast newZombie = new ZombieToast(new Position(this.getXPos(), this.getYPos(), 50), 10,2,currRandom);
             // check if a valid position is possible
             ArrayList<Integer> validDirIndexes = new ArrayList<Integer>();
             // -1 because we don't want NONE Direction
@@ -55,7 +54,7 @@ public class Toaster extends StaticEntity{
             
             // spawn zombie if valid
             if (validDirIndexes.size() > 0){
-                Direction validDir = randomDirection(validDirIndexes.size());
+                Direction validDir = randomDirection(validDirIndexes);
                 newZombie.move(validDir);
                 entityList.add(newZombie);
             }
@@ -67,9 +66,10 @@ public class Toaster extends StaticEntity{
         }
     }
 
-    private Direction randomDirection(int size) {
-        int pick = currRandom.nextInt(size);
-        return Direction.values()[pick];
+    private Direction randomDirection(ArrayList<Integer> validDirIndexes) {
+        int pick = currRandom.nextInt(validDirIndexes.size());
+        Direction ranDir = Direction.values()[validDirIndexes.get(pick)];
+        return ranDir;
     }
 
     private Boolean checkMove(Entity entity, Direction direction) {
