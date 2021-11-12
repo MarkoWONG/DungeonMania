@@ -33,10 +33,12 @@ public class MovementManager {
 
     public void initTicksTilMove(EntityList entities) {
         for (Entity e : entities) {
-            if (e.getType() == "player") {
-                ticksTilMove.put(e, 1);
-            } else {
-                ticksTilMove.put(e, calcMovFactor(e.getPosition()));
+            if (! ticksTilMove.containsKey(e)) {
+                if (e.getType() == "player") {
+                    ticksTilMove.put(e, 1);
+                } else {
+                    ticksTilMove.put(e, calcMovFactor(e.getPosition()));
+                }
             }
         }
     }
@@ -67,6 +69,7 @@ public class MovementManager {
 
 
     public void moveChar(Direction moveDir) {
+        initTicksTilMove(entities);
         checkBoulder(moveDir);
         ArrayList<Entity> player = entities.search("player");
         for (Entity thePlayer : player) {
@@ -86,6 +89,7 @@ public class MovementManager {
      * if the player is invincible, it runs away
      */
     public void moveMobs() {
+        initTicksTilMove(entities);
         for (Entity eachEntity : entities) {
             if ( eachEntity instanceof Mob && !(player.getInvisibleTicks() > 0)) {
                 if (ticksTilMove.get(eachEntity) == 1) {
