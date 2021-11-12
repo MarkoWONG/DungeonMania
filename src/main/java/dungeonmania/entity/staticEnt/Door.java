@@ -55,7 +55,9 @@ public class Door extends StaticEntity{
                 unlock();
                 return true;
             }
-            else if (item.getType().equals("key")){
+        }
+        for (CollectableEntity item : player.getInventory()){
+            if (item.getType().equals("key")){
                 Key playerKey = (Key) item;
                 if (playerKey.getKeyIdentifer() == key){
                     System.out.println("unlocking with key");
