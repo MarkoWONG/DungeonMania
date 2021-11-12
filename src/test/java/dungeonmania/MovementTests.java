@@ -14,6 +14,12 @@ public class MovementTests {
     //     return response.getEntities().stream().filter(e -> e.getType().equals(type)).filter(e -> e.getPosition().equals(position)).count() == 1;
     // }
 
+    public boolean isAdjacent(Position a, Position b) {
+        int x = Math.abs(a.getX() - b.getX());
+        int y = Math.abs(a.getY() - b.getY());
+        return x + y == 1;
+    }
+
     @Test
     public void testMovement_player() {
         DungeonManiaController controller = new DungeonManiaController();
@@ -70,7 +76,7 @@ public class MovementTests {
             response = controller.tick(null, Direction.NONE);
 
             Position current = response.getEntities().get(0).getPosition();
-            assert(Position.isAdjacent(prev, current));
+            assert(isAdjacent(prev, current));
         }
         
     }
