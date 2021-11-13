@@ -4,7 +4,6 @@ import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.Mercenary;
-import dungeonmania.mobs.Spider;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
@@ -73,11 +72,6 @@ public class Portal extends StaticEntity{
     @Override
     public void interact(Boulder boulder){
         boulder.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), boulder.getPosition().getLayer()));
-    }
-
-    @Override
-    public void interact(Spider spider){
-        spider.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), spider.getPosition().getLayer()));
     }
 
     //Setters 

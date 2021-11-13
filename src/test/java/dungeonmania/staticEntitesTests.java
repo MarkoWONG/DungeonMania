@@ -109,7 +109,7 @@ public class staticEntitesTests {
     
     // test portals
     @Test
-    public void portals(){
+    public void portalPlayer(){
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Peaceful", 1636722821454L);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
@@ -127,6 +127,33 @@ public class staticEntitesTests {
 
         new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,3)));
+    }
+
+    @Test
+    public void portalBoulder(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/portal_boulder", "Peaceful", 1636722821454L);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(3,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(4,3)));
+
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "boulder", new Position(1,1)));
+    }
+
+    @Test
+    public void portalMercenary(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/portal_mercenary", "Peaceful", 1636722821454L);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(3,3)));
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(4,3)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(4,3)));
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,1)));
+        assertTrue(checkEntityOnPosition(new_frame, "mercenary", new Position(1,1)));
     }
 
     @Test

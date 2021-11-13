@@ -1,4 +1,5 @@
 package dungeonmania.mobs;
+import dungeonmania.entity.Entity;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.Armour;
@@ -40,6 +41,11 @@ public class Mercenary extends Mob implements Subscriber{
         } else {
             setArmour(null);
         }
+    }
+
+    @Override
+    public void startInteraction(Entity entity) {
+        entity.interact(this);
     }
 
     @Override
