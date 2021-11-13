@@ -185,6 +185,17 @@ public class staticEntitesTests {
             assertTrue(adjectSpawning(new_frame, new Position(4,2)));
         }
     }
+    @Test
+    public void NoSpawnZombies(){
+        DungeonManiaController dungeon = new DungeonManiaController();
+        DungeonResponse new_frame = dungeon.newGame("test_maps/zombie_no_spawn", "Hard", 1636724584073L);
+
+        for (int i = 0; i < 50; i++){
+            new_frame = dungeon.tick(null, Direction.DOWN);
+            assertTrue(entityCounter(new_frame, "zombie_toast") == 0);
+        }
+    }
+
 
     @Test
     public void boulderMovement(){
