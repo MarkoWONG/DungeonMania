@@ -19,7 +19,7 @@ public class DijkstraTests {
     @Test
     public void mazeTest() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("dijkstra_maze", "Standard");
+        DungeonResponse response = controller.newGame("dijkstra_maze", "Standard",1L);
 
         assertTrue(entityAtPosition("mercenary",response,new Position(1, 1)));
         response = controller.tick(null, Direction.UP);
@@ -78,7 +78,7 @@ public class DijkstraTests {
     @Test
     public void twoRoutes() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("merc_equal", "Standard");
+        DungeonResponse response = controller.newGame("merc_equal", "Standard",9L);
 
         // path checks clockwise from "up". if the two shortest paths are equal, 
         // the one checked sooner will be taken (ie, UP or RIGHT)
