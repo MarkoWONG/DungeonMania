@@ -62,4 +62,8 @@ public class Shield extends BuildableEntity {
         return this.recipeUsed;
     }
 
+    @Override
+    public void resetDurability() {
+        this.durability = startingDurability * 2;
+    }
 }

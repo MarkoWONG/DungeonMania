@@ -52,7 +52,7 @@ public class DungeonAdapterTests {
     @Test
     public void testBuildableContents() {
         Dungeon currDungeon = new Dungeon("buildableEntities","Standard",123L);
-        IntStream.range(0,6).forEach(tick -> currDungeon.tick(null, Direction.UP));
+        IntStream.range(0,7).forEach(tick -> currDungeon.tick(null, Direction.UP));
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         List<String> allBuildables = currResponse.getBuildables();

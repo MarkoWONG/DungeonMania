@@ -128,6 +128,7 @@ public class Dungeon {
         }
         // check if buildable type has the materials
         else if (BuildableEntity.getBuildables(getInventory(), entities).contains(item)) {
+            target.resetDurability();
             character.addItemToInventory(target);
             character.consume(target.getRecipeUsed());
         }
