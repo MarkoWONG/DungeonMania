@@ -53,7 +53,7 @@ public class DijkstraTests {
     @Test
     public void trapped() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("merc_trapped", "Standard");
+        DungeonResponse response = controller.newGame("merc_trapped", "Standard",5L);
         // merc has no way to get to player, so does not move
 
         assertTrue(entityAtPosition("mercenary",response,new Position(1, 1)));
