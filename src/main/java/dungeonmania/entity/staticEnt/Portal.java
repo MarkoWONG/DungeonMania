@@ -80,11 +80,7 @@ public class Portal extends StaticEntity{
         spider.setPosition(new Position(otherPortalPosition.getX(), otherPortalPosition.getY(), spider.getPosition().getLayer()));
     }
 
-    //Getters and Setters 
-    public Position getOtherPortalPosition() {
-        return this.otherPortalPosition;
-    }
-
+    //Setters 
     public void setOtherPortalPosition(Position otherPortalPosition) {
         this.otherPortalPosition = otherPortalPosition;
     }
