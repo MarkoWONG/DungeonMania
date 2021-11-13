@@ -29,7 +29,7 @@ public class DungeonTests {
     @Test
     public void testEntityMapCreation_MobsOnly() {
         DungeonManiaController currController = new DungeonManiaController();
-        DungeonResponse currResponse = currController.newGame("dungeon_moving", "Standard");
+        DungeonResponse currResponse = currController.newGame("dungeon_moving", "Standard",1L);
         assertTrue(currResponse.getEntities().stream().filter(e -> e.getType().equals("spider")).anyMatch(e -> e.getPosition().equals(new Position(0, 0))));
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).filter(e -> e.getPosition().equals(new Position(1, 0))).count());
         assertEquals(1, currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(2, 0))).count());
@@ -116,7 +116,7 @@ public class DungeonTests {
     @Test
     public void testClickingMercenary() {
         DungeonManiaController currController = new DungeonManiaController();
-        DungeonResponse currResponse = currController.newGame("clickableEntities2", "Standard");
+        DungeonResponse currResponse = currController.newGame("clickableEntities2", "Standard",1L);
 
         // get the id of the mercenary
         String mercenaryId = currResponse.getEntities().stream().filter(e -> e.getType().equals("mercenary")).findAny().get().getId();

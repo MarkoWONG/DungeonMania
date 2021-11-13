@@ -57,4 +57,8 @@ public abstract class BuildableEntity extends CollectableEntity{
         }
         return output;
     }
+
+    public void resetDurability() {
+        ;
+    }
 }
