@@ -696,12 +696,10 @@ public class itemTests {
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("test_maps/bribe", "Standard", 1636711524052L);
         // collect materials
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 3; i++){
             new_frame = dungeon.tick(null, Direction.LEFT);
         }
-        for (int i = 0; i < 2; i++){
-            new_frame = dungeon.tick(null, Direction.DOWN);
-        }
+        new_frame = dungeon.tick(null, Direction.DOWN);
         assertTrue(inventoryItemCount(new_frame, "sceptre") == 0);
         assertEquals(new_frame.getBuildables(), Arrays.asList("sceptre"));
         new_frame = dungeon.build("sceptre");
@@ -713,9 +711,9 @@ public class itemTests {
         DungeonManiaController dungeon = new DungeonManiaController();
         DungeonResponse new_frame = dungeon.newGame("test_maps/bribe", "Standard", 1636711524052L);
         // collect materials
-        for (int i = 0; i < 3; i++){
-            new_frame = dungeon.tick(null, Direction.DOWN);
-        }
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(inventoryItemCount(new_frame, "sceptre") == 0);
         assertEquals(new_frame.getBuildables(), Arrays.asList("sceptre"));
         new_frame = dungeon.build("sceptre");
