@@ -45,7 +45,7 @@ public class staticEntitesTests {
     @Test
     public void wallCollosion(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("maze", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("maze", "Peaceful", 1636722821454L);
 
         new_frame = dungeon.tick(null, Direction.UP);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(1,1)));
@@ -66,7 +66,7 @@ public class staticEntitesTests {
     @Test
     public void exit(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Peaceful", 1636722821454L);
 
         new_frame = dungeon.tick(null, Direction.UP);
         new_frame = dungeon.tick(null, Direction.UP);
@@ -82,7 +82,7 @@ public class staticEntitesTests {
     @Test
     public void openClosedDoors(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/key_test", "Peaceful", 1636722821454L);
 
         new_frame = dungeon.tick(null, Direction.UP);
         // playerPosition should be in the same postion as player don't have a key
@@ -111,7 +111,7 @@ public class staticEntitesTests {
     @Test
     public void portals(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/portalExit", "Peaceful", 1636722821454L);
         assertTrue(checkEntityOnPosition(new_frame, "player", new Position(2,2)));
 
         new_frame = dungeon.tick(null, Direction.RIGHT);
@@ -132,7 +132,7 @@ public class staticEntitesTests {
     @Test
     public void StandardSpawnZombies(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/zombieSpawn", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/zombieSpawn", "Standard", 1636722821454L);
 
         for (int expected_zoms = 0; expected_zoms < 5; expected_zoms++){
             for (int i = 0; i < 19; i++){
@@ -163,9 +163,19 @@ public class staticEntitesTests {
     @Test
     public void hardSpawnZombies(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/zombieSpawn", "Hard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/zombieSpawn", "Hard", 1636724584073L);
 
-        for (int expected_zoms = 0; expected_zoms < 5; expected_zoms++){
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.UP);
+        new_frame = dungeon.tick(null, Direction.LEFT);
+        new_frame = dungeon.tick(null, Direction.RIGHT);
+        for (int i = 0; i < 5; i++){
+            new_frame = dungeon.tick(null, Direction.LEFT);
+            new_frame = dungeon.tick(null, Direction.RIGHT);
+        }
+        assertTrue(entityCounter(new_frame, "zombie_toast") == 1);
+        for (int expected_zoms = 1; expected_zoms < 5; expected_zoms++){
             for (int i = 0; i < 14; i++){
                 new_frame = dungeon.tick(null, Direction.UP);
                 assertTrue(entityCounter(new_frame, "zombie_toast") == expected_zoms);
@@ -179,7 +189,7 @@ public class staticEntitesTests {
     @Test
     public void boulderMovement(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("bombs", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("bombs", "Peaceful", 1636722821454L);
         new_frame = dungeon.tick(null, Direction.RIGHT);
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.RIGHT);
@@ -197,7 +207,7 @@ public class staticEntitesTests {
     @Test
     public void switches(){
         DungeonManiaController dungeon = new DungeonManiaController();
-        DungeonResponse new_frame = dungeon.newGame("test_maps/simpleBoulders", "Standard");
+        DungeonResponse new_frame = dungeon.newGame("test_maps/simpleBoulders", "Peaceful", 1636722821454L);
         new_frame = dungeon.tick(null, Direction.UP);
         new_frame = dungeon.tick(null, Direction.DOWN);
         new_frame = dungeon.tick(null, Direction.DOWN);
@@ -207,4 +217,6 @@ public class staticEntitesTests {
         new_frame = dungeon.tick(null, Direction.RIGHT);
         assertTrue(new_frame.getGoals().length() == 0);
     }
+
+    //spawn tile test elsewhere
 }

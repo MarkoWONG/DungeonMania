@@ -21,16 +21,16 @@ public class Shield extends BuildableEntity {
 
     public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (materialCounter(inventory, "wood") >= 2){
-            if (materialCounter(inventory, "treasure") >= 1){
+            if (materialCounter(inventory, "sun_stone") >= 1){
+                recipeUsed = Arrays.asList("wood","wood");
+                return true;
+            }
+            else if (materialCounter(inventory, "treasure") >= 1){
                 recipeUsed = Arrays.asList("wood","wood","treasure");
                 return true;
             }
             else if (materialCounter(inventory, "key") >= 1){
                 recipeUsed = Arrays.asList("wood","wood","key");
-                return true;
-            }
-            else if (materialCounter(inventory, "sun_stone") >= 1){
-                recipeUsed = Arrays.asList("wood","wood");
                 return true;
             }
             else{

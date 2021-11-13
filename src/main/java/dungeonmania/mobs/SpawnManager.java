@@ -21,7 +21,7 @@ public class SpawnManager {
 
         ArrayList<Entity> inPos = map.search(position);
         for (Entity e: inPos) {
-            if (e.getPosition().getLayer() > 50) {
+            if (e.getPosition().getLayer() >= 50) {
                 return false;
             }
         }

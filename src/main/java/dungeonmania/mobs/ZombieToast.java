@@ -1,6 +1,5 @@
 package dungeonmania.mobs;
 
-import dungeonmania.Dungeon;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.util.Position;
 import java.util.Random;

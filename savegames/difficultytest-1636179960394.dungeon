@@ -1,1 +1,1 @@
-{"entities":[{"":"","x":-2,"y":0,"type":"mercenary"},{"":"","x":0,"y":-1,"type":"spider"}],"name":"difficultytest","id":"c77b384b-9e24-4e6f-a43b-d53da2e6a932","inventory":[],"gamemode":"Standard"}
+{"seed":1636724584073,"entities":[{"":"","x":-2,"y":0,"type":"player"},{"":"","x":-1,"y":0,"type":"mercenary"},{"":"","x":1,"y":-1,"type":"spider"},{"":"","x":2,"y":-1,"type":"spider"},{"":"","x":2,"y":-1,"type":"spider"},{"":"","x":2,"y":-1,"type":"spider"}],"name":"difficultytest","id":"69b70d79-ea84-4dcc-9cf1-cfb07501b886","inventory":[],"gamemode":"Standard"}

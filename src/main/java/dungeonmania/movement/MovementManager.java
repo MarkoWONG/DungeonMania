@@ -1,6 +1,5 @@
 package dungeonmania.movement;
 
-import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
@@ -9,7 +8,6 @@ import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-//import java.lang.Math;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +33,12 @@ public class MovementManager {
 
     public void initTicksTilMove(EntityList entities) {
         for (Entity e : entities) {
-            if (e.getType() == "player") {
-                ticksTilMove.put(e, 1);
-            } else {
-                ticksTilMove.put(e, calcMovFactor(e.getPosition()));
+            if (! ticksTilMove.containsKey(e)) {
+                if (e.getType().equals("player")) {
+                    ticksTilMove.put(e, 1);
+                } else {
+                    ticksTilMove.put(e, calcMovFactor(e.getPosition()));
+                }
             }
         }
     }
@@ -69,13 +69,14 @@ public class MovementManager {
 
 
     public void moveChar(Direction moveDir) {
+        initTicksTilMove(entities);
         checkBoulder(moveDir);
         ArrayList<Entity> player = entities.search("player");
         for (Entity thePlayer : player) {
             if (checkMove(thePlayer,moveDir) && ticksTilMove.get(thePlayer) == 1) {
                 thePlayer.move(moveDir);
                 ticksTilMove.replace(thePlayer, 1);
-            } else {
+            } else if (checkMove(thePlayer,moveDir) && ticksTilMove.get(thePlayer) > 1) {
                 int m = ticksTilMove.get(thePlayer);
                 ticksTilMove.replace(thePlayer, m-1);
             }
@@ -88,6 +89,7 @@ public class MovementManager {
      * if the player is invincible, it runs away
      */
     public void moveMobs() {
+        initTicksTilMove(entities);
         for (Entity eachEntity : entities) {
             if ( eachEntity instanceof Mob && !(player.getInvisibleTicks() > 0)) {
                 if (ticksTilMove.get(eachEntity) == 1) {
@@ -160,6 +162,9 @@ public class MovementManager {
             if (eachEntity instanceof Door && entity instanceof PlayerCharacter) {
                 return (((Door) eachEntity).unlockDoor((PlayerCharacter) entity));
             }
+            if (eachEntity.getType().equals("player") && direction.equals(Direction.NONE)){
+                return true;
+            }
             if (eachEntity.getType().equals(entity.getType())) {
                 return false;
             }
@@ -224,23 +229,6 @@ public class MovementManager {
      * @return the direction a must travel to get to b
      */
     public static Direction shortestPath(Entity a, Position b, EntityList entities) {
-        /*Position btwn = Position.calculatePositionBetween(a.getPosition(), b);
-        int xDistance = btwn.getX();
-        int yDistance = btwn.getY();
-        Direction d = Direction.NONE;
-
-        if (Math.abs(xDistance) < Math.abs(yDistance)) { // further away on the y axis
-            d = (yDistance > 0) ? Direction.DOWN : Direction.UP;
-        } else if (Math.abs(yDistance) < Math.abs(xDistance)) { // further away on the x axis OR equal
-            d = (xDistance > 0) ? Direction.RIGHT : Direction.LEFT;
-        } 
-
-        if (staticCheckMove(a, d, entities)) {
-            return d;
-        } else {
-            return Direction.NONE;
-        }
-        */
         if (a.getPosition().equals(b)) {
             return Direction.NONE;
         }

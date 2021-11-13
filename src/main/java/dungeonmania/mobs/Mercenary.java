@@ -1,5 +1,4 @@
 package dungeonmania.mobs;
-import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.Armour;
@@ -74,6 +73,9 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     protected boolean checkBribeRange(Position characterPos, Position thisPos){
+        if (characterPos == null){
+            return false;
+        }
         if (abs(characterPos.getX()-thisPos.getX()) <= 2 && characterPos.getY() == thisPos.getY()){
             return true;
         }
