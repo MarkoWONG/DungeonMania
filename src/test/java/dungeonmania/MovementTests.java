@@ -54,42 +54,7 @@ public class MovementTests {
 
 
     }
-
-    @Test
-    public void testMovement_mercenary() {
-        DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("merc_mov", "Standard");
-        // player is at 0,0 and merc is at 10,0
-
-        controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(9, 0))).count());
-        
-        controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(8, 0))).count());
-        
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(3, 0))).count());
-        
-        controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(3, 1))).count());
-
-        controller.tick(null, Direction.DOWN);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(3, 2))).count());
-
-        controller.tick(null, Direction.LEFT);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(2, 2))).count());
-        
-        controller.tick(null, Direction.LEFT);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(1, 2))).count());
-        
-        controller.tick(null, Direction.RIGHT);
-        assertEquals(1, response.getEntities().stream().filter(e -> e.getType().equals("mercenary")).filter(e -> e.getPosition().equals(new Position(0, 2))).count());
-        
-    }
+    // mercenary movement tests conducted in DijkstraTests
 
     @Test
     public void testMovement_spider() {
