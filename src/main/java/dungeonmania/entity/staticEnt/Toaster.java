@@ -4,6 +4,7 @@ import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.mobs.ZombieToast;
+import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Position;
 import dungeonmania.util.Direction;
 import dungeonmania.mobs.Mob;
@@ -47,7 +48,7 @@ public class Toaster extends StaticEntity{
             ArrayList<Integer> validDirIndexes = new ArrayList<Integer>();
             // -1 because we don't want NONE Direction
             for (Integer dir_index = 0; dir_index < Direction.values().length - 1; dir_index++){
-                if (checkMove(newZombie, Direction.values()[dir_index])){
+                if (MovementManager.staticCheckMove(newZombie, Direction.values()[dir_index],entityList)){
                     validDirIndexes.add(dir_index);
                 }
             }
@@ -70,20 +71,6 @@ public class Toaster extends StaticEntity{
         int pick = currRandom.nextInt(validDirIndexes.size());
         Direction ranDir = Direction.values()[validDirIndexes.get(pick)];
         return ranDir;
-    }
-
-    private Boolean checkMove(Entity entity, Direction direction) {
-        Position newEntityPosition = entity.getPosition().translateBy(direction);
-        ArrayList<Entity> tile = entityList.search(newEntityPosition);
-        for (Entity eachEntity : tile) {
-            if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
-                if (eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) {
-                    return true;
-                }
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override
