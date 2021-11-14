@@ -1,11 +1,12 @@
 package dungeonmania.entity.collectables.potion;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 
 
-public class HealthPotion extends PotionEntity implements Usable{
+public class HealthPotion extends CollectableEntity implements Usable{
 
 
     public HealthPotion(Position position){

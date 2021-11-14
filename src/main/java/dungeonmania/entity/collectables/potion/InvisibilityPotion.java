@@ -1,11 +1,12 @@
 package dungeonmania.entity.collectables.potion;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 
 
-public class InvisibilityPotion extends PotionEntity implements Usable{
+public class InvisibilityPotion extends CollectableEntity implements Usable{
     private static final int effectDuration = 5;
     
     public InvisibilityPotion(Position position){
