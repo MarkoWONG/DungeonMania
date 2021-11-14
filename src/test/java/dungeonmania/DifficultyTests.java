@@ -29,7 +29,7 @@ public class DifficultyTests {
     @Test
     public void testStandardMode_hasFights() {
         DungeonManiaController currController = new DungeonManiaController();
-        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard",1L);
+        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard",2L);
 
         IntStream.range(0,4).forEach(tick -> currController.tick(null, Direction.NONE));
         currResponse = currController.tick(null, Direction.NONE);
@@ -57,12 +57,12 @@ public class DifficultyTests {
     public void testHardMode_NoInvinc() {
         DungeonManiaController currController = new DungeonManiaController();
         DungeonResponse currResponse = currController.newGame("difficultytest", "Hard",1L);
-
+        
         // get the potion, use it
         currResponse = currController.tick(null, Direction.LEFT);
         String invincPotionId = currResponse.getInventory().get(0).getId();
         currController.tick(invincPotionId, Direction.NONE);
-
+        
         // character will now die in two ticks because potion doesn't do anything in hard
         currResponse = currController.tick(null, Direction.NONE);
         currResponse = currController.tick(null, Direction.NONE);

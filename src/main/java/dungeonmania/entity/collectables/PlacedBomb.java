@@ -23,7 +23,7 @@ public class PlacedBomb extends StaticEntity {
 
     @Override
     public void incrementTick(){
-        for (Position eachPos : this.getPosition().getAdjacentPositions()) {
+        for (Position eachPos : this.getPosition().getCardinallyAdjacentPositions()) {
             for (Entity eachEntity : entities.search(eachPos)) {
                 if (eachEntity.getType().equals("switch") && ((Switch) eachEntity).getSwitchOn()) {
                     denotate();

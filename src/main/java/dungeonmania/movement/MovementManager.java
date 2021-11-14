@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 
 public class MovementManager {
@@ -151,6 +152,13 @@ public class MovementManager {
         }
     }
 
+    public static Boolean checkBoulder(Position position,EntityList entities) {
+        return entities.search(position)
+                .stream().map(Entity::getType)
+                .collect(Collectors.toList())
+                .contains("boulder");
+    }
+
     /**
      * @precondition the entity passed is movable (ie, implements movement)
      * @return true if the move is possible, false is not
@@ -189,11 +197,6 @@ public class MovementManager {
                 if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
                     return true;
                 }
-                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
-                    ((Spider) eachEntity).changeDirection();
-                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
-                    ((Spider) entity).changeDirection();
-                }
                 return false;
             }
         }
@@ -210,11 +213,6 @@ public class MovementManager {
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
                 if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
                     return true;
-                }
-                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
-                    ((Spider) eachEntity).changeDirection();
-                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
-                    ((Spider) entity).changeDirection();
                 }
                 return false;
             }

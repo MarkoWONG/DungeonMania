@@ -58,6 +58,8 @@ public abstract class EntityFactory {
         if (entityType.toLowerCase(Locale.ROOT).contains("shield")) {return makeShield();}
         if (entityType.toLowerCase(Locale.ROOT).contains("bow")) {return makeBow();}
         if (entityType.toLowerCase(Locale.ROOT).contains("sun_stone")) {return makeSunStone(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("hydra")) {return makeHydra(startPos);}
+        if (entityType.toLowerCase(Locale.ROOT).contains("anduril")) {return makeAnduril(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("swamp_tile")) {return makeSwampTile(startPos, mov_factor);}
         return null;
     }
@@ -125,7 +127,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeSpider(Position startPos) {
-        return new Spider(startPos,5,6);
+        return new Spider(startPos,5,6,entityMap);
     }
 
     protected Entity makeTreasure(Position startPos) {
@@ -209,6 +211,19 @@ public abstract class EntityFactory {
             return new SunStone();
         }
         return new SunStone(startPos);
+    }
+
+    protected Entity makeAnduril(Position startPos) {
+        if (startPos == null) {
+            return new Anduril();
+        }
+        return new Anduril(startPos);
+    }
+    
+
+    protected Entity makeHydra(Position startPos) {
+        //return new Hydra(startPos);
+        return null;
     }
 
     protected Entity makeBow() { return new Bow(); }
