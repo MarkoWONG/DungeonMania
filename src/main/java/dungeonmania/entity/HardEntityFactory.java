@@ -4,6 +4,7 @@ import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.collectables.potion.InvincibilityPotion;
 import dungeonmania.entity.staticEnt.Toaster;
+import dungeonmania.mobs.Hydra;
 import dungeonmania.util.Position;
 
 import java.util.Random;
@@ -30,5 +31,10 @@ public class HardEntityFactory extends EntityFactory{
             return new InvincibilityPotion(false);
         }
         return new InvincibilityPotion(startPos,false);
+    }
+
+    @Override
+    protected Entity makeHydra(Position startPos) {
+        return new Hydra(startPos, 50, 2, currRandom);
     }
 }

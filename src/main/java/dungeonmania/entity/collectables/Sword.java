@@ -17,6 +17,7 @@ public class Sword extends CollectableEntity implements Weapon{
     }
 
     public Sword() {
+
         super(null);
     }
 
@@ -47,5 +48,9 @@ public class Sword extends CollectableEntity implements Weapon{
     @Override
     public int usedInAttack(int attackDamage) {
         return attackDamage + 2;
+    }
+
+    public int getDurability() {
+        return durability;
     }
 }

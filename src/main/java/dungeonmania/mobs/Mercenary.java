@@ -48,6 +48,22 @@ public class Mercenary extends Mob implements Subscriber{
         entity.interact(this);
     }
 
+    /**
+     * bribe the mercenary to change its faction. 
+     * the amount given is cumilative
+     * @param amount an amount of money given
+     * @return false if its not enough, true if the merc has become an ally
+     */
+    public void bribe(int amount) {
+        price -= amount;
+        if (price > 0) {
+            return;
+        }
+        super.changeFaction("ally");
+        for (Entity e : entities) {
+            e.addAlly(this);
+        }
+    }
     @Override
     public boolean isInteractable() {
         return isEnemy() && checkBribeRange(getCharacterPos(),this.getPosition());
