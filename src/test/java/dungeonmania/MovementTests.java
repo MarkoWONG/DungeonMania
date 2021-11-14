@@ -56,7 +56,7 @@ public class MovementTests {
             // isAdjacent is bugged (doesn't do absolute value) or we would use that here
         }
         Position finalPos = response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).map(EntityResponse::getPosition).collect(Collectors.toList()).get(0);
-        assertEquals(finalPos, new Position(1,1));
+        assertEquals(finalPos, new Position(1,3, 50));
 
 
     }
