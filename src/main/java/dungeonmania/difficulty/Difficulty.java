@@ -27,11 +27,17 @@ public abstract class Difficulty {
     abstract public String getMode();
 
     /**
-     *
+     * Simulate the game board for a single turn
      * @param entitiesMap The EntityList of all entities with a place in the dungeon
      * @param movementDirection A direction for the player
      */
     abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
+    /**
+     * Create an entity factory with the correct entity values
+     * @param entityMap The current dungeons' EntityList
+     * @param currRandom The dungeon wide random object
+     * @return An instance of an entity factory for this difficulty
+     */
     abstract public EntityFactory createEntityFactory(EntityList entityMap, Random currRandom);
 }
