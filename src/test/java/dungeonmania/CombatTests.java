@@ -27,6 +27,7 @@ public class CombatTests {
     @Test
     public void testCombat_playerVsMob() {
         Position position = new Position(0,0,0);
+        Random rand = new Random(1);
         EntityList square = new EntityList();
         Entity spider = new Spider(position, 5, 6);
         Mob zombie = new ZombieToast(position, 10, 2);
@@ -52,7 +53,7 @@ public class CombatTests {
         square.add(floorSwitch);
 
         //do the fights
-        FightManager fightManager = new FightManager(square);
+        FightManager fightManager = new FightManager(square, rand);
         fightManager.setCharacter(character);
         
 
@@ -113,19 +114,21 @@ public class CombatTests {
 
         // player dies on this tick
         fightManager.doCharFights();
-        assertTrue(character.getHealth() == -1);
+        assertEquals(-1, character.getHealth());
         assertTrue(mercenary.getHealth() == 3);
         assertFalse(square.contains(character));
         assertFalse(square.contains(zombie));
         assertFalse(square.contains(spider));
         assertTrue(square.contains(mercenary));
         assertTrue(square.contains(floorSwitch));
+        assertTrue(character.getInventory().isEmpty());
     }
 
     @Test
     public void testCombat_armour() {
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
+        Random rand = new Random(1);
         Mob zombie = new ZombieToast(position, 10, 2);
         while (zombie.getArmour() == null) {
             zombie = new ZombieToast(position, 10, 2);
@@ -149,7 +152,7 @@ public class CombatTests {
         assertTrue(zombie.getArmour().getDurability() == 6);
         assertTrue(mercenary.getArmour().getDurability() == 6);
 
-        FightManager fightManager = new FightManager(square);
+        FightManager fightManager = new FightManager(square, rand);
         fightManager.setCharacter(character);
         fightManager.doCharFights();
         
@@ -163,7 +166,7 @@ public class CombatTests {
     @Test
     public void testCombat_sword_and_bow() {
         Position position = new Position(0,0,0);
-        Random rand = new Random(0);
+        Random rand = new Random(1);
         EntityList square = new EntityList();
         Mob zombie = new ZombieToast(position, 10, 2);
         while (zombie.getArmour() == null) {
@@ -182,7 +185,7 @@ public class CombatTests {
         assertEquals(zombie.getArmour().getDurability(), 6);
         assertEquals(6, sworda.getDurability());
         assertEquals(6, swordb.getDurability());
-        FightManager fightManager = new FightManager(square);
+        FightManager fightManager = new FightManager(square, rand);
 
         fightManager.setCharacter(character);
         fightManager.doCharFights();
@@ -280,20 +283,20 @@ public class CombatTests {
         square.add(zombie);
 
         fightManager.doCharFights();
-
-        assertTrue(character.getHealth() == 10);
-        assertEquals(3, zombie.getHealth());
+        assertEquals(14, character.getHealth());
+        assertEquals(1, zombie.getHealth());
         assertEquals(0, sworda.getDurability());
         assertEquals(6, swordb.getDurability());
         assertEquals(2, bow.getDurability());
 
-        assertEquals(2, character.getInventory().size());
+        assertEquals(4, character.getInventory().size());
     }
 
     @Test
     public void testCombat_anduril() {
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
+        Random rand = new Random(1);
         Mob zombie = new ZombieToast(position, 10, 2);
         while (zombie.getArmour() == null) {
             zombie = new ZombieToast(position, 10, 2);
@@ -314,7 +317,7 @@ public class CombatTests {
         assertEquals(zombie.getArmour().getDurability(), 6);
         assertEquals(6, sword.getDurability());
         assertEquals(6, anduril.getDurability());
-        FightManager fightManager = new FightManager(square);
+        FightManager fightManager = new FightManager(square, rand);
 
         fightManager.setCharacter(character);
         fightManager.doCharFights();
@@ -347,7 +350,7 @@ public class CombatTests {
 
         assertEquals(6, sword.getDurability());
         assertEquals(6, anduril.getDurability());
-        FightManager fightManager = new FightManager(square);
+        FightManager fightManager = new FightManager(square, random);
 
         fightManager.setCharacter(character);
         fightManager.doCharFights();
@@ -480,11 +483,12 @@ public class CombatTests {
     public void testCombat_invincibility() {
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
+        Random rand = new Random(1);
 
 
-        Mob zombie = new ZombieToast(position, 1, 2);
+        Mob zombie = new ZombieToast(position, 10, 2);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 1, 2);
+            zombie = new ZombieToast(position, 10, 2);
         }
         assertEquals(6, zombie.getArmour().getDurability());
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
@@ -492,45 +496,65 @@ public class CombatTests {
         square.add(character);
         square.add(zombie);
 
-        FightManager fightManager = new FightManager(square);
+        FightManager fightManager = new FightManager(square, rand);
         fightManager.setCharacter(character);
+        
+        character.setInvincibleTicks(1);
         fightManager.doCharFights();
 
-        assertEquals(-3, zombie.getHealth());
-        assertEquals(1, square.size());
+        assertEquals(6, zombie.getHealth());
+        assertEquals(20, character.getHealth());
 
-        zombie = new ZombieToast(position, 1, 2);
-        while (zombie.getArmour() != null) {
-            zombie = new ZombieToast(position, 1, 2);
+        for (Entity e : square) {
+            e.setHasFought(false);
         }
-        square.add(zombie);
-
-        character.setInventory(new ArrayList<CollectableEntity>());
+        character.incrementTick();
         fightManager.doCharFights();
-        assertEquals(-7, zombie.getHealth());
-        assertEquals(1, square.size());
-        assertEquals(1, character.getInventory().size());
-        assertEquals("anduril", character.getInventory().get(0).getType());
+
+        
+        assertEquals(2, zombie.getHealth());
+        assertEquals(19, character.getHealth());
+
+        character.setInvisibleTicks(1);
+        for (Entity e : square) {
+            e.setHasFought(false);
+        }
+        fightManager.doCharFights();
+
+        
+        assertEquals(2, zombie.getHealth());
+        assertEquals(19, character.getHealth());
+
+        for (Entity e : square) {
+            e.setHasFought(false);
+        }
+        character.incrementTick();
+        fightManager.doCharFights();
+
+        
+        assertEquals(-1, zombie.getHealth());
+        assertEquals(19, character.getHealth());
     }
 
 
     public static void main(String[] args) {
         int i = 0;
         Random rand = null;
+        int value = 0;
+        int count =0;
         while (true) {
             rand = new Random(i);
-            if (rand.nextInt(10) != 1) {
-                if (rand.nextInt(10) != 1) {
-                    if (rand.nextInt(10) != 1) {
-                        if (rand.nextInt(10) != 1) {
-                            if (rand.nextInt(10) != 1) {
-                                System.out.println(i);
-                                break;
-                            }
-                        }
-                    }
-                }
+            value = rand.nextInt(10);
+            count = 0;
+            while ((value != 1 && value != 0 && count < 10)) {
+                value = rand.nextInt(10);
+                count++;
             }
+            if (count >= 10) {
+                System.out.println(i);
+                break;
+            }
+            
             i++;
         }
     }
