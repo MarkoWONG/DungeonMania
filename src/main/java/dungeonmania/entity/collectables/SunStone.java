@@ -21,10 +21,13 @@ public class SunStone extends CollectableEntity implements BribeMaterial{
         return 1;
     }
     public void usedInBribe(PlayerCharacter player){
-        
+
     }
     public int getBribePriority(){
         return 2;
+    }
+    public int getBribeDuration(){
+        return -1;
     }
 
     @Override

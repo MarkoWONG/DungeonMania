@@ -49,6 +49,10 @@ public class Bow extends BuildableEntity implements Weapon {
     public List<String> getRecipeUsed() {
         return this.recipeUsed;
     }
+
+    public void resetDurability() {
+        this.durability = startingDurability * 2;
+    }
     
     public Integer getDurability() {
         return durability;

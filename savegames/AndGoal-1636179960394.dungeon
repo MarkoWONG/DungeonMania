@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"entities":[{"":"","x":2,"y":1,"type":"player"},{"":"","x":2,"y":2,"type":"switch"},{"":"","x":3,"y":3,"type":"boulder"},{"":"","x":1,"y":2,"type":"spider"},{"":"","x":1,"y":2,"type":"spider"},{"":"","x":1,"y":2,"type":"spider"},{"":"","x":1,"y":2,"type":"spider"}],"name":"AndGoal","id":"43057ea6-3191-4ca8-b165-1a6c12376727","inventory":[{"":"","type":"treasure"}],"gamemode":"Standard"}
+=======
+{"seed":1636724584073,"entities":[{"":"","x":2,"y":1,"type":"player"},{"":"","x":2,"y":2,"type":"switch"},{"":"","x":3,"y":3,"type":"boulder"},{"":"","x":0,"y":1,"type":"spider"},{"":"","x":0,"y":0,"type":"spider"},{"":"","x":2,"y":2,"type":"spider"}],"name":"AndGoal","id":"1bdcc3ce-dbbb-4646-9a7b-dd37da5420be","inventory":[{"":"","type":"treasure"}],"gamemode":"Standard"}
+>>>>>>> master

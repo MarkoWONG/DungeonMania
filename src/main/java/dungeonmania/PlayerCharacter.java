@@ -79,6 +79,12 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
+    public void startGame() {
+        for(Subscriber s: subscribers) {
+            s.notifyMove(super.getPosition());
+        }
+    }
+
 
 
     public void consume(List<String> items) {
@@ -133,7 +139,7 @@ public class PlayerCharacter extends Entity implements Movement{
             mob.takeDamage(attack());
             takeDamage(mobAttack);
             for(Subscriber s: subscribers) {
-                s.notifyFight();
+                s.notifyFight(this.getPosition());
             }
         }
     }
@@ -145,7 +151,7 @@ public class PlayerCharacter extends Entity implements Movement{
             hydra.takeDamage(attackHydra(), usingAnduril);
             takeDamage(mobAttack);
             for(Subscriber s: subscribers) {
-                s.notifyFight();
+                s.notifyFight(getPosition());
             }
         }
     }
@@ -354,6 +360,7 @@ public class PlayerCharacter extends Entity implements Movement{
         allies.remove(oldAlly);
     }
 
+    @Override
     public Integer getHealth() {
         return this.Health;
     }

@@ -51,9 +51,16 @@ public class Door extends StaticEntity{
             return true;
         }
         for (CollectableEntity item : player.getInventory()){
+            if (item.getType().equals("sun_stone")){
+                unlock();
+                return true;
+            }
+        }
+        for (CollectableEntity item : player.getInventory()){
             if (item.getType().equals("key")){
                 Key playerKey = (Key) item;
                 if (playerKey.getKeyIdentifer() == key){
+                    System.out.println("unlocking with key");
                     player.removeItemFromInventory(item);
                     unlock();
                     return true;
@@ -61,14 +68,5 @@ public class Door extends StaticEntity{
             }
         }
         return false;
-    }
-
-    //Getter and Setter
-    public Boolean getIsOpen() {
-        return this.isOpen;
-    }
-
-    public void setIsOpen(Boolean isOpen) {
-        this.isOpen = isOpen;
     }
 }

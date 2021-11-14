@@ -21,7 +21,11 @@ public class Shield extends BuildableEntity {
 
     public boolean buildable(ArrayList<String> inventory, EntityList entities) {
         if (materialCounter(inventory, "wood") >= 2){
-            if (materialCounter(inventory, "treasure") >= 1){
+            if (materialCounter(inventory, "sun_stone") >= 1){
+                recipeUsed = Arrays.asList("wood","wood");
+                return true;
+            }
+            else if (materialCounter(inventory, "treasure") >= 1){
                 recipeUsed = Arrays.asList("wood","wood","treasure");
                 return true;
             }
@@ -58,4 +62,8 @@ public class Shield extends BuildableEntity {
         return this.recipeUsed;
     }
 
+    @Override
+    public void resetDurability() {
+        this.durability = startingDurability * 2;
+    }
 }

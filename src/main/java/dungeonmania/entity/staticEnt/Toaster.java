@@ -14,11 +14,13 @@ public class Toaster extends StaticEntity{
     private int tickTilSpawn;
     private int currentTickCount;
     private EntityList entityList;
-    public Toaster(Position position, int tickTilSpawn, EntityList entityList){
+    private Random currRandom;
+    public Toaster(Position position, int tickTilSpawn, EntityList entityList, Random currRandom){
         super(new Position(position.getX(), position.getY(), 80));
         this.tickTilSpawn = tickTilSpawn;    
         this.currentTickCount = 0;
         this.entityList = entityList;
+        this.currRandom = currRandom;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class Toaster extends StaticEntity{
     public void incrementTick(){
         currentTickCount++;
         if (currentTickCount >= tickTilSpawn){
-            ZombieToast newZombie = new ZombieToast(this.getPosition(),10,2);
+            ZombieToast newZombie = new ZombieToast(new Position(this.getXPos(), this.getYPos(), 50), 10,2,currRandom);
             // check if a valid position is possible
             ArrayList<Integer> validDirIndexes = new ArrayList<Integer>();
             // -1 because we don't want NONE Direction
@@ -65,9 +67,9 @@ public class Toaster extends StaticEntity{
     }
 
     private Direction randomDirection(ArrayList<Integer> validDirIndexes) {
-        int pick = new Random().nextInt(validDirIndexes.size());
-        int validRandDir = validDirIndexes.get(pick);
-        return Direction.values()[validRandDir];
+        int pick = currRandom.nextInt(validDirIndexes.size());
+        Direction ranDir = Direction.values()[validDirIndexes.get(pick)];
+        return ranDir;
     }
 
     private Boolean checkMove(Entity entity, Direction direction) {

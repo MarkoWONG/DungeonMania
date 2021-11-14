@@ -15,7 +15,7 @@ public class DungeonAdapterTests {
 
     @Test
     public void testDungeonName() {
-        Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
+        Dungeon currDungeon = new Dungeon("dungeon_static","Standard",123L);
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         assertEquals("dungeon_static",currResponse.getDungeonName());
@@ -23,7 +23,7 @@ public class DungeonAdapterTests {
 
     @Test
     public void testEntityOnly() {
-        Dungeon currDungeon = new Dungeon("dungeon_static","Standard");
+        Dungeon currDungeon = new Dungeon("dungeon_static","Standard",123L);
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         assertTrue(8 <= (int) currResponse.getEntities().size());
@@ -32,7 +32,7 @@ public class DungeonAdapterTests {
 
     @Test
     public void testItemResponse() {
-        Dungeon currDungeon = new Dungeon("dungeon_collectable","Standard");
+        Dungeon currDungeon = new Dungeon("dungeon_collectable","Standard",123L);
         IntStream.range(0,10).forEach(tick -> currDungeon.tick(null, Direction.LEFT));
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
@@ -51,8 +51,8 @@ public class DungeonAdapterTests {
 
     @Test
     public void testBuildableContents() {
-        Dungeon currDungeon = new Dungeon("buildableEntities","Standard");
-        IntStream.range(0,6).forEach(tick -> currDungeon.tick(null, Direction.UP));
+        Dungeon currDungeon = new Dungeon("buildableEntities","Standard",123L);
+        IntStream.range(0,7).forEach(tick -> currDungeon.tick(null, Direction.UP));
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         List<String> allBuildables = currResponse.getBuildables();
@@ -63,7 +63,7 @@ public class DungeonAdapterTests {
 
     @Test
     public void testGoalContents() {
-        Dungeon currDungeon = new Dungeon("advanced","Standard");
+        Dungeon currDungeon = new Dungeon("advanced","Standard",123L);
         DungeonResponseAdapter adapter = new DungeonResponseAdapter(currDungeon);
         DungeonResponse currResponse = adapter.createDungResponse();
         String goals = currResponse.getGoals();

@@ -26,24 +26,25 @@ public class CombatTests {
 
     @Test
     public void testCombat_playerVsMob() {
+        Random testingRandom = new Random(1213);
         Position position = new Position(0,0,0);
         Random rand = new Random(1);
         EntityList square = new EntityList();
         Entity spider = new Spider(position, 5, 6);
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2,testingRandom);
         while (zombie.getArmour() != null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2,testingRandom);
         }
         Entity floorSwitch = new Switch(position);
-        Mob mercenary = new Mercenary(position, 1, square, 15, 4);
+        Mob mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         while (mercenary.getArmour() != null) {
-            mercenary = new Mercenary(position, 1, square, 15, 4);
+            mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         }
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
 
 
         Position otherPosition = new Position(2,2,2);
-        Mob otherZombie = new ZombieToast(otherPosition, 10, 2);
+        Mob otherZombie = new ZombieToast(otherPosition, 10, 2,testingRandom);
 
         square.add(character);
         square.add(spider);
@@ -109,7 +110,7 @@ public class CombatTests {
         for (Entity e : square) {
             e.setHasFought(false);
         }
-        Mob lastZombie = new ZombieToast(position, 10, 4);
+        Mob lastZombie = new ZombieToast(position, 10, 4, testingRandom);
         square.add(lastZombie);
 
         // player dies on this tick
@@ -126,16 +127,17 @@ public class CombatTests {
 
     @Test
     public void testCombat_armour() {
+        Random testingRandom = new Random(1213);
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
         Random rand = new Random(1);
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2, testingRandom);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2,testingRandom);
         }
-        Mob mercenary = new Mercenary(position, 1, square, 15, 4);
+        Mob mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         while (mercenary.getArmour() == null) {
-            mercenary = new Mercenary(position, 1, square, 15, 4);
+            mercenary = new Mercenary(position, 1, square, 15, 4,testingRandom);
         }
 
         PlayerCharacter character = new PlayerCharacter(position, 20, 1);
@@ -168,9 +170,9 @@ public class CombatTests {
         Position position = new Position(0,0,0);
         Random rand = new Random(1);
         EntityList square = new EntityList();
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
 
         PlayerCharacter character = new PlayerCharacter(position, 20, 1);
@@ -208,9 +210,9 @@ public class CombatTests {
 
         square.remove(zombie);
 
-        zombie = new ZombieToast(position, 10, 2);
+        zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
 
         for (Entity e : square) {
@@ -232,9 +234,9 @@ public class CombatTests {
 
         square.remove(zombie);
 
-        zombie = new ZombieToast(position, 10, 2);
+        zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
 
         for (Entity e : square) {
@@ -252,9 +254,9 @@ public class CombatTests {
 
         square.remove(zombie);
 
-        zombie = new ZombieToast(position, 10, 2);
+        zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
 
         for (Entity e : square) {
@@ -272,9 +274,9 @@ public class CombatTests {
 
         square.remove(zombie);
 
-        zombie = new ZombieToast(position, 10, 2);
+        zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
 
         for (Entity e : square) {
@@ -297,9 +299,9 @@ public class CombatTests {
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
         Random rand = new Random(1);
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
 
         PlayerCharacter character = new PlayerCharacter(position, 20, 1);
@@ -399,12 +401,12 @@ public class CombatTests {
     public void testCombat_drops() {
         Position position = new Position(0,0,0);
         EntityList square = new EntityList();
-        Random rand = new Random(193);
+        Random rand = new Random(3);
 
 
-        Mob zombie = new ZombieToast(position, 1, 2);
+        Mob zombie = new ZombieToast(position, 1, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 1, 2);
+            zombie = new ZombieToast(position, 1, 2, rand);
         }
         assertEquals(6, zombie.getArmour().getDurability());
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
@@ -422,9 +424,9 @@ public class CombatTests {
         assertEquals("armour", character.getInventory().get(0).getType());
         assertEquals("one_ring", character.getInventory().get(1).getType());
 
-        zombie = new ZombieToast(position, 1, 2);
+        zombie = new ZombieToast(position, 1, 2, rand);
         while (zombie.getArmour() != null) {
-            zombie = new ZombieToast(position, 1, 2);
+            zombie = new ZombieToast(position, 1, 2, rand);
         }
         square.add(zombie);
 
@@ -438,23 +440,24 @@ public class CombatTests {
 
     @Test
     public void testCombat_allies() {
+        Random rand = new Random(1);
         Position position = new Position(0,0,0);
         Position position2 = new Position(1,1,1);
         EntityList square = new EntityList();
 
 
-        Mob zombie = new ZombieToast(position, 80, 2);
+        Mob zombie = new ZombieToast(position, 80, 2, rand);
         while (zombie.getArmour() != null) {
-            zombie = new ZombieToast(position, 80, 2);
+            zombie = new ZombieToast(position, 80, 2, rand);
         }
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
 
         square.add(character);
         square.add(zombie);
-        Mercenary mercenary = new Mercenary(position2, 1, square, 15, 4);
+        Mercenary mercenary = new Mercenary(position2, 1, square, 15, 4, rand);
         mercenary.bribe(1);
 
-        Assassin assassin = new Assassin(position2, 1, square, 15, 4);
+        Assassin assassin = new Assassin(position2, 1, square, 15, 4, rand);
         assassin.bribe(1);
         assertEquals(mercenary, character.getAllies().get(0));
         assertEquals(assassin, character.getAllies().get(1));
@@ -486,9 +489,9 @@ public class CombatTests {
         Random rand = new Random(1);
 
 
-        Mob zombie = new ZombieToast(position, 10, 2);
+        Mob zombie = new ZombieToast(position, 10, 2, rand);
         while (zombie.getArmour() == null) {
-            zombie = new ZombieToast(position, 10, 2);
+            zombie = new ZombieToast(position, 10, 2, rand);
         }
         assertEquals(6, zombie.getArmour().getDurability());
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
@@ -535,5 +538,6 @@ public class CombatTests {
         assertEquals(-1, zombie.getHealth());
         assertEquals(19, character.getHealth());
     }
+
 }
 

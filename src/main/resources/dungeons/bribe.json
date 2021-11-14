@@ -23,7 +23,7 @@
         {
             "x": 3,
             "y": 4,
-            "type": "arrow"
+            "type": "sun_stone"
         },
         {
             "x": 2,
@@ -33,22 +33,27 @@
         {
             "x": 1,
             "y": 4,
-            "type": "key"
+            "type": "arrow"
         },
         {
             "x": 0,
             "y": 4,
-            "type": "sun_stone"
+            "type": "key"
         },
         {
-            "x": 2,
+            "x": 1,
             "y": 5,
             "type": "treasure"
         },
         {
-            "x": 2,
-            "y": 6,
-            "type": "sun_stone"
+            "x": 3,
+            "y": 3,
+            "type": "wood"
+        },
+        {
+            "x": 3,
+            "y": 2,
+            "type": "key"
         },
         {
             "x": 5,
@@ -102,8 +107,48 @@
         },
         {
             "x": 7,
-            "y": 7,
+            "y": 5,
             "type": "treasure"
+        },
+        {
+            "x": 6,
+            "y": 4,
+            "type": "one_ring"
+        },
+        {
+            "x": 7,
+            "y": 2,
+            "type": "wall"
+        },
+        {
+            "x": 7,
+            "y": 8,
+            "type": "wall"
+        },
+        {
+            "x": 5,
+            "y": 0,
+            "type": "wall"
+        },
+        {
+            "x": 5,
+            "y": 10,
+            "type": "wall"
+        },
+        {
+            "x": 6,
+            "y": 0,
+            "type": "wall"
+        },
+        {
+            "x": 7,
+            "y": 9,
+            "type": "wall"
+        },
+        {
+            "x": 8,
+            "y": 10,
+            "type": "wall"
         }
     ]
 }

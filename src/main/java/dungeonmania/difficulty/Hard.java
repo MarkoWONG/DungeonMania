@@ -8,6 +8,8 @@ import dungeonmania.entity.HardEntityFactory;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 
+import java.util.Random;
+
 public class Hard extends Difficulty{
     public Hard(Dungeon dungRef, MovementManager movementManager, FightManager fightManager) {
         super(dungRef,movementManager,fightManager);
@@ -33,7 +35,7 @@ public class Hard extends Difficulty{
     }
 
     @Override
-    public EntityFactory createEntityFactory(EntityList entityMap) {
-        return new HardEntityFactory(entityMap);
+    public EntityFactory createEntityFactory(EntityList entityMap, Random currRandom) {
+        return new HardEntityFactory(entityMap, currRandom);
     }
 }

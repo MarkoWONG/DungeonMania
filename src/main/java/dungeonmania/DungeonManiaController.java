@@ -50,7 +50,14 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
-        currDungeon = new Dungeon(dungeonName,gameMode);
+        Long random_seed = System.currentTimeMillis();
+        currDungeon = new Dungeon(dungeonName,gameMode, random_seed);
+        this.currAdapter = new DungeonResponseAdapter(currDungeon);
+        return currAdapter.createDungResponse();
+    }
+
+    public DungeonResponse newGame(String dungeonName, String gameMode, Long seed) throws IllegalArgumentException {
+        currDungeon = new Dungeon(dungeonName,gameMode, seed);
         this.currAdapter = new DungeonResponseAdapter(currDungeon);
         return currAdapter.createDungResponse();
     }

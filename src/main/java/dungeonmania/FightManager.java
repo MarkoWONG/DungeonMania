@@ -45,8 +45,8 @@ public class FightManager {
             if(curr.getHealth() <= 0) {
                 if (!curr.canRevive()) {
                     entities.remove(i);
-                    for (CollectableEntity e : curr.getInventory()) {
-                        character.addItemToInventory(e);
+                    for(int j = curr.getInventory().size() - 1; j >= 0; --j) {
+                        character.addItemToInventory(curr.getInventory().get(j));
                     }
                     int newRand = rand.nextInt(10);
                     if (newRand == 0) {

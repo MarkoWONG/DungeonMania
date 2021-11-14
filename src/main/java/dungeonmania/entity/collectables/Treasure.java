@@ -27,6 +27,9 @@ public class Treasure extends CollectableEntity implements BribeMaterial{
     public int getBribePriority(){
         return 1;
     }
+    public int getBribeDuration(){
+        return -1;
+    }
 
     @Override
     public void startInteraction(Entity entity) {

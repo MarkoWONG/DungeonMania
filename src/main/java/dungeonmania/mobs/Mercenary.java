@@ -1,7 +1,7 @@
 package dungeonmania.mobs;
+import dungeonmania.entity.Entity;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
-import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.entity.collectables.BribeMaterial;
 import dungeonmania.entity.collectables.CollectableEntity;
@@ -22,8 +22,9 @@ public class Mercenary extends Mob implements Subscriber{
     private Boolean charIsInvincible;
     private int price;
     private int battleRadius;
+    private int bribeDuration;
 
-    public Mercenary(Position position, int price, EntityList entities,int health, int ad) {
+    public Mercenary(Position position, int price, EntityList entities,int health, int ad, Random currRandom) {
         super(new Position(position.getX(), position.getY(),50));
         setAttackDamage(ad);
         setHealth(health);
@@ -33,8 +34,9 @@ public class Mercenary extends Mob implements Subscriber{
         this.charIsInvincible = false;
         this.charIsInvisible = false;
         this.battleRadius = 5;
-        Random rand = new Random();
-        if (rand.nextInt(5) == 4) {
+        this.bribeDuration = -1;
+        int rand = currRandom.nextInt(5);
+        if (rand == 4) {
             setArmour(new Armour());
         } else {
             setArmour(null);
@@ -42,8 +44,8 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     @Override
-    public boolean isInteractable() {
-        return isEnemy();
+    public void startInteraction(Entity entity) {
+        entity.interact(this);
     }
 
     /**
@@ -62,25 +64,62 @@ public class Mercenary extends Mob implements Subscriber{
             e.addAlly(this);
         }
     }
+    @Override
+    public boolean isInteractable() {
+        return isEnemy() && checkBribeRange(getCharacterPos(),this.getPosition());
+    }
 
     @Override
     public String getType() {
         return "mercenary";
     }
 
+    public Position getCharacterPos() { return charPosition; }
+
+    public int getPrice() {
+        return price;
+    }
+
     @Override
     public void click(PlayerCharacter character) {
         BribeMaterial bribeMat = searchBribeMaterial(character);
         if (bribeMat == null) {
-            throw new InvalidActionException("bribe material is required to bribe");
+            throw new InvalidActionException("Bribe material is required to bribe");
         }
-        Position posBetween = Position.calculatePositionBetween(character.getPosition(),this.getPosition());
-        if (abs(posBetween.getX()) <= 2 || abs(posBetween.getY()) <= 2) {
-            bribe(bribeMat.getBribeAmount(price));
+        if (checkBribeRange(charPosition, this.getPosition())) {
+            bribe(bribeMat.getBribeAmount(price), bribeMat.getBribeDuration());
             bribeMat.usedInBribe(character);
         } else {
             throw new InvalidActionException("Mercenary out of range");
         }
+    }
+
+    protected boolean checkBribeRange(Position characterPos, Position thisPos){
+        if (characterPos == null){
+            return false;
+        }
+        if (abs(characterPos.getX()-thisPos.getX()) <= 2 && characterPos.getY() == thisPos.getY()){
+            return true;
+        }
+        else if (abs(characterPos.getY()-thisPos.getY()) <= 2 && characterPos.getX() == thisPos.getX()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * bribe the mercenary to change its faction. 
+     * the amount given is cumilative
+     * @param amount an amount of money given
+     * @return false if its not enough, true if the merc has become an ally
+     */
+    public void bribe(int amount, int bribeDuration) {
+        price -= amount;
+        if (price > 0) {
+            return;
+        }
+        this.bribeDuration = bribeDuration;
+        super.changeFaction("ally");
     }
 
     private BribeMaterial searchBribeMaterial(PlayerCharacter character){
@@ -93,16 +132,16 @@ public class Mercenary extends Mob implements Subscriber{
         }
 
         // return the highest Piority birbe Material (spectre -> sun_stone -> teasure)
-        BribeMaterial highestPiorityMat = null;
+        BribeMaterial highestPriorityMat = null;
         if (bribeMats.size() > 0){
-            highestPiorityMat = bribeMats.get(0);
+            highestPriorityMat = bribeMats.get(0);
             for (BribeMaterial mat: bribeMats){
-                if (highestPiorityMat.getBribePriority() < mat.getBribePriority()){
-                    highestPiorityMat = mat;
+                if (highestPriorityMat.getBribePriority() < mat.getBribePriority()){
+                    highestPriorityMat = mat;
                 }
             }
         }
-        return highestPiorityMat;
+        return highestPriorityMat;
     }
 
     @Override
@@ -115,13 +154,19 @@ public class Mercenary extends Mob implements Subscriber{
             else {
                 super.move(MovementManager.shortestPath(this, charPosition, entities));
             }
+            if (bribeDuration == 0){
+                super.changeFaction("enemy");
+            }
+            else if (bribeDuration > -1){
+                bribeDuration--;
+            }
         }
     }
 
     @Override
-    public void notifyFight() {
+    public void notifyFight(Position position) {
         if (! (charIsInvincible || charIsInvisible) && battleInRadius()) {
-            move(MovementManager.shortestPath(this, charPosition, entities));
+            move(MovementManager.shortestPath(this, position, entities));
         }
     }
 

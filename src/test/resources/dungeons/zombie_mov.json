@@ -1,10 +1,15 @@
 
 {
     "entities": [
-    {
-        "x": 1,
-        "y": 1,
-        "type": "zombie_toast"
+        {
+            "x": 1,
+            "y": 1,
+            "type": "zombie_toast"
+        },
+        {
+            "x": 10,
+            "y": 10,
+            "type": "player"
         }
     ]
-  }
+}
