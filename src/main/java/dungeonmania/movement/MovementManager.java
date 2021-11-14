@@ -172,6 +172,11 @@ public class MovementManager {
                 if ((eachEntity instanceof Mob && entity instanceof PlayerCharacter) || (eachEntity instanceof PlayerCharacter && entity instanceof Mob)) {
                     return true;
                 }
+                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
+                    ((Spider) eachEntity).changeDirection();
+                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
+                    ((Spider) entity).changeDirection();
+                }
                 return false;
             }
         }
