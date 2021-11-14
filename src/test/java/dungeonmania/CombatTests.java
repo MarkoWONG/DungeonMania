@@ -151,8 +151,8 @@ public class CombatTests {
         square.add(character);
         square.add(zombie);
         square.add(mercenary);
-        assertTrue(zombie.getArmour().getDurability() == 6);
-        assertTrue(mercenary.getArmour().getDurability() == 6);
+        assertTrue(zombie.getArmour().getDurability() == 3);
+        assertTrue(mercenary.getArmour().getDurability() == 3);
 
         FightManager fightManager = new FightManager(square, rand);
         fightManager.setCharacter(character);
@@ -160,9 +160,9 @@ public class CombatTests {
         
         assertTrue(character.getHealth() == 16);
         assertTrue(zombie.getHealth() == 8);
-        assertTrue(zombie.getArmour().getDurability() == 5);
+        assertEquals(2, zombie.getArmour().getDurability());
         assertTrue(mercenary.getHealth() == 14);
-        assertTrue(mercenary.getArmour().getDurability() == 5);
+        assertTrue(mercenary.getArmour().getDurability() == 2);
     }
 
     @Test
@@ -184,9 +184,9 @@ public class CombatTests {
         square.add(character);
         square.add(zombie);
 
-        assertEquals(zombie.getArmour().getDurability(), 6);
-        assertEquals(6, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
+        assertEquals(zombie.getArmour().getDurability(), 3);
+        assertEquals(3, sworda.getDurability());
+        assertEquals(3, swordb.getDurability());
         FightManager fightManager = new FightManager(square, rand);
 
         fightManager.setCharacter(character);
@@ -194,8 +194,8 @@ public class CombatTests {
         
         assertTrue(character.getHealth() == 18);
         assertEquals(4, zombie.getHealth());
-        assertEquals(5, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
+        assertEquals(2, sworda.getDurability());
+        assertEquals(3, swordb.getDurability());
 
         for (Entity e : square) {
             e.setHasFought(false);
@@ -205,8 +205,8 @@ public class CombatTests {
 
         assertTrue(character.getHealth() == 18);
         assertEquals(-1, zombie.getHealth());
-        assertEquals(4, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
+        assertEquals(1, sworda.getDurability());
+        assertEquals(3, swordb.getDurability());
 
         square.remove(zombie);
 
@@ -228,9 +228,9 @@ public class CombatTests {
 
         assertEquals(character.getHealth(), 17);
         assertEquals(0, zombie.getHealth());
-        assertEquals(3, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
-        assertEquals(5, bow.getDurability());
+        assertEquals(0, sworda.getDurability());
+        assertEquals(3, swordb.getDurability());
+        assertEquals(2, bow.getDurability());
 
         square.remove(zombie);
 
@@ -248,9 +248,9 @@ public class CombatTests {
 
         assertTrue(character.getHealth() == 16);
         assertEquals(0, zombie.getHealth());
-        assertEquals(2, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
-        assertEquals(4, bow.getDurability());
+        assertEquals(0, sworda.getDurability());
+        assertEquals(2, swordb.getDurability());
+        assertEquals(1, bow.getDurability());
 
         square.remove(zombie);
 
@@ -268,9 +268,9 @@ public class CombatTests {
 
         assertEquals(character.getHealth(), 15);
         assertEquals(1, zombie.getHealth());
-        assertEquals(1, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
-        assertEquals(3, bow.getDurability());
+        assertEquals(0, sworda.getDurability());
+        assertEquals(1, swordb.getDurability());
+        assertEquals(0, bow.getDurability());
 
         square.remove(zombie);
 
@@ -286,12 +286,12 @@ public class CombatTests {
 
         fightManager.doCharFights();
         assertEquals(14, character.getHealth());
-        assertEquals(1, zombie.getHealth());
+        assertEquals(6, zombie.getHealth());
         assertEquals(0, sworda.getDurability());
-        assertEquals(6, swordb.getDurability());
-        assertEquals(2, bow.getDurability());
+        assertEquals(0, swordb.getDurability());
+        assertEquals(0, bow.getDurability());
 
-        assertEquals(4, character.getInventory().size());
+        assertEquals(1, character.getInventory().size());
     }
 
     @Test
@@ -316,9 +316,9 @@ public class CombatTests {
         square.add(character);
         square.add(zombie);
 
-        assertEquals(zombie.getArmour().getDurability(), 6);
-        assertEquals(6, sword.getDurability());
-        assertEquals(6, anduril.getDurability());
+        assertEquals(zombie.getArmour().getDurability(), 3);
+        assertEquals(3, sword.getDurability());
+        assertEquals(3, anduril.getDurability());
         FightManager fightManager = new FightManager(square, rand);
 
         fightManager.setCharacter(character);
@@ -326,9 +326,9 @@ public class CombatTests {
         
         assertTrue(character.getHealth() == 18);
         assertEquals(-10, zombie.getHealth());
-        assertEquals(5, anduril.getDurability());
-        assertEquals(5, bow.getDurability());
-        assertEquals(6, sword.getDurability());
+        assertEquals(2, anduril.getDurability());
+        assertEquals(2, bow.getDurability());
+        assertEquals(3, sword.getDurability());
     }
 
     @Test
@@ -350,8 +350,8 @@ public class CombatTests {
         square.add(character);
         square.add(hydra);
 
-        assertEquals(6, sword.getDurability());
-        assertEquals(6, anduril.getDurability());
+        assertEquals(3, sword.getDurability());
+        assertEquals(3, anduril.getDurability());
         FightManager fightManager = new FightManager(square, random);
 
         fightManager.setCharacter(character);
@@ -359,9 +359,9 @@ public class CombatTests {
         
         assertEquals(10, character.getHealth());
         assertEquals(74, hydra.getHealth());
-        assertEquals(6, anduril.getDurability());
-        assertEquals(5, bow.getDurability());
-        assertEquals(5, sword.getDurability());
+        assertEquals(3, anduril.getDurability());
+        assertEquals(2, bow.getDurability());
+        assertEquals(2, sword.getDurability());
 
         character.addItemToInventory(anduril);
 
@@ -377,9 +377,9 @@ public class CombatTests {
         
         assertEquals(13, character.getHealth());
         assertEquals(34, hydra.getHealth());
-        assertEquals(5, anduril.getDurability());
-        assertEquals(4, bow.getDurability());
-        assertEquals(5, sword.getDurability());
+        assertEquals(2, anduril.getDurability());
+        assertEquals(1, bow.getDurability());
+        assertEquals(2, sword.getDurability());
 
         character.removeItemFromInventory(anduril);
 
@@ -392,9 +392,9 @@ public class CombatTests {
         
         assertEquals(17, character.getHealth());
         assertEquals(10, hydra.getHealth());
-        assertEquals(5, anduril.getDurability());
-        assertEquals(3, bow.getDurability());
-        assertEquals(4, sword.getDurability());
+        assertEquals(2, anduril.getDurability());
+        assertEquals(0, bow.getDurability());
+        assertEquals(1, sword.getDurability());
     }
 
     @Test
@@ -408,7 +408,7 @@ public class CombatTests {
         while (zombie.getArmour() == null) {
             zombie = new ZombieToast(position, 1, 2, rand);
         }
-        assertEquals(6, zombie.getArmour().getDurability());
+        assertEquals(3, zombie.getArmour().getDurability());
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
 
         square.add(character);
@@ -493,7 +493,7 @@ public class CombatTests {
         while (zombie.getArmour() == null) {
             zombie = new ZombieToast(position, 10, 2, rand);
         }
-        assertEquals(6, zombie.getArmour().getDurability());
+        assertEquals(3, zombie.getArmour().getDurability());
         PlayerCharacter character = new PlayerCharacter(position, 20, 2);
 
         square.add(character);
