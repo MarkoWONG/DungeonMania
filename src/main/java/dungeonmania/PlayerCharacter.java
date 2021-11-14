@@ -45,10 +45,6 @@ public class PlayerCharacter extends Entity implements Movement{
         subscribers.add(s);
     }
 
-    public void removeSubscriber(Subscriber s) {
-        subscribers.remove(s);
-    }
-
     public void replaceInventory(ArrayList<CollectableEntity> newInv) {
         this.inventory = newInv;
     }
@@ -320,15 +316,6 @@ public class PlayerCharacter extends Entity implements Movement{
     public CollectableEntity getItemById(String id) {
         for (CollectableEntity eachEntity : inventory) {
             if (eachEntity.getId().equals(id)) {
-                return eachEntity;
-            }
-        }
-        return null;
-    }
-
-    public CollectableEntity getItemByType(String type) {
-        for (CollectableEntity eachEntity : inventory) {
-            if (eachEntity.getType().equals(type)) {
                 return eachEntity;
             }
         }
