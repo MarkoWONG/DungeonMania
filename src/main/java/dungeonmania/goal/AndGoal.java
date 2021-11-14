@@ -17,7 +17,7 @@ public class AndGoal implements Goal {
 
     @Override
     public String toString() {
-        if (goal1.compute() && goal2.compute()) {
+        if (compute()) {
             return "";
         } else if (goal1.compute() || goal2.compute()) {
             return goal1.compute() ? goal2.toString() : goal1.toString();

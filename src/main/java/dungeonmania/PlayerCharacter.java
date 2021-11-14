@@ -45,10 +45,6 @@ public class PlayerCharacter extends Entity implements Movement{
         subscribers.add(s);
     }
 
-    public void removeSubscriber(Subscriber s) {
-        subscribers.remove(s);
-    }
-
     public void replaceInventory(ArrayList<CollectableEntity> newInv) {
         this.inventory = newInv;
     }
@@ -326,15 +322,6 @@ public class PlayerCharacter extends Entity implements Movement{
         return null;
     }
 
-    public CollectableEntity getItemByType(String type) {
-        for (CollectableEntity eachEntity : inventory) {
-            if (eachEntity.getType().equals(type)) {
-                return eachEntity;
-            }
-        }
-        return null;
-    }
-
     public boolean hasWeapon() {
         for (CollectableEntity eachEntity : inventory) {
             if (eachEntity instanceof Weapon) {
@@ -381,11 +368,6 @@ public class PlayerCharacter extends Entity implements Movement{
     @Override
     public String getType() {
         return "player";
-    }
-
-
-    public Integer getInvincibleTicks() {
-        return invincibleTicks;
     }
 
     public void setInvincibleTicks(Integer invincibleTicks) {
