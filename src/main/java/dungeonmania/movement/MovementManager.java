@@ -5,7 +5,6 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
-import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
@@ -13,16 +12,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 
 public class MovementManager {
     private PlayerCharacter player;
     private EntityList entities;
+    private static EntityList staticEntities;
     private HashMap<Entity, Integer> ticksTilMove;
     private Random currRandom;
 
     public MovementManager(EntityList entities, Random currRandom) {
         this.entities = entities;
+        MovementManager.staticEntities = entities;
         this.ticksTilMove = new HashMap<>();
         this.currRandom = currRandom;
     }
@@ -151,6 +153,14 @@ public class MovementManager {
         }
     }
 
+    public static Boolean checkBoulder(Position position, Direction direction) {
+        Position newPos = position.translateBy(direction);
+        return staticEntities.search(newPos)
+                .stream().map(Entity::getType)
+                .collect(Collectors.toList())
+                .contains("mercenary");
+    }
+
     /**
      * @precondition the entity passed is movable (ie, implements movement)
      * @return true if the move is possible, false is not
@@ -189,11 +199,6 @@ public class MovementManager {
                 if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
                     return true;
                 }
-                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
-                    ((Spider) eachEntity).changeDirection();
-                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
-                    ((Spider) entity).changeDirection();
-                }
                 return false;
             }
         }
@@ -210,11 +215,6 @@ public class MovementManager {
             if (eachEntity.getPosition().getLayer() >= entity.getPosition().getLayer()) {
                 if ((eachEntity instanceof Mob || eachEntity instanceof PlayerCharacter) && (entity instanceof Mob || entity instanceof PlayerCharacter)) {
                     return true;
-                }
-                if ((eachEntity.getType().equals("spider") && entity.getType().equals("boulder"))) {
-                    ((Spider) eachEntity).changeDirection();
-                } else if ((eachEntity.getType().equals("boulder") && entity.getType().equals("spider"))) {
-                    ((Spider) entity).changeDirection();
                 }
                 return false;
             }

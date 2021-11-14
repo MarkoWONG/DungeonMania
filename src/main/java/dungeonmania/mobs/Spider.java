@@ -30,43 +30,82 @@ public class Spider extends Mob {
 
     @Override
     public void move(Direction direction) {
+        Boolean boulder = MovementManager.checkBoulder(super.getPosition(), direction);
         switch(positionCounter) {
             case -1:
+            if (!boulder) {
                 super.move(Direction.UP);
-                break;
+            }
+            break;
             case 0 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.LEFT);
+            } else {
                 super.move(Direction.RIGHT);
-                break;
+            }
+            break;
             case 1 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.UP);
+            } else {
                 super.move(Direction.DOWN);
-                break;
+            }
+            break;
             case 2 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.UP);
+            } else {
                 super.move(Direction.DOWN);
-                break;
+            }
+            break;
             case 3 :
-                super.move(Direction.LEFT);
-                break;
-            case 4 :
-                super.move(Direction.LEFT);
-                break;
-            case 5 :
-                super.move(Direction.UP);
-                break;
-            case 6 :
-                super.move(Direction.UP);
-                break;
-            case 7 :
+            if (boulder) {
+                positionCounter *= -1;
                 super.move(Direction.RIGHT);
-                break;
+            } else {
+                super.move(Direction.LEFT);
+            }
+            break;
+            case 4 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.RIGHT);
+            } else {
+                super.move(Direction.LEFT);
+            }
+            break;
+            case 5 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.RIGHT);
+            } else {
+                super.move(Direction.UP);
+            }
+            break;
+            case 6 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.RIGHT);
+            } else {
+                super.move(Direction.UP);
+            }
+            break;
+            case 7 :
+            if (boulder) {
+                positionCounter *= -1;
+                super.move(Direction.LEFT);
+            } else {
+                super.move(Direction.RIGHT);
+            }
+            break;
         }
         positionCounter = positionCounter + moveDirection;
         if (positionCounter < 0 || positionCounter > 7) {
-            positionCounter = (((positionCounter % 8) + 8) % 8) + 1;
+            positionCounter = (((positionCounter % 8) + 8) % 8);
         }
-    }
-
-    public void changeDirection() {
-        moveDirection = moveDirection * -1;
     }
 
     @Override
