@@ -60,8 +60,8 @@ public class DifficultyTests {
         
         // get the potion, use it
         currResponse = currController.tick(null, Direction.LEFT);
-        //String invincPotionId = currResponse.getInventory().get(0).getId();
-        //currController.tick(invincPotionId, Direction.NONE);
+        String invincPotionId = currResponse.getInventory().get(0).getId();
+        currController.tick(invincPotionId, Direction.NONE);
         
         // character will now die in two ticks because potion doesn't do anything in hard
         currResponse = currController.tick(null, Direction.NONE);
@@ -72,7 +72,6 @@ public class DifficultyTests {
                 .stream().map(EntityResponse::getType)
                 .collect(Collectors.toList())
                 .contains("Player"));
-
     }
 
     @Test

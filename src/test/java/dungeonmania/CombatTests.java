@@ -30,7 +30,7 @@ public class CombatTests {
         Position position = new Position(0,0,0);
         Random rand = new Random(1);
         EntityList square = new EntityList();
-        Entity spider = new Spider(position, 5, 6);
+        Entity spider = new Spider(position, 5, 6,new EntityList());
         Mob zombie = new ZombieToast(position, 10, 2,testingRandom);
         while (zombie.getArmour() != null) {
             zombie = new ZombieToast(position, 10, 2,testingRandom);
