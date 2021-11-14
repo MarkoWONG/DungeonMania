@@ -370,11 +370,6 @@ public class PlayerCharacter extends Entity implements Movement{
         return "player";
     }
 
-
-    public Integer getInvincibleTicks() {
-        return invincibleTicks;
-    }
-
     public void setInvincibleTicks(Integer invincibleTicks) {
         this.invincibleTicks = invincibleTicks;
     }
