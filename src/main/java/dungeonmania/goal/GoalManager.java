@@ -6,6 +6,7 @@ import dungeonmania.util.FileLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 // use the composite pattern!!!
@@ -24,7 +25,7 @@ public class GoalManager {
         JSONObject currGoals;
         try {
             currFileStr = FileLoader.loadResourceFile("/dungeons/" + dungeonName + ".json");
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             throw new IllegalArgumentException("Dungeon does not exist");
         }
         try {

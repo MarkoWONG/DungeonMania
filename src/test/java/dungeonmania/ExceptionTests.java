@@ -37,8 +37,9 @@ public class ExceptionTests {
     }
 
     @Test
-    public void testGameModeException() {
+    public void testNewGameException() {
         DungeonManiaController currController = new DungeonManiaController();
-        assertThrows(IllegalArgumentException.class,() -> currController.newGame("dungeon_collectable", "BadGameMode",1L));
+        assertThrows(IllegalArgumentException.class,() -> currController.newGame("dungeon_collectable", "BadGameMode"));
+        assertThrows(IllegalArgumentException.class,() -> currController.newGame("BADDUNGEONNAME", "Standard"));
     }
 }
