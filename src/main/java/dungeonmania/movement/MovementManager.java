@@ -5,6 +5,7 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
+import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
@@ -12,19 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 public class MovementManager {
     private PlayerCharacter player;
     private EntityList entities;
-    private static EntityList staticEntities;
     private HashMap<Entity, Integer> ticksTilMove;
     private Random currRandom;
 
     public MovementManager(EntityList entities, Random currRandom) {
         this.entities = entities;
-        MovementManager.staticEntities = entities;
         this.ticksTilMove = new HashMap<>();
         this.currRandom = currRandom;
     }
@@ -153,12 +151,11 @@ public class MovementManager {
         }
     }
 
-    public static Boolean checkBoulder(Position position, Direction direction) {
-        Position newPos = position.translateBy(direction);
-        return staticEntities.search(newPos)
+    public static Boolean checkBoulder(Position position) {
+        return entities.search(position)
                 .stream().map(Entity::getType)
                 .collect(Collectors.toList())
-                .contains("mercenary");
+                .contains("boulder");
     }
 
     /**
