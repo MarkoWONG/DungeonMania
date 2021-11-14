@@ -535,28 +535,5 @@ public class CombatTests {
         assertEquals(-1, zombie.getHealth());
         assertEquals(19, character.getHealth());
     }
-
-
-    public static void main(String[] args) {
-        int i = 0;
-        Random rand = null;
-        int value = 0;
-        int count =0;
-        while (true) {
-            rand = new Random(i);
-            value = rand.nextInt(10);
-            count = 0;
-            while ((value != 1 && value != 0 && count < 10)) {
-                value = rand.nextInt(10);
-                count++;
-            }
-            if (count >= 10) {
-                System.out.println(i);
-                break;
-            }
-            
-            i++;
-        }
-    }
 }
 
