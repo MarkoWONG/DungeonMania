@@ -33,80 +33,68 @@ public class Spider extends Mob {
 
     @Override
     public void move(Direction direction) {
-        if (MovementManager.checkBoulder(super.getPosition(), entities)) {
+        Direction pos = getMovePos();
+        Direction neg = getMoveNeg();
+        Position newPos = super.getPosition().translateBy((moveDirection == 1) ? pos : neg);
+        
+        if (MovementManager.checkBoulder(newPos, entities)) {
             moveDirection *= -1;
         }
 
-        if (moveDirection == 1) {doMovePos();}
-        else if (moveDirection == -1) {doMoveNeg();}
+        super.move((moveDirection == 1) ? pos : neg);
 
         positionCounter = modulus(positionCounter + moveDirection, 8);
     }
 
-    private void doMovePos(){
+    private Direction getMovePos(){
         
         switch(positionCounter) {
             case -1:
-            super.move(Direction.UP);
-            break;
+            return Direction.UP;
             case 0 :
-            super.move(Direction.RIGHT);
-            break;
+            return Direction.RIGHT;
             case 1 :
-            super.move(Direction.DOWN);
-            break;
+            return Direction.DOWN;
             case 2 :
-            super.move(Direction.DOWN);
-            break;
+            return Direction.DOWN;
             case 3 :
-            super.move(Direction.LEFT);
-            break;
+            return Direction.LEFT;
             case 4 :
-            super.move(Direction.LEFT);
-            break;
+            return Direction.LEFT;
             case 5 :
-            super.move(Direction.UP);
-            break;
+            return Direction.UP;
             case 6 :
-            super.move(Direction.UP);
-            break;
+            return Direction.UP;
             case 7 :
-            super.move(Direction.RIGHT);
-            break;
+            return Direction.RIGHT;
         }
+
+        return Direction.NONE;
     }
 
     
-    private void doMoveNeg(){
+    private Direction getMoveNeg(){
         
         switch(positionCounter) {
-            case -1:
-            break;
             case 0 :
-            super.move(Direction.LEFT);
-            break;
+             return Direction.LEFT;
             case 1 :
-            super.move(Direction.LEFT);
-            break;
+            return Direction.LEFT;
             case 2 :
-            super.move(Direction.UP);
-            break;
+            return Direction.UP;
             case 3 :
-            super.move(Direction.UP);
-            break;
+            return Direction.UP;
             case 4 :
-            super.move(Direction.RIGHT);
-            break;
+            return Direction.RIGHT;
             case 5 :
-            super.move(Direction.RIGHT);
-            break;
+            return Direction.RIGHT;
             case 6 :
-            super.move(Direction.DOWN);
-            break;
+            return Direction.DOWN;
             case 7 :
-            super.move(Direction.DOWN);
-            break;
+            return Direction.DOWN;
         }
+
+        return Direction.NONE;
     }
 
     @Override
