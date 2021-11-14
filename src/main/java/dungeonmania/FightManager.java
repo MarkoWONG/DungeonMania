@@ -2,7 +2,6 @@ package dungeonmania;
 
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Anduril;
-import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.rare.OneRing;
 
 import java.util.ArrayList;

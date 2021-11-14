@@ -1,25 +1,18 @@
 package dungeonmania;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
 
 public class RandomSeedTests {
 
-    private boolean entityAtPosition(String type, DungeonResponse response, Position position) {
-        return response.getEntities().stream().filter(e -> e.getType().equals(type)).filter(e -> e.getPosition().equals(position)).count() == 3;
-    }
-
     @Test
     public void testCollisions_playerToWall() {
-        Long seed = System.currentTimeMillis();
         DungeonManiaController controller1 = new DungeonManiaController();
         DungeonResponse response1 = controller1.newGame("lots_of_zombies", "Standard", 1321L);
 

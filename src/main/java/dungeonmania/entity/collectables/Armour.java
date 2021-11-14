@@ -12,14 +12,12 @@ public class Armour extends CollectableEntity{
 
     public Armour() {
         super(null);
-        // times 2 as items are used twice per battle one for attacking and one for defending
-        this.durability = startingDurability * 2;
+        this.durability = startingDurability;
     }
 
     public Armour(Position position){
         super(new Position(position.getX(), position.getY(), 40));
-        // times 2 as items are used twice per battle one for attacking and one for defending
-        this.durability = startingDurability * 2;
+        this.durability = startingDurability;
     }
 
     @Override
@@ -42,10 +40,8 @@ public class Armour extends CollectableEntity{
 
     public boolean usedInBattle(PlayerCharacter player){
         durability--;
-        // System.out.println("armour durablity is now: " + durability);
         if (durability <= 0){
             return true;
-            // player.getInventory().removeIf(ent -> ent.equals(this));
         }
         return false;
     }

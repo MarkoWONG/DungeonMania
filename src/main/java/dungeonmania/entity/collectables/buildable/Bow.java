@@ -15,8 +15,7 @@ public class Bow extends BuildableEntity implements Weapon {
     private List<String> recipeUsed;
 
     public Bow() {
-        // times 2 as items are used twice per battle one for attacking and one for defending
-        this.durability = startingDurability * 2;
+        this.durability = startingDurability ;
         this.recipeUsed = new ArrayList<String>();
     }
 
@@ -51,7 +50,7 @@ public class Bow extends BuildableEntity implements Weapon {
     }
 
     public void resetDurability() {
-        this.durability = startingDurability * 2;
+        this.durability = startingDurability;
     }
     
     public Integer getDurability() {
