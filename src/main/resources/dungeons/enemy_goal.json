@@ -7,6 +7,22 @@
       }
     ],
     "goal-condition": {
-        "goal": "enemies"
-    }
+        "goal": "AND",
+        "subgoals": [
+          {
+            "goal": "exit"
+          },
+          {
+            "goal": "OR",
+            "subgoals": [
+                {
+                  "goal": "enemies"
+                },
+                {
+                  "goal": "treasure"
+                }
+              ]
+          }
+        ]
+      }
 }
