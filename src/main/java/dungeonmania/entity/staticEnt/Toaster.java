@@ -7,7 +7,6 @@ import dungeonmania.mobs.ZombieToast;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Position;
 import dungeonmania.util.Direction;
-import dungeonmania.mobs.Mob;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -75,7 +74,7 @@ public class Toaster extends StaticEntity{
 
     @Override
     public void click(PlayerCharacter character) {
-        for (Position adjPositions : this.getPosition().getAdjacentPositions() ) {
+        for (Position adjPositions : this.getPosition().getCardinallyAdjacentPositions() ) {
             if (character.getPosition().equals(adjPositions.asLayer(50)) && character.hasWeapon()) {
                 entityList.remove(this);
             }
