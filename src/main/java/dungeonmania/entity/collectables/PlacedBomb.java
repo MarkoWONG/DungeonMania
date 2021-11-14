@@ -33,7 +33,9 @@ public class PlacedBomb extends StaticEntity {
         }
     }
 
-    // removes all entities directly surrounding bomb (except player)
+    /**
+     * When called, destroy all entities surrounding this entity, except the player
+     */
     private void denotate(){
         for (Position eachPos : this.getPosition().getAdjacentPositions()) {
             for (Entity eachEntity : entities.search(eachPos)) {

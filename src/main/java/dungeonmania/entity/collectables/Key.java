@@ -40,7 +40,12 @@ public class Key extends CollectableEntity {
             player.addItemToInventory(this);
         }
     }
-    
+
+    /**
+     * Search the player's inventory for any key, returning true if they have one
+     * @param player The player to be searched
+     * @return Whether the given player has a key in their inventory
+     */
     private boolean playerHasKey(PlayerCharacter player){
         for (CollectableEntity ent : player.getInventory()){
             if (ent.getType().equals("key")){
@@ -50,7 +55,10 @@ public class Key extends CollectableEntity {
         return false;
     }
 
-    // Getter
+    /**
+     * Return the number ID for which door/key combo this corresponds to
+     * @return the key identifier this key belongs to
+     */
     public int getKeyIdentifer() {
         return this.keyIdentifer;
     }

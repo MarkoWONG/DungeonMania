@@ -11,10 +11,10 @@ import dungeonmania.util.Position;
 public class SpawnManager {
     
     /**
-     * 
-     * @param map
-     * @param position
-     * @return whether or not an entity can spawn in the given position 
+     * Check whether a spawn can be made on the given position
+     * @param map The EntityList for the current dungeon
+     * @param position The position to be checked
+     * @return Whether or not an entity can spawn in the given position
      */
     public static Boolean checkValidSpawn(EntityList map, Position position){
         // note: is only applied to mercenary atm, so is hard coded to that height

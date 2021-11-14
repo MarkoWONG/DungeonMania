@@ -32,6 +32,10 @@ public class OneRing extends CollectableEntity {
         player.removeItemFromInventory(this);
     }
 
+    /**
+     * Use the item as a bribe, removing itself from the given player's inventory
+     * @param playerCharacter The character currently being controlled
+     */
     public void usedInBribe(PlayerCharacter playerCharacter) {
         playerCharacter.removeItemFromInventory(this);
     }

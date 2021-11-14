@@ -12,8 +12,10 @@ import dungeonmania.mobs.Spider;
 import dungeonmania.mobs.ZombieToast;
 
 public interface Interacts {
-    // In InteractionManager: for each entity in the entities map, do currEntity.doInteraction(currEntity2), for each entity on the same square
-    // currEntity.doInteraction(currEntity2) will then call currEntity2.interact(this) to get the right type without typecasting. (HOPEFULLY?!)
+    /**
+     * Visitor pattern starter for interactions (when two entities share a tile)
+     * @param entity The entity that this entity should try for an interaction with
+     */
     void startInteraction(Entity entity);
 
     // we need to have a case for every subclass of entity... (a lot)

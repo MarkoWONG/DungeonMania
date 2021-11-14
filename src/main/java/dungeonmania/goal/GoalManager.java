@@ -20,6 +20,12 @@ public class GoalManager {
         this.goal = createGoal(dungeonName);
     }
 
+    /**
+     * Create the goal object for the given dungeon from JSON
+     * @param dungeonName The name of the dungeon to be loaded from file
+     * @return The goal object for the given dungeon
+     * @throws IllegalArgumentException Where the dungeon map cannot be found
+     */
     private Goal createGoal(String dungeonName) throws IllegalArgumentException {
         String currFileStr;
         JSONObject currGoals;
@@ -36,6 +42,11 @@ public class GoalManager {
         return doGoal(currGoals);
     }
 
+    /**
+     * Given a goal, recursively create a goal object
+     * @param topLevelGoal the current goal level that has subgoals
+     * @return Part of or a complete goal object
+     */
     private Goal doGoal(JSONObject topLevelGoal) {
         String goalName = topLevelGoal.getString("goal");
         JSONArray currSubGoals;
@@ -65,6 +76,9 @@ public class GoalManager {
         }
     }
 
+    /**
+     * @return the readable goal string of the current goal object
+     */
     public String getGoals() {
         return goal.toString();
     }

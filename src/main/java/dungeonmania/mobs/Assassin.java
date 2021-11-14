@@ -49,6 +49,11 @@ public class Assassin extends Mercenary{
         }
     }
 
+    /**
+     * Search the player's inventory for all valid bribe materials, and return the highest priority one
+     * @param character The player character's whose inventory is to be searched
+     * @return The highest priority bribe material or null if none
+     */
     private BribeMaterial searchBribeMaterial(PlayerCharacter character){
         // get all avaliable bribe Materials
         ArrayList<BribeMaterial> bribeMats = new ArrayList<BribeMaterial>();
@@ -71,6 +76,11 @@ public class Assassin extends Mercenary{
         return highestPriorityMat;
     }
 
+    /**
+     * Search the players inventory for the One Ring
+     * @param character The player character's whose inventory is to be searched
+     * @return The one ring or null if not found
+     */
     private OneRing searchOneRing(PlayerCharacter character) {
         for (CollectableEntity ent : character.getInventory()){
             if (ent instanceof OneRing){

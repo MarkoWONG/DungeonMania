@@ -8,12 +8,8 @@ import dungeonmania.entity.staticEnt.*;
 import dungeonmania.entity.collectables.*;
 import dungeonmania.entity.collectables.potion.*;
 import dungeonmania.entity.collectables.rare.*;
-import dungeonmania.mobs.Assassin;
+import dungeonmania.mobs.*;
 import dungeonmania.entity.floorTiles.SwampTile;
-import dungeonmania.mobs.Mercenary;
-import dungeonmania.mobs.Spider;
-import dungeonmania.mobs.Subscriber;
-import dungeonmania.mobs.ZombieToast;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
@@ -31,6 +27,15 @@ public abstract class EntityFactory {
         this.currRandom = currRandom;
     }
 
+    /**
+     * Create an entity of the corresponding type
+     * @param entityType The string type of the entity
+     * @param startPos The entities starting position
+     * @param colour String colour of the entity (where applicable)
+     * @param key String keyID of the entity (where applicable)
+     * @param mov_factor The movement factor of the entity (where applicable)
+     * @return The entity that has been created
+     */
     public Entity create(String entityType, Position startPos, String colour, String key, int mov_factor) {
         if (entityType.toLowerCase(Locale.ROOT).contains("player")) {return makePlayer(startPos);}
         if (entityType.toLowerCase(Locale.ROOT).contains("wall")) {return makeWall(startPos);}
@@ -64,6 +69,11 @@ public abstract class EntityFactory {
         return null;
     }
 
+    /**
+     * Given an entity, have them set up to observe the player character, and then return the same entity
+     * @param e The entity that should watch the player
+     * @return The entity given as input
+     */
     private Entity subscribe(Entity e) {
         PlayerCharacter player = entityMap.findPlayer(); 
         if (e instanceof Subscriber && player != null) { // && player exists already
@@ -74,6 +84,11 @@ public abstract class EntityFactory {
         return e;
     }
 
+    /**
+     * Create the player, and set up all their subscribers
+     * @param startPos The player's starting position
+     * @return The player
+     */
     protected Entity makePlayer(Position startPos) {
         Entity player = new PlayerCharacter(startPos,20,2);
         for (Subscriber s : subscribers) {
@@ -110,14 +125,24 @@ public abstract class EntityFactory {
         return new Toaster(startPos,20,entityMap,currRandom);
     }
 
+    /**
+     * Create a mercenary, but with a chance to create an assassin in it's place
+     * @param startPos The spawn position of the mercenary or assassin
+     * @return The mercenary or assassin
+     */
     protected Entity makeMercenary(Position startPos) {
         if (currRandom.nextInt(100) < 30) {
-            return makeAssassin(startPos);
+            return subscribe(makeAssassin(startPos));
         } else {
             return subscribe(new Mercenary(startPos,1,entityMap,15,4,currRandom));
         }
     }
 
+    /**
+     * Create an assassin, where you want to force an assassin spawn
+     * @param startPos The spawn position of the mercenary or assassin
+     * @return
+     */
     protected Entity makeAssassin(Position startPos) {
         return subscribe(new Assassin(startPos,1,entityMap,15,10,currRandom));
     }
@@ -222,8 +247,7 @@ public abstract class EntityFactory {
     
 
     protected Entity makeHydra(Position startPos) {
-        //return new Hydra(startPos);
-        return null;
+        return new Hydra(startPos, 50, 2, currRandom);
     }
 
     protected Entity makeBow() { return new Bow(); }

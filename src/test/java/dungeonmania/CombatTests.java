@@ -146,7 +146,7 @@ public class CombatTests {
         ArrayList<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(armoura);
         inventory.add(armourb);
-        character.setInventory(inventory);
+        character.replaceInventory(inventory);
 
         square.add(character);
         square.add(zombie);
@@ -430,7 +430,7 @@ public class CombatTests {
         }
         square.add(zombie);
 
-        character.setInventory(new ArrayList<CollectableEntity>());
+        character.replaceInventory(new ArrayList<CollectableEntity>());
         fightManager.doCharFights();
         assertEquals(-7, zombie.getHealth());
         assertEquals(1, square.size());

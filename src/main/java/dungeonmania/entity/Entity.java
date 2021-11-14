@@ -46,10 +46,17 @@ public abstract class Entity implements Interacts {
         return position.getY();
     }
 
+    /**
+     * @return How many ticks it takes for an entity (other than the player) to cross this tile
+     */
     public int getMovementFactor() {
         return movementFactor;
     }
-    
+
+    /**
+     * How many ticks it takes an entity (other than the player) to cross this tile
+     * @param movementFactor The number of ticks for this tile
+     */
     public void setMovementFactor(int movementFactor) {
         this.movementFactor = movementFactor;
     }
@@ -58,50 +65,88 @@ public abstract class Entity implements Interacts {
         return id;
     }
 
+    /**
+     * @return The string representing the entity
+     */
     abstract public String getType();
 
+    /**
+     * @return Whether the entity can be clicked on by the frontend
+     */
     public boolean isInteractable() {
         return false;
     }
 
+    /**
+     * Perform the entity behaviour for being clicked on
+     * @param character The player character currently being controlled
+     */
     public void click(PlayerCharacter character) {} // nothing by default
 
+    /**
+     * Move the entity in the given direction, assumes the move is valid
+     * @param direction The direction to be moved in
+     */
     public void move(Direction direction) {
-        ;
+
     }
+
     public void fight(Entity e) {}
 
     public void fight(Mob mob) {}
 
 
+    /**
+     * Increment this entities internal tick counter if needed
+     */
     public void incrementTick(){}
-    // none of these do anything by default you need to override them in the specific class to implement the behaviour
-    // startFight and startInteraction just call .fight(this) when overridden
 
     public void startFight(PlayerCharacter playerCharacter) {
         playerCharacter.fight(this); //example override for playerCharacter
     }
-    
 
+    /**
+     * Mark the entity as having fought or not fought this tick
+     * @param value Whether the entity has fought
+     */
     public void setHasFought(Boolean value) {
         hasFought = value;
     }
 
+    /**
+     * @return whether the entity has fought this tick
+     */
     public boolean hasFought() {
         return hasFought;
     }
 
+    /**
+     * @return whether the entity is capable of reviving
+     */
     public boolean canRevive() {
         return false;
     }
-    public void revive(Entity e) {
+
+    /**
+     * Revive the entity where possible
+     * @param e This entity
+     */
+    public void revive() {
 
     }
 
+    /**
+     * Get the other info of this entity, the type of this info defined by getOtherInfoType()
+     * @return A string containing the other info
+     */
     public String getOtherInfo() {
         return "";
     }
 
+    /**
+     * Get the other info type of this entity, the actual info defined by getOtherInfo()
+     * @return A string containing the other info
+     */
     public String getOtherInfoType() {
         return "";
     }
@@ -226,12 +271,24 @@ public abstract class Entity implements Interacts {
 
     }
 
+    /**
+     * @return The current health of the entity
+     */
     public Integer getHealth() {
         return 1;
     }
+
+    /**
+     * Given a mob, add it to this entities allies list
+     * @param newAlly The mob to be added as an ally
+     */
     public void addAlly(Mob newAlly) {
     }
 
+    /**
+     * Get the inventory of the
+     * @return an ArrayList of CollectableEntities
+     */
     public ArrayList<CollectableEntity> getInventory() {
         return new ArrayList<CollectableEntity>();
     }
