@@ -1,5 +1,6 @@
 package dungeonmania.mobs;
 
+import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -58,7 +59,10 @@ public class Spider extends Mob {
                 super.move(Direction.RIGHT);
                 break;
         }
-        positionCounter = (positionCounter + moveDirection) % 8;
+        positionCounter = positionCounter + moveDirection;
+        if (positionCounter < 0 || positionCounter > 7) {
+            positionCounter = (((positionCounter % 8) + 8) % 8) + 1;
+        }
     }
 
     public void changeDirection() {
