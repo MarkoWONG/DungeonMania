@@ -7,6 +7,7 @@ import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.entity.collectables.Weapon;
 import dungeonmania.entity.collectables.buildable.BuildableEntity;
+import dungeonmania.mobs.Hydra;
 import dungeonmania.mobs.Mob;
 import dungeonmania.mobs.Subscriber;
 import dungeonmania.util.Direction;
@@ -143,43 +144,152 @@ public class PlayerCharacter extends Entity implements Movement{
         }
     }
 
+    public void fight(Hydra hydra) {
+        if (hydra.isEnemy()) {
+            int mobAttack = hydra.getAttackDamage() * hydra.getHealth() / 10;
+            Boolean usingAnduril = hasAnduril();
+            hydra.takeDamage(attackHydra(), usingAnduril);
+            takeDamage(mobAttack);
+            for(Subscriber s: subscribers) {
+                s.notifyFight(getPosition());
+            }
+        }
+    }
+
     public int attack() {
         int AD = (int)getAttackDamage();
-        ArrayList<String> typesUsed = new ArrayList<String>();
+        ArrayList<CollectableEntity> weaponsUsed = new ArrayList<CollectableEntity>();
 
-        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
-            CollectableEntity currentEnt = iterator.next();
-            if (!typesUsed.contains(currentEnt.getType())) {
-                AD = currentEnt.usedInAttack(AD);
-                if (currentEnt.usedInBattle(this)){
-                    iterator.remove();
-                    typesUsed.add(currentEnt.getType());
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("anduril")) {
+                AD = e.usedInAttack(AD);
+                weaponsUsed.add(e);
+                break;
+            }
+        }
+
+        if (weaponsUsed.isEmpty()) {
+            for (CollectableEntity e : inventory) {
+                if (e.getType().equals("sword")) {
+                    AD = e.usedInAttack(AD);
+                    weaponsUsed.add(e);
+                    break;
                 }
             }
         }
         
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("bow")) {
+                AD = e.usedInAttack(AD);
+                weaponsUsed.add(e);
+                break;
+            }
+        }   
+        for (CollectableEntity e : weaponsUsed) {
+            if (e.usedInBattle(this)) {
+                inventory.remove(e);
+            }
+        }
+
+        for (Mob mob : allies) {
+            AD += mob.getAttackDamage()/2;
+        }
+        return AD * getHealth() / 5;
+    }
+
+    public int attackHydra() {
+        int AD = (int)getAttackDamage();
+        ArrayList<CollectableEntity> weaponsUsed = new ArrayList<CollectableEntity>();
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("anduril")) {
+                AD = e.usedInAttack(AD);
+                weaponsUsed.add(e);
+                break;
+            }
+        }
+
+        if (weaponsUsed.isEmpty()) {
+            for (CollectableEntity e : inventory) {
+                if (e.getType().equals("sword")) {
+                    AD = e.usedInAttack(AD);
+                    weaponsUsed.add(e);
+                    break;
+                }
+            }
+        }
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("midnight_armour")) {
+                AD = e.usedInAttack(AD);
+                weaponsUsed.add(e);
+                break;
+            }
+        }
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("bow")) {
+                AD = e.usedInAttack(AD);
+                weaponsUsed.add(e);
+                break;
+            }
+        }   
+        for (CollectableEntity e : weaponsUsed) {
+            if (e.usedInBattle(this)) {
+                inventory.remove(e);
+            }
+        }
 
         for (Mob mob : allies) {
             AD += mob.getAttackDamage();
         }
         return AD * getHealth() / 5;
-    }   
+    }
 
     public void takeDamage(int damage) {
-        ArrayList<String> typesUsed = new ArrayList<String>();
+        ArrayList<CollectableEntity> typesUsed = new ArrayList<CollectableEntity>();
         int reducedDamage = damage;
-        for (Iterator<CollectableEntity> iterator = inventory.iterator(); iterator.hasNext();){
-            CollectableEntity currentEnt = iterator.next();
-            if (!typesUsed.contains(currentEnt.getType())) {
-                reducedDamage = currentEnt.usedInDefense(reducedDamage);
-                if (currentEnt.usedInBattle(this)){
-                    iterator.remove();
-                    typesUsed.add(currentEnt.getType());
-                }
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("midnight_armour")) {
+                reducedDamage = e.usedInDefense(reducedDamage);
+                typesUsed.add(e);
+                break;
             }
         }
-        
-        setHealth(getHealth() - reducedDamage);
+
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("shield")) {
+                reducedDamage = e.usedInDefense(reducedDamage);
+                typesUsed.add(e);
+                break;
+            }
+        }   
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("armour")) {
+                reducedDamage = e.usedInDefense(reducedDamage);
+                typesUsed.add(e);
+                break;
+            }
+        }
+
+        for (CollectableEntity e : typesUsed) {
+            if (e.usedInBattle(this)) {
+                inventory.remove(e);
+            }
+        }
+        if (invincibleTicks <= 0) {
+            setHealth(getHealth() - reducedDamage);
+        }
+    }
+
+    public boolean hasAnduril() {
+        for (CollectableEntity e : inventory) {
+            if (e.getType().equals("anduril")) {
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override
@@ -240,6 +350,14 @@ public class PlayerCharacter extends Entity implements Movement{
 
     public void setAllies(ArrayList<Mob> allies) {
         this.allies = allies;
+    }
+    @Override
+    public void addAlly(Mob newAlly) {
+        allies.add(newAlly);
+    }
+
+    public void removeAlly(Mob oldAlly) {
+        allies.remove(oldAlly);
     }
 
     @Override

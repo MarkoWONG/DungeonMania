@@ -1,6 +1,7 @@
 package dungeonmania.mobs;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.collectables.Armour;
 import dungeonmania.entity.collectables.BribeMaterial;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.rare.OneRing;
@@ -10,9 +11,16 @@ import dungeonmania.util.Position;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Math.abs;
+
 public class Assassin extends Mercenary{
     public Assassin(Position position, int price, EntityList entities,int health, int ad, Random currRandom) {
         super(new Position(position.getX(), position.getY(),50),price,entities,health,ad, currRandom);
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return isEnemy();
     }
 
     @Override

@@ -54,4 +54,7 @@ public class Bow extends BuildableEntity implements Weapon {
         this.durability = startingDurability * 2;
     }
     
+    public Integer getDurability() {
+        return durability;
+    }
 }

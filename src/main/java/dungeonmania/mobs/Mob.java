@@ -1,7 +1,10 @@
 package dungeonmania.mobs;
+import java.util.ArrayList;
+
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.movement.Movement;
@@ -25,6 +28,15 @@ public abstract class Mob extends Entity implements Movement{
 
     public Armour getArmour() {
         return armour;
+    }
+
+    @Override
+    public ArrayList<CollectableEntity> getInventory() {
+        ArrayList<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        if (armour != null) {
+            inventory.add(armour);
+        }
+        return inventory;
     }
 
     public void takeDamage(int damage) {
@@ -72,6 +84,7 @@ public abstract class Mob extends Entity implements Movement{
     public void changeFaction(String newFaction) {
         if (newFaction.equals("ally")) {
             faction.setFaction(new Ally());
+            
         } else if (newFaction.equals("enemy")) {
             faction.setFaction(new Enemy());
         }

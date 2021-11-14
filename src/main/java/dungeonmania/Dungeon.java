@@ -50,7 +50,7 @@ public class Dungeon {
         this.entities = new EntityList();
         this.goalManager = new GoalManager(dungeonName,this);
         this.movementManager = new MovementManager(entities,currRandom);
-        this.fightManager = new FightManager(entities);
+        this.fightManager = new FightManager(entities, currRandom);
         this.gameMode = difficultySelector(gameMode);
         this.entityFactory = this.gameMode.createEntityFactory(entities,currRandom);
         createNewEntitiesMap(entities, dungeonName);
@@ -110,6 +110,10 @@ public class Dungeon {
     public void doSpawns() {
         if (tick != 0 && tick % 30 == 0 && SpawnManager.checkValidSpawn(entities, entry)) {
             entities.add(entityFactory.create("mercenary", entry, "", "", 1));
+        }
+        if (tick != 0 && tick % 50 == 0 && gameMode.getMode().equals("Hard")) {
+            Position p = SpawnManager.getRandPosition(entities, currRandom);
+            if (p != null) {entities.add(entityFactory.create("hydra", p, "", "", 0));}
         }
     }
 

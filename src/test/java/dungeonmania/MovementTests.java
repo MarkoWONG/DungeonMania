@@ -16,6 +16,12 @@ public class MovementTests {
     //     return response.getEntities().stream().filter(e -> e.getType().equals(type)).filter(e -> e.getPosition().equals(position)).count() == 1;
     // }
 
+    public boolean isAdjacent(Position a, Position b) {
+        int x = Math.abs(a.getX() - b.getX());
+        int y = Math.abs(a.getY() - b.getY());
+        return x + y == 1;
+    }
+
     @Test
     public void testMovement_player() {
         DungeonManiaController controller = new DungeonManiaController();
@@ -50,11 +56,30 @@ public class MovementTests {
             // isAdjacent is bugged (doesn't do absolute value) or we would use that here
         }
         Position finalPos = response.getEntities().stream().filter(e -> e.getType().equals("zombie_toast")).map(EntityResponse::getPosition).collect(Collectors.toList()).get(0);
-        assertEquals(finalPos, new Position(1,1));
+        assertEquals(finalPos, new Position(1,3, 50));
 
 
     }
     // mercenary movement tests conducted in DijkstraTests
+
+    @Test
+    public void testMovement_hydra() {
+        DungeonManiaController controller = new DungeonManiaController();
+        DungeonResponse response = controller.newGame("hydra_mov", "Hard");
+
+        assertEquals(6, response.getEntities().size());
+        assertEquals(response.getEntities().get(0).getPosition(), new Position(1, 1, 50));
+        
+        for (int i = 0; i < 10; i++) {
+            Position prev = response.getEntities().get(0).getPosition();
+            
+            response = controller.tick(null, Direction.NONE);
+
+            Position current = response.getEntities().get(0).getPosition();
+            assert(isAdjacent(prev, current));
+        }
+        
+    }
 
     @Test
     public void testMovement_spider() {
