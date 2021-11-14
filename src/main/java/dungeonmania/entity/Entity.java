@@ -14,6 +14,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entity.staticEnt.*;
 import dungeonmania.PlayerCharacter;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public abstract class Entity implements Interacts {
@@ -71,6 +72,7 @@ public abstract class Entity implements Interacts {
     public void startFight(PlayerCharacter playerCharacter) {
         playerCharacter.fight(this); //example override for playerCharacter
     }
+    
 
     public void setHasFought(Boolean value) {
         hasFought = value;
@@ -217,5 +219,9 @@ public abstract class Entity implements Interacts {
 
     public Integer getHealth() {
         return 1;
+    }
+
+    public ArrayList<CollectableEntity> getInventory() {
+        return new ArrayList<CollectableEntity>();
     }
 }

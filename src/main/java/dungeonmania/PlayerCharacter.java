@@ -155,10 +155,20 @@ public class PlayerCharacter extends Entity implements Movement{
         ArrayList<CollectableEntity> weaponsUsed = new ArrayList<CollectableEntity>();
 
         for (CollectableEntity e : inventory) {
-            if (e.getType().equals("sword")) {
+            if (e.getType().equals("anduril")) {
                 AD = e.usedInAttack(AD);
                 weaponsUsed.add(e);
                 break;
+            }
+        }
+
+        if (weaponsUsed.isEmpty()) {
+            for (CollectableEntity e : inventory) {
+                if (e.getType().equals("sword")) {
+                    AD = e.usedInAttack(AD);
+                    weaponsUsed.add(e);
+                    break;
+                }
             }
         }
         
