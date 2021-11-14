@@ -62,7 +62,7 @@ public class DungeonTests {
     @Test
     public void testItemUsedAndPickedUpOnTick() {
         DungeonManiaController currController = new DungeonManiaController();
-        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard");
+        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard",1L);
 
         // get the potion, use it
         currResponse = currController.tick(null, Direction.LEFT);

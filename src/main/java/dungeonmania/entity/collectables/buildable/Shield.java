@@ -14,8 +14,7 @@ public class Shield extends BuildableEntity {
     private List<String> recipeUsed;
 
     public Shield() {
-        // times 2 as items are used twice per battle one for attacking and one for defending
-        this.durability = startingDurability * 2;
+        this.durability = startingDurability;
         this.recipeUsed = new ArrayList<String>();
     }
 
@@ -64,6 +63,6 @@ public class Shield extends BuildableEntity {
 
     @Override
     public void resetDurability() {
-        this.durability = startingDurability * 2;
+        this.durability = startingDurability;
     }
 }

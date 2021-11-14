@@ -47,6 +47,7 @@
 * Sceptre are activated via a interact (click) and the effect duration wares off according to the ticks
 * The chance of getting a rare entity drop on mob kill is 1/5 with a 1/10 chance of getting the one ring and 1/10 chance of getting anduril (cannot get both from one mob)
 * If the difficulty is not hard, any hydra will be replaced by a zombie
+* Zombie walk over portals
 
 ## Entity Statistics
 * PlayerCharacter: 20 (Standard) 6 (Hard), Base AD = 1	→ 4 damage at 20 health
