@@ -21,8 +21,16 @@ public abstract class Difficulty {
         this.fightManager = fightManager;
     }
 
+    /**
+     * @return A string containing the name of the current gamemode
+     */
     abstract public String getMode();
 
+    /**
+     *
+     * @param entitiesMap The EntityList of all entities with a place in the dungeon
+     * @param movementDirection A direction for the player
+     */
     abstract public void simulate(EntityList entitiesMap, Direction movementDirection);
 
     abstract public EntityFactory createEntityFactory(EntityList entityMap, Random currRandom);

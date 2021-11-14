@@ -23,12 +23,10 @@ public class Standard extends Difficulty {
     @Override
     public void simulate(EntityList entitiesMap, Direction moveDir) {
         movementManager.moveChar(moveDir);
-//        movementManager.doInteractions();
         fightManager.doCharFights();
         movementManager.moveMobs();
         movementManager.doInteractions();
         fightManager.doCharFights();
-//        movementManager.doMercenarySpMove();
         fightManager.doCharFights();
         fightManager.resetHasFought();
     }

@@ -7,7 +7,9 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -65,7 +67,7 @@ public class PersistenceTests {
         currController.saveGame("difficultytest-1636179960394");
         assert currController.allGames().contains("difficultytest-1636179960394");
         currController.newGame("difficultytest", "Standard"); // reset
-        currController.loadGame("difficultytest-1636179960394"); // restore
+        currResponse = currController.loadGame("difficultytest-1636179960394"); // restore
 
         // assert no potion in inventory
         assertFalse(currResponse.getInventory()
@@ -88,7 +90,22 @@ public class PersistenceTests {
         currController.saveGame("AndGoal-1636179960394");
         assert currController.allGames().contains("AndGoal-1636179960394");
         currController.newGame("AndGoal", "Standard"); // reset
-        currController.loadGame("AndGoal-1636179960394"); // restore
+        currResponse = currController.loadGame("AndGoal-1636179960394"); // restore
         assertEquals(":boulder",currResponse.getGoals()); //
+    }
+
+    @Test
+    public void saveAndLoad_Inventory() {
+        DungeonManiaController currController = new DungeonManiaController();
+        DungeonResponse currResponse = currController.newGame("dungeon_collectable", "Standard");
+        IntStream.range(0,9).forEach(tick -> currController.tick(null, Direction.LEFT));
+        currResponse = currController.tick(null, Direction.LEFT);
+        List<String> allItemsBefore = currResponse.getInventory().stream().map(ItemResponse::getType).collect(Collectors.toList());
+        currController.saveGame("dungeon_collectable-1636179960394");
+        assert currController.allGames().contains("dungeon_collectable-1636179960394");
+        currController.newGame("dungeon_collectable", "Standard"); // reset
+        currResponse = currController.loadGame("dungeon_collectable-1636179960394"); // restore
+        List<String> allItemsAfter = currResponse.getInventory().stream().map(ItemResponse::getType).collect(Collectors.toList());
+        assertEquals(allItemsBefore,allItemsAfter);
     }
 }
