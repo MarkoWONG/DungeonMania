@@ -5,7 +5,6 @@ import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.staticEnt.Door;
 import dungeonmania.mobs.Mob;
-import dungeonmania.mobs.Spider;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import java.util.ArrayList;
@@ -28,10 +27,18 @@ public class MovementManager {
         this.currRandom = currRandom;
     }
 
+    /**
+     * Set the current instance's player field
+     * @param player The player object for the current dungeon
+     */
     public void setCharacter(PlayerCharacter player) {
         this.player = player;
     }
 
+    /**
+     * Apply the correct movement factor to each mob
+     * @param entities The EntityList for the current dungeon
+     */
     public void initTicksTilMove(EntityList entities) {
         for (Entity e : entities) {
             if (! ticksTilMove.containsKey(e)) {
@@ -44,6 +51,10 @@ public class MovementManager {
         }
     }
 
+    /**
+     * @param p The given position
+     * @return the movement factor for the given position
+     */
     private int calcMovFactor(Position p) {
         int mov_factor = 1;
         for (Entity e : entities.search(p)) {
@@ -53,6 +64,9 @@ public class MovementManager {
     }
 
 
+    /**
+     * For each entity sharing a tile with another, do all interactions
+     */
     public void doInteractions() {
         for (Entity eachEntity : entities) {
             for (Entity eachOtherEntity : entities.searchTile(eachEntity)) {
@@ -69,6 +83,10 @@ public class MovementManager {
     }
 
 
+    /**
+     * Move the character in the given direction
+     * @param moveDir
+     */
     public void moveChar(Direction moveDir) {
         initTicksTilMove(entities);
         checkBoulder(moveDir);
@@ -105,8 +123,8 @@ public class MovementManager {
     }
 
     /**
-     * generates a random, possible movement direction
-     * @param entity
+     * Generates a random, possible movement direction
+     * @param entity The given entity
      * @return a random direction the entity can move in
      */
     private Direction getRandDirection(Entity entity) {
@@ -152,6 +170,11 @@ public class MovementManager {
         }
     }
 
+    /**
+     * @param position The position to be checked
+     * @param entities The EntityList for the current dungeon
+     * @return whether the position contains a boulder
+     */
     public static Boolean checkBoulder(Position position,EntityList entities) {
         return entities.search(position)
                 .stream().map(Entity::getType)
@@ -160,8 +183,9 @@ public class MovementManager {
     }
 
     /**
-     * @precondition the entity passed is movable (ie, implements movement)
-     * @return true if the move is possible, false is not
+     * @param entity The entity to be checked
+     * @param direction The direction to be checked for possible move
+     * @return True if the move is possible, False is not
      */
     private Boolean checkMove(Entity entity, Direction direction) {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
@@ -186,6 +210,12 @@ public class MovementManager {
         return true;
     }
 
+    /**
+     * @param entity An entity to be checked
+     * @param direction The direction of the possible move
+     * @param entities The EntityList for the current dungeon
+     * @return Whether a move can be made for the given entity in the given direction
+     */
     public static Boolean staticCheckMove(Entity entity, Direction direction, EntityList entities) {
         Position newEntityPosition = entity.getPosition().translateBy(direction);
         ArrayList<Entity> tile = entities.search(newEntityPosition);
@@ -203,6 +233,12 @@ public class MovementManager {
         return true;
     }
 
+    /**
+     * @param entity An entity to be checked
+     * @param position The position of the possible move
+     * @param entities The EntityList for the current dungeon
+     * @return Whether a move can be made for the given entity in the given direction
+     */
     public static Boolean staticCheckMove(Entity entity, Position position, EntityList entities) {
         Position newEntityPosition = position;
         ArrayList<Entity> tile = entities.search(newEntityPosition);
@@ -230,9 +266,13 @@ public class MovementManager {
         if (a.getPosition().equals(b)) {
             return Direction.NONE;
         }
-        return dijksra(a, b, entities);
+        return Dijkstra(a, b, entities);
     }
 
+    /**
+     * @param d Any direction
+     * @return The opposite of the given direction
+     */
     public static Direction invertDirection(Direction d) {
         if (d.toString().equals("UP")){
             return Direction.DOWN;
@@ -251,7 +291,14 @@ public class MovementManager {
         }
     }
 
-    private static Direction dijksra(Entity a, Position b, EntityList entities) {
+    /**
+     * Perform dijkstra's algorithm between two points, finding the shortest path, and returning the first step in that path
+     * @param a The entity that is conducting the pathfinding
+     * @param b The ending position
+     * @param entities The EntityList of the current dungeon
+     * @return The first step in the shortest path
+     */
+    private static Direction Dijkstra(Entity a, Position b, EntityList entities) {
         
         List<Position> grid = entities.grid(a);
 
@@ -310,6 +357,12 @@ public class MovementManager {
         return path;
     }
 
+    /**
+     * Given a list of positions, return the closest
+     * @param queue A queue of all possible positions
+     * @param dist The distance for each position
+     * @return The position with the lowest distance
+     */
     private static Position getDijkstraMin(List<Position> queue, Map<Position, Double> dist) {
         Position shortest = null;
         Double min = Double.POSITIVE_INFINITY; 

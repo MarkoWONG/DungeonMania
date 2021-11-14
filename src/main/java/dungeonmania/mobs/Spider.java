@@ -46,6 +46,9 @@ public class Spider extends Mob {
         positionCounter = modulus(positionCounter + moveDirection, 8);
     }
 
+    /**
+     * @return the direction to move when moving clockwise
+     */
     private Direction getMovePos(){
         
         switch(positionCounter) {
@@ -72,7 +75,9 @@ public class Spider extends Mob {
         return Direction.NONE;
     }
 
-    
+    /**
+     * @return the direction to move when moving anti-clockwise
+     */
     private Direction getMoveNeg(){
         
         switch(positionCounter) {

@@ -9,7 +9,11 @@ import java.util.ArrayList;
 
 public class DungeonJSONAdapter {
 
-
+    /**
+     * Given a Dungeon object, create a JSONObject containing it's state
+     * @param currDungeon Any Dungeon Object
+     * @return The JSONObject of the Dungeon's state
+     */
     public static JSONObject toJSON(Dungeon currDungeon) {
         JSONObject main = new JSONObject();
         main.put("name",currDungeon.getName());
@@ -22,7 +26,11 @@ public class DungeonJSONAdapter {
     }
 
 
-
+    /**
+     * Given an ArrayList of Entities, convert it to JSONArray form
+     * @param entities Any ArrayList of Entities
+     * @return JSONArray of Entity JSONObjects
+     */
     private static JSONArray entitiesToJSON(ArrayList<Entity> entities) {
         JSONArray output = new JSONArray();
         for (Entity eachEntity : entities) {
@@ -36,6 +44,11 @@ public class DungeonJSONAdapter {
         return output;
     }
 
+    /**
+     * Given an ArrayList of CollectableEntities, convert it to JSONArray Form
+     * @param inventory An ArrayList of CollectableEntities
+     * @return JSONArray of CollectableEntities
+     */
     private static JSONArray InventoryToJSON(ArrayList<CollectableEntity> inventory) {
         JSONArray output = new JSONArray();
         for (CollectableEntity eachItem : inventory) {

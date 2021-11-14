@@ -28,8 +28,8 @@ public class SpawnManager {
     }
 
     /**
-     * 
-     * @param map
+     * Given the existing entities, and the dungeon-wide random object, get a random position
+     * @param map The map of all existing entities
      * @return a randomly generated, valid spawn position
      */
     public static Position getRandPosition(EntityList map, Random currRandom){
@@ -43,8 +43,8 @@ public class SpawnManager {
         return possible.get(x);
     }
     /**
-     * 
-     * @param map
+     * Create a list of all possible spawning positions
+     * @param map The map of all existing entities
      * @return a list of positions available to spawn in
      */
     private static ArrayList<Position> positions(EntityList map) {

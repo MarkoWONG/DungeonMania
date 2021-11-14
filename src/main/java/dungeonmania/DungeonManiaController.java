@@ -110,7 +110,6 @@ public class DungeonManiaController {
 
 
     }
-    // itemUsed refers to the id!!
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
         currDungeon.tick(itemUsed,movementDirection);
         return currAdapter.createDungResponse();
