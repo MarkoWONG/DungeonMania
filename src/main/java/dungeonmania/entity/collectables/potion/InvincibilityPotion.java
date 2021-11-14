@@ -1,10 +1,11 @@
 package dungeonmania.entity.collectables.potion;
 import dungeonmania.entity.Entity;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Usable;
 import dungeonmania.util.Position;
 import dungeonmania.PlayerCharacter;
 
-public class InvincibilityPotion extends PotionEntity implements Usable{
+public class InvincibilityPotion extends CollectableEntity implements Usable{
     private static final int effectDuration = 5;
     private boolean enabled;
 
