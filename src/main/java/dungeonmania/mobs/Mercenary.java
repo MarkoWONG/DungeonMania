@@ -76,6 +76,9 @@ public class Mercenary extends Mob implements Subscriber{
 
     public Position getCharacterPos() { return charPosition; }
 
+    /**
+     * @return How much the mercenary costs to bribe
+     */
     public int getPrice() {
         return price;
     }
@@ -94,6 +97,12 @@ public class Mercenary extends Mob implements Subscriber{
         }
     }
 
+    /**
+     * Check if a position is within bribing range of the mercenary
+     * @param characterPos The position of the character
+     * @param thisPos The position of the Mercenary-like entity being bribed
+     * @return Whether the position is within bribing range
+     */
     protected boolean checkBribeRange(Position characterPos, Position thisPos){
         if (characterPos == null){
             return false;
@@ -108,10 +117,9 @@ public class Mercenary extends Mob implements Subscriber{
     }
 
     /**
-     * bribe the mercenary to change its faction. 
-     * the amount given is cumilative
+     * Bribe the mercenary to change its faction.
      * @param amount an amount of money given
-     * @return false if its not enough, true if the merc has become an ally
+     * @return False if the price has not been met, true if price has been met and the merc has become an ally
      */
     public void bribe(int amount, int bribeDuration) {
         price -= amount;
@@ -122,6 +130,11 @@ public class Mercenary extends Mob implements Subscriber{
         super.changeFaction("ally");
     }
 
+    /**
+     * Search the player's inventory for all valid bribe materials, and return the highest priority one
+     * @param character The player character's whose inventory is to be searched
+     * @return The highest priority bribe material or null if none
+     */
     private BribeMaterial searchBribeMaterial(PlayerCharacter character){
         // get all avaliable bribe Materials
         ArrayList<BribeMaterial> bribeMats = new ArrayList<BribeMaterial>();
@@ -195,6 +208,10 @@ public class Mercenary extends Mob implements Subscriber{
         super.takeDamage(reducedDamage);
     }
 
+    /**
+     * Check if a battle is occurring between the player and another mob within the mercenary's battle radius
+     * @return
+     */
     private Boolean battleInRadius() {
         int xDiff = abs(super.getPosition().getX() - charPosition.getX());
         int yDiff = abs(super.getPosition().getY() - charPosition.getY());

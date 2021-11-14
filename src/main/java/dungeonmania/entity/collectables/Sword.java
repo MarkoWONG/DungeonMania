@@ -47,6 +47,10 @@ public class Sword extends CollectableEntity implements Weapon{
         return attackDamage + 2;
     }
 
+    /**
+     * Return the durability of the item, currently only used for internal white-box testing
+     * @return The durability of the item
+     */
     public int getDurability() {
         return durability;
     }

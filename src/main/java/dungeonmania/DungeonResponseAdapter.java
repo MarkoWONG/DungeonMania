@@ -18,6 +18,10 @@ public class DungeonResponseAdapter {
         this.dungeon = dungRef;
     }
 
+    /**
+     * Create a dungeonResponse from the current instance Dungeon object
+     * @return DungeonResponse of the dungeon's state
+     */
     public DungeonResponse createDungResponse() {
         String id = dungeon.getId();
         String name = dungeon.getName();;
@@ -28,6 +32,10 @@ public class DungeonResponseAdapter {
         return new DungeonResponse(id,name,entities,inventory,buildables,goals);
     }
 
+    /**
+     * Convert Dungeon's Entities to a list of EntityResponses
+     * @return List of all EntityResponses in the dungeon
+     */
     private List<EntityResponse> doEntities() {
         ArrayList<EntityResponse> output = new ArrayList<>();
         for (Entity eachEntity : dungeon.getEntities() ) {
@@ -36,6 +44,10 @@ public class DungeonResponseAdapter {
         return output;
     }
 
+    /**
+     * Convert each item in the player's inventory to a list of ItemResponses
+     * @return A list of ItemResponses in the players inventory
+     */
     private List<ItemResponse> doItems() {
         ArrayList<ItemResponse> output = new ArrayList<>();
         for (Entity eachItem : dungeon.getInventory()) {

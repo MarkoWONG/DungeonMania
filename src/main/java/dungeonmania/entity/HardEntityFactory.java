@@ -32,9 +32,4 @@ public class HardEntityFactory extends EntityFactory{
         }
         return new InvincibilityPotion(startPos,false);
     }
-
-    @Override
-    protected Entity makeHydra(Position startPos) {
-        return new Hydra(startPos, 50, 2, currRandom);
-    }
 }

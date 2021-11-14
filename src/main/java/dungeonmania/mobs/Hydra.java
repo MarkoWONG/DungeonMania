@@ -8,14 +8,6 @@ import dungeonmania.util.Position;
 public class Hydra extends Mob{
     private Random rand;
 
-    public Hydra(Position position, int health, int ad) {
-        super(new Position(position.getX(), position.getY(),50));
-        this.setHealth(health);
-        setAttackDamage(ad);
-        rand = new Random(System.currentTimeMillis());
-    }
-
-
     public Hydra(Position position, int health, int ad, Random rand) {
         super(new Position(position.getX(), position.getY(),50));
         setHealth(health);

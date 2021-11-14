@@ -22,10 +22,17 @@ public abstract class Mob extends Entity implements Movement{
         faction.setFaction(new Enemy());
     }
 
+    /**
+     * Give this mob armour
+     * @param armour The armour object to be given
+     */
     public void setArmour(Armour armour) {
         this.armour = armour;
     }
 
+    /**
+     * @return the armour object used by this mob (null if none)
+     */
     public Armour getArmour() {
         return armour;
     }

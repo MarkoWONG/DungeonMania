@@ -59,6 +59,9 @@ public class EntityList extends ArrayList<Entity> {
         return output;
     }
 
+    /**
+     * @return The player in this EntityList
+     */
     public PlayerCharacter findPlayer() {
         for (Entity eachEntity : this) {
             if (eachEntity instanceof PlayerCharacter) {
@@ -78,9 +81,9 @@ public class EntityList extends ArrayList<Entity> {
     }
 
     /**
-     * generate a list of positions an entity can move to
-     * @param position the position of the entity, used to get the layer to determine available positions
-     * @return a list of the possible positions an entity can move to
+     * Create a grid representing the EntityList for use by Dijkstra's algorithm
+     * @param entity The entity doing the Dijkstra pathfinding
+     * @return A list of Positions
      */
     public List<Position> grid(Entity entity) {
         

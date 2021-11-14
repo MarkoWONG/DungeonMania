@@ -60,7 +60,6 @@ public class Door extends StaticEntity{
             if (item.getType().equals("key")){
                 Key playerKey = (Key) item;
                 if (playerKey.getKeyIdentifer() == key){
-                    System.out.println("unlocking with key");
                     player.removeItemFromInventory(item);
                     unlock();
                     return true;

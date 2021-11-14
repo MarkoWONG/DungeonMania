@@ -25,6 +25,9 @@ public class FightManager {
         this.rand = rand;
     }
 
+    /**
+     * Do all fights between the character and entities on the same tile as the character
+     */
     public void doCharFights() {
         if (character.getInvisibleTicks() <= 0) {
             ArrayList<Entity> currTile= entities.searchTile(character);
@@ -38,6 +41,11 @@ public class FightManager {
         cleanUp();
     }
 
+    /**
+     * For all entities with negative health, remove them from the game
+     * If they had an item, add it to the players inventory
+     * Randomly give the player a rare collectable on kill
+     */
     private void cleanUp () {
         for(int i = entities.size() - 1; i >= 0; --i) {
             Entity curr = entities.get(i);
@@ -54,18 +62,25 @@ public class FightManager {
                         character.addItemToInventory(new Anduril());
                     }
                 } else {
-                    curr.revive(curr);
+                    curr.revive();
                 }
             }
         }
     }
 
+    /**
+     * For each entity, reset it's hasFought status to false
+     */
     public void resetHasFought() {
         for (Entity eachEntity : entities) {
                 eachEntity.setHasFought(false);
         }
     }
 
+    /**
+     * Set the current instance of FightManager to the given character
+     * @param character The controlled character for this dungeon
+     */
     public void setCharacter(PlayerCharacter character) {
         this.character = character;
     }
