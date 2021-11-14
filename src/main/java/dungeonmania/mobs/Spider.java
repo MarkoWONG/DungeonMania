@@ -6,7 +6,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class Spider extends Mob {
-    private int positionCounter = 998;
+    private int positionCounter = -1;
     private int moveDirection = 1; // 1 for movement clockwise, -1 for anticlockwise
     private EntityList entities;
     /**
@@ -33,105 +33,79 @@ public class Spider extends Mob {
 
     @Override
     public void move(Direction direction) {
-        Boolean boulder;
-        if (moveDirection == -1) {
-            positionCounter--;
-        }else {
-            positionCounter++;
+        if (MovementManager.checkBoulder(super.getPosition(), entities)) {
+            moveDirection *= -1;
         }
-        if (positionCounter != 999) {
-            positionCounter = (((positionCounter % 8) + 8) % 8);
-        }
+
+        if (moveDirection == 1) {doMovePos();}
+        else if (moveDirection == -1) {doMoveNeg();}
+
+        positionCounter = modulus(positionCounter + moveDirection, 8);
+    }
+
+    private void doMovePos(){
+        
         switch(positionCounter) {
-            case 999:
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.UP), entities);
-                if (!boulder) {
-                    super.move(Direction.UP);
-                    positionCounter = -1;
-                } else {
-                    positionCounter = 998;
-                }
-                break;
+            case -1:
+            super.move(Direction.UP);
+            break;
             case 0 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.RIGHT), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.LEFT);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.RIGHT);
-                }
-                break;
+            super.move(Direction.RIGHT);
+            break;
             case 1 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.DOWN), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.UP);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.DOWN);
-                }
-                break;
+            super.move(Direction.DOWN);
+            break;
             case 2 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.DOWN), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.UP);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.DOWN);
-                }
-                break;
+            super.move(Direction.DOWN);
+            break;
             case 3 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.LEFT), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.RIGHT);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.LEFT);
-                }
-                break;
+            super.move(Direction.LEFT);
+            break;
             case 4 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.LEFT), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.RIGHT);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.LEFT);
-                }
-                break;
+            super.move(Direction.LEFT);
+            break;
             case 5 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.UP), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.RIGHT);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.UP);
-                }
-                break;
+            super.move(Direction.UP);
+            break;
             case 6 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.UP), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.RIGHT);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.UP);
-                }
-                break;
+            super.move(Direction.UP);
+            break;
             case 7 :
-                boulder = MovementManager.checkBoulder(super.getPosition().translateBy(Direction.RIGHT), entities);
-                if (boulder) {
-                    moveDirection *= -1;
-                    super.move(Direction.LEFT);
-                    positionCounter = positionCounter - 5;
-                } else {
-                    super.move(Direction.RIGHT);
-                }
-                break;
+            super.move(Direction.RIGHT);
+            break;
+        }
+    }
+
+    
+    private void doMoveNeg(){
+        
+        switch(positionCounter) {
+            case -1:
+            break;
+            case 0 :
+            super.move(Direction.LEFT);
+            break;
+            case 1 :
+            super.move(Direction.LEFT);
+            break;
+            case 2 :
+            super.move(Direction.UP);
+            break;
+            case 3 :
+            super.move(Direction.UP);
+            break;
+            case 4 :
+            super.move(Direction.RIGHT);
+            break;
+            case 5 :
+            super.move(Direction.RIGHT);
+            break;
+            case 6 :
+            super.move(Direction.DOWN);
+            break;
+            case 7 :
+            super.move(Direction.DOWN);
+            break;
         }
     }
 
@@ -139,4 +113,11 @@ public class Spider extends Mob {
     public void teleport(Position position) {
         // does nothing.
     }
+
+    private int modulus(int x, int y) {
+        int remainder = x % y;
+        int mod = (remainder < 0) ? (y + remainder) : remainder;
+        return mod;
+    }
+
 }
