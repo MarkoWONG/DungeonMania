@@ -38,7 +38,6 @@ public class Sword extends CollectableEntity implements Weapon{
         durability--;
         if (durability <= 0){
             return true;
-            // player.getInventory().removeIf(ent -> ent.equals(this));
         }
         return false;
     }

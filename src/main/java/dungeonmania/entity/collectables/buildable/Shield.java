@@ -57,6 +57,7 @@ public class Shield extends BuildableEntity {
         return damage / 2;
     }
 
+    @Override
     public List<String> getRecipeUsed() {
         return this.recipeUsed;
     }

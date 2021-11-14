@@ -1,0 +1,1 @@
+{"seed":1636896439264,"entities":[{"":"","x":2,"y":1,"type":"player"},{"":"","x":2,"y":2,"type":"switch"},{"":"","x":3,"y":3,"type":"boulder"},{"":"","x":0,"y":1,"type":"spider"},{"":"","x":1,"y":0,"type":"spider"},{"":"","x":0,"y":2,"type":"spider"}],"name":"AndGoal","id":"7fad24e9-6805-47bf-9d5e-0c6818a4adb5","inventory":[{"":"","type":"treasure"}],"gamemode":"Standard"}
