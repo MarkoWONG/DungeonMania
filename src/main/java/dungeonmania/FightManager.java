@@ -27,11 +27,13 @@ public class FightManager {
     }
 
     public void doCharFights() {
-        ArrayList<Entity> currTile= entities.searchTile(character);
-        for (Entity e : currTile) {
-            if (!e.hasFought()) {
-                e.startFight(character);
-                e.setHasFought(true);
+        if (character.getInvisibleTicks() <= 0) {
+            ArrayList<Entity> currTile= entities.searchTile(character);
+            for (Entity e : currTile) {
+                if (!e.hasFought()) {
+                    e.startFight(character);
+                    e.setHasFought(true);
+                }
             }
         }
         cleanUp();

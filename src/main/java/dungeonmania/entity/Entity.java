@@ -220,6 +220,8 @@ public abstract class Entity implements Interacts {
     public Integer getHealth() {
         return 1;
     }
+    public void addAlly(Mob newAlly) {
+    }
 
     public ArrayList<CollectableEntity> getInventory() {
         return new ArrayList<CollectableEntity>();

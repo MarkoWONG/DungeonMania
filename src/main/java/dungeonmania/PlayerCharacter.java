@@ -186,7 +186,7 @@ public class PlayerCharacter extends Entity implements Movement{
         }
 
         for (Mob mob : allies) {
-            AD += mob.getAttackDamage();
+            AD += mob.getAttackDamage()/2;
         }
         return AD * getHealth() / 5;
     }
@@ -272,8 +272,9 @@ public class PlayerCharacter extends Entity implements Movement{
                 inventory.remove(e);
             }
         }
-        
-        setHealth(getHealth() - reducedDamage);
+        if (invincibleTicks <= 0) {
+            setHealth(getHealth() - reducedDamage);
+        }
     }
 
     public boolean hasAnduril() {
@@ -343,6 +344,14 @@ public class PlayerCharacter extends Entity implements Movement{
 
     public void setAllies(ArrayList<Mob> allies) {
         this.allies = allies;
+    }
+    @Override
+    public void addAlly(Mob newAlly) {
+        allies.add(newAlly);
+    }
+
+    public void removeAlly(Mob oldAlly) {
+        allies.remove(oldAlly);
     }
 
     public Integer getHealth() {

@@ -84,6 +84,7 @@ public abstract class Mob extends Entity implements Movement{
     public void changeFaction(String newFaction) {
         if (newFaction.equals("ally")) {
             faction.setFaction(new Ally());
+            
         } else if (newFaction.equals("enemy")) {
             faction.setFaction(new Enemy());
         }

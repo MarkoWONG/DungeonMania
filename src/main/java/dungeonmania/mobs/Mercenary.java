@@ -1,6 +1,7 @@
 package dungeonmania.mobs;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
+import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.Armour;
 import dungeonmania.entity.collectables.BribeMaterial;
 import dungeonmania.entity.collectables.CollectableEntity;
@@ -57,6 +58,9 @@ public class Mercenary extends Mob implements Subscriber{
             return;
         }
         super.changeFaction("ally");
+        for (Entity e : entities) {
+            e.addAlly(this);
+        }
     }
 
     @Override

@@ -57,6 +57,9 @@ public class Assassin extends Mob implements Subscriber{
             return;
         }
         super.changeFaction("ally");
+        for (Entity e : entities) {
+            e.addAlly(this);
+        }
     }
 
     @Override
