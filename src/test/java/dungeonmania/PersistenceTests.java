@@ -59,7 +59,7 @@ public class PersistenceTests {
     @Test
     public void saveAndLoad_ItemUseTick() {
         DungeonManiaController currController = new DungeonManiaController();
-        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard",1L);
+        DungeonResponse currResponse = currController.newGame("difficultytest", "Standard", 1L);
         currResponse = currController.tick(null, Direction.LEFT);
         String invisPotionId = currResponse.getInventory().get(0).getId();
         currResponse = currController.tick(invisPotionId, Direction.LEFT);

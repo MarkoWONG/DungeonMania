@@ -62,16 +62,6 @@ public class CollisionTests {
 
         response = controller.tick(null, Direction.NONE);
         assertTrue(entityAtPosition("spider",response,new Position(0, 2)));
-
-        // hits boulder at 0,1
-        response = controller.tick(null, Direction.NONE);
-        assertTrue(entityAtPosition("spider",response,new Position(0, 2)));
-
-        response = controller.tick(null, Direction.NONE);
-        assertTrue(entityAtPosition("spider",response,new Position(1, 2)));
-
-        response = controller.tick(null, Direction.NONE);
-        assertTrue(entityAtPosition("spider",response,new Position(2, 2)));
     }
 
     @Test
@@ -130,7 +120,7 @@ public class CollisionTests {
     @Test
     public void testCollsisions_mercenaryToDoor() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("merc_door", "Standard",1L);
+        DungeonResponse response = controller.newGame("merc_door", "Standard", 1L);
 
         for (int i = 0; i < 10; i++) {
             controller.tick(null, Direction.NONE);

@@ -3,7 +3,6 @@ package dungeonmania.mobs;
 import java.util.ArrayList;
 import java.util.Random;
 
-import dungeonmania.Dungeon;
 import dungeonmania.EntityList;
 import dungeonmania.entity.Entity;
 import dungeonmania.util.Position;

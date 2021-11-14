@@ -8,7 +8,6 @@ import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class EntityList extends ArrayList<Entity> {

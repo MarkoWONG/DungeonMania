@@ -11,9 +11,7 @@ public class Sword extends CollectableEntity implements Weapon{
 
     public Sword(Position position){
         super(new Position(position.getX(), position.getY(), 40));
-        
-        // times 2 as items are used twice per battle one for attacking and one for defending
-        this.durability = startingDurability * 2; 
+        this.durability = startingDurability; 
     }
 
     public Sword() {
