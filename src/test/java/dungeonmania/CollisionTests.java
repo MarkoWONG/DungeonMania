@@ -130,7 +130,7 @@ public class CollisionTests {
     @Test
     public void testCollsisions_mercenaryToDoor() {
         DungeonManiaController controller = new DungeonManiaController();
-        DungeonResponse response = controller.newGame("merc_door", "Standard");
+        DungeonResponse response = controller.newGame("merc_door", "Standard",1L);
 
         for (int i = 0; i < 10; i++) {
             controller.tick(null, Direction.NONE);

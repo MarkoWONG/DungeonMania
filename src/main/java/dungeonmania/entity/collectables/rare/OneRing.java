@@ -1,9 +1,10 @@
 package dungeonmania.entity.collectables.rare;
+import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
 import dungeonmania.PlayerCharacter;
 
-public class OneRing extends rareEntity{
+public class OneRing extends CollectableEntity {
     public OneRing(Position position){
         super(new Position(position.getX(), position.getY(), 40));
     }

@@ -83,7 +83,11 @@ public class Dungeon {
     }
 
     private void useItemId(String itemUsed) {
-        Entity givenItem = character.getItemById(itemUsed);
+        Entity givenItem = null;
+        givenItem = character.getItemById(itemUsed);
+        if (givenItem == null) {
+            givenItem = entities.searchId(itemUsed);
+        }
         if (!(givenItem instanceof Usable)) {
             throw new IllegalArgumentException();
         }
