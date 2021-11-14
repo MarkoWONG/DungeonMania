@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 
 public class MovementManager {
@@ -151,7 +152,7 @@ public class MovementManager {
         }
     }
 
-    public static Boolean checkBoulder(Position position) {
+    public static Boolean checkBoulder(Position position,EntityList entities) {
         return entities.search(position)
                 .stream().map(Entity::getType)
                 .collect(Collectors.toList())

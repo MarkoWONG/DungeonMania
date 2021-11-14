@@ -125,7 +125,7 @@ public abstract class EntityFactory {
     }
 
     protected Entity makeSpider(Position startPos) {
-        return new Spider(startPos,5,6);
+        return new Spider(startPos,5,6,entityMap);
     }
 
     protected Entity makeTreasure(Position startPos) {
