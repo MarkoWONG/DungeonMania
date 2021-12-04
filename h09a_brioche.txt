@@ -1,4 +1,4 @@
-Autotesting Result = 0/110, the final cap hasn't been defined yet but will be around 80-90
+Autotesting Result = 0/285, the final cap hasn't been defined yet but will be around 80-90
 Test 1-1
 /Users/braedonwooding/project-automarking/h09a_brioche/src/main/java/dungeonmania/Dungeon.java:3: error: package com.fasterxml.jackson.annotation does not exist
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
