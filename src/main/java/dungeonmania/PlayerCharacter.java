@@ -1,7 +1,5 @@
 package dungeonmania;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.entity.collectables.CollectableEntity;
 import dungeonmania.entity.collectables.Weapon;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class PlayerCharacter extends Entity {
 
     private ArrayList<CollectableEntity> inventory;

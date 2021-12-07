@@ -1,7 +1,5 @@
 package dungeonmania;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.difficulty.Difficulty;
 import dungeonmania.difficulty.Hard;
 import dungeonmania.difficulty.Peaceful;
@@ -24,7 +22,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.*;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Dungeon {
 
     private String name;

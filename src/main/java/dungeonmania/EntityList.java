@@ -1,7 +1,5 @@
 package dungeonmania;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dungeonmania.entity.Entity;
 import dungeonmania.movement.MovementManager;
 import dungeonmania.util.Position;
@@ -9,7 +7,6 @@ import dungeonmania.util.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class EntityList extends ArrayList<Entity> {
 
     public ArrayList<Entity> search(Position position) {

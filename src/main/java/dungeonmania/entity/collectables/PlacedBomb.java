@@ -1,5 +1,4 @@
 package dungeonmania.entity.collectables;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import dungeonmania.EntityList;
 import dungeonmania.PlayerCharacter;
 import dungeonmania.entity.staticEnt.StaticEntity;
@@ -8,7 +7,6 @@ import dungeonmania.util.Position;
 import dungeonmania.entity.Entity;
 
 public class PlacedBomb extends StaticEntity {
-    @JsonBackReference
     private EntityList entities;
 
     public PlacedBomb(Position position, EntityList entityMap){
